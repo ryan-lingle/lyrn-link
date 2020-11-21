@@ -1,0 +1,112 @@
+// 
+// table.scss
+// 
+
+.table-wrapper {
+	overflow-x: scroll;
+}
+
+table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0 10px;
+	font-family: 'Open Sans';
+	font-weight: normal;
+	font-size: small;
+	color: $navy;
+	margin: 5px auto 20px auto;
+}
+
+thead {
+	font-weight: bold;
+}
+
+tbody {
+	font-weight: normal;
+}
+
+tr {
+	overflow-x: scroll !important;
+}
+
+
+// Table Header Cells
+
+th {
+	background: $white;
+	border-top: 1px solid darken($white, 5%);
+	border-bottom: 1px solid darken($white, 5%);
+	padding: 5px;
+	white-space: nowrap;
+	-moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	white-space: nowrap;
+
+	&:hover{
+		cursor: pointer;
+
+	}
+}
+
+th i {
+	margin: 5px 5px;
+}
+
+th:first-child {
+	padding-left: 20px;
+	border-left: 1px solid darken($white, 5%);
+	border-radius: 8px 0px 0px 8px;
+}
+
+th:last-child {
+	padding-right: 20px;
+	border-right: 1px solid darken($white, 5%);
+	border-radius: 0px 8px 8px 0px;
+}
+
+
+// Table Data Cells
+
+td {
+	background: $white;
+	border-top: 1px solid darken($white, 5%);
+	border-bottom: 1px solid darken($white, 5%);
+	padding: 10px;
+	white-space: nowrap;
+}
+
+td:first-child {
+	padding-left: 20px;
+	border-left: 1px solid darken($white, 5%);
+	border-radius: 8px 0px 0px 8px;
+	color: $orange;
+
+}
+
+td:first-child:hover{
+	color: lighten($orange, 5%);
+	cursor: pointer;
+}
+
+
+
+td:last-child {
+	padding-right: 20px;
+	border-right: 1px solid darken($white, 5%);
+	border-radius: 0px 8px 8px 0px;
+}
+
+.destroy-row {
+	color: $light-red;
+	text-align: left;
+	padding-left: 50px;
+	width: 10px;
+	cursor: pointer;
+
+	&:hover {
+		color:$red;
+	}
+}
+

@@ -1,0 +1,35 @@
+.profile-picture-input div {
+	position: relative;
+}
+
+.profile-picture-input img {
+	width: 100px;
+	border-radius: 50px;
+	filter: brightness(95%);
+}
+
+.profile-picture-input div:hover {
+	filter: brightness(90%);
+	cursor: pointer;
+}
+
+
+.profile-picture-input i {
+	color: white;
+	font-size: 20px;
+	position: absolute;
+	left: 40px;
+	top: 40px;
+}
+
+.profile-pic-slider {
+	margin-bottom: 20px;
+}
+
+.profile-pic-slider .slider {
+	max-width: 400px;
+}
+
+.profile-pic-slider .btn-navy {
+	margin-top: 10px;
+}

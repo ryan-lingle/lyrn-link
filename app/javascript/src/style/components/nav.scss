@@ -1,0 +1,149 @@
+.nav {
+	max-width: 1200px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin: auto;
+}
+
+.nav-bg {
+	background-color: $white;
+	box-shadow: 0px 0px 8px $light-grey, 0px 0px 16px  $light-grey;
+	align-items: center;
+	padding: 10px 0px;
+}
+
+.nav-logo {
+	height: 32px;
+	margin: auto;
+}
+
+.navlinks {
+	padding: 0 20px;
+	flex-grow: 1;
+	margin: auto;
+}
+
+.navlinks a {
+	letter-spacing: 0.0275em;
+	font-feature-settings: 'tnum' on, 'lnum' on, 'ss01' on;
+	color: $navy;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: normal;
+	font-size: small;
+	line-height: 150%;
+	margin: 0px 3px;
+	text-decoration: none !important;
+	padding: 4px;
+}
+
+.navlinks a:hover {
+	text-decoration: none !important;
+	color: $grey;
+	filter: brightness(95%);
+}
+
+.nav-current {
+	color: $orange !important;;
+	font-weight: bold;
+}
+
+.nav-disabled {
+	color: $light-grey !important;
+}
+
+.nav-disabled {
+	pointer-events: none;
+	cursor: none;
+}
+
+.nav-name {
+	color: $navy;
+	font-family: 'Open Sans';
+	font-weight: bold;
+	font-size: small;
+	line-height: 143%;
+	align-items: right;
+	text-align: right;
+	letter-spacing: 0.018em;
+}
+
+.nav-avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 100px;
+	margin-left: 15px;
+}
+
+.nav-avatar:hover {
+	cursor: pointer;
+	filter: brightness(95%);
+}
+
+.nav-profile {
+	display: flex;
+	position: relative;
+	margin: auto;
+}
+
+.nav-agency {
+	font-family: 'Open Sans';
+	font-weight: normal;
+	font-size: small;
+	line-height: 126%;
+	align-items: right;
+	text-align: right;
+	letter-spacing: 0.033em;
+	font-feature-settings: 'ss01' on;
+	color: #758491;
+}
+
+.hamburger-menu {
+	position: absolute;
+	top: 55px;
+	right: 0;
+	z-index: 10;
+	background: $white;
+    box-shadow: 0px 0px 8px rgba(58, 58, 68, 0.1), 0px 0px 16px rgba(90, 91, 106, 0.1);
+    border-radius: 5px;
+}
+
+.hamburger-menu a {
+	display: block;
+	padding: 7px 20px;
+	font-family: 'Open Sans';
+    font-weight: normal;
+    font-size: small;
+    color: $navy !important;
+}
+
+.hamburger-menu a:hover {
+	background: #f1f2f4;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.mobile-only-link {
+	display: none !important;
+}
+
+@media only screen and (max-width: 635px) {
+	.navlinks a {
+		display: none;
+	}
+
+	.mobile-only-link {
+		display: block !important;
+	}
+}
+
+#default-avatar {
+	font-size: xx-large;
+	margin-left: 15px;
+	color: $navy;
+}
+
+#default-avatar:hover {
+	cursor: pointer;
+}
+
