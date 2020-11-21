@@ -1,0 +1,31 @@
+#tabs {
+	display: flex;
+	align-items: center;
+	margin: 0px 0px 30px 0px;
+	padding-bottom: 10px;
+	border-bottom: lighten($navy, 60%) 2px solid;
+}
+
+.tab {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: normal;
+	font-size: medium;
+	color: $navy;
+	margin-right: 20px;
+}
+
+.tab:hover {
+	cursor: pointer;
+	color: $orange;
+}
+
+.current-tab {
+	color: $orange;
+	font-weight: bolder;
+}
+
+.current-tab:hover {
+	color: $orange;
+	font-weight: bolder;
+}

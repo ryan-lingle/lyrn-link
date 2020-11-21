@@ -1,0 +1,53 @@
+// 
+// body.scss
+// 
+
+body {
+	background: #fafafa;
+	height: 100%;
+	z-index: 1;
+}
+
+.container {
+	max-width: 1200px;
+	min-height: calc(100vh - 180px);
+}
+
+// page heading // 
+
+#page-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 40px auto 20px auto;
+}
+
+.page-title {
+	font-family: 'Open Sans';
+	font-weight: bold;
+	font-size: x-large;
+	color: $navy;
+}
+
+// section // 
+#section-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	vertical-align: middle;
+	margin: 40px auto 10px auto;
+}
+
+.section-title {
+	font-family: 'Open Sans';
+	font-weight: bolder;
+	font-size: medium;
+	color: $navy;
+}
+
+#page-menu {
+	margin: auto;
+	text-align: right;
+	padding: 10px;
+	margin: 15px auto 15px auto;
+}

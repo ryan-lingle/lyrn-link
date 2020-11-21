@@ -1,0 +1,131 @@
+@import 'colors';
+
+.btn-navy {
+    color: $white;
+    background: $navy;
+    padding: 6px 12px;
+    min-width: 90px;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+	box-sizing: border-box;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-size: small;
+    -webkit-transition: (0.2s ease-in-out);
+	-moz-transition: (0.2s ease-in-out); 
+	-o-transition: (0.2s ease-in-out); 
+	transition: (0.2s ease-in-out);  
+    cursor:pointer;
+    text-decoration: none;
+
+    &:hover {
+        background: lighten($navy, 10%);
+        text-decoration: none;
+        color: $white;
+    }
+}
+
+.btn-orange {
+    color: $orange;
+    background: transparent;
+    padding: 6px 12px;
+    min-width: 90px;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+	box-sizing: border-box;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-size: medium;
+    -webkit-transition: (0.2s ease-in-out);
+	-moz-transition: (0.2s ease-in-out); 
+	-o-transition: (0.2s ease-in-out); 
+	transition: (0.2s ease-in-out);  
+    cursor:pointer;
+    text-decoration: none;
+
+    &:hover {
+        color: lighten($orange, 10%);
+        text-decoration: none;
+    }
+}
+
+.btn-green {
+    color: $green;
+    background: transparent;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+	box-sizing: border-box;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-size: small;
+    -webkit-transition: (0.2s ease-in-out);
+	-moz-transition: (0.2s ease-in-out); 
+	-o-transition: (0.2s ease-in-out); 
+	transition: (0.2s ease-in-out);  
+    cursor:pointer;
+    text-decoration: none;
+
+    &:hover {
+        color: lighten($green, 10%);
+        text-decoration: none;
+    }
+}
+
+.btn-soft {
+    color: $navy;
+    background: transparent;
+    padding: 6px 12px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: bold;
+    font-size: small;
+    font-feature-settings: 'ss01' on;
+    -webkit-transition: (0.2s ease-in-out);
+	-moz-transition: (0.2s ease-in-out); 
+	-o-transition: (0.2s ease-in-out); 
+	transition: (0.2s ease-in-out);  
+    cursor:pointer;
+    text-decoration: none;
+
+    &:hover {
+        color: lighten($navy, 10%);
+        text-decoration: none;
+    }
+}
+
+#btn-download {
+    color: $navy;
+    background: transparent;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+	box-sizing: border-box;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: normal;
+    font-size: small;
+    font-feature-settings: 'ss01' on;
+    -webkit-transition: (0.2s ease-in-out);
+	-moz-transition: (0.2s ease-in-out); 
+	-o-transition: (0.2s ease-in-out); 
+	transition: (0.2s ease-in-out);  
+    cursor:pointer;
+    text-decoration: none;
+
+    &:hover {
+        color: lighten($orange, 15%);
+        text-decoration: none;
+    }
+}
+
+.remove-item {
+    color: $light-red !important;
+}
+
+.remove-item:hover {
+    cursor: pointer;
+    color: $red !important;
+}
