@@ -65,6 +65,15 @@ const Form = ({ inputs=[], onSubmit, submitCopy, type, col="6", children }) => {
                     </select>
                 );
             }
+        } else if (input.type === 'textarea') {
+            return(
+                <textarea
+                    ref={refs[input.key]} 
+                    defaultValue={input.defaultValue}
+                    onChange={input.onChange}
+                    placeholder={input.placeholder}
+                />
+            );
         } else {
             return(
                 <input

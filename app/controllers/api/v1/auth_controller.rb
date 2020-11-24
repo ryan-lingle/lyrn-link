@@ -1,30 +1,36 @@
 class Api::V1::AuthController < ApplicationController
 	skip_before_action :authenticate_request
 
-	def sign_up
-		@user = User.create!(user_params)
-
-		if @user.valid?
-			render json: {
-		    	auth_token: new_jwt,
-		    	user: @user.to_res
-		    }
-		else
-	 		raise "Invalid email and/or password"
-		end
+	def request_token
+		callback_url = "http://localhost:3000/twitter/callback"
+		res = OauthConsumer.get_request_token(oauth_callback: callback_url)
+		OauthCredential.create!(
+			token: res.token,
+			secret: res.secret
+		)
+		render json: {
+			token: res.token,
+		}
 	end
 
-	def login
-		@user = User.find_by(email: user_params[:email])
-		if @user && @user.authenticate(user_params[:password])
-	 		render json: {
-		    	auth_token: new_jwt,
-		    	user: @user.to_res
-		    }
-		else
-	 		raise "Invalid email and/or password"
-		end
-	end
+	def access_token
+	    creds = OauthCredential.find_by(token: params[:oauth_token])
+	    request_token  = OAuth::RequestToken.from_hash(OauthConsumer, creds.to_hash)
+	    res = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
+	    id = res.params[:user_id]
+	    username = res.params[:screen_name]
+	    @user = User.find_or_create_by(twitter_id: id)
+	    @user.update!(
+	    	username: username,
+	    	twitter_token: res.token,
+	    	twitter_secret: res.secret,
+	    )
+	    render json: {
+	    	auth_token: new_jwt,
+	    	user: @user.to_res
+	    }
+		    
+  	end
 
 	def refresh_token
 		decoded_refresh = JsonWebToken.decode(cookies[:refresh_token])
@@ -46,29 +52,4 @@ class Api::V1::AuthController < ApplicationController
 		end
 	end
 
-	def reset_password
-		user = User.find_by(email: params[:email])
-		raise "No user found with that email" if !user
-		PasswordReset.create!(user: user)
-		render json: { success: true }
-	end
-
-	def change_password
-		password_reset = PasswordReset.find_by(token: params[:token])
-		if !password_reset
-			raise "Invalid token"
-		else
-			raise "Request has expired" if Time.now > password_reset.expire_at
-			password_reset.user.password = params[:password]
-			password_reset.user.save!
-			password_reset.destroy!
-			render json: { success: true }
-		end
-	end
-
-	private
-
-	def user_params
-		params.require(:user).permit(:email, :password, :username)
-	end
 end

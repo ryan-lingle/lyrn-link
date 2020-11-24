@@ -3,11 +3,16 @@ class Store {
         this.state = {
             user: {
                 username: localStorage.getItem('username'),
+                lists: [],
+            },
+            list: {
+                items: [],
             },
             loading: {},
             errors: {},
             success: {},
             searchResults: {},
+            scrapeResult: {},
         }
 
         this.setState = () => {};
@@ -36,8 +41,29 @@ class Store {
             localStorage.setItem('username', event.user.username);
             this.state.user = event.user || {};
             break;
+        case 'add_list':
+            this.state.loading.lists = false;
+            this.state.user.lists.push(event.list);
+            break;
+        case 'set_list':
+            this.state.loading.lists = false;
+            this.state.list = event.list;
+            break;
+        case 'add_item':
+            this.state.loading.items = false;
+            this.state.list.items.push(event.item);
+            break;
         case 'search_results':
-            this.state.searchResults[event.searchType] = event.results;
+            this.state.loading.search = false;
+            if (event.push) {
+                this.state.searchResults[event.searchType] = this.state.searchResults[event.searchType].concat(event.results);
+            } else {
+                this.state.searchResults[event.searchType] = event.results;
+            };
+            break;
+        case 'scrape':
+            this.state.loading.scrape = false;
+            this.state.scrapeResult = event.result;
             break;
         case 'error':
             this.state.loading[event.errorType] = null;

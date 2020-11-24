@@ -1,7 +1,7 @@
 import React, { Component, createContext } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Login, SignUp, ResetPassword, ChangePassword } from "../src/pages";
+import { Login, TwitterCallback } from "../src/pages";
 import Routes from "../src/routes";
 import { store } from '../src/store';
 import { api } from '../src/api';
@@ -32,10 +32,8 @@ class Root extends Component {
       <Context.Provider value={{ api, state: this.state }} >
         <Router>
           <Switch>
-            <Route exact path="/login" component={Login}/>
-            <Route exact path="/sign_up" component={SignUp}/>
-            <Route exact path="/reset_password" component={ResetPassword}/>
-            <Route exact path="/change_password/:token" component={ChangePassword}/>
+            <Route exact path="/sign_in" component={Login}/>
+            <Route exact path="/twitter/callback" component={TwitterCallback}/>
             <Route component={Routes}/>
           </Switch>
         </Router>

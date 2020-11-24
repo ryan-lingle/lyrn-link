@@ -5,17 +5,27 @@ Rails.application.routes.draw do
   	namespace 'v1' do
 
       # AUTH ROUTES
-  		post 'sign_up', to: 'auth#sign_up'
-  		post 'login', to: 'auth#login'
-  		post 'reset_password', to: 'auth#reset_password'
-  		post 'change_password', to: 'auth#change_password'
+  		post 'request_token', to: 'auth#request_token'
+      post 'access_token', to: 'auth#access_token'
   		get 'refresh_token', to: 'auth#refresh_token'
+      
   		get 'current_user', to: 'users#show'
 
       # RESOURCES
       resources :users, only: [:update, :destroy] do
         member do
           post 'profile_picture', to: 'users#profile_picture'
+        end
+      end
+      resources :lists, only: [:create, :show], param: :type do 
+        member do
+          get 'search', to: 'lists#search'
+        end
+        resources :items, only: [:create]
+      end
+      resources :items, only: [] do
+        collection do
+          get 'scrape', to: 'items#scrape'
         end
       end
     end

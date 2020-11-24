@@ -87,12 +87,32 @@ class Api {
         }
     }
 
-    createUser = async (user) => {
+    requestToken = async () => {
         this.setLoading('login');
 
-        const res = await this.post('sign_up', { 
-            params: { user },
-            errorType: 'login',
+        const res = await this.post('request_token', {
+            checkRefresh: false,
+        });
+
+        if (!res.error) {
+
+            window.location.href = `https://api.twitter.com/oauth/authenticate?oauth_token=${res.token}`;
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
+    accessToken = async (params) => {
+        this.setLoading('login');
+
+        const res = await this.post('access_token', {
+            params,
             checkRefresh: false,
         });
 
@@ -103,9 +123,9 @@ class Api {
                 token: res.auth_token,
                 user: res.user,
             });
-
-            window.location.href = "/";
-
+            
+            window.location.href = '/admin';
+            
             return true;
 
         } else {
@@ -113,6 +133,7 @@ class Api {
             return false;
 
         }
+
     }
 
     updateUser = async (id, user, type='update_user') => {
@@ -171,34 +192,6 @@ class Api {
         });
     }
 
-    login = async (user, redirectTo="/") => {
-        this.setLoading('login');
-
-        const res = await this.post('login', {
-            params: { user },
-            errorType: 'login',
-            checkRefresh: false,
-        });
-
-        if (!res.error) {
-
-            store.reduce({
-                type: 'login',
-                token: res.auth_token,
-                user: res.user,
-            });
-
-            window.location.href = redirectTo;
-
-            return true;
-
-        } else {
-
-            return false;
-
-        }
-    }
-
     getUser = async () => {
         this.setLoading('login');
 
@@ -213,26 +206,125 @@ class Api {
             });
     }
 
-    createPasswordReset = async (email) => {
-        this.setLoading('login');
+    createList = async (list) => {
+        this.setLoading('lists');
 
-        return await this.post('reset_password', {
-            params: { email },
-            errorType: 'login',
-            checkRefresh: false,
+        const res = await this.post('lists', {
+            params: { list },
+            errorType: 'lists',
         });
 
+        if (!res.error) {
+
+            store.reduce({
+                type: 'add_list',
+                list: res.list,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
     }
 
-    changePassword = async (params) => {
-        this.setLoading('login');
+    getList = async ({ type }) => {
+        this.setLoading('lists');
 
-        return await this.post('change_password', {
-            params,
-            errorType: 'login',
-            checkRefresh: false,
+        const res = await this.get(`lists/${type}`, {
+            errorType: 'lists',
         });
 
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_list',
+                list: res.list,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    search = async (type, term, offset=0) => {
+        this.setLoading('search');
+
+        const res = await this.get(`lists/${type}/search`, {
+            params: { term, offset },
+            errorType: 'search',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'search_results',
+                searchType: type,
+                results: res.results,
+                push: offset > 0,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    scrape = async (url) => {
+        this.setLoading('scrape');
+
+        const res = await this.get('items/scrape', {
+            params: { url },
+            errorType: 'scrape',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'scrape',
+                result: res,
+            })
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    createItem = async (listType, item) => {
+        this.setLoading('items');
+
+        const res = await this.post(`lists/${listType}/items`, {
+            params: { item },
+            errorType: 'items',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'add_item',
+                item: res.item,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
     }
 
     setError = (errorType, error) => {
