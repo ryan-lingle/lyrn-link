@@ -59,11 +59,11 @@ class ApplicationController < ActionController::Base
     })
     refresh_token = JsonWebToken.encode({ 
       user_id: user.id, 
-      expires: Time.now + 1.hour 
+      expires: Time.now + 2.weeks 
     })
     cookies[:refresh_token] = { 
       value: refresh_token, 
-      expires: Time.now + 1.hour, 
+      expires: Time.now + 2.weeks, 
       httponly: true 
     }
     jwt

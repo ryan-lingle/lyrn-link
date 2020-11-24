@@ -36,8 +36,8 @@ const NavBar = ({ location }) => {
                     </a>
                 </div>
                 <div className="navlinks">
-                    <a href="/" className={current("/") ? "nav-current" : ""}>
-                        Home
+                    <a href="/admin" className={current("/") ? "nav-current" : ""}>
+                        Admin
                     </a>
                 </div>
                 <div className="nav-profile">
@@ -69,7 +69,7 @@ const NavBar = ({ location }) => {
                             display: showHam ? "" : "none",
                         }}
                     >   
-                        <a href="/" className="mobile-only-link" >Home</a>
+                        <a href="/admin" className="mobile-only-link" >Admin</a>
                         <a href="/profile" >
                             Profile
                         </a>

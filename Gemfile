@@ -30,15 +30,19 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'pry-rails' , groups: [:development, :test]
 gem 'rspec-rails' , groups: [:development, :test]
 gem 'awesome_print'
-gem 'bcrypt'
+# gem 'bcrypt'
 gem 'jwt'
-gem 'postmark'
+# gem 'postmark'
 gem 'pundit'
 gem 'aws-sdk-s3'
 gem 'active_storage_base64'
 gem 'image_processing'
 gem 'rollbar'
 gem 'pg_search'
+gem 'unirest', '~> 1.1.2'
+gem 'nokogiri'
+gem 'oauth', '~> 0.5.1'
+gem 'twitter'
 # gem 'stripe'
 
 group :development, :test do
@@ -57,4 +61,3 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'sqreen', '>= 1.16'
