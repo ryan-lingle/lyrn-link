@@ -75,7 +75,7 @@ const NavBar = ({ location }) => {
                         </a>
                         <a onClick={() => {
                             localStorage.clear();
-                            window.location.href = "/login";
+                            window.location.href = "/sign_in";
                         }}>
                             Sign Out</a>
                     </div>

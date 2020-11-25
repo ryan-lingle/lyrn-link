@@ -5,9 +5,7 @@ class Store {
                 username: localStorage.getItem('username'),
                 lists: [],
             },
-            list: {
-                items: [],
-            },
+            listIndex: 0,
             loading: {},
             errors: {},
             success: {},
@@ -35,23 +33,27 @@ class Store {
             break;
         case 'set_user':
             this.state.loading.login = false;
+            this.state.loading.user = false;
             this.state.loading.update_user = false;
-            this.state.loading.update_password = false;
             this.state.loading.profile_picture = false;
-            localStorage.setItem('username', event.user.username);
-            this.state.user = event.user || {};
+            if (event.user.username) localStorage.setItem('username', event.user.username);
+            this.state.user = { ...this.state.user, ...event.user };
             break;
         case 'add_list':
             this.state.loading.lists = false;
             this.state.user.lists.push(event.list);
             break;
-        case 'set_list':
-            this.state.loading.lists = false;
-            this.state.list = event.list;
+        case 'set_list_index':
+            if (Number.isInteger(event.index)) {
+                this.state.listIndex = event.index;
+            }
+            if (event.listType) {
+                this.state.listIndex = this.findIndexFromType(event.listType)
+            }
             break;
         case 'add_item':
             this.state.loading.items = false;
-            this.state.list.items.push(event.item);
+            this.currentList().items.push(event.item);
             break;
         case 'search_results':
             this.state.loading.search = false;
@@ -88,6 +90,14 @@ class Store {
 
     tenMinFromNow() {
         return new Date(new Date().getTime() + 600000);
+    }
+
+    currentList = () => {
+        return this.state.user.lists[this.state.listIndex];
+    }
+
+    findIndexFromType = (listType) => {
+        return this.state.user.lists.findIndex(({ type }) => type === listType) || 0;
     }
 }
 

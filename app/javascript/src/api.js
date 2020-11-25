@@ -68,7 +68,7 @@ class Api {
     handleResponse = async (json, errorType) => {
         if (json.status === 401) {
 
-            window.location.href = '/login';
+            window.location.href = '/sign_in';
             return {};
 
         } else {
@@ -193,10 +193,10 @@ class Api {
     }
 
     getUser = async () => {
-        this.setLoading('login');
+        this.setLoading('user');
 
         const res = await this.get('current_user', {
-            errorType: 'login',
+            errorType: 'user',
         });
         
         if (!res.error)
@@ -217,8 +217,8 @@ class Api {
         if (!res.error) {
 
             store.reduce({
-                type: 'add_list',
-                list: res.list,
+                type: 'set_user',
+                user: res.user,
             });
 
             return true;
@@ -230,18 +230,17 @@ class Api {
         }
     }
 
-    getList = async ({ type }) => {
-        this.setLoading('lists');
-
+    destroyList = async (type) => {
         const res = await this.get(`lists/${type}`, {
+            method: 'DELETE',
             errorType: 'lists',
         });
 
         if (!res.error) {
 
             store.reduce({
-                type: 'set_list',
-                list: res.list,
+                type: 'set_user',
+                user: res.user,
             });
 
             return true;

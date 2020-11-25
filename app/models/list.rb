@@ -8,15 +8,9 @@ class List < ApplicationRecord
 		self.index = user.lists.count
 	end
 
-	def to_index_res
+	def to_res
 		{
 			index: self.index,
-			type: self.type.downcase,
-		}
-	end
-
-	def to_show_res
-		{
 			type: self.type.downcase,
 			singular: singular,
 			searchable: self.respond_to?('search'),

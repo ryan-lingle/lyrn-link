@@ -1,21 +1,22 @@
 class Api::V1::ListsController < ApplicationController
+	before_action :set_list, except: [:create]
+
 	def create
 		list = List.create!(list_params)
 		render json: {
-			list: list.to_index_res,
+			user: current_user.to_res
 		}
 	end
 
-	def show
-		list = current_user.lists.find_by(type: params[:type].capitalize)
+	def destroy
+		@list.destroy!
 		render json: {
-			list: list.to_show_res,
+			user: current_user.to_res
 		}
 	end
 
 	def search
-		list = current_user.lists.find_by(type: params[:type].capitalize)
-		results = list.search(params[:term].to_s, offset: params[:offset])
+		results = @list.search(params[:term].to_s, offset: params[:offset])
 		render json: {
 			results: results,
 		}
@@ -28,5 +29,9 @@ class Api::V1::ListsController < ApplicationController
 			rams[:type] = rams[:type].capitalize
 			rams[:user] = current_user
 		end
+	end
+
+	def set_list
+		@list = current_user.lists.find_by(type: params[:type].capitalize)
 	end
 end

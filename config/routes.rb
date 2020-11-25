@@ -17,7 +17,7 @@ Rails.application.routes.draw do
           post 'profile_picture', to: 'users#profile_picture'
         end
       end
-      resources :lists, only: [:create, :show], param: :type do 
+      resources :lists, only: [:create, :destroy], param: :type do 
         member do
           get 'search', to: 'lists#search'
         end
