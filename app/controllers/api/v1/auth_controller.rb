@@ -2,7 +2,12 @@ class Api::V1::AuthController < ApplicationController
 	skip_before_action :authenticate_request
 
 	def request_token
-		callback_url = "http://localhost:3000/twitter/callback"
+		if Rails.env == "development"
+			callback_url = "http://localhost:3000/twitter/callback"
+		else
+			callback_url = "https://lyrn.link/twitter/callback"
+		end
+		
 		res = OauthConsumer.get_request_token(oauth_callback: callback_url)
 		OauthCredential.create!(
 			token: res.token,
