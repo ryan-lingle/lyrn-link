@@ -29,7 +29,7 @@ class Root extends Component {
 
   render() {
     return (
-      <Context.Provider value={{ api, state: this.state }} >
+      <Context.Provider value={{ api, state: this.state, store }} >
         <Router>
           <Switch>
             <Route exact path="/sign_in" component={Login}/>

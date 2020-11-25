@@ -2,15 +2,11 @@ import React, { useEffect, useContext } from 'react';
 import { Form } from '../components';
 import Context from '../context';
 
-const Scraper = () => {
+const Scraper = ({ onSubmit }) => {
     const { api, state } = useContext(Context);
 
     function scrape({ target }) {
         api.scrape(target.value);
-    };
-
-    function onSubmit(params) {
-        api.createItem(state.list.type, params);
     };
 
     const loading = state.loading.scrape;
@@ -21,7 +17,7 @@ const Scraper = () => {
         <div>
             <img src={result.image} width="300px" />
             <Form
-                onSubmit={onSubmit}
+                onSubmit={(params) => onSubmit(params)}
                 submitCopy="Create Item"
                 type="items"
                 inputs={[

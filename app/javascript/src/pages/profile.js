@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
-import { Form, PasswordConditions, ImageEditor } from '../components';
+import { Form, ImageEditor } from '../components';
 import Context from '../context';
 import AvatarEditor from 'react-avatar-editor';
 import { userParams } from '../params';
@@ -42,41 +42,6 @@ const Profile = () => {
                 type="update_user"
                 inputs={userParams(state.user)}
             />
-            <div id="section-header">
-                <div className="section-title">
-                    <i class="far fa-key"></i>
-                    &nbsp;
-                    Change Password</div>
-            </div>
-            <Form
-                onSubmit={changePassword}
-                submitCopy="Update Password"
-                type="update_password"
-            >
-                <div className="col-md-6">
-                    <div className="input-primary">
-                        <label>New Password</label>
-                        <input 
-                            value={password} 
-                            onChange={({ target }) => setPassword(target.value)} 
-                            type="password"
-                        />
-                    </div>
-                </div>
-                <div className="col-md-6">
-                    <div className="input-primary">
-                        <label>Verify Password</label>
-                        <input 
-                            value={passwordCopy} 
-                            onChange={({ target }) => setPasswordCopy(target.value)} 
-                            type="password"
-                        />
-                    </div>
-                </div>
-                <div className="col-md-12">
-                    <PasswordConditions password={password} passwordCopy={passwordCopy} />
-                </div>
-            </Form>
             <div id="section-header">
             <div className="section-title">
                 <i class="far fa-camera-retro"/>

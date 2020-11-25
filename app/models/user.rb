@@ -14,7 +14,7 @@ class User < ApplicationRecord
 	end
 
 	def list_index
-		lists.map { |list| list.to_index_res }
+		lists.map { |list| list.to_res }
 	end
 
 	def uncreated_lists
@@ -46,6 +46,14 @@ class User < ApplicationRecord
 	#     self.profile_picture.variant(resize_to_limit: [100, 100]).processed.service_url if self.profile_picture.attachment
 	# end
 
+	def search_people(term, page: 1)
+		twitter_client.user_search(term, count: 20, page: page).map do |twitter_user|
+			reduce_user(twitter_user)
+		end
+	end
+
+	private
+
 	def twitter_client
 		Twitter::REST::Client.new do |config|
 		  	config.consumer_key        = ENV["TWITTER_KEY"]
@@ -53,5 +61,13 @@ class User < ApplicationRecord
 		  	config.access_token        = self.twitter_token
 		  	config.access_token_secret = self.twitter_secret
 		end
+	end
+
+	def reduce_user(twitter_user)
+		{
+			title: twitter_user.name,
+			url: twitter_user.uri.to_s,
+			image: twitter_user.profile_image_url.to_s.sub('_normal', ''),
+		}
 	end
 end

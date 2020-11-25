@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import Context from '../context';
 import { observer } from '../utils';
 
-const Search = ({ type, singular, children }) => {
+const Search = ({ type, item, children }) => {
     const { api, state } = useContext(Context);
     const [firstLoad, setFirstLoad] = useState(true);
     const [term, setTerm] = useState('');
@@ -42,6 +42,8 @@ const Search = ({ type, singular, children }) => {
 
             if (sb) streamObserver.observe(sb);
 
+            return () => streamObserver.unobserve(sb);
+
         }, [ results.length ]);
 
     return(
@@ -49,7 +51,7 @@ const Search = ({ type, singular, children }) => {
             <div className="input-primary">
                 <input 
                     value={term} 
-                    placeholder={`search for a ${singular}`}
+                    placeholder={`search for a ${item}`}
                     onChange={({ target }) => {
                         setFirstLoad(false);
                         setTerm(target.value);

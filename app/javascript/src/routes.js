@@ -19,7 +19,7 @@ const Routes = () => {
               <ErrorBox error={state.errors.standard} />
               <Switch>
                 <PrivateRoute path="/admin" exact component={Admin} />
-                <PrivateRoute path="/admin/lists/:type" exact component={AdminList} />
+                <PrivateRoute path="/admin/:listType" exact component={Admin} />
                 <PrivateRoute path="/profile" exact component={Profile} />
                 <Route component={_404_} />
               </Switch>
