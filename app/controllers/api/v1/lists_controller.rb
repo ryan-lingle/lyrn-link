@@ -1,5 +1,5 @@
 class Api::V1::ListsController < ApplicationController
-	before_action :set_list, except: [:create]
+	before_action :set_list, except: [:create, :index]
 
 	def create
 		list = List.create!(list_params)
@@ -10,6 +10,21 @@ class Api::V1::ListsController < ApplicationController
 
 	def destroy
 		@list.destroy!
+		current_user.re_index_lists!
+		render json: {
+			user: current_user.to_res
+		}
+	end
+
+	def index
+		current_user.update_list_index!(params[:lists])
+		render json: {
+			user: current_user.to_res
+		}
+	end
+
+	def item_index
+		@list.update_item_index!(params[:items])
 		render json: {
 			user: current_user.to_res
 		}

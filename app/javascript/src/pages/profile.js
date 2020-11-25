@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Form, ImageEditor } from '../components';
 import Context from '../context';
 import AvatarEditor from 'react-avatar-editor';
@@ -10,6 +10,10 @@ const Profile = () => {
     const [password, setPassword] = useState('');
     const [passwordCopy, setPasswordCopy] = useState('');
     const [profilePicture, setProfilePicture] = useState(state.user.profile_picture_url);
+
+    useEffect(() => {
+        api.getUser();
+    }, []);
 
     function updateUser(params) {
         api.updateUser(state.user.id, params);

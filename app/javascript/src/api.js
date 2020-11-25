@@ -192,10 +192,11 @@ class Api {
         });
     }
 
-    getUser = async () => {
+    getUser = async (params) => {
         this.setLoading('user');
 
         const res = await this.get('current_user', {
+            params,
             errorType: 'user',
         });
         
@@ -324,6 +325,75 @@ class Api {
             return false;
 
         }
+    }
+
+    destroyItem = async (type, id) => {
+        const res = await this.get(`lists/${type}/items/${id}`, {
+            method: 'DELETE',
+            errorType: 'items',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_user',
+                user: res.user,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    updateItemIndex = async () => {
+        const list = this.store.currentList();
+        const res = await this.post(`lists/${list.type}/item_index`, {
+            params: { items: list.items },
+            errorType: 'items',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_user',
+                user: res.user,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
+    updateListIndex = async () => {
+        const res = await this.post(`lists/index`, {
+            params: { lists: this.store.state.user.lists },
+            errorType: 'lists',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_user',
+                user: res.user,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
     }
 
     setError = (errorType, error) => {

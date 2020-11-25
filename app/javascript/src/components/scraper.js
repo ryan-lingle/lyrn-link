@@ -3,11 +3,19 @@ import { Form } from '../components';
 import Context from '../context';
 
 const Scraper = ({ onSubmit }) => {
-    const { api, state } = useContext(Context);
+    const { api, state, store } = useContext(Context);
 
     function scrape({ target }) {
         api.scrape(target.value);
     };
+
+    function handleSubmit(params) {
+        onSubmit(params);
+        store.reduce({
+            type: 'scrape',
+            result: {},
+        });
+    }
 
     const loading = state.loading.scrape;
     const error = state.errors.scrape;
@@ -17,7 +25,7 @@ const Scraper = ({ onSubmit }) => {
         <div>
             <img src={result.image} width="300px" />
             <Form
-                onSubmit={(params) => onSubmit(params)}
+                onSubmit={handleSubmit}
                 submitCopy="Create Item"
                 type="items"
                 inputs={[

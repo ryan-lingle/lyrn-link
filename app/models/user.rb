@@ -13,6 +13,21 @@ class User < ApplicationRecord
 		List.where(user_id: self.id).order(index: :asc)
 	end
 
+	def re_index_lists!
+		lists.each_with_index do |list, index|
+			list.index = index
+			list.save
+		end
+	end
+
+	def update_list_index!(lists)
+		lists.each do |list_rams|
+			list = List.find(list_rams[:id])
+			list.index = list_rams[:index]
+			list.save
+		end
+	end
+
 	def list_index
 		lists.map { |list| list.to_res }
 	end

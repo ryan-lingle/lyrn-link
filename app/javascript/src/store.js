@@ -51,9 +51,33 @@ class Store {
                 this.state.listIndex = this.findIndexFromType(event.listType)
             }
             break;
+        case 'swap_lists':
+            let newIndex = this.state.listIndex;
+            if (this.state.listIndex == event.dragIndex) {
+                newIndex = event.hoverIndex;
+            }
+            if (this.state.listIndex == event.hoverIndex) {
+                newIndex = event.dragIndex;
+            }
+            this.state.listIndex = newIndex;
+            const lists = this.state.user.lists;
+            const dragList = lists[event.dragIndex];
+            dragList.index = event.hoverIndex;
+            lists[event.dragIndex] = lists[event.hoverIndex];
+            lists[event.hoverIndex].index = event.dragIndex;
+            lists[event.hoverIndex] = dragList;
+            break;
         case 'add_item':
             this.state.loading.items = false;
             this.currentList().items.push(event.item);
+            break;
+        case 'swap_items':
+            const items = this.currentList().items;
+            const dragItem = items[event.dragIndex];
+            dragItem.index = event.hoverIndex;
+            items[event.dragIndex] = items[event.hoverIndex];
+            items[event.hoverIndex].index = event.dragIndex;
+            items[event.hoverIndex] = dragItem;
             break;
         case 'search_results':
             this.state.loading.search = false;

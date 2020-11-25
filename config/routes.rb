@@ -18,10 +18,14 @@ Rails.application.routes.draw do
         end
       end
       resources :lists, only: [:create, :destroy], param: :type do 
+        collection do
+          post 'index', to: 'lists#index'
+        end
         member do
+          post 'item_index', to: 'lists#item_index'
           get 'search', to: 'lists#search'
         end
-        resources :items, only: [:create]
+        resources :items, only: [:create, :destroy]
       end
       resources :items, only: [] do
         collection do

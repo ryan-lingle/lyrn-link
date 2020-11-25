@@ -4,7 +4,7 @@ import { Form } from '.';
 import Context from '../context';
 
 const NewList = () => {
-    const { state, api } = useContext(Context);
+    const { state, api, store } = useContext(Context);
     const [show, setShow] = useState(false);
     const lists = state.user.uncreated_lists;
 
@@ -20,7 +20,13 @@ const NewList = () => {
 
                 ?   <div className="new-list-menu">
                         {lists.map((list, i) =>
-                            <div key={i} onClick={() => api.createList({ type: list })} >
+                            <div key={i} onClick={async () => {
+                                await api.createList({ type: list });
+                                store.reduce({
+                                    type: 'set_list_index',
+                                    listType: list,
+                                });
+                            }} >
                                 {list.toUpperCase()}
                             </div>
                         )}
