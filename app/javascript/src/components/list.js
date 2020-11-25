@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { ErrorBox, Loader, ListTab, NewList, Search, Scraper, Draggable, ItemCard } from '../components';
 import Context from '../context';
 
@@ -30,12 +30,12 @@ const List = ({ type, singular, searchable, items=[], createItem, destroyItem, r
         </div>
     );
 
-    const moveItem = useCallback((dragIndex, hoverIndex) => {
+    function onMove(dragIndex, hoverIndex) {
         api.store.reduce({
             type: 'swap_items',
             dragIndex, hoverIndex,
         });
-    }, [items]);
+    };
 
 
     return(
@@ -78,7 +78,7 @@ const List = ({ type, singular, searchable, items=[], createItem, destroyItem, r
                     index={item.index}
                     disable={readOnly} 
                     onDrop={() => api.updateItemIndex()} 
-                    onMove={moveItem}
+                    onMove={onMove}
                 >
                     <ItemCard
                         readOnly={readOnly}
