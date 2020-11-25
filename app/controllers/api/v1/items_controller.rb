@@ -1,10 +1,19 @@
 class Api::V1::ItemsController < ApplicationController
+	before_action :set_list, except: [:scrape]
 
 	def create
-		@list = current_user.lists.find_by(type: params[:list_type].capitalize)
 		item = Item.create!(item_params)
 		render json: {
 			item: item.to_index_res,
+		}
+	end
+
+	def destroy
+		item = Item.find(params[:id])
+		item.destroy!
+		@list.re_index_items!
+		render json: {
+			user: current_user.to_res
 		}
 	end
 
@@ -21,6 +30,10 @@ class Api::V1::ItemsController < ApplicationController
 	end
 
 	private
+
+	def set_list
+		@list = current_user.lists.find_by(type: params[:list_type].capitalize)
+	end
 
 	def item_params
 		params.require(:item).permit(:title, :description, :url, :image).tap do |rams|

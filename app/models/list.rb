@@ -8,8 +8,16 @@ class List < ApplicationRecord
 		self.index = user.lists.count
 	end
 
+	def re_index_items!
+		items.each_with_index do |item, index|
+			item.index = index
+			item.save
+		end
+	end
+
 	def to_res
 		{
+			id: self.id,
 			index: self.index,
 			type: self.type.downcase,
 			singular: singular,
@@ -24,5 +32,13 @@ class List < ApplicationRecord
 
 	def item_index
 		items.map { |item| item.to_index_res }
+	end
+
+	def update_item_index!(items)
+		items.each do |item_rams|
+			item = Item.find(item_rams[:id])
+			item.index = item_rams[:index]
+			item.save
+		end
 	end
 end

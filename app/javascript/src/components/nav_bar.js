@@ -6,10 +6,6 @@ const NavBar = ({ location }) => {
     const { api, state } = useContext(Context);
     const [showHam, setShowHam] = useState(false);
 
-    useEffect(() => {
-        api.getUser();
-    }, []);
-
     function current(path, match=null) {
         if (path == '/') {
             return location.pathname ==  path;

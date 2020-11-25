@@ -8,6 +8,7 @@ class Item < ApplicationRecord
 
 	def to_index_res
 		{
+			id: self.id,
 			title: self.title,
 			description: self.description,
 			image: self.image,

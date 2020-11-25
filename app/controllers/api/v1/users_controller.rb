@@ -1,10 +1,23 @@
 class Api::V1::UsersController < ApplicationController
+	skip_before_action :authenticate_request, only: [:show]
 	before_action :set_user, except: [:show]
 
 	def show
-		render json: {
-			user: current_user.to_res 
-		}
+		if params[:username]
+			user = User.find_by(username: params[:username])
+			if !user
+				render json: {}, status: 404
+			else
+				render json: {
+					user: user.to_res
+				}
+			end
+		else
+			authenticate_request
+			render json: {
+				user: current_user.to_res 
+			}
+		end
 	end
 
 	def update

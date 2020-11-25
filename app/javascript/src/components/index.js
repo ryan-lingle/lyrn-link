@@ -17,3 +17,4 @@ export {default as Search} from './search.js';
 export {default as Scraper} from './scraper.js';
 export {default as ItemCard} from './item_card.js';
 export {default as List} from './list.js';
+export {default as Draggable} from './draggable.js';

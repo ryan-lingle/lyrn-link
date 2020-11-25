@@ -1,12 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
-const ListTab = ({ type, onClick, onDestroy, current }) => {
-	const listTab = useRef();
+const ListTab = ({ type, onClick, onDestroy, current, readOnly }) => {
 
 	function destroy(e) {
 		e.stopPropagation();
 		if (window.confirm('Are you sure you want to delete this list?')) {
-			listTab.current.style.display = 'none';
 			onDestroy();
 		};
 	};
@@ -15,11 +13,10 @@ const ListTab = ({ type, onClick, onDestroy, current }) => {
         <div 
             className={`card list-tab ${current ? 'current-list-tab' : ''}`}
             onClick={onClick}
-            ref={listTab}
         >
         	<div className="card-wrapper">
 	            <div>{type.toUpperCase()}</div>
-	            <i className="fa fa-times" onClick={destroy} />
+	            {readOnly ? null : <i className="fa fa-trash" onClick={destroy} />}
 	        </div>
         </div>
     );

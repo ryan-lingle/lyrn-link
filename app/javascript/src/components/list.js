@@ -1,13 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { ErrorBox, Loader, ListTab, NewList, Search, Scraper, ItemCard } from '../components';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
+import { ErrorBox, Loader, ListTab, NewList, Search, Scraper, Draggable, ItemCard } from '../components';
 import Context from '../context';
 
-const List = ({ type, singular, searchable, items=[], createItem }) => {
+const List = ({ type, singular, searchable, items=[], createItem, destroyItem, readOnly }) => {
     const [add, setAdd] = useState(false);
+    const { api } = useContext(Context);
 
     useEffect(() => {
         setAdd(false);
     }, [type]);
+
+    function addBtn() {
+        if (readOnly) {
+            return null;
+        } else {
+            return(
+                <div className="b-copy new-list" style={{ color: add ? 'gray' : '' }} onClick={() => setAdd(prev => !prev)} >
+                    <i className="fas fa-plus-circle"></i>
+                    &nbsp;
+                    New Item
+                </div>
+            );
+        }
+    }
 
     if (!type) return(
         <div className="list">
@@ -15,25 +30,19 @@ const List = ({ type, singular, searchable, items=[], createItem }) => {
         </div>
     );
 
+    const moveItem = useCallback((dragIndex, hoverIndex) => {
+        api.store.reduce({
+            type: 'swap_items',
+            dragIndex, hoverIndex,
+        });
+    }, [items]);
+
+
     return(
         <div className="list" >
             <h1>{type && type.toUpperCase()}</h1>
             <br/>
-            {
-                add
-
-                ?   <div className="b-copy new-list" style={{ color: 'gray' }} onClick={() => setAdd(false)} >
-                        <i className="fas fa-plus-circle"></i>
-                        &nbsp;
-                        New Item
-                    </div>
-
-                :   <div className="b-copy new-list" onClick={() => setAdd(true)} >
-                        <i className="fas fa-plus-circle"></i>
-                        &nbsp;
-                        New Item
-                    </div>
-            }
+            {addBtn()}
             {   
                 add
 
@@ -61,7 +70,23 @@ const List = ({ type, singular, searchable, items=[], createItem }) => {
 
                 :   null
             }
-            {items.map((item, i) => <ItemCard key={i} {...item} />)}
+            {items.map((item, i) => 
+                <Draggable 
+                    key={i} 
+                    type="item"
+                    id={item.id}
+                    index={item.index}
+                    disable={readOnly} 
+                    onDrop={() => api.updateItemIndex()} 
+                    onMove={moveItem}
+                >
+                    <ItemCard
+                        readOnly={readOnly}
+                        onDestroy={() => destroyItem(type, item.id)}
+                        {...item} 
+                    />
+                </Draggable>
+            )}
         </div>
     );
 }
