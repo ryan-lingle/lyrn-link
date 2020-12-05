@@ -33,15 +33,25 @@
 	cursor: pointer;
 }
 
+#list-tabs {
+	margin: 20px auto;
+}
+
 .list-tab {
 	width: 100%;
-	margin: 20px 10px;
-	background: $orange;
-	color: white;
-	text-align: center;
-	max-width: 300px;
+	color: $grey;
+	padding-right: 15px;
+}
+
+.list-tab:hover {
+	cursor: pointer;
 }
 
 .current-list-tab {
-	background: $navy !important;
+	color: $very-dark-grey;
+}
+
+
+.list-desc {
+	color: $very-dark-grey;
 }

@@ -11,13 +11,13 @@ const ListTab = ({ type, onClick, onDestroy, current, readOnly }) => {
 
     return(
         <div 
-            className={`card list-tab ${current ? 'current-list-tab' : ''}`}
+            className={`list-tab flex-between ${current ? 'current-list-tab' : ''}`}
             onClick={onClick}
         >
-        	<div className="card-wrapper">
+        	<div className="big-heading">
 	            <div>{type.toUpperCase()}</div>
-	            {readOnly ? null : <i className="fa fa-trash" onClick={destroy} />}
 	        </div>
+	        {/*readOnly ? null : <i className="fa fa-trash" onClick={destroy} />*/}
         </div>
     );
 };

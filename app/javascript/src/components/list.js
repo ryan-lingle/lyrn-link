@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { ErrorBox, Loader, ListTab, NewList, Search, Scraper, Draggable, ItemCard } from '../components';
 import Context from '../context';
 
-const List = ({ type, singular, searchable, items=[], createItem, destroyItem, readOnly }) => {
+const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, readOnly }) => {
     const [add, setAdd] = useState(false);
     const { api } = useContext(Context);
 
@@ -40,8 +40,12 @@ const List = ({ type, singular, searchable, items=[], createItem, destroyItem, r
 
     return(
         <div className="list" >
-            <h1>{type && type.toUpperCase()}</h1>
-            <br/>
+            <div className="flex">
+                <i className={icon} style={{fontSize: '14px', marginRight: '10px'}} />
+                <div className="little-heading list-desc">
+                    The top {items.length} {type.toLowerCase()} I am learning from.
+                </div>
+            </div>
             {addBtn()}
             {   
                 add

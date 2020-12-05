@@ -46,8 +46,70 @@ p {
 	margin: auto;
 }
 
-a {
-	color: $orange;
+.huge-heading {
+	font-family: Raleway;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 28px;
+}
+
+.big-heading {
+	font-family: Raleway;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 22px;
+	line-height: 26px;
+}
+
+.main-heading {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 25px;
+}
+
+.little-heading {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 150%;
+}
+
+.big-body {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 19px;
+}
+
+.main-body {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 150%;
+}
+
+.little-body {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 10px;
+	line-height: 14px;
+}
+
+.little-strong-body {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 10px;
+	line-height: 14px;
+	color: $dark-grey;
+
 }
 
 .b-copy {
@@ -100,6 +162,21 @@ a {
 	pointer-events: auto;
 }
 
+.flex {
+	display: flex;
+	align-items: center;
+}
+
+.flex-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.flex-grow {
+	flex-grow: 1;
+}
+
 .tippy-popper {
 	max-width: 260px;
 	background: $orange;
@@ -112,4 +189,13 @@ a {
 	font-weight: normal;
 	padding: 5px 10px;
 	margin: 5px;
+}
+
+.draggable {
+    cursor: move;
+    cursor: grab;
+}
+
+.draggable:active {
+    cursor: grabbing;
 }

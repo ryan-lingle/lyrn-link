@@ -1,9 +1,6 @@
 import React from 'react';
 
-const ItemCard = ({ id, index, title, image, url, readOnly, onDestroy }) => {
-    function go() {
-        if (url) window.open(url, '_blank');
-    };
+const ItemCard = ({ id, index, title, subtitle, image, url, url_copy, creator, readOnly, onDestroy }) => {
 
     function destroy(e) {
         e.stopPropagation();
@@ -13,14 +10,22 @@ const ItemCard = ({ id, index, title, image, url, readOnly, onDestroy }) => {
     };
 
     return(
-        <div className="card item-card" id="drag-item" onClick={go} >
-            <div className="card-wrapper">
-                <img src={image} width="70px" />   
-                <div className="card-wrapper">
-                    <div className="b-copy">{title}</div>
-                    {readOnly ? null : <i className="fa fa-trash" style={{marginLeft: '10px', color: 'red'}} onClick={destroy} />}
-                </div>
+        <div className="item-card flex-between draggable" >
+            <div className="item-rank">
+                {index + 1}
             </div>
+            <div style={{minWidth: '60px'}} >
+                <img src={image} className="item-image" /> 
+            </div>  
+            <div className="flex-grow">
+                <div className="item-title">
+                    {title}
+                    {subtitle ? ' - ' : ''}
+                    {subtitle}
+                </div>
+                <a className="little-heading item-creator" href={url} target="_blank" >{creator || url_copy || url}</a>
+            </div>
+            {readOnly ? null : <i className="fal fa-times" style={{marginLeft: '10px'}} onClick={destroy} />}
         </div>
     );
 };

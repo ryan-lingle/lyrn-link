@@ -22,6 +22,7 @@ class List < ApplicationRecord
 			type: self.type.downcase,
 			singular: singular,
 			searchable: self.respond_to?('search'),
+			icon: icon,
 			items: item_index,
 		}
 	end

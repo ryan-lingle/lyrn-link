@@ -14,7 +14,6 @@ const Routes = () => {
 
     return(
       <div>
-          <Route exact component={NavBar} />
           <div className="container">
               <ErrorBox error={state.errors.standard} />
               <Switch>

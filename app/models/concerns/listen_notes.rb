@@ -19,9 +19,15 @@ class ListenNotes
 		{
 			title: episode["title_original"],
 			description: episode["description_original"],
-			itunes_id: episode["itunes_id"],
+			uid: episode["itunes_id"],
 			image: episode["image"],
-			podcast_title: episode["podcast"]["title_original"],
+			creator: episode["podcast"]["title_original"],
+			publish_date: parse_date(episode["pub_date_ms"]),
 		}
+	end
+
+	def self.parse_date(ms)
+		sec = (ms.to_f / 1000).to_s
+		Date.strptime(sec, '%s')
 	end
 end

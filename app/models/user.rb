@@ -9,6 +9,14 @@ class User < ApplicationRecord
 	has_many :lists, dependent: :destroy
 	has_many :password_resets, dependent: :destroy
 
+	before_create :add_name_and_description
+	before_update :add_name_and_description
+
+	def add_name_and_description
+		self.name = twitter_client.user.name if !self.name
+		self.description = twitter_client.user.description if !self.description
+	end
+
 	def lists
 		List.where(user_id: self.id).order(index: :asc)
 	end
@@ -45,7 +53,9 @@ class User < ApplicationRecord
 	def to_res
 		{
 			id: self.id,
-			username: self.username,
+			name: self.name,
+			handle: self.handle,
+			description: self.description,
 			email: self.email,
 			profile_picture_url: profile_picture_url,
 			lists: list_index,
@@ -67,8 +77,6 @@ class User < ApplicationRecord
 		end
 	end
 
-	private
-
 	def twitter_client
 		Twitter::REST::Client.new do |config|
 		  	config.consumer_key        = ENV["TWITTER_KEY"]
@@ -80,9 +88,12 @@ class User < ApplicationRecord
 
 	def reduce_user(twitter_user)
 		{
+			uid: twitter_user.id.to_s,
 			title: twitter_user.name,
+			url_copy: '@' + twitter_user.screen_name,
 			url: twitter_user.uri.to_s,
 			image: twitter_user.profile_image_url.to_s.sub('_normal', ''),
+			description: twitter_user.description,
 		}
 	end
 end

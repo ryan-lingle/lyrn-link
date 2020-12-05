@@ -5,11 +5,11 @@ import NewList from './new_list';
 import Draggable from './draggable';
 
 const ListTabs = ({ pathname="/admin/", readOnly }) => {
-    const { state, store, api } = useContext(Context);
+    const { state, api } = useContext(Context);
 
     function listCallback(list) {
         return async function() {
-            store.reduce({
+            api.store.reduce({
                 type: 'set_list_index',
                 index: list.index,
             });
@@ -24,7 +24,7 @@ const ListTabs = ({ pathname="/admin/", readOnly }) => {
         });
     }
     return(
-        <div className="card-wrapper new-list">
+        <div className="flex" id="list-tabs">
             {state.user.lists.map((list, i) =>
                 <Draggable 
                     key={i} 

@@ -31,14 +31,14 @@ class Root extends Component {
 
   render() {
     return (
-      <Context.Provider value={{ api, state: this.state, store }} >
+      <Context.Provider value={{ api, state: this.state }} >
         <DndProvider backend={HTML5Backend}>
           <Router>
             <Switch>
               <Route exact path="/sign_in" component={Login}/>
               <Route exact path="/twitter/callback" component={TwitterCallback} />
-              <Route exact path="/u/:username/" component={List} />
-              <Route exact path="/u/:username/:listType" component={List} />
+              <Route exact path="/u/:handle/" component={List} />
+              <Route exact path="/u/:handle/:listType" component={List} />
               <Route component={Routes}/>
             </Switch>
           </Router>
