@@ -197,6 +197,7 @@ class Api {
 
         const res = await this.get('current_user', {
             params,
+            checkRefresh: params && params.handle ? false : true,
             errorType: 'user',
         });
         

@@ -17,7 +17,7 @@ const ListTab = ({ type, onClick, onDestroy, current, readOnly }) => {
         	<div className="big-heading">
 	            <div>{type.toUpperCase()}</div>
 	        </div>
-	        {/*readOnly ? null : <i className="fa fa-trash" onClick={destroy} />*/}
+	        {readOnly ? null : <i className="fas fa-times-circle delete-list" onClick={destroy} />}
         </div>
     );
 };

@@ -24,11 +24,19 @@ class Api::V1::AuthController < ApplicationController
 	    res = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
 	    id = res.params[:user_id]
 	    handle = res.params[:screen_name]
-	    @user = User.find_or_create_by(twitter_id: id)
-	    @user.twitter_token = res.token
-	    @user.twitter_secret = res.secret
-	    @user.handle = handle if !@user.handle
-	    @user.save!
+	    @user = User.find_by(twitter_id: id)
+	    if !@user
+	    	@user = User.create!(
+	    		twitter_id: id,
+	    		twitter_token: res.token,
+	    		twitter_secret: res.secret,
+	    		handle: handle,
+	    	)
+	    else
+	    	@user.twitter_token = res.token
+	    	@user.twitter_secret = res.secret
+	    	@user.save!
+	    end
 	    render json: {
 	    	auth_token: new_jwt,
 	    	user: @user.to_res

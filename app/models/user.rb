@@ -1,20 +1,26 @@
 class User < ApplicationRecord
-	include ActiveStorageSupport::SupportForBase64
-	has_one_base64_attached :profile_picture
+	# include ActiveStorageSupport::SupportForBase64
+	# has_one_base64_attached :profile_picture
 
 	# TODO: HANDLE USER VALIDATIONS
 	# validates :username, :email, :password_digest, presence: true
 	# validates :username, :email, uniqueness: true
 
 	has_many :lists, dependent: :destroy
-	has_many :password_resets, dependent: :destroy
 
 	before_create :add_name_and_description
 	before_update :add_name_and_description
 
+	before_create :add_profile_picture_url
+	before_update :add_profile_picture_url
+
 	def add_name_and_description
 		self.name = twitter_client.user.name if !self.name
 		self.description = twitter_client.user.description if !self.description
+	end
+
+	def add_profile_picture_url
+		self.profile_picture_url = twitter_client.user.profile_image_url.to_s.sub('_normal', '') if !self.profile_picture_url
 	end
 
 	def lists
@@ -57,19 +63,12 @@ class User < ApplicationRecord
 			handle: self.handle,
 			description: self.description,
 			email: self.email,
-			profile_picture_url: profile_picture_url,
+			profile_picture_url: self.profile_picture_url,
 			lists: list_index,
 			uncreated_lists: uncreated_lists,
 		}
 	end
 
-	def profile_picture_url
-		twitter_client.user.profile_image_url.to_s.sub('_normal', '')
-	end
-
-	# def profile_picture_url
-	#     self.profile_picture.variant(resize_to_limit: [100, 100]).processed.service_url if self.profile_picture.attachment
-	# end
 
 	def search_people(term, page: 1)
 		twitter_client.user_search(term, count: 20, page: page).map do |twitter_user|

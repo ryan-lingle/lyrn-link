@@ -11,9 +11,8 @@ const NewList = () => {
     if (lists && lists.length === 0) return <div></div>;
 
     return(
-        <div className="b-copy new-list" onClick={() => setShow(prev => !prev)} >
-            <i className="fas fa-plus-circle"></i>
-            &nbsp;
+        <div className="big-heading new-list" onClick={() => setShow(prev => !prev)} >
+            <i className="fas fa-plus-circle" style={{marginRight: '5px'}} />
             New List
             {
                 show

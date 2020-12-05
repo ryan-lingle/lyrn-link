@@ -35,6 +35,7 @@ class Root extends Component {
         <DndProvider backend={HTML5Backend}>
           <Router>
             <Switch>
+              <Route exact path="/" component={Login}/>
               <Route exact path="/sign_in" component={Login}/>
               <Route exact path="/twitter/callback" component={TwitterCallback} />
               <Route exact path="/u/:handle/" component={List} />

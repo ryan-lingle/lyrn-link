@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { ErrorBox, Loader, ListTab, NewList, Search, Scraper, Draggable, ItemCard } from '../components';
+import { ErrorBox, Loader, ListTab, Search, Scraper, Draggable, ItemCard } from '../components';
 import Context from '../context';
 
 const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, readOnly }) => {
@@ -15,9 +15,8 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return null;
         } else {
             return(
-                <div className="b-copy new-list" style={{ color: add ? 'gray' : '' }} onClick={() => setAdd(prev => !prev)} >
-                    <i className="fas fa-plus-circle"></i>
-                    &nbsp;
+                <div className="big-heading new-item" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
+                    <i className="fas fa-plus-circle" style={{marginRight: '5px'}} />
                     New Item
                 </div>
             );
@@ -25,9 +24,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     }
 
     if (!type) return(
-        <div className="list">
-            <h1>No List ¯\_(ツ)_/¯</h1>
-        </div>
+        <div className="big-heading no-list" style={{marginTop: '40px'}} >No Lists Yet ¯\_(ツ)_/¯</div>
     );
 
     function onMove(dragIndex, hoverIndex) {
@@ -55,13 +52,16 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
                     ?   <Search type={type} item={singular} >
                             {(result, clearResults) =>
-                                <div className="search-result" onClick={() => {
+                                <div onClick={() => {
                                     createItem(type, result);
                                     setAdd(false);
                                     clearResults();
                                 }} >
-                                    <img src={result.image} width="70px" />
-                                    <div>{result.title}</div>
+                                    <ItemCard
+                                        readOnly={true}
+                                        rank={false}
+                                        {...result}
+                                    />
                                 </div>
                             }
                         </Search>
@@ -74,6 +74,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
                 :   null
             }
+            <div style={{marginTop: '20px'}}></div>
             {items.map((item, i) => 
                 <Draggable 
                     key={i} 
