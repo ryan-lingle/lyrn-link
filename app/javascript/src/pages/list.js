@@ -1,16 +1,16 @@
 import React, { useEffect, useContext } from 'react';
-import { ErrorBox, Loader, ListTabs, List } from '../components';
+import { ErrorBox, Loader, ListTabs, List, UserProfile } from '../components';
 import Context from '../context';
 
 const AdminList = ({ match }) => {
-    const { api, state, store } = useContext(Context);
+    const { api, state } = useContext(Context);
 
     useEffect(() => {
         console.log('hi');
         (async function() {
-            await api.getUser({ username: match.params.username });
+            await api.getUser({ handle: match.params.handle });
             if (match.params.listType) {
-                store.reduce({
+                api.store.reduce({
                     type: 'set_list_index',
                     listType: match.params.listType,
                 });
@@ -24,15 +24,15 @@ const AdminList = ({ match }) => {
     if (loading) return <Loader />;
     if (error) return <ErrorBox error={error} />;
 
-    const currentList = store.currentList();
+    const currentList = api.store.currentList();
 
     return(
         <div className="container">
             <div id="dashboard">
-                <br/>
+                <UserProfile readOnly={true} />
                 <ListTabs 
                     readOnly={true} 
-                    pathname={`/u/${match.params.username}/`} 
+                    pathname={`/u/${match.params.handle}/`} 
                 />
                 <List 
                     {...currentList} 

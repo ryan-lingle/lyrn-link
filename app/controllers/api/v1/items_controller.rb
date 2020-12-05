@@ -36,7 +36,7 @@ class Api::V1::ItemsController < ApplicationController
 	end
 
 	def item_params
-		params.require(:item).permit(:title, :description, :url, :image).tap do |rams|
+		params.require(:item).permit(:uid, :title, :description, :url, :url_copy, :subtitle, :image, :creator, :subtitle, :publish_date, :categories).tap do |rams|
 			rams[:list] = @list
 		end
 	end

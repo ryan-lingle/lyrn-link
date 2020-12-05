@@ -7,4 +7,8 @@ class People < List
 		page = (offset.to_i / 20) + 1
 		user.search_people(term, page: page)
 	end
+
+	def icon
+		"fal fa-at"
+	end
 end

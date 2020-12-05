@@ -23,13 +23,12 @@ class Api::V1::AuthController < ApplicationController
 	    request_token  = OAuth::RequestToken.from_hash(OauthConsumer, creds.to_hash)
 	    res = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
 	    id = res.params[:user_id]
-	    username = res.params[:screen_name]
+	    handle = res.params[:screen_name]
 	    @user = User.find_or_create_by(twitter_id: id)
-	    @user.update!(
-	    	username: username,
-	    	twitter_token: res.token,
-	    	twitter_secret: res.secret,
-	    )
+	    @user.twitter_token = res.token
+	    @user.twitter_secret = res.secret
+	    @user.handle = handle if !@user.handle
+	    @user.save!
 	    render json: {
 	    	auth_token: new_jwt,
 	    	user: @user.to_res

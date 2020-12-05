@@ -6,4 +6,8 @@ class Podcasts < List
 	def search(term, offset: 0)
 		ListenNotes.search(term, offset: offset)
 	end
+
+	def icon
+		"fal fa-podcast"
+	end
 end

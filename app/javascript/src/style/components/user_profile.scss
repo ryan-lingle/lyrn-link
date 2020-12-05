@@ -1,0 +1,30 @@
+#user-profile {
+	margin: 40px auto 20px auto;
+	max-width: 800px;
+}
+
+#user-profile-picture {
+	width: 80px;
+	height: 80px;
+	border-radius: 3px;
+	margin-right: 10px;
+}
+
+.user-link-icon {
+	margin-left: 30px;
+	color: $dark-grey;
+	font-size: 12px;
+} 
+
+.user-handle {
+	margin: 5px 0px;
+}
+
+.user-handle .little-heading {
+	color: $dark-grey !important;
+}
+
+.user-handle:hover {
+	cursor: pointer;
+	text-decoration: none !important;
+}

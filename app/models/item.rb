@@ -10,10 +10,13 @@ class Item < ApplicationRecord
 		{
 			id: self.id,
 			title: self.title,
+			subtitle: self.subtitle,
 			description: self.description,
 			image: self.image,
 			url: self.url,
+			url_copy: self.url_copy, 
 			index: self.index,
+			creator: self.creator,
 		}
 	end
 end

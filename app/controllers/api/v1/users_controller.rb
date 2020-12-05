@@ -3,8 +3,8 @@ class Api::V1::UsersController < ApplicationController
 	before_action :set_user, except: [:show]
 
 	def show
-		if params[:username]
-			user = User.find_by(username: params[:username])
+		if params[:handle]
+			user = User.find_by(handle: params[:handle])
 			if !user
 				render json: {}, status: 404
 			else
@@ -47,7 +47,7 @@ class Api::V1::UsersController < ApplicationController
 	private
 
 	def user_params
-		params.require(:user).permit(:email, :password, :username)
+		params.require(:user).permit(:email, :name, :handle, :description)
 	end
 
 	def set_user

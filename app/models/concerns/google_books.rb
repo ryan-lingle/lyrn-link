@@ -13,12 +13,23 @@ class GoogleBooks
 		if book && book["volumeInfo"] && book["volumeInfo"]["imageLinks"]
 			{
 				title: book["volumeInfo"]["title"],
-				# isbn13: book["volumeInfo"]["industryIdentifiers"]["isbn13"],
+				subtitle: book["volumeInfo"]["subtitle"],
+				description: book["volumeInfo"]["description"],
+				publish_date: book["volumeInfo"]["publishedDate"],
+				uid: find_isbn13(book["volumeInfo"]["industryIdentifiers"]),
 				image: book["volumeInfo"]["imageLinks"]["thumbnail"],
-				authors: book["volumeInfo"]["authors"],
+				creator: book["volumeInfo"]["authors"]&.join(' & '),
+				categories: book["volumeInfo"]["categories"],
 			}
 		else
 			nil
 		end
+	end
+
+	def self.find_isbn13(industry_ids=[])
+		h = (industry_ids || []).find do |h|
+			h["type"] == "ISBN_13"
+		end
+		h && h["identifier"]
 	end
 end

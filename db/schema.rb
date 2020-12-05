@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_24_150612) do
+ActiveRecord::Schema.define(version: 2020_12_04_191601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -43,10 +43,15 @@ ActiveRecord::Schema.define(version: 2020_11_24_150612) do
     t.string "url"
     t.integer "index"
     t.string "image"
-    t.text "authors"
+    t.text "creator"
     t.uuid "list_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "subtitle"
+    t.string "url_copy"
+    t.string "uid"
+    t.text "categories"
+    t.date "publish_date"
     t.index ["list_id"], name: "index_items_on_list_id"
   end
 
@@ -68,7 +73,7 @@ ActiveRecord::Schema.define(version: 2020_11_24_150612) do
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email"
-    t.string "username"
+    t.string "handle"
     t.string "password_digest"
     t.boolean "email_confirmed", default: false
     t.string "type"
@@ -77,6 +82,8 @@ ActiveRecord::Schema.define(version: 2020_11_24_150612) do
     t.string "twitter_token"
     t.string "twitter_secret"
     t.string "twitter_id"
+    t.string "name"
+    t.string "description"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

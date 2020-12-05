@@ -1,15 +1,15 @@
 import React, { useEffect, useContext } from 'react';
-import { ErrorBox, Loader, ListTabs, List } from '../components';
+import { ErrorBox, Loader, ListTabs, List, UserProfile } from '../components';
 import Context from '../context';
 
 const AdminList = ({ match }) => {
-    const { api, state, store } = useContext(Context);
+    const { api, state } = useContext(Context);
 
     useEffect(() => {
         (async function() {
             await api.getUser();
             if (match.params.listType) {
-                store.reduce({
+                api.store.reduce({
                     type: 'set_list_index',
                     listType: match.params.listType,
                 });
@@ -23,11 +23,11 @@ const AdminList = ({ match }) => {
     if (loading) return <Loader />;
     if (error) return <ErrorBox error={error} />;
 
-    const currentList = store.currentList();
+    const currentList = api.store.currentList();
 
     return(
         <div id="dashboard">
-            <br/>
+            <UserProfile />
             <ListTabs />
             <List 
                 {...currentList} 
