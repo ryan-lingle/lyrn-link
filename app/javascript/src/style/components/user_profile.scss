@@ -22,9 +22,44 @@
 
 .user-handle .little-heading {
 	color: $dark-grey !important;
+	padding-right: 17px;
 }
 
 .user-handle:hover {
 	cursor: pointer;
 	text-decoration: none !important;
 }
+
+.editable {
+	position: relative;
+}
+
+.editable:hover {
+	cursor: pointer;
+	.edit-pencil {
+		display: block;
+	}
+}
+
+.edit-pencil {
+	font-size: 12px;
+	position: absolute;
+	top: 0px;
+	right: 2px;
+	display: none;
+}
+
+.edit-input input {
+	background: $white;
+	border: 1px solid darken($white, 5%);
+	box-sizing: border-box;
+	border-radius: 8px;
+}
+
+.edit-input textarea {
+	background: $white;
+	border: 1px solid darken($white, 5%);
+	box-sizing: border-box;
+	border-radius: 8px;
+}
+

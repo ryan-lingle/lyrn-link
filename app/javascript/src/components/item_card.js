@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ItemCard = ({ id, index, title, subtitle, image, url, url_copy, creator, readOnly, onDestroy }) => {
+const ItemCard = ({ rank=true, id, index, title, subtitle, image, url, url_copy, creator, readOnly, onDestroy }) => {
 
     function destroy(e) {
         e.stopPropagation();
@@ -10,10 +10,16 @@ const ItemCard = ({ id, index, title, subtitle, image, url, url_copy, creator, r
     };
 
     return(
-        <div className="item-card flex-between draggable" >
-            <div className="item-rank">
-                {index + 1}
-            </div>
+        <div className={`item-card flex-between ${readOnly ? '' : 'draggable'}`}>
+            {
+                rank
+
+                ?   <div className="item-rank">
+                        {index + 1}
+                    </div>
+
+                :   null
+            }
             <div style={{minWidth: '60px'}} >
                 <img src={image} className="item-image" /> 
             </div>  
@@ -23,9 +29,15 @@ const ItemCard = ({ id, index, title, subtitle, image, url, url_copy, creator, r
                     {subtitle ? ' - ' : ''}
                     {subtitle}
                 </div>
-                <a className="little-heading item-creator" href={url} target="_blank" >{creator || url_copy || url}</a>
+                <a 
+                    className={`little-heading item-creator ${!creator ? '' : 'no-decoration'}`}
+                    href={url} 
+                    target="_blank" 
+                >
+                    {creator || url_copy || url}
+                </a>
             </div>
-            {readOnly ? null : <i className="fal fa-times" style={{marginLeft: '10px'}} onClick={destroy} />}
+            {readOnly ? null : <i className="fal fa-times-circle delete-item" onClick={destroy} />}
         </div>
     );
 };

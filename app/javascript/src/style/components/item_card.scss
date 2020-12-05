@@ -41,9 +41,23 @@
 
 .item-creator:hover {
 	color: $dark-grey !important;
+}
+
+.no-decoration:hover {
 	text-decoration: none !important;
 }
 
 .item-subtitle {
 	font-weight: normal;
 }
+
+.delete-item {
+	margin-left: 10px;
+}
+
+.delete-item:hover {
+	color: #b30000;
+	cursor: pointer;
+}
+
+

@@ -9,14 +9,8 @@
     width: 100%;
 }
 
-.search-result {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 20px;
-}
 
-.search-result:hover {
+.search-results div:hover {
 	background: #f1f2f4;
 	cursor: pointer;
 }

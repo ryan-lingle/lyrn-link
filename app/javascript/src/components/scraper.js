@@ -3,7 +3,7 @@ import { Form } from '../components';
 import Context from '../context';
 
 const Scraper = ({ onSubmit }) => {
-    const { api, state, store } = useContext(Context);
+    const { api, state } = useContext(Context);
 
     function scrape({ target }) {
         api.scrape(target.value);
@@ -11,11 +11,20 @@ const Scraper = ({ onSubmit }) => {
 
     function handleSubmit(params) {
         onSubmit(params);
-        store.reduce({
+        api.store.reduce({
             type: 'scrape',
             result: {},
         });
     }
+
+    useEffect(() => {
+        return () => {
+            api.store.reduce({
+                type: 'scrape',
+                result: {},
+            });
+        };
+    }, [])
 
     const loading = state.loading.scrape;
     const error = state.errors.scrape;
@@ -42,9 +51,8 @@ const Scraper = ({ onSubmit }) => {
                         defaultValue: result.title,
                     },
                     {
-                        label: 'Description',
                         key: 'description',
-                        type: 'textarea',
+                        type: 'hidden',
                         defaultValue: result.description,
                     },
                     {
