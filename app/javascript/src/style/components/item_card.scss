@@ -1,46 +1,38 @@
 .item-card {
-	background: white;
+	background: lighten($grey1,3%);
 	padding: 10px 20px;
-	border-radius: 3px;	
+	border-radius: 8px;	
 	margin-top: 15px;
-
 }
 
-.item-rank {
-	color: $light-grey;
-	font-family: Raleway;
-	font-style: normal;
-	font-weight: 300;
-	font-size: 24px;
-	line-height: 28px;
-	display: flex;
-	align-items: center;
-	padding-bottom: 20px;
-	width: 35px;
+.item-box {
+	width: 60px;
+	height: 60px;
+	margin-right: 20px;
+	@media only screen and (max-width: 600px)  {
+		height: 40px;
+		width: 40px;
+		margin-right: 10px;
+	}
 }
 
 .item-image {
+	width: 60px;
 	height: 60px;
-	max-width: 120px;
-	border-radius: 3px;
-	margin-right: 20px;
-}
-
-.item-title {
-	font-family: Open Sans;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 18px;
-	line-height: 25px;
-	color: #333333;
+	border-radius: 8px;
+	object-fit: cover;
+	@media only screen and (max-width: 600px)  {
+		height: 40px;
+		width: 40px;
+	}
 }
 
 .item-creator {
-	color: $dark-grey;
+	color: $grey5;
 }
 
 .item-creator:hover {
-	color: $dark-grey !important;
+	color: $grey5 !important;
 }
 
 .no-decoration:hover {

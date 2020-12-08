@@ -5,28 +5,15 @@
 footer {
 	text-align: center;
     width: 100%;
-    margin: 40px auto 0px auto;
-    padding-bottom: 20px;
+    margin: 10px auto 0px auto;
 }
 
 #footer-top {
-	font-family: Sen;
-	font-style: normal;
-	font-weight: bold;
-	font-size: small;
-	line-height: 120%;
-	text-align: center;
-	letter-spacing: 0.06em;
-	color: #374958;
-}
-
-#footer-bottom {
-	font-family: Sen;
+	font-family: Raleway;
 	font-style: normal;
 	font-weight: normal;
 	font-size: small;
 	line-height: 120%;
 	text-align: center;
-	letter-spacing: 0.06em;
-	color: #374958;
+	color: $grey3;
 }

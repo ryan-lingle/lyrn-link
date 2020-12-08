@@ -14,23 +14,23 @@ const ItemCard = ({ rank=true, id, index, title, subtitle, image, url, url_copy,
             {
                 rank
 
-                ?   <div className="item-rank">
+                ?   <div className="h h-rank">
                         {index + 1}
                     </div>
 
                 :   null
             }
-            <div style={{minWidth: '60px'}} >
-                <img src={image} className="item-image" /> 
-            </div>  
+            <div className="item-box">
+                <img src={image} className="item-image" />
+            </div>
             <div className="flex-grow">
-                <div className="item-title">
+                <div className="h h-itemtitle">
                     {title}
                     {subtitle ? ' - ' : ''}
                     {subtitle}
                 </div>
                 <a 
-                    className={`little-heading item-creator ${!creator ? '' : 'no-decoration'}`}
+                    className={`b b-creator ${!creator ? '' : 'no-decoration'}`}
                     href={url} 
                     target="_blank" 
                 >
