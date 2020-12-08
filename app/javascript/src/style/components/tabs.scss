@@ -3,7 +3,7 @@
 	align-items: center;
 	margin: 0px 0px 30px 0px;
 	padding-bottom: 10px;
-	border-bottom: lighten($navy, 60%) 2px solid;
+	border-bottom: lighten($blue, 60%) 2px solid;
 }
 
 .tab {
@@ -11,21 +11,21 @@
 	font-style: normal;
 	font-weight: normal;
 	font-size: medium;
-	color: $navy;
+	color: $blue;
 	margin-right: 20px;
 }
 
 .tab:hover {
 	cursor: pointer;
-	color: $orange;
+	color: $red;
 }
 
 .current-tab {
-	color: $orange;
+	color: $red;
 	font-weight: bolder;
 }
 
 .current-tab:hover {
-	color: $orange;
+	color: $red;
 	font-weight: bolder;
 }

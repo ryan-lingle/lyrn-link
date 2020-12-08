@@ -26,7 +26,7 @@ const UserProfile = ({ readOnly }) => {
 				<div className={isLoggedIn ? 'flex-grow' : ''} >
 					<Editable
 						readOnly={readOnly}
-						className="big-heading"
+						className="h h-name"
 						value={state.user.name}
 						onUpdate={updateName}
 					/>
@@ -34,7 +34,7 @@ const UserProfile = ({ readOnly }) => {
 						/
 						<Editable
 							readOnly={readOnly}
-							className="little-heading"
+							className="h h-handle"
 							value={state.user.handle}
 							onUpdate={updateHandle}
 						/>
@@ -48,8 +48,8 @@ const UserProfile = ({ readOnly }) => {
 								</a>
 						}
 					</div>
-					<div className="little-strong-body">
-						Sharing since December 2020
+					<div className="b b-since">
+						Sharing since December '20
 					</div>
 				</div>
 				{
@@ -63,10 +63,9 @@ const UserProfile = ({ readOnly }) => {
 				}
 				
 			</div>
-			<div style={{marginTop: '10px'}}></div>
 			<Editable
 				readOnly={readOnly}
-				className="main-body"
+				className="b b-description"
 				value={state.user.description}
 				onUpdate={updateDescription}
 				textArea={true}

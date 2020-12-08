@@ -6,7 +6,7 @@ const Submit = ({ copy, loading, style }) => {
 
     return(
         <input
-            className="btn-navy"
+            className="btn"
             type="submit"
             value={copy}
             style={style}
