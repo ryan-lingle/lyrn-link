@@ -18,7 +18,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return(
                 <div className="btn-item" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
                     <i className="far fa-plus-circle" style={{marginRight: '5px'}} />
-                    {capitalize(type)}
+                    {capitalize(singular)}
                 </div>
             );
         }
@@ -38,7 +38,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
     return(
         <div id="listy" >
-            <div id="list-section">
+            <div className="flex-between">
                 <div className="main-heading">
                     <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
                     <b>My Top {items.length} {capitalize(type)}</b>

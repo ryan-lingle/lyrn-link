@@ -1,17 +1,4 @@
-
-
-#list-section {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-
 // list tabs
-
-#list-tabs {
-	display: flex;
-}
 
 .list-tab {
 	width: 100%;
@@ -52,7 +39,6 @@
 }
 
 .new-list {
-	color: $grey5;
 	position: relative;
 }
 
@@ -77,12 +63,12 @@
 .new-list-menu {
 	position: absolute;
 	margin: 0;
-	width: 120px;
-	z-index: 100;
+	width: 90px;
+	z-index: 120;
+	right: 0px;
 	background: $white;
     box-shadow: 0px 0px 8px rgba(58, 58, 68, 0.1), 0px 0px 16px rgba(90, 91, 106, 0.1);
     border-radius: 5px;
-    text-align: right;
 }
 
 .new-list-menu div {
@@ -92,6 +78,8 @@
     font-weight: bold;
     font-size: small;
     color: $black !important;
+    text-align: right;
+    border-radius: 3px;
 }
 
 .new-list-menu div:hover {
