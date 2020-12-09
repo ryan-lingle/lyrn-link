@@ -18,7 +18,7 @@ class Api::V1::ItemsController < ApplicationController
 	end
 
 	def scrape
-		doc = Nokogiri::HTML.parse(open(params[:url]))
+		doc = Nokogiri::HTML.parse(open(params[:url], 'User-Agent' => 'lyrn-link'))
 		image_meta = doc.at('meta[property="og:image"]')
 		title_meta = doc.at('meta[property="og:title"]')
 		description_meta = doc.at('meta[property="og:description"]')
