@@ -4,40 +4,25 @@
     &-green {
         color: $green;
     }
-    &-light-green {
-        color: $light-green;
-    }
     &-yellow {
         color: $yellow;
     }
-    &-light-yellow {
-        color: $light-yellow;
-    }
     &-red {
-        color: $light-red;
+        color: $red;
     }
-    &-navy {
-        color: $navy;
-    }      
-    &-light-navy {
-        color: $light-navy;
-    }
-    &-light-grey {
-        color: $light-grey;
+    &-blue {
+        color: $blue;
     }
     &-grey {
-        color: $grey;
-    }
-    &-orange {
-        color: $orange;
+        color: $grey1;
     }
     &-small {
         font-size: x-small;
         vertical-align: top;
-        color: $orange;
+        color: $red;
     }
     &:hover {
-	    color: $grey;
+	    color: $grey1;
         text-decoration: none !important;
         cursor: pointer;
     }

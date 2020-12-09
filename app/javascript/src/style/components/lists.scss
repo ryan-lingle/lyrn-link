@@ -1,15 +1,15 @@
 .new-list {
-	color: $very-dark-grey;
+	color: $grey5;
 	position: relative;
 }
 
 .new-item {
-	color: $very-dark-grey;
+	color: $grey5;
 	margin-top: 20px;
 }
 
 .no-list {
-	color: $very-dark-grey;
+	color: $grey5;
 }
 
 .new-list:hover {
@@ -37,7 +37,7 @@
 	font-family: 'Open Sans';
     font-weight: normal;
     font-size: small;
-    color: $navy !important;
+    color: $blue !important;
 }
 
 .new-list-menu div:hover {
@@ -46,14 +46,15 @@
 }
 
 #list-tabs {
-	margin: 20px auto;
+	margin: 40px 0px 20px;
+	overflow-x: scroll;
 }
 
 .list-tab {
 	width: 100%;
-	color: $grey;
-	padding-right: 15px;
+	color: $grey2;
 	position: relative;
+	margin-right: 10px;
 }
 
 .list-tab:hover {
@@ -66,11 +67,7 @@
 }
 
 .current-list-tab {
-	color: $very-dark-grey;
-}
-
-.list-desc {
-	color: $very-dark-grey;
+	color: $black;
 }
 
 .delete-list {
@@ -81,7 +78,7 @@
 }
 
 .delete-list:hover {
-	color: #b30000;
+	color: $red;
 }
 
 

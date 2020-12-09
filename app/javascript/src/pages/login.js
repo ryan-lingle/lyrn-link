@@ -21,7 +21,7 @@ const Login = ({ location }) => {
                 alt="lyrn list logo" 
             />
             <ErrorBox error={error} />
-            <div onClick={() => api.requestToken()} className="btn-navy">
+            <div onClick={() => api.requestToken()} className="btn">
                 Sign in with Twitter
             </div>
         </div>

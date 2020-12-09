@@ -73,7 +73,7 @@
 }
 
 #edit-design-name {
-	color: $navy !important;
+	color: $blue !important;
 	font-size: x-small;
 	margin-left: 5px;
 }
@@ -131,14 +131,14 @@
 	font-weight: bold;
 	font-size: medium;
 	font-feature-settings: 'tnum' on, 'lnum' on, 'ss01' on;
-	color: $grey;
+	color: $grey1;
 }
 
 .pb-small {
 	font-family: 'Open Sans';
 	font-weight: normal;
 	font-size: small;
-	color: $grey;
+	color: $grey1;
 }
 
 .pb-arrow:hover {

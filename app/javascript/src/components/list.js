@@ -38,9 +38,9 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     return(
         <div className="list" >
             <div className="flex">
-                <i className={icon} style={{fontSize: '14px', marginRight: '10px'}} />
-                <div className="little-heading list-desc">
-                    The top {items.length} {type.toLowerCase()} I am learning from.
+                <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
+                <div className="h h-list">
+                    The top {items.length} {type.toLowerCase()} I recommend learning from!
                 </div>
             </div>
             {addBtn()}

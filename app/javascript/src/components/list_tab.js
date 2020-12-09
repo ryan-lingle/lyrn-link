@@ -14,7 +14,7 @@ const ListTab = ({ type, onClick, onDestroy, current, readOnly }) => {
             className={`list-tab flex-between ${current ? 'current-list-tab' : ''}`}
             onClick={onClick}
         >
-        	<div className="big-heading">
+        	<div className="h h-tab">
 	            <div>{type.toUpperCase()}</div>
 	        </div>
 	        {readOnly ? null : <i className="fas fa-times-circle delete-list" onClick={destroy} />}

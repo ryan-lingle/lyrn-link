@@ -6,13 +6,13 @@
 #user-profile-picture {
 	width: 80px;
 	height: 80px;
-	border-radius: 3px;
+	border-radius: 8px;
 	margin-right: 10px;
 }
 
 .user-link-icon {
 	margin-left: 30px;
-	color: $dark-grey;
+	color: $grey5;
 	font-size: 12px;
 } 
 
@@ -21,7 +21,7 @@
 }
 
 .user-handle .little-heading {
-	color: $dark-grey !important;
+	color: $grey5 !important;
 	padding-right: 17px;
 }
 
