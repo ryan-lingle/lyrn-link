@@ -5,12 +5,11 @@
 .search-results {
 	background: $white;
     box-shadow: 0px 0px 8px rgba(58, 58, 68, 0.1), 0px 0px 16px rgba(90, 91, 106, 0.1);
-    border-radius: 8px;
+    border-radius: 4px;
     width: 100%;
 }
 
-
 .search-results div:hover {
-	background: #f1f2f4;
+	background: $grey1;
 	cursor: pointer;
 }

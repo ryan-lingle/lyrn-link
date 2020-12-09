@@ -1,21 +1,16 @@
 .auth-container {
 	text-align: center;
-	width: 300px;
+	width: 340px;
 	margin: auto;
 	min-height: calc(100vh - 180px);
 }
 
-
-.password-condition {
-	display: 'flex';
-    align-items: 'center';
-	text-align: right;
-	font-size: 8px;
-    width: 100%;
-    margin: 10px auto;
+.auth-heading {
+	margin-bottom: 20px;
 }
 
-.password-condition span {
-	margin-left: 10px;
-	font-family: Sen;
+.auth-card {
+	background: $white;
+	padding: 10px;
+	border-radius: 4px;	
 }
