@@ -69,7 +69,7 @@ const Profile = () => {
                                 <i className="fas fa-user-edit"></i>
                             </div>
 
-                        :  <button className="btn-navy">Upload</button>
+                        :  <button className="btn">Upload</button>
 
                     }
                 </div>

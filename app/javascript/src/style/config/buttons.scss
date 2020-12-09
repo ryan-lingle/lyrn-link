@@ -1,8 +1,8 @@
 @import 'colors';
 
-.btn-navy {
+.btn {
     color: $white;
-    background: $navy;
+    background: $black;
     padding: 6px 12px;
     min-width: 90px;
     text-align: center;
@@ -20,34 +20,9 @@
     text-decoration: none;
 
     &:hover {
-        background: lighten($navy, 10%);
+        background: lighten($blue, 10%);
         text-decoration: none;
         color: $white;
-    }
-}
-
-.btn-orange {
-    color: $orange;
-    background: transparent;
-    padding: 6px 12px;
-    min-width: 90px;
-    text-align: center;
-    border: none;
-    border-radius: 8px;
-	box-sizing: border-box;
-    font-family: 'Open Sans';
-    font-weight: bold;
-    font-size: medium;
-    -webkit-transition: (0.2s ease-in-out);
-	-moz-transition: (0.2s ease-in-out); 
-	-o-transition: (0.2s ease-in-out); 
-	transition: (0.2s ease-in-out);  
-    cursor:pointer;
-    text-decoration: none;
-
-    &:hover {
-        color: lighten($orange, 10%);
-        text-decoration: none;
     }
 }
 
@@ -75,7 +50,7 @@
 }
 
 .btn-soft {
-    color: $navy;
+    color: $blue;
     background: transparent;
     padding: 6px 12px;
     font-family: 'Open Sans';
@@ -91,13 +66,13 @@
     text-decoration: none;
 
     &:hover {
-        color: lighten($navy, 10%);
+        color: lighten($blue, 10%);
         text-decoration: none;
     }
 }
 
 #btn-download {
-    color: $navy;
+    color: $blue;
     background: transparent;
     padding: 6px 12px;
     border: none;
@@ -116,13 +91,13 @@
     text-decoration: none;
 
     &:hover {
-        color: lighten($orange, 15%);
+        color: lighten($red, 15%);
         text-decoration: none;
     }
 }
 
 .remove-item {
-    color: $light-red !important;
+    color: $red !important;
 }
 
 .remove-item:hover {

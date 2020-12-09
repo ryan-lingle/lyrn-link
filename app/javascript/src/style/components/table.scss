@@ -13,7 +13,7 @@ table {
 	font-family: 'Open Sans';
 	font-weight: normal;
 	font-size: small;
-	color: $navy;
+	color: $blue;
 	margin: 5px auto 20px auto;
 }
 
@@ -81,12 +81,12 @@ td:first-child {
 	padding-left: 20px;
 	border-left: 1px solid darken($white, 5%);
 	border-radius: 8px 0px 0px 8px;
-	color: $orange;
+	color: $red;
 
 }
 
 td:first-child:hover{
-	color: lighten($orange, 5%);
+	color: lighten($red, 5%);
 	cursor: pointer;
 }
 
@@ -99,7 +99,7 @@ td:last-child {
 }
 
 .destroy-row {
-	color: $light-red;
+	color: $red;
 	text-align: left;
 	padding-left: 50px;
 	width: 10px;

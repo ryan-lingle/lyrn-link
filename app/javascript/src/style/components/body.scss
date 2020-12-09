@@ -3,7 +3,7 @@
 // 
 
 body {
-	background: #fafafa;
+	background: $white;
 	height: 100%;
 	z-index: 1;
 }
@@ -26,7 +26,7 @@ body {
 	font-family: 'Open Sans';
 	font-weight: bold;
 	font-size: x-large;
-	color: $navy;
+	color: $blue;
 }
 
 // section // 
@@ -42,7 +42,7 @@ body {
 	font-family: 'Open Sans';
 	font-weight: bolder;
 	font-size: medium;
-	color: $navy;
+	color: $blue;
 }
 
 #page-menu {

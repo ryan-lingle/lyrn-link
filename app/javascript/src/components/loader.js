@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from '../assets/animation.gif';
+import Spinner from '../assets/spinner.svg';
 
 const Loader = () => (
     <div style={{ textAlign: 'center' }} className="spinner" >
