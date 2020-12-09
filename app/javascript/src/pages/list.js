@@ -29,14 +29,16 @@ const AdminList = ({ match }) => {
     return(
         <div className="container">
             <div id="dashboard">
-                <UserProfile readOnly={true} />
+                <UserProfile 
+                    readOnly={true} 
+                />
                 <ListTabs 
-                readOnly={true} 
-                pathname={`/u/${match.params.handle}/`} 
+                    readOnly={true} 
+                    pathname={`/u/${match.params.handle}/`} 
                 />
                 <List 
-                {...currentList} 
-                readOnly={true}
+                    {...currentList} 
+                    readOnly={true}
                 />
             </div>
         </div>

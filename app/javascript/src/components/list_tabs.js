@@ -6,6 +6,7 @@ import Draggable from './draggable';
 
 const ListTabs = ({ pathname="/admin/", readOnly }) => {
     const { state, api } = useContext(Context);
+    const lists = state.user.lists;
 
     function listCallback(list) {
         return async function() {
@@ -24,9 +25,14 @@ const ListTabs = ({ pathname="/admin/", readOnly }) => {
         });
     }
     return(
-        <div id="list-section">
-            <div className="flex" id="list-tabs">
-                {state.user.lists.map((list, i) =>
+        <div className="flex-between" >
+            <div 
+                className="flex"
+                style={{
+                    display: lists.length === 0 ? 'none' : '',
+                }}
+            >
+                {lists.map((list, i) =>
                     <Draggable 
                         key={i} 
                         type="list"
