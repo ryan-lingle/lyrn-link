@@ -1,6 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { Form } from '.';
-// import { capitalize } from '../utils';
 import Context from '../context';
 
 const NewList = () => {
@@ -11,9 +9,9 @@ const NewList = () => {
     if (lists && lists.length === 0) return <div></div>;
 
     return(
-        <div className="big-heading new-list" onClick={() => setShow(prev => !prev)} >
-            <i className="fas fa-plus-circle" style={{marginRight: '5px'}} />
-            New List
+        <div className="btn-list" onClick={() => setShow(prev => !prev)} >
+            <i className="far fa-plus-circle" style={{marginRight: '5px'}} />
+            List
             {
                 show
 

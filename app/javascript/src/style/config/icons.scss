@@ -1,14 +1,9 @@
 .icon {
-    padding: 5px;
-    margin: 5px;
     &-green {
         color: $green;
     }
     &-yellow {
         color: $yellow;
-    }
-    &-red {
-        color: $red;
     }
     &-blue {
         color: $blue;
@@ -21,9 +16,12 @@
         vertical-align: top;
         color: $red;
     }
-    &:hover {
-	    color: $grey1;
-        text-decoration: none !important;
-        cursor: pointer;
+    &-delete {
+        color: $grey4;
+        &:hover {
+            color: $red;
+            cursor: pointer;
+            text-decoration: !important;
+        }
     }
 }

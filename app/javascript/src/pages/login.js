@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import Context from '../context';
 import Logo from '../assets/logo.png';
-import { Submit, ErrorBox } from '../components';
+import { ErrorBox } from '../components';
 
 const Login = ({ location }) => {
     const { api, state } = useContext(Context);
@@ -20,9 +20,19 @@ const Login = ({ location }) => {
                 src={Logo} 
                 alt="lyrn list logo" 
             />
-            <ErrorBox error={error} />
-            <div onClick={() => api.requestToken()} className="btn">
-                Sign in with Twitter
+            <div className="auth-card">
+                <div className="auth-heading">
+                    <div className="big-heading">
+                        Welcome back
+                    </div>
+                    <div className="tiny-heading">
+                        Login to edit your lyrnlink
+                    </div>
+                </div>
+                <ErrorBox error={error} />
+                <div className="btn-black" onClick={() => api.requestToken()}>
+                    Sign in with Twitter
+                </div>
             </div>
         </div>
     )
