@@ -1,4 +1,5 @@
 import React from 'react';
+import { capitalize } from '../utils';
 
 const ListTab = ({ type, onClick, onDestroy, current, readOnly }) => {
 
@@ -11,13 +12,14 @@ const ListTab = ({ type, onClick, onDestroy, current, readOnly }) => {
 
     return(
         <div 
-            className={`list-tab flex-between ${current ? 'current-list-tab' : ''}`}
+            className={`list-tab ${current ? 'current-list-tab' : ''}`}
             onClick={onClick}
         >
-        	<div className="h h-tab">
-	            <div>{type.toUpperCase()}</div>
+        	<div className="mega-heading">
+	            <div>{capitalize(type)}</div>
+				<div>{readOnly ? null : <i className="fas fa-times-circle delete-list icon-delete" onClick={destroy} />}</div>
 	        </div>
-	        {readOnly ? null : <i className="fas fa-times-circle delete-list" onClick={destroy} />}
+	        
         </div>
     );
 };

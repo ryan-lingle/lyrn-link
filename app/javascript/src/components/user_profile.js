@@ -26,7 +26,7 @@ const UserProfile = ({ readOnly }) => {
 				<div className={isLoggedIn ? 'flex-grow' : ''} >
 					<Editable
 						readOnly={readOnly}
-						className="h h-name"
+						className="huge-heading"
 						value={state.user.name}
 						onUpdate={updateName}
 					/>
@@ -34,7 +34,7 @@ const UserProfile = ({ readOnly }) => {
 						/
 						<Editable
 							readOnly={readOnly}
-							className="h h-handle"
+							className="big-heading"
 							value={state.user.handle}
 							onUpdate={updateHandle}
 						/>
@@ -44,11 +44,11 @@ const UserProfile = ({ readOnly }) => {
 							? 	null
 
 							: 	<a  href={`/u/${state.user.handle}`} target="_blank" >
-									<i className="fal fa-link user-link-icon" />
+									<i className="fas fa-link user-link-icon" />
 								</a>
 						}
 					</div>
-					<div className="b b-since">
+					<div className="tiny-heading">
 						Sharing since December '20
 					</div>
 				</div>
@@ -57,7 +57,7 @@ const UserProfile = ({ readOnly }) => {
 
 					?	null
 
-					: 	<a className="flex-grow little-strong-body text-right" href="/" >
+					: 	<a className="flex-grow tiny-body text-right" href="/" >
 							Join Lyrn Link
 						</a>
 				}

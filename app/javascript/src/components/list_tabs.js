@@ -24,27 +24,29 @@ const ListTabs = ({ pathname="/admin/", readOnly }) => {
         });
     }
     return(
-        <div className="flex" id="list-tabs">
-            {state.user.lists.map((list, i) =>
-                <Draggable 
-                    key={i} 
-                    type="list"
-                    id={list.id}
-                    index={list.index}
-                    disable={readOnly} 
-                    onDrop={() => api.updateListIndex()} 
-                    onMove={onMove}
-                >
+        <div id="list-section">
+            <div className="flex" id="list-tabs">
+                {state.user.lists.map((list, i) =>
+                    <Draggable 
+                        key={i} 
+                        type="list"
+                        id={list.id}
+                        index={list.index}
+                        disable={readOnly} 
+                        onDrop={() => api.updateListIndex()} 
+                        onMove={onMove}
+                    >
 
-                    <ListTab 
-                        {...list} 
-                        readOnly={readOnly}
-                        onClick={listCallback(list)}
-                        onDestroy={() => api.destroyList(list.type)}
-                        current={list.index == state.listIndex}
-                    />
-                </Draggable>
-            )}
+                        <ListTab 
+                            {...list} 
+                            readOnly={readOnly}
+                            onClick={listCallback(list)}
+                            onDestroy={() => api.destroyList(list.type)}
+                            current={list.index == state.listIndex}
+                        />
+                    </Draggable>
+                )}
+            </div>
             {readOnly ? null : <NewList />}
         </div>
     );

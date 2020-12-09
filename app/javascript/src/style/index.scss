@@ -10,39 +10,122 @@ $fa-font-path: "webfonts";
 @import "pages";
 @import "components";
 
-.h {
+.mega-heading {
 	font-family: Raleway;
 	font-style: normal;
-	font-weight: normal;
+	font-weight: lighter;
 	font-size: x-large;
-	line-height: 100%;
-	&-name {
-		font-weight: lighter;
-	}
-	&-handle {
-		font-size: large;
-		font-weight: bold;
-	}
-	&-small {
-		font-size: small;
-		font-weight: lighter;
-		line-height: 150%;
-	}
-	&-tab {
-		font-size: x-large;
-		font-weight: bolder;
-		@media only screen and (max-width: 600px)  {
-			font-size: medium;
-		}
-	}
-	&-list {
+	@media only screen and (max-width: 600px)  {
 		font-size: medium;
-		font-weight: lighter;
-		line-height: 150%;
-		@media only screen and (max-width: 600px)  {
-			font-size: x-small;
-		}
 	}
+}
+.huge-heading {
+	font-family: Raleway;
+	font-style: normal;
+	font-weight: lighter;
+	font-size: x-large;
+	@media only screen and (max-width: 600px)  {
+		font-size: large;
+	}
+}
+
+.big-heading {
+	font-family: Raleway;
+	font-style: normal;
+	font-weight: bold;
+	font-size: large;
+	@media only screen and (max-width: 600px)  {
+		font-size: medium;
+	}
+}
+
+.main-heading {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: normal;
+	font-size: medium;
+	@media only screen and (max-width: 600px)  {
+		font-size: small;
+	}
+}
+
+.little-heading {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: bold;
+	font-size: small;
+	@media only screen and (max-width: 600px)  {
+		font-size: x-small;
+	}
+}
+
+.tiny-heading {
+	font-family: 'Open Sans';
+	font-size: x-small;
+	font-weight: lighter;
+	@media only screen and (max-width: 600px)  {
+		font-size: xx-small;
+	}
+}
+
+
+.huge-body {	
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: bold;
+	font-size: medium;
+	@media only screen and (max-width: 600px)  {
+		font-size: small;
+	}
+}
+.big-body {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: normal;
+	font-size: small;
+	color: $grey5;
+	@media only screen and (max-width: 600px)  {
+		font-size: x-small;
+	}
+}
+
+.main-body {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: normal;
+	font-size: x-small;
+	color: $grey4;
+	@media only screen and (max-width: 600px)  {
+		font-size: xx-small;
+	}
+}
+
+.little-body {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: bold;
+	font-size: xx-small;
+}
+
+.tiny-body {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: normal;
+	font-size: xx-small;ont-size: smaller;
+}
+
+.truncate {
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+
+
+
+.h {
 	&-itemtitle {
 		font-size: medium;
 		font-weight: bold;
@@ -94,60 +177,12 @@ $fa-font-path: "webfonts";
 	}
 }
 
-.big-heading {
-	font-family: Raleway;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 20px;
-}
 
-.main-heading {
-	font-family: Open Sans;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 14px;
-}
 
-.little-heading {
-	font-family: Open Sans;
-	font-style: normal;
-	font-weight: 600;
-	font-size: 14px;
-}
 
-.big-body {
-	font-family: Open Sans;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 14px;
-	line-height: 19px;
-}
 
-.main-body {
-	font-family: Open Sans;
-	font-style: normal;
-	font-weight: 600;
-	font-size: 14px;
-	line-height: 150%;
-}
 
-.little-body {
-	font-family: Open Sans;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 10px;
-	line-height: 14px;
-}
 
-.little-strong-body {
-	font-family: Open Sans;
-	font-style: normal;
-	font-weight: 600;
-	font-size: 10px;
-	line-height: 14px;
-	color: $grey5;
-
-}
 
 .b-copy {
 	font-family: 'Open Sans';
@@ -219,7 +254,7 @@ $fa-font-path: "webfonts";
 	background: $red;
 	border: 1px solid darken($red, 5%);
 	box-sizing: border-box;
-	border-radius: 8px;
+	border-radius: 4px;
 	color: $white;
 	font-family: 'Open Sans';
 	font-size: x-small;

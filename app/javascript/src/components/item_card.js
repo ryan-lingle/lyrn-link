@@ -10,12 +10,12 @@ const ItemCard = ({ rank=true, id, index, title, subtitle, image, url, url_copy,
     };
 
     return(
-        <div className={`item-card flex-between ${readOnly ? '' : 'draggable'}`}>
+        <div className={`item-card ${readOnly ? '' : 'draggable'}`}>
             {
                 rank
 
-                ?   <div className="h h-rank">
-                        {index + 1}
+                ?   <div className="item-rank">
+                        #{index + 1}
                     </div>
 
                 :   null
@@ -23,21 +23,25 @@ const ItemCard = ({ rank=true, id, index, title, subtitle, image, url, url_copy,
             <div className="item-box">
                 <img src={image} className="item-image" />
             </div>
-            <div className="flex-grow">
-                <div className="h h-itemtitle">
+            <div className="item-details truncate">
+                <div className="huge-body truncate">
                     {title}
-                    {subtitle ? ' - ' : ''}
-                    {subtitle}
+                    {subtitle ? '   ' : ''}
+                    <span className="main-body">
+                        {subtitle}
+                    </span>
                 </div>
                 <a 
-                    className={`b b-creator ${!creator ? '' : 'no-decoration'}`}
+                    className={`big-body ${!creator ? '' : 'no-decoration'}`}
                     href={url} 
                     target="_blank" 
                 >
                     {creator || url_copy || url}
                 </a>
             </div>
-            {readOnly ? null : <i className="fal fa-times-circle delete-item" onClick={destroy} />}
+            <div className="item-delete">
+                {readOnly ? null : <i className="fal fa-times icon icon-delete" onClick={destroy} />}
+            </div>
         </div>
     );
 };
