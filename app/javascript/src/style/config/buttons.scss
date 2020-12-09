@@ -1,16 +1,16 @@
 @import 'colors';
 
-.btn {
+.btn-black {
     color: $white;
     background: $black;
-    padding: 6px 12px;
-    min-width: 90px;
+    padding: 8px 12px;
     text-align: center;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
 	box-sizing: border-box;
     font-family: 'Open Sans';
     font-style: normal;
+    font-weight: bold;
     font-size: small;
     -webkit-transition: (0.2s ease-in-out);
 	-moz-transition: (0.2s ease-in-out); 
@@ -20,79 +20,66 @@
     text-decoration: none;
 
     &:hover {
-        background: lighten($blue, 10%);
+        background: lighten($black,10%);
         text-decoration: none;
         color: $white;
     }
 }
 
-.btn-green {
-    color: $green;
+.btn-list {
+    color: $grey4;
     background: transparent;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 8px;
-	box-sizing: border-box;
-    font-family: 'Open Sans';
-    font-weight: bold;
-    font-size: small;
-    -webkit-transition: (0.2s ease-in-out);
-	-moz-transition: (0.2s ease-in-out); 
-	-o-transition: (0.2s ease-in-out); 
-	transition: (0.2s ease-in-out);  
-    cursor:pointer;
-    text-decoration: none;
-
-    &:hover {
-        color: lighten($green, 10%);
-        text-decoration: none;
-    }
-}
-
-.btn-soft {
-    color: $blue;
-    background: transparent;
-    padding: 6px 12px;
-    font-family: 'Open Sans';
+    text-align: right;
+    padding-right: 10px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'Raleway';
     font-style: normal;
-    font-weight: bold;
-    font-size: small;
-    font-feature-settings: 'ss01' on;
-    -webkit-transition: (0.2s ease-in-out);
-	-moz-transition: (0.2s ease-in-out); 
-	-o-transition: (0.2s ease-in-out); 
-	transition: (0.2s ease-in-out);  
-    cursor:pointer;
-    text-decoration: none;
-
-    &:hover {
-        color: lighten($blue, 10%);
-        text-decoration: none;
-    }
-}
-
-#btn-download {
-    color: $blue;
-    background: transparent;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 8px;
-	box-sizing: border-box;
-    font-family: 'Open Sans';
-    font-style: normal;
+    font-size: medium;
     font-weight: normal;
-    font-size: small;
-    font-feature-settings: 'ss01' on;
     -webkit-transition: (0.2s ease-in-out);
-	-moz-transition: (0.2s ease-in-out); 
-	-o-transition: (0.2s ease-in-out); 
-	transition: (0.2s ease-in-out);  
+    -moz-transition: (0.2s ease-in-out); 
+    -o-transition: (0.2s ease-in-out); 
+    transition: (0.2s ease-in-out);  
     cursor:pointer;
     text-decoration: none;
 
+    @media only screen and (max-width: 600px)  {
+        font-size: x-small;
+    }
+
     &:hover {
-        color: lighten($red, 15%);
-        text-decoration: none;
+    color: $grey3;
+    text-decoration: none;
+    }
+}
+
+.btn-item {
+    color: $white;
+    background: $blue;
+    padding: 4px 6px;
+    text-align: center;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-size: small;
+    font-weight: normal;
+    -webkit-transition: (0.2s ease-in-out);
+    -moz-transition: (0.2s ease-in-out); 
+    -o-transition: (0.2s ease-in-out); 
+    transition: (0.2s ease-in-out);  
+    cursor:pointer;
+    text-decoration: none;
+
+    @media only screen and (max-width: 600px)  {
+        font-size: x-small;
+    }
+
+    &:hover {
+    background: darken($blue,10%);
+    text-decoration: none;
     }
 }
 

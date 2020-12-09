@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { ErrorBox, Loader, ListTab, Search, Scraper, Draggable, ItemCard } from '../components';
+import { Search, Scraper, Draggable, ItemCard } from '../components';
 import Context from '../context';
+import { capitalize } from '../utils';
 
 const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, readOnly }) => {
     const [add, setAdd] = useState(false);
@@ -15,9 +16,9 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return null;
         } else {
             return(
-                <div className="big-heading new-item" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
-                    <i className="fas fa-plus-circle" style={{marginRight: '5px'}} />
-                    New Item
+                <div className="btn-item" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
+                    <i className="far fa-plus-circle" style={{marginRight: '5px'}} />
+                    {capitalize(singular)}
                 </div>
             );
         }
@@ -36,14 +37,14 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
 
     return(
-        <div className="list" >
-            <div className="flex">
-                <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
-                <div className="h h-list">
-                    The top {items.length} {type.toLowerCase()} I recommend learning from!
+        <div id="listy" >
+            <div className="flex-between">
+                <div className="main-heading">
+                    <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
+                    <b>My Top {items.length} {capitalize(type)}</b>
                 </div>
+                {addBtn()}
             </div>
-            {addBtn()}
             {   
                 add
 
@@ -74,7 +75,6 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
                 :   null
             }
-            <div style={{marginTop: '20px'}}></div>
             {items.map((item, i) => 
                 <Draggable 
                     key={i} 

@@ -45,7 +45,7 @@ class Root extends Component {
             </Switch>
           </Router>
           <footer>
-            <div id="footer-top">Always Learning, © Lyrn Link.</div>
+            <div id="footer-text">Always Learning, © 2020 Lyrn Link.</div>
           </footer>
         </DndProvider>
       </Context.Provider>

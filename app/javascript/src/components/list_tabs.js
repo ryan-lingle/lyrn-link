@@ -6,6 +6,7 @@ import Draggable from './draggable';
 
 const ListTabs = ({ pathname="/admin/", readOnly }) => {
     const { state, api } = useContext(Context);
+    const lists = state.user.lists;
 
     function listCallback(list) {
         return async function() {
@@ -24,27 +25,34 @@ const ListTabs = ({ pathname="/admin/", readOnly }) => {
         });
     }
     return(
-        <div className="flex" id="list-tabs">
-            {state.user.lists.map((list, i) =>
-                <Draggable 
-                    key={i} 
-                    type="list"
-                    id={list.id}
-                    index={list.index}
-                    disable={readOnly} 
-                    onDrop={() => api.updateListIndex()} 
-                    onMove={onMove}
-                >
+        <div className="flex-between" >
+            <div 
+                className="flex"
+                style={{
+                    display: lists.length === 0 ? 'none' : '',
+                }}
+            >
+                {lists.map((list, i) =>
+                    <Draggable 
+                        key={i} 
+                        type="list"
+                        id={list.id}
+                        index={list.index}
+                        disable={readOnly} 
+                        onDrop={() => api.updateListIndex()} 
+                        onMove={onMove}
+                    >
 
-                    <ListTab 
-                        {...list} 
-                        readOnly={readOnly}
-                        onClick={listCallback(list)}
-                        onDestroy={() => api.destroyList(list.type)}
-                        current={list.index == state.listIndex}
-                    />
-                </Draggable>
-            )}
+                        <ListTab 
+                            {...list} 
+                            readOnly={readOnly}
+                            onClick={listCallback(list)}
+                            onDestroy={() => api.destroyList(list.type)}
+                            current={list.index == state.listIndex}
+                        />
+                    </Draggable>
+                )}
+            </div>
             {readOnly ? null : <NewList />}
         </div>
     );

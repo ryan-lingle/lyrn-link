@@ -1,16 +1,56 @@
+// list tabs
+
+.list-tab {
+	width: 100%;
+	color: $grey2;
+	text-align: center;
+	padding-left: 15px;
+	padding-right: 15px;
+	position: relative;
+	border-bottom: 2px solid $grey2;
+	@media only screen and (max-width: 600px)  {
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+}
+
+.list-tab:hover {
+	cursor: pointer;
+	color: $grey3;
+	border-bottom: 2px solid $grey3;
+
+	.delete-list {
+		display: block;
+		position: absolute;
+	}
+}
+
+.current-list-tab {
+	color: $black;
+	border-bottom: 2px solid $black;
+}
+
+
+// lists
+
+#listy {
+	margin-top: 20px;
+	border-radius: 4px;
+}
+
 .new-list {
-	color: $grey5;
 	position: relative;
 }
 
 .new-item {
-	color: $grey5;
-	margin-top: 20px;
+	display: flex;
+	text-align: right;
 }
 
 .no-list {
 	color: $grey5;
 }
+// new list
 
 .new-list:hover {
 	cursor: pointer;
@@ -22,22 +62,24 @@
 
 .new-list-menu {
 	position: absolute;
-	width: 120px;
-	top: 30px;
-	z-index: 100;
+	margin: 0;
+	width: 90px;
+	z-index: 120;
+	right: 0px;
 	background: $white;
     box-shadow: 0px 0px 8px rgba(58, 58, 68, 0.1), 0px 0px 16px rgba(90, 91, 106, 0.1);
     border-radius: 5px;
-    text-align: center;
 }
 
 .new-list-menu div {
 	display: block;
-	padding: 7px 20px;
-	font-family: 'Open Sans';
-    font-weight: normal;
+	padding: 4px 15px;
+	font-family: 'Raleway';
+    font-weight: bold;
     font-size: small;
-    color: $blue !important;
+    color: $black !important;
+    text-align: right;
+    border-radius: 3px;
 }
 
 .new-list-menu div:hover {
@@ -45,29 +87,9 @@
 	cursor: pointer;
 }
 
-#list-tabs {
-	margin: 40px 0px 20px;
-}
 
-.list-tab {
-	width: 100%;
-	color: $grey2;
-	position: relative;
-	margin-right: 10px;
-}
 
-.list-tab:hover {
-	cursor: pointer;
 
-	.delete-list {
-		display: block;
-		position: absolute;
-	}
-}
-
-.current-list-tab {
-	color: $black;
-}
 
 .delete-list {
 	font-size: 11px;
