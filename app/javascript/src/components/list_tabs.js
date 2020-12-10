@@ -1,12 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Context from '../context';
 import ListTab from './list_tab';
 import NewList from './new_list';
 import Draggable from './draggable';
+import { parseQuery } from '../utils';
 
 const ListTabs = ({ pathname="/admin/", readOnly }) => {
     const { state, api } = useContext(Context);
     const lists = state.user.lists;
+
+    useEffect(() => {
+
+        const changeTab = () => {
+
+            const wire = window.location.pathname.split('/');
+            const path = wire[wire.length - 1];
+            if (path) api.store.reduce({
+                type: 'set_list_index',
+                listType: path,
+            });
+            window.removeEventListener('popstate', changeTab);
+
+        }
+
+        window.addEventListener('popstate', changeTab);
+
+        () => window.removeEventListener('popstate', changeTab);
+
+    }, [state.listIndex]);
 
     function listCallback(list) {
         return async function() {

@@ -1,6 +1,6 @@
 class Articles < List
 	def singular
-		'person'
+		'article'
 	end
 
 	def icon

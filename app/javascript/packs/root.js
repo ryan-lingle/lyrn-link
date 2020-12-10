@@ -44,8 +44,6 @@ class Root extends Component {
               <Route exact path="/sign_in" component={Login}/>
               <Route exact path="/sign_up" component={SignUp}/>
               <Route exact path="/twitter/callback" component={TwitterCallback} />
-              <Route exact path="/u/:handle/" component={List} />
-              <Route exact path="/u/:handle/:listType" component={List} />
               <Route component={Routes}/>
             </Switch>
           </Router>
