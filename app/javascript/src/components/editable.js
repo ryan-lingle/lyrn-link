@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const Editable = ({ readOnly, value, onUpdate, className, textArea=false }) => {
+const Editable = ({ readOnly, value, onUpdate, className, defaultValue, textArea=false }) => {
 	const input = useRef();
 	const form = useRef();
 	const [edit, setEdit] = useState(false);
@@ -50,7 +50,7 @@ const Editable = ({ readOnly, value, onUpdate, className, textArea=false }) => {
 				className={(readOnly ? '' : 'editable ') + className}
 				onDoubleClick={handleEdit}
 			>
-				{value}
+				<div>{value || defaultValue}</div>
 				<i className="fas fa-pen-square edit-pencil" onClick={handleEdit} />
 			</div>
 		);
