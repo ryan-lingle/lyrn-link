@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { ErrorBox, Loader, ListTabs, List, UserProfile } from '../components';
 import Context from '../context';
+import { Helmet } from 'react-helmet';
 
 const AdminList = ({ match }) => {
     const { api, state } = useContext(Context);
@@ -28,13 +29,16 @@ const AdminList = ({ match }) => {
 
     return(
         <div className="container">
+            <Helmet>
+                <title>{`${state.user.name} (${state.user.handle})`}</title>
+            </Helmet>
             <div id="dashboard">
                 <UserProfile 
                     readOnly={true} 
                 />
                 <ListTabs 
                     readOnly={true} 
-                    pathname={`/u/${match.params.handle}/`} 
+                    pathname={`/${match.params.handle}/`} 
                 />
                 <List 
                     {...currentList} 

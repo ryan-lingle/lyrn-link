@@ -71,6 +71,9 @@ class Api {
             window.location.href = '/sign_in';
             return {};
 
+        } else if (json.status === 404) {
+            window.location.href = '/404';
+            return {};
         } else {
 
             const res = await json.json();

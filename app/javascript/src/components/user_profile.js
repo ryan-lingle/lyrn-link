@@ -43,7 +43,7 @@ const UserProfile = ({ readOnly }) => {
 
 							? 	null
 
-							: 	<a  href={`/u/${state.user.handle}`} target="_blank" >
+							: 	<a  href={`/${state.user.handle}`} target="_blank" >
 									<i className="fas fa-link user-link-icon" />
 								</a>
 						}
