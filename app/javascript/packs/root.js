@@ -29,6 +29,11 @@ class Root extends Component {
   //     });
   // }
 
+  signOut = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  }
+
   render() {
     return (
       <Context.Provider value={{ api, state: this.state }} >
@@ -45,6 +50,7 @@ class Root extends Component {
             </Switch>
           </Router>
           <footer>
+            <a id="sign-out" onClick={this.signOut} href="#" >Sign Out</a>
             <div id="footer-text">Always Learning, © 2020 Lyrn Link.</div>
           </footer>
         </DndProvider>
