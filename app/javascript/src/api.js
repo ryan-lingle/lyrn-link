@@ -245,6 +245,11 @@ class Api {
                 user: res.user,
             });
 
+            store.reduce({
+                type: 'set_list_index',
+                index: store.state.user.lists.length - 1,
+            });
+
             return true;
 
         } else {
