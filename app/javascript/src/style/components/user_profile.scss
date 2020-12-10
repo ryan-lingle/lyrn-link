@@ -32,7 +32,7 @@
 }
 
 .editable {
-	position: relative;
+	display: flex; 
 }
 
 .editable:hover {
@@ -44,10 +44,8 @@
 
 .edit-pencil {
 	font-size: 12px;
-	position: absolute;
-	top: 0px;
-	right: 2px;
 	display: none;
+	margin-left: 2px;
 }
 
 .edit-input input {

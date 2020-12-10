@@ -29,6 +29,7 @@ const UserProfile = ({ readOnly }) => {
 						className="huge-heading"
 						value={state.user.name}
 						onUpdate={updateName}
+						defaultValue="( name )"
 					/>
 					<div className="user-handle flex">
 						/
@@ -37,6 +38,7 @@ const UserProfile = ({ readOnly }) => {
 							className="big-heading"
 							value={state.user.handle}
 							onUpdate={updateHandle}
+							defaultValue="( handle )"
 						/>
 						{
 							readOnly
@@ -69,6 +71,7 @@ const UserProfile = ({ readOnly }) => {
 				value={state.user.description}
 				onUpdate={updateDescription}
 				textArea={true}
+				defaultValue="( description )"
 			/>
 		</div>
 	);
