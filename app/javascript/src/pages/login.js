@@ -21,17 +21,23 @@ const Login = ({ location }) => {
                 alt="lyrn list logo" 
             />
             <div className="auth-card">
+                <ErrorBox error={error} />
                 <div className="auth-heading">
                     <div className="big-heading">
-                        Welcome back
+                            Welcome Back!
                     </div>
-                    <div className="tiny-heading">
-                        Login to edit your lyrnlink
+                    <div className="main-heading">
+                        Sign in to edit your lyrnlink
                     </div>
                 </div>
-                <ErrorBox error={error} />
-                <div className="btn-black" onClick={() => api.requestToken()}>
+                <div className="btn-item auth-button" onClick={() => api.requestToken()}>
+                    <i className="fab fa-twitter" style={{marginRight: '5px'}} />
                     Sign in with Twitter
+                </div>
+            </div>
+            <div className="auth-heading">
+                <div className="little-body">
+                        Don't have a lyrnlink yet? <a href="/signup">Sign Up</a>
                 </div>
             </div>
         </div>

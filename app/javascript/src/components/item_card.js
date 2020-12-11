@@ -11,15 +11,19 @@ const ItemCard = ({ rank=true, id, index, title, subtitle, image, url, url_copy,
 
     return(
         <div className={`item-card ${readOnly ? '' : 'draggable'}`}>
-            {
-                rank
+            <div className="item-ranking">
+                {
+                    rank
 
-                ?   <div className="item-rank">
-                        #{index + 1}
-                    </div>
+                    ?   <div className="item-rank">
+                            {index + 1}
+                        </div>
 
-                :   null
-            }
+                    :   null
+                }       
+                {readOnly ? null : <i className="fas fa-ellipsis-v icon"/>} 
+            </div>
+            
             <div className="item-box">
                 <img src={image} className="item-image" />
             </div>
@@ -40,7 +44,7 @@ const ItemCard = ({ rank=true, id, index, title, subtitle, image, url, url_copy,
                 </a>
             </div>
             <div className="item-delete">
-                {readOnly ? null : <i className="fal fa-times icon icon-delete" onClick={destroy} />}
+                {readOnly ? null : <i className="fal fa-times icon icon-delete item-delete" onClick={destroy} />}
             </div>
         </div>
     );
