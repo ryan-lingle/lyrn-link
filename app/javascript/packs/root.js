@@ -41,14 +41,14 @@ class Root extends Component {
           <Router>
             <Switch>
               <Route exact path="/" component={Login}/>
-              <Route exact path="/sign_in" component={Login}/>
-              <Route exact path="/sign_up" component={SignUp}/>
+              <Route exact path="/signin" component={Login}/>
+              <Route exact path="/signup" component={SignUp}/>
               <Route exact path="/twitter/callback" component={TwitterCallback} />
               <Route component={Routes}/>
             </Switch>
           </Router>
           <footer>
-            <a id="sign-out" onClick={this.signOut} href="#" >Sign Out</a>
+            {localStorage.getItem('authToken') ? <a id="sign-out" onClick={this.signOut} href="#" >Sign Out</a> : null}
             <div id="footer-text">Always Learning, © 2020 Lyrn Link.</div>
           </footer>
         </DndProvider>

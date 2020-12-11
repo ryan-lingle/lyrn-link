@@ -68,7 +68,7 @@ class Api {
     handleResponse = async (json, errorType) => {
         if (json.status === 401) {
 
-            window.location.href = '/sign_in';
+            window.location.href = '/signin';
             return {};
 
         } else if (json.status === 404) {
