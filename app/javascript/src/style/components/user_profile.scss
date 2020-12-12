@@ -1,5 +1,5 @@
 #user-profile {
-	margin: 40px auto 40px auto;
+	margin: 40px auto 20px auto;
 	max-width: 800px;
 }
 
@@ -39,6 +39,21 @@
 
 .user-handle {
 	margin: 5px 0px;
+	align-items: center;
+	display: flex;
+}
+
+.user-link-icon {
+	margin-left: 10px;
+	color: $green;
+	font-size: 10px;
+	margin-bottom: 3px;
+	align-items: center;
+	vertical-align: middle;
+}
+
+.user-description {
+	margin-top: 20px;
 }
 
 .user-handle .little-heading {
@@ -57,15 +72,7 @@
 
 .editable:hover {
 	cursor: pointer;
-	.edit-pencil {
-		display: block;
-	}
-}
-
-.edit-pencil {
-	font-size: 12px;
-	display: none;
-	margin-left: 2px;
+	color: $grey2;
 }
 
 .edit-input input {

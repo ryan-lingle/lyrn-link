@@ -1,16 +1,23 @@
 .auth-container {
 	text-align: center;
-	width: 340px;
+	max-width: 330px;
 	margin: auto;
 	min-height: calc(100vh - 180px);
 }
 
 .auth-heading {
-	margin-bottom: 20px;
+	margin: 10px auto;
 }
 
 .auth-card {
 	background: $white;
 	padding: 10px;
 	border-radius: 4px;	
+}
+.auth-button {
+	margin: 20px;
+}
+.auth-logo {
+	width: 150px;
+	margin: 70px 0px 20px 0px
 }

@@ -42,8 +42,8 @@ const UserProfile = ({ readOnly }) => {
 						onUpdate={updateName}
 						defaultValue="( name )"
 					/>
-					<div className="user-handle flex">
-						/
+					<div className="user-handle">
+						/&nbsp;
 						<Editable
 							readOnly={readOnly}
 							className="big-heading"
@@ -57,7 +57,7 @@ const UserProfile = ({ readOnly }) => {
 							? 	null
 
 							: 	<a  href={`/${state.user.handle}`} target="_blank" >
-									<i className="fas fa-link user-link-icon" />
+									<i className="far fa-external-link user-link-icon" />
 								</a>
 						}
 					</div>
@@ -78,11 +78,11 @@ const UserProfile = ({ readOnly }) => {
 			</div>
 			<Editable
 				readOnly={readOnly}
-				className="b b-description"
+				className="big-body user-description"
 				value={state.user.description}
 				onUpdate={updateDescription}
 				textArea={true}
-				defaultValue="( description )"
+				defaultValue="I don't have a description."
 			/>
 		</div>
 	);
