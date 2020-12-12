@@ -46,7 +46,7 @@ const ListTabs = ({ pathname="/admin/", readOnly }) => {
         });
     }
     return(
-        <div className="flex-between" >
+        <div className="flex-between tabs">
             <div 
                 className="flex"
                 style={{

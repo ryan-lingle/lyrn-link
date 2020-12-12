@@ -15,31 +15,32 @@ const Login = ({ location }) => {
 
     return(
         <div className="auth-container" >
-            <img 
-                className="auth-logo"
-                src={Logo} 
-                alt="lyrn list logo" 
-            />
+            <div className="auth-heading">
+                <div className="mega-heading">
+                        Sign up for lyrnlink
+                </div>
+                <div className="big-heading">
+                    The #1 spot to share your learning
+                </div>
+            </div>
             <div className="auth-card">
                 <ErrorBox error={error} />
-                <div className="auth-heading">
-                    <div className="big-heading">
-                            Sign up for Lyrnliink!
-                    </div>
-                    <div className="main-heading">
-                        #1 place to share where you learn
-                    </div>
+                <div className="auth-description huge-body" style={{fontWeight: 'normal'}}>
+                    Currently, we require you to sign up with your <b>Twitter</b> account. The twitter universe lends itself to be a rich community of learners, which bodes well for lyrnlink. Authentication via Twitter allows us to ensure you a seamless onboarding experience.
                 </div>
                 <div className="btn-item auth-button" onClick={() => api.requestToken()}>
-                    <i className="fab fa-twitter" style={{marginRight: '5px'}} />
-                    Sign in with Twitter
+                    <i className="fab fa-twitter" style={{marginRight: '10px'}} />
+                    Sign Up with Twitter
                 </div>
+                <div className="auth-button main-body">
+                    We won't post anything to your account without your permission.
+                </div>
+            </div>
+            <div className="auth-footing">
                 <div className="tiny-heading">
                         By signing up for lyrnlink, you agree to our Privacy Policy and Terms of Use.
                 </div>
-            </div>
-            <div className="auth-heading">
-                <div className="little-body">
+                <div className="little-body" style={{marginTop: '15px'}}>
                         Already got a lyrnlink? <a href="/signin">Sign In</a>
                 </div>
             </div>
