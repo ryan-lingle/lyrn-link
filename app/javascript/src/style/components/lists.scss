@@ -1,5 +1,10 @@
 // list tabs
 
+.tabs {
+	border-bottom: 1.5px solid $grey2;
+	box-sizing: border-box;
+}
+
 .list-tab {
 	width: 100%;
 	color: $grey2;
@@ -7,7 +12,6 @@
 	padding-left: 15px;
 	padding-right: 15px;
 	position: relative;
-	border-bottom: 2px solid $grey2;
 	@media only screen and (max-width: 600px)  {
 		padding-left: 8px;
 		padding-right: 8px;
@@ -16,8 +20,6 @@
 
 .list-tab:hover {
 	cursor: pointer;
-	// color: $grey3;
-	// border-bottom: 2px solid $grey3;
 
 	.delete-list {
 		display: block;
@@ -27,7 +29,7 @@
 
 .current-list-tab {
 	color: $black;
-	border-bottom: 2px solid $black;
+	border-radius: 4px 4px 0px 0px;
 }
 
 

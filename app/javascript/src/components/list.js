@@ -16,7 +16,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return null;
         } else {
             return(
-                <div className="btn-item" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
+                <div className="btn-black" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
                     <i className="far fa-plus-circle" style={{marginRight: '5px'}} />
                     {capitalize(singular)}
                 </div>
@@ -25,7 +25,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     }
 
     if (!type) return(
-        <div className="big-heading no-list" style={{marginTop: '40px'}} >No Lists Yet ¯\_(ツ)_/¯</div>
+        <div className="big-heading no-list" style={{marginTop: '40px'}} ></div>
     );
 
     function onMove(dragIndex, hoverIndex) {

@@ -25,7 +25,6 @@ const UserProfile = ({ readOnly }) => {
 			<div className="flex-between">
 				<div id="user-profile-picture-wrapper">
 					<img src={state.user.profile_picture_url} id="user-profile-picture" />
-					<i className="fas fa-pen-square" id="edit-profile-picture" />
 				</div>
 				<input 
 				    type="file" 
@@ -42,7 +41,7 @@ const UserProfile = ({ readOnly }) => {
 						onUpdate={updateName}
 						defaultValue="( name )"
 					/>
-					<div className="user-handle">
+					<div className="user-handle" style={{marginTop: '-2px'}}>
 						/&nbsp;
 						<Editable
 							readOnly={readOnly}
@@ -70,8 +69,8 @@ const UserProfile = ({ readOnly }) => {
 
 					?	null
 
-					: 	<a className="flex-grow tiny-body text-right" href="/signup" >
-							Join Lyrn Link
+					: 	<a className="flex-grow big-body text-right" style={{fontWeight: 'bold', alignSelf: 'baseline', color: '#1DA1F2'}} href="/signup" >
+							 Sign up for lyrnlink
 						</a>
 				}
 				
