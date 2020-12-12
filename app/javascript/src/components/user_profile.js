@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Context from '../context';
 import { Editable } from '../components';
 
 const UserProfile = ({ readOnly }) => {
 	const { api, state } = useContext(Context);
-
+    const fileInput = useRef();
+    const [profilePicture, setProfilePicture] = useState(state.user.profile_picture_url);
 	const isLoggedIn = localStorage.getItem('authToken');
 
 	function updateName(name) {
@@ -22,7 +23,17 @@ const UserProfile = ({ readOnly }) => {
 	return(
 		<div id="user-profile">
 			<div className="flex-between">
-				<img src={state.user.profile_picture_url} id="user-profile-picture" />
+				<div id="user-profile-picture-wrapper">
+					<img src={state.user.profile_picture_url} id="user-profile-picture" />
+					<i className="fas fa-pen-square" id="edit-profile-picture" />
+				</div>
+				<input 
+				    type="file" 
+				    ref={fileInput}
+				    style={{display: 'none'}}
+				    accept="image/jpeg,image/png,image/webp" 
+				    onChange={({ target }) => setProfilePicture(target.files[0])} 
+				/>
 				<div className={isLoggedIn ? 'flex-grow' : ''} >
 					<Editable
 						readOnly={readOnly}
@@ -59,7 +70,7 @@ const UserProfile = ({ readOnly }) => {
 
 					?	null
 
-					: 	<a className="flex-grow tiny-body text-right" href="/" >
+					: 	<a className="flex-grow tiny-body text-right" href="/signup" >
 							Join Lyrn Link
 						</a>
 				}
