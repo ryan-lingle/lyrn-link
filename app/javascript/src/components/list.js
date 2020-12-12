@@ -16,7 +16,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return null;
         } else {
             return(
-                <div className="btn-item" onClick={() => setAdd(prev => !prev)} >
+                <div className="btn-item" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
                     <i className="far fa-plus-circle" style={{marginRight: '5px'}} />
                     {capitalize(singular)}
                 </div>
