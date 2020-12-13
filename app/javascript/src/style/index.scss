@@ -29,6 +29,16 @@ $fa-font-path: "webfonts";
 	}
 }
 
+.tabs-heading {
+	font-family: Raleway;
+	font-style: normal;
+	font-weight: bold;
+	font-size: x-large;
+	@media only screen and (max-width: 600px)  {
+		font-size: medium;
+	}
+}
+
 .big-heading {
 	font-family: Raleway;
 	font-style: normal;

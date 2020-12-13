@@ -15,7 +15,7 @@ const ListTab = ({ type, onClick, onDestroy, current, readOnly }) => {
             className={`list-tab ${current ? 'current-list-tab' : ''}`}
             onClick={onClick}
         >
-        	<div className="huge-heading">
+        	<div className="tabs-heading">
 	            <div>{capitalize(type)}</div>
 				<div>{readOnly ? null : <i className="fas fa-times-circle delete-list icon-delete" onClick={destroy} />}</div>
 	        </div>
