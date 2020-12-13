@@ -2,6 +2,7 @@
 	text-align: center;
 	max-width: 400px;
 	margin: auto;
+	padding: 10px;
 	min-height: calc(100vh - 180px);
 }
 
@@ -11,6 +12,7 @@
 
 .auth-card {
 	background: $white;
+	margin: auto;
 	padding: 10px;
 	border-radius: 4px;	
 }
