@@ -13,10 +13,10 @@ $fa-font-path: "webfonts";
 .mega-heading {
 	font-family: Raleway;
 	font-style: normal;
-	font-weight: lighter;
-	font-size: x-large;
+	font-weight: bold;
+	font-size: xx-large;
 	@media only screen and (max-width: 600px)  {
-		font-size: medium;
+		font-size: large;
 	}
 }
 .huge-heading {
