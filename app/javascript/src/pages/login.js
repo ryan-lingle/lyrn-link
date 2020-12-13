@@ -20,26 +20,28 @@ const Login = ({ location }) => {
                 src={Logo} 
                 alt="lyrn list logo" 
             />
-            <div className="auth-card">
-                <ErrorBox error={error} />
-                <div className="auth-heading">
-                    <div className="big-heading">
-                            Welcome Back!
-                    </div>
-                    <div className="main-heading">
-                        Sign in to edit your lyrnlink
-                    </div>
-                </div>
-                <div className="btn-item auth-button" onClick={() => api.requestToken()}>
-                    <i className="fab fa-twitter" style={{marginRight: '5px'}} />
-                    Sign in with Twitter
+            <div className="auth-heading">
+                <div className="big-heading">
+                    The #1 spot to share your learning
                 </div>
             </div>
-            <div className="auth-heading">
-                <div className="little-body">
+            <div className="auth-card">
+                <ErrorBox error={error} />
+                <div className="btn-item auth-button" onClick={() => api.requestToken()}>
+                    <i className="fab fa-twitter" style={{marginRight: '10px'}} />
+                    Sign in with Twitter
+                </div>
+                <div className="auth-button main-body">
+                    Remember, we won't post anything to Twitter without your permission.
+                </div>
+            </div>
+            <div className="auth-footing">
+                <div className="little-body" style={{marginTop: '15px'}}>
                         Don't have a lyrnlink yet? <a href="/signup">Sign Up</a>
                 </div>
             </div>
+
+
         </div>
     )
 }
