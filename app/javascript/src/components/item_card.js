@@ -43,9 +43,7 @@ const ItemCard = ({ rank=true, id, index, title, subtitle, image, url, url_copy,
                     {creator || url_copy || url}
                 </a>
             </div>
-            <div className="item-delete">
-                {readOnly ? null : <i className="fal fa-times icon icon-delete item-delete" onClick={destroy} />}
-            </div>
+            {readOnly ? null : <i className="fal fa-times icon icon-delete item-delete" onClick={destroy} />}
         </div>
     );
 };

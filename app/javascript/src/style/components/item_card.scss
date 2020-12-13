@@ -27,6 +27,10 @@
 		color: $grey3;
 		background: darken($white,2%);
 	}
+	@media only screen and (max-width: 600px)  {
+		font-size: x-small;
+		margin-right: 5px;
+	}
 }
 
 .item-delete {
@@ -54,6 +58,11 @@
 	border-radius: 4px;
 	color: $grey2;
 	margin-bottom: 5px;
+	@media only screen and (max-width: 600px)  {
+		font-size: x-small;
+		height: 15px;
+		width: 15px;
+	}
 }
 
 .item-box {
@@ -63,6 +72,8 @@
 	@media only screen and (max-width: 600px)  {
 		height: 40px;
 		width: 40px;
+		margin-left: 5px;
+		margin-right: 5px;
 	}
 }
 
@@ -83,6 +94,9 @@
 .item-details {
 	display: block;
 	margin: 10px;
+	@media only screen and (max-width: 600px)  {
+		margin-left: 5px;
+	}
 }
 
 .item-creator {
