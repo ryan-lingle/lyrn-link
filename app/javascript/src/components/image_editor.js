@@ -1,11 +1,13 @@
 import React, { useState, useRef, useContext } from 'react';
 import Context from '../context';
 import AvatarEditor from 'react-avatar-editor';
-import { Submit } from '../components';
+import { Submit, Modal } from '../components';
 
-const ImageEditor = ({ image, onSubmit }) => {
+const ImageEditor = ({ image, onSubmit, onClose }) => {
     const { api, state } = useContext(Context);
     const editor = useRef();
+    const fileInput = useRef();
+    const [imageState, setImage] = useState(image);
     const [scale, setScale] = useState(1);
 
     async function getCroppedImage(e) {
@@ -15,10 +17,18 @@ const ImageEditor = ({ image, onSubmit }) => {
         if (res) onSubmit();
     }
 
+
     if (image) return(
-        <div>
+        <Modal heading="Edit Image" show={!!image} onClose={onClose} >
+            <input 
+                type="file" 
+                ref={fileInput}
+                style={{display: 'none'}}
+                accept="image/jpeg,image/png,image/webp" 
+                onChange={({ target }) => setImage(target.files[0])} 
+            />
             <AvatarEditor
-                image={image}
+                image={imageState || image}
                 ref={editor}
                 width={200}
                 height={200}
@@ -41,14 +51,19 @@ const ImageEditor = ({ image, onSubmit }) => {
                     onChange={({ target }) => setScale(parseFloat(target.value))}
                 />
                 <br/>
-                <form onSubmit={getCroppedImage} >
-                    <Submit
-                        copy="Save Changes"
-                        loading={state.loading.profile_picture}
-                    />
-                </form>
+                <div className="flex-around" style={{marginTop: '20px'}} >
+                    <button onClick={() => fileInput.current.click()} className="btn-black">
+                        Upload New Image
+                    </button>
+                    <form onSubmit={getCroppedImage} >
+                        <Submit
+                            copy="Save Changes"
+                            loading={state.loading.profile_picture}
+                        />
+                    </form>
+                </div>
             </div>
-        </div>
+        </Modal>
     );
 
     return <div></div>;

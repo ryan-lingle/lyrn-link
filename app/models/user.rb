@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-	# include ActiveStorageSupport::SupportForBase64
-	# has_one_base64_attached :profile_picture
+	include EncodeImageUrl
+	include ActiveStorageSupport::SupportForBase64
+	has_one_base64_attached :profile_picture
 
 	# TODO: HANDLE USER VALIDATIONS
 	# validates :username, :email, :password_digest, presence: true
@@ -12,7 +13,7 @@ class User < ApplicationRecord
 	before_update :add_name_and_description
 
 	before_create :add_profile_picture_url
-	before_update :add_profile_picture_url
+	# before_update :add_profile_picture_url
 
 	def add_name_and_description
 		self.name = twitter_client.user.name if !self.name
@@ -20,7 +21,12 @@ class User < ApplicationRecord
 	end
 
 	def add_profile_picture_url
-		self.profile_picture_url = twitter_client.user.profile_image_url.to_s.sub('_normal', '') if !self.profile_picture_url
+		binding.pry
+		if !self.profile_picture
+			url = twitter_client.user.profile_image_url.to_s.sub('_normal', '')
+			data = encode_image_url(url)
+			self.profile_picture.attach(data: data)
+		end
 	end
 
 	def lists
@@ -56,6 +62,10 @@ class User < ApplicationRecord
 		end
 	end
 
+	def profile_picture_url
+	    self.profile_picture.variant(resize_to_limit: [100, 100]).processed.service_url if self.profile_picture.attachment
+	end
+
 	def to_res
 		{
 			id: self.id,
@@ -63,7 +73,7 @@ class User < ApplicationRecord
 			handle: self.handle,
 			description: self.description,
 			email: self.email,
-			profile_picture_url: self.profile_picture_url,
+			profile_picture_url: profile_picture_url,
 			lists: list_index,
 			uncreated_lists: uncreated_lists,
 		}

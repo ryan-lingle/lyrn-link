@@ -250,6 +250,12 @@ $fa-font-path: "webfonts";
 	justify-content: space-between;
 }
 
+.flex-around {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
 .flex-grow {
 	flex-grow: 1;
 }
