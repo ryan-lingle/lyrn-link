@@ -48,7 +48,7 @@ const Editable = ({ readOnly, value, onUpdate, className, defaultValue, textArea
 		return(
 			<div 
 				className={(readOnly ? '' : 'editable ') + className}
-				onDoubleClick={handleEdit}
+				onClick={handleEdit}
 			>
 				<div>{value || defaultValue}</div>
 			</div>

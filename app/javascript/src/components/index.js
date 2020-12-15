@@ -20,3 +20,4 @@ export {default as List} from './list.js';
 export {default as Draggable} from './draggable.js';
 export {default as UserProfile} from './user_profile.js';
 export {default as Editable} from './editable';
+export {default as Modal} from './modal.js';
