@@ -6,6 +6,17 @@
 	}
 }
 
+#profile-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.header-logo {
+	max-height: 30px;
+
+}
+
 #user-profile-picture-wrapper {
 	position: relative;
 }
@@ -16,6 +27,10 @@
 	border-radius: 4px;
 	border: 2px solid black;
 	margin-right: 10px;
+	@media only screen and (max-width: 600px)  {
+		width: 60px;
+		height: 60px;
+	}
 }
 
 #user-profile-picture-wrapper:hover {
@@ -34,16 +49,27 @@
 	display: none;
 }
 
+.profile-info {
+	align-items: flex-start;
+}
+
 .user-link-icon {
 	margin-left: 10px;
 	color: $grey5;
 	font-size: 12px;
 } 
 
+.user-name {
+	align-items: flex-start;
+}
+
 .user-handle {
-	margin: 5px 0px;
-	align-items: center;
+	align-items: flex-start;
 	display: flex;
+}
+
+.user-since {
+	align-items: baseline;
 }
 
 .user-link-icon {
