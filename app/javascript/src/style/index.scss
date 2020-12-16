@@ -121,7 +121,7 @@ $fa-font-path: "webfonts";
 	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: normal;
-	font-size: xx-small;ont-size: smaller;
+	font-size: x-small;
 }
 
 .truncate {
@@ -262,8 +262,7 @@ $fa-font-path: "webfonts";
 
 .tippy-popper {
 	max-width: 260px;
-	background: $red;
-	border: 1px solid darken($red, 5%);
+	background: black;
 	box-sizing: border-box;
 	border-radius: 4px;
 	color: $white;
