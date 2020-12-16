@@ -22,7 +22,7 @@ const UserProfile = ({ readOnly }) => {
 
 	return(
 		<div id="user-profile">
-			<div className="flex-between">
+			<div id="profile-header">
 				<div id="user-profile-picture-wrapper">
 					<img src={state.user.profile_picture_url} id="user-profile-picture" />
 				</div>
@@ -33,15 +33,17 @@ const UserProfile = ({ readOnly }) => {
 				    accept="image/jpeg,image/png,image/webp" 
 				    onChange={({ target }) => setProfilePicture(target.files[0])} 
 				/>
-				<div className={isLoggedIn ? 'flex-grow' : ''} >
-					<Editable
-						readOnly={readOnly}
-						className="huge-heading"
-						value={state.user.name}
-						onUpdate={updateName}
-						defaultValue="( name )"
-					/>
-					<div className="user-handle" style={{marginTop: '-2px'}}>
+				<div className="flex-grow profile-info" >
+					<div className="user-name">
+						<Editable
+							readOnly={readOnly}
+							className="huge-heading"
+							value={state.user.name}
+							onUpdate={updateName}
+							defaultValue="( name )"
+						/>
+					</div>
+					<div className="user-handle" style={{marginTop: '-5px'}}>
 						/&nbsp;
 						<Editable
 							readOnly={readOnly}
@@ -50,30 +52,26 @@ const UserProfile = ({ readOnly }) => {
 							onUpdate={updateHandle}
 							defaultValue="( handle )"
 						/>
-						{
-							readOnly
-
-							? 	null
-
-							: 	<a  href={`/${state.user.handle}`} target="_blank" >
-									<i className="far fa-external-link user-link-icon" />
-								</a>
-						}
 					</div>
-					<div className="tiny-heading">
+					<div className="user-since tiny-heading">
 						Sharing since December '20
 					</div>
 				</div>
 				{
 					isLoggedIn
 
-					?	null
-
-					: 	<a className="flex-grow big-body text-right" style={{fontWeight: 'bold', alignSelf: 'baseline', color: '#1DA1F2'}} href="/signup" >
-							 Sign up for lyrnlink
+					?	<div className="flex">
+							<span className="text-right tiny-body" ><b>My lyrnlink:&nbsp;</b></span>
+							<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
+								https://lyrn.link/{state.user.handle}
+							</a>
+							<i className="far fa-copy btn-share" style={{fontSize: 'small', marginLeft: '10px'}} />
+						</div>
+						
+					: 	<a className="btn-black" href="/signup" >
+							Sign Up
 						</a>
 				}
-				
 			</div>
 			<Editable
 				readOnly={readOnly}
