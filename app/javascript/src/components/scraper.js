@@ -57,7 +57,7 @@ const Scraper = ({ onSubmit }) => {
                     },
                     {
                         type: 'hidden',
-                        key: 'image',
+                        key: 'image_url',
                         defaultValue: result.image,
                     }
                 ]}

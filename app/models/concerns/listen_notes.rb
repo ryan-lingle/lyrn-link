@@ -20,7 +20,7 @@ class ListenNotes
 			title: episode["title_original"],
 			description: episode["description_original"],
 			uid: episode["itunes_id"],
-			image: episode["image"],
+			image_url: episode["image"],
 			creator: episode["podcast"]["title_original"],
 			publish_date: parse_date(episode["pub_date_ms"]),
 		}

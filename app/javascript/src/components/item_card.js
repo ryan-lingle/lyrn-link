@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ItemCard = ({ rank=true, id, index, title, subtitle, image, url, url_copy, creator, readOnly, onDestroy }) => {
+const ItemCard = ({ rank=true, id, index, title, subtitle, image_url, url, url_copy, creator, readOnly, onDestroy }) => {
 
     function destroy(e) {
         e.stopPropagation();
@@ -25,7 +25,7 @@ const ItemCard = ({ rank=true, id, index, title, subtitle, image, url, url_copy,
             </div>
             
             <div className="item-box">
-                <img src={image} className="item-image" />
+                <img src={image_url} className="item-image" />
             </div>
             <div className="item-details truncate">
                 <div className="huge-body truncate">

@@ -1,6 +1,8 @@
 module EncodeImageUrl
 	def encode_image_url(url)
-		image = open(url)
-		Base64.encode64(image.read)
+		if url
+			image = open(url)
+			"data:#{image.meta['content-type']};base64," + Base64.encode64(image.read)
+		end
 	end
 end
