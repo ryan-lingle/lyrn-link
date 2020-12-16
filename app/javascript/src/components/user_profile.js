@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import Context from '../context';
 import { Editable, ImageEditor } from '../components';
+import { Tooltip } from 'react-tippy';
 
 const UserProfile = ({ readOnly }) => {
 	const { api, state } = useContext(Context);
@@ -19,6 +20,10 @@ const UserProfile = ({ readOnly }) => {
 	function updateDescription(description) {
 		api.updateUser(state.user.id, { description });
 	};
+
+	function copyLyrnLink() {
+		navigator.clipboard.writeText('https://lyrn.link/' + state.user.handle);
+	}
 
 	return(
 		<div id="user-profile">
@@ -59,19 +64,36 @@ const UserProfile = ({ readOnly }) => {
 					</div>
 				</div>
 				{
-					isLoggedIn
+					readOnly
 
-					?	<div className="flex">
-							<span className="text-right tiny-body" ><b>My lyrnlink:&nbsp;</b></span>
+					? 	isLoggedIn
+						
+						?	null
+
+						: 	<a className="btn-black" href="/signup" >
+								Sign Up
+							</a>
+
+					:	<div className="flex">
+							<span className="text-right tiny-body" ><strong>My lyrnlink:&nbsp;</strong></span>
 							<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
 								https://lyrn.link/{state.user.handle}
 							</a>
-							<i className="far fa-copy btn-share" style={{fontSize: 'small', marginLeft: '10px'}} />
+							<Tooltip
+						        title="Copy LyrnLink"
+						        position= "right"
+						        trigger= "mouseenter"
+						        inertia= "true"
+						        transitionFlip= "true"
+						        delay='0'
+						    >
+								<i 
+									className="far fa-copy btn-share"
+									style={{fontSize: 'small', marginLeft: '10px'}}
+									onClick={copyLyrnLink}
+								/>
+							</Tooltip>
 						</div>
-						
-					: 	<a className="btn-black" href="/signup" >
-							Sign Up
-						</a>
 				}
 			</div>
 			<Editable
