@@ -21,8 +21,7 @@ class User < ApplicationRecord
 	end
 
 	def add_profile_picture_url
-		binding.pry
-		if !self.profile_picture
+		if !self.profile_picture.attachment
 			url = twitter_client.user.profile_image_url.to_s.sub('_normal', '')
 			data = encode_image_url(url)
 			self.profile_picture.attach(data: data)
@@ -101,7 +100,7 @@ class User < ApplicationRecord
 			title: twitter_user.name,
 			url_copy: '@' + twitter_user.screen_name,
 			url: twitter_user.uri.to_s,
-			image: twitter_user.profile_image_url.to_s.sub('_normal', ''),
+			image_url: twitter_user.profile_image_url.to_s.sub('_normal', ''),
 			description: twitter_user.description,
 		}
 	end

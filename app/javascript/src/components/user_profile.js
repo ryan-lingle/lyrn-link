@@ -27,7 +27,7 @@ const UserProfile = ({ readOnly }) => {
 					<img 
 						src={state.user.profile_picture_url} 
 						id="user-profile-picture"
-						onClick={() => setProfilePicture(state.user.profile_picture_url)}
+						onClick={() => setProfilePicture(state.user.profile_picture_url || 1)}
 					/>
 				</div>
 				<ImageEditor 

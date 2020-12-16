@@ -3,7 +3,7 @@ import Context from '../context';
 import AvatarEditor from 'react-avatar-editor';
 import { Submit, Modal } from '../components';
 
-const ImageEditor = ({ image, onSubmit, onClose }) => {
+const ImageEditor = ({ image, onClose }) => {
     const { api, state } = useContext(Context);
     const editor = useRef();
     const fileInput = useRef();
@@ -14,9 +14,8 @@ const ImageEditor = ({ image, onSubmit, onClose }) => {
         e.preventDefault();
         const canvas = editor.current.getImage().toDataURL();
         const res = await api.updateProfilePicture(state.user.id, canvas);
-        if (res) onSubmit();
+        if (res) onClose();
     }
-
 
     if (image) return(
         <Modal heading="Edit Image" show={!!image} onClose={onClose} >

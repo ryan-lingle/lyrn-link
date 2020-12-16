@@ -17,7 +17,7 @@ class GoogleBooks
 				description: book["volumeInfo"]["description"],
 				publish_date: book["volumeInfo"]["publishedDate"],
 				uid: find_isbn13(book["volumeInfo"]["industryIdentifiers"]),
-				image: book["volumeInfo"]["imageLinks"]["thumbnail"],
+				image_url: book["volumeInfo"]["imageLinks"]["thumbnail"],
 				creator: book["volumeInfo"]["authors"]&.join(' & '),
 				categories: book["volumeInfo"]["categories"],
 			}
