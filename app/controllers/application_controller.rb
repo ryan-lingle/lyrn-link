@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
       	return
   	end
   	@current_user = User.find(auth_token[:user_id])
+    forbidden if !@current_user
   rescue JWT::VerificationError, JWT::DecodeError
   	forbidden
   end

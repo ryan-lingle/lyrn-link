@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_004535) do
+ActiveRecord::Schema.define(version: 2020_12_17_003910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -54,6 +54,15 @@ ActiveRecord::Schema.define(version: 2020_12_16_004535) do
     t.index ["list_id"], name: "index_items_on_list_id"
   end
 
+  create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "like_id", null: false
+    t.uuid "link_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["like_id"], name: "index_likes_on_like_id"
+    t.index ["link_id"], name: "index_likes_on_link_id"
+  end
+
   create_table "lists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type"
     t.integer "index"
@@ -88,5 +97,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_004535) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "items", "lists"
+  add_foreign_key "likes", "users", column: "like_id"
+  add_foreign_key "likes", "users", column: "link_id"
   add_foreign_key "lists", "users"
 end

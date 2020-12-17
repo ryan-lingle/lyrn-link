@@ -402,7 +402,69 @@ class Api {
             return false;
 
         }
+    }
 
+    createLike = async (id) => {
+        const res = await this.post('likes', {
+            params: { like: { link_id: id } },
+            errorType: 'likes',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_liked',
+                ...res,
+            });
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    destroyLike = async (id) => {
+        const res = await this.get(`likes/${id}`, {
+            method: 'DELETE',
+            errorType: 'likes',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_liked',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    getLike = async (id, authed=false) => {
+        const res = await this.get(`likes/${id}`, {
+            params: { authed },
+            checkRefresh: false,
+            errorType: 'likes',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_liked',
+                ...res,
+            });
+
+        } else {
+
+            return false;
+
+        }
     }
 
     setError = (errorType, error) => {
