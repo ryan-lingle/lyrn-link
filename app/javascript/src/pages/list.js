@@ -26,7 +26,7 @@ const AdminList = ({ match }) => {
     if (error) return <ErrorBox error={error} />;
 
     const currentList = api.store.currentList();
-
+    
     return(
         <div className="container">
             <Helmet>

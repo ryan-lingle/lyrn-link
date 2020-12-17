@@ -30,6 +30,8 @@ Rails.application.routes.draw do
           get 'scrape', to: 'items#scrape'
         end
       end
+
+      resources :likes, only: [:create, :destroy, :show]
     end
   end
 

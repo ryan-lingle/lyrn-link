@@ -7,6 +7,9 @@ class User < ApplicationRecord
 	# validates :username, :email, :password_digest, presence: true
 	# validates :username, :email, uniqueness: true
 
+	has_many :likes, class_name: "Like", foreign_key: "like_id"
+	has_many :likers, class_name: "Like", foreign_key: "link_id"
+
 	has_many :lists, dependent: :destroy
 
 	before_create :add_name_and_description

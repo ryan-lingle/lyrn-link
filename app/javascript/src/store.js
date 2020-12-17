@@ -6,11 +6,15 @@ class Store {
                 lists: [],
             },
             listIndex: 0,
-            loading: {},
+            loading: {
+                user: true,
+            },
             errors: {},
             success: {},
             searchResults: {},
             scrapeResult: {},
+            likeCount: 0,
+            liked: null,
         }
 
         this.setState = () => {};
@@ -90,6 +94,19 @@ class Store {
         case 'scrape':
             this.state.loading.scrape = false;
             this.state.scrapeResult = event.result;
+            break;
+        case 'set_liked':
+            this.state.liked = event.liked;
+            if (event.count) {
+                this.state.likeCount = event.count;
+            } else {
+                if (this.state.liked === false) {
+                    if (this.state.likeCount > 0)
+                        this.state.likeCount -= 1
+                } else {
+                    this.state.likeCount += 1
+                }
+            }
             break;
         case 'error':
             this.state.loading[event.errorType] = null;
