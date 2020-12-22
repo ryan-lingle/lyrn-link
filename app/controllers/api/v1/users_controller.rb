@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-	skip_before_action :authenticate_request, only: [:show]
+	before_action :soft_authentication, only: [:show]
 	before_action :set_user, except: [:show, :index]
 
 	def index
@@ -17,7 +17,7 @@ class Api::V1::UsersController < ApplicationController
 				render json: {}, status: 404
 			else
 				render json: {
-					user: user.to_res
+					user: user.to_res(current_user)
 				}
 			end
 		else

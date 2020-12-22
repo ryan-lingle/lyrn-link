@@ -479,19 +479,32 @@ class Api {
         }
     }
 
-    getLike = async (id, authed=false) => {
-        const res = await this.get(`likes/${id}`, {
-            params: { authed },
-            checkRefresh: false,
-            errorType: 'likes',
+    createBookmark = async (id) => {
+        const res = await this.post('bookmarks', {
+            params: { bookmark: { item_id: id } },
+            errorType: 'bookmarks',
         });
 
         if (!res.error) {
 
-            store.reduce({
-                type: 'set_liked',
-                ...res,
-            });
+            return res.bookmarked;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    destroyBookmark = async (id) => {
+        const res = await this.get(`bookmarks/${id}`, {
+            method: 'DELETE',
+            errorType: 'bookmarks',
+        });
+
+        if (!res.error) {
+
+            return res.bookmarked;
 
         } else {
 

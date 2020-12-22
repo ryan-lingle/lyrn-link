@@ -18,6 +18,15 @@ class ApplicationController < ActionController::Base
   	forbidden
   end
 
+  def soft_authentication
+    unless valid_token?
+        return
+    end
+    @current_user = User.find(auth_token[:user_id])
+  rescue JWT::VerificationError, JWT::DecodeError
+    return
+  end
+
 	private
 
 	def forbidden(e='Please log in.')

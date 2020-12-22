@@ -1,12 +1,8 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import Context from '../context';
 
 const LikeButton = ({ authed }) => {
 	const { state, api } = useContext(Context);
-
-	useEffect(() => {
-		api.getLike(state.user.id, authed);
-	}, []);
 
 	return(
 		<div className="flex" style={{marginTop: '10px'}} >
