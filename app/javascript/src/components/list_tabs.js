@@ -5,29 +5,30 @@ import NewList from './new_list';
 import Draggable from './draggable';
 import { parseQuery } from '../utils';
 
-const ListTabs = ({ pathname="/admin/", readOnly }) => {
+const ListTabs = ({ pathname="/admin/lists/" }) => {
     const { state, api } = useContext(Context);
+    const readOnly = state.readOnly;
     const lists = state.user.lists;
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const changeTab = () => {
+    //     const changeTab = () => {
 
-            const wire = window.location.pathname.split('/');
-            const path = wire[wire.length - 1];
-            if (path) api.store.reduce({
-                type: 'set_list_index',
-                listType: path,
-            });
-            window.removeEventListener('popstate', changeTab);
+    //         const wire = window.location.pathname.split('/');
+    //         const path = wire[wire.length - 1];
+    //         if (path) api.store.reduce({
+    //             type: 'set_list_index',
+    //             listType: path,
+    //         });
+    //         window.removeEventListener('popstate', changeTab);
 
-        }
+    //     }
 
-        window.addEventListener('popstate', changeTab);
+    //     window.addEventListener('popstate', changeTab);
 
-        () => window.removeEventListener('popstate', changeTab);
+    //     () => window.removeEventListener('popstate', changeTab);
 
-    }, [state.listIndex]);
+    // }, [state.listIndex]);
 
     function listCallback(list) {
         return async function() {

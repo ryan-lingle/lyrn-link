@@ -10,6 +10,8 @@ class User < ApplicationRecord
 	has_many :likes, class_name: "Like", foreign_key: "like_id"
 	has_many :likers, class_name: "Like", foreign_key: "link_id"
 
+	has_many :following, through: :likes, source: :link
+
 	has_many :lists, dependent: :destroy
 
 	before_create :add_name_and_description
@@ -86,10 +88,22 @@ class User < ApplicationRecord
 			name: self.name,
 			handle: self.handle,
 			description: self.description,
-			email: self.email,
 			profile_picture_url: profile_picture_url,
 			lists: list_index,
+			following: {
+				type: 'following',
+				items: following.map { |u| u.to_index_res },
+			},
 			uncreated_lists: uncreated_lists,
+		}
+	end
+
+	def to_index_res
+		{
+			id: self.id,
+			title: self.name,
+			url:  ENV["DOMAIN"] + '/' + self.handle,
+			image_url: profile_picture_url,
 		}
 	end
 
