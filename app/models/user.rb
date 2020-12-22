@@ -11,8 +11,11 @@ class User < ApplicationRecord
 	has_many :likers, class_name: "Like", foreign_key: "link_id"
 
 	has_many :following, through: :likes, source: :link
+	has_many :followers, through: :likers, source: :like
 
 	has_many :lists, dependent: :destroy
+	has_many :bookmarks, dependent: :destroy
+	has_many :bookmarked_items, through: :bookmarks, source: :item
 
 	before_create :add_name_and_description
 	before_update :add_name_and_description
@@ -64,8 +67,8 @@ class User < ApplicationRecord
 		end
 	end
 
-	def list_index
-		lists.map { |list| list.to_res }
+	def list_index(current_user=nil)
+		lists.map { |list| list.to_res(current_user) }
 	end
 
 	def uncreated_lists
@@ -82,19 +85,25 @@ class User < ApplicationRecord
 	    self.profile_picture.variant(resize_to_limit: [100, 100]).processed.service_url if self.profile_picture.attachment
 	end
 
-	def to_res
+	def to_res(current_user=nil)
 		{
 			id: self.id,
 			name: self.name,
 			handle: self.handle,
 			description: self.description,
 			profile_picture_url: profile_picture_url,
-			lists: list_index,
+			lists: list_index(current_user),
 			following: {
 				type: 'following',
 				items: following.map { |u| u.to_index_res },
 			},
+			bookmarks: {
+				type: 'bookmarks',
+				items: bookmarked_items.map { |i| i.to_index_res(current_user) },
+			},
 			uncreated_lists: uncreated_lists,
+			like_count: likes.count,
+			liked: followers.include?(current_user),
 		}
 	end
 

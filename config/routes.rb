@@ -31,7 +31,9 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :likes, only: [:create, :destroy, :show]
+      resources :likes, only: [:create, :destroy]
+      resources :bookmarks, only: [:create, :destroy]
+
     end
   end
 

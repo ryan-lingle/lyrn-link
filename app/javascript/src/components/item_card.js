@@ -1,6 +1,7 @@
 import React from 'react';
+import { BookmarkButton } from '../components';
 
-const ItemCard = ({ rank=true, id, index, title, subtitle, image_url, url, url_copy, creator, readOnly, onDestroy }) => {
+const ItemCard = ({ rank=true, id, bookmarked, index, title, subtitle, image_url, url, url_copy, creator, readOnly, onDestroy }) => {
 
     function destroy(e) {
         e.stopPropagation();
@@ -43,7 +44,13 @@ const ItemCard = ({ rank=true, id, index, title, subtitle, image_url, url, url_c
                     {creator || url_copy || url}
                 </a>
             </div>
-            {readOnly ? null : <i className="fal fa-times icon icon-delete item-delete" onClick={destroy} />}
+            {
+                readOnly
+
+                ?   <BookmarkButton id={id} bookmarked={bookmarked} />
+                
+                :   <i className="fal fa-times icon icon-delete item-delete" onClick={destroy} />
+            }
         </div>
     );
 };
