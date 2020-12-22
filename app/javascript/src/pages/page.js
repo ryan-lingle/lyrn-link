@@ -3,19 +3,27 @@ import { ErrorBox, Loader, ListTabs, List, UserProfile } from '../components';
 import Context from '../context';
 import { Helmet } from 'react-helmet';
 
-const AdminList = ({ match }) => {
+const Page = ({ match }) => {
     const { api, state } = useContext(Context);
 
     useEffect(() => {
-        console.log('hi');
         (async function() {
-            await api.getUser({ handle: match.params.handle });
+            await api.getUser(match.params);
+
+            if (match.params.tab) {
+                api.store.reduce({
+                    type: 'set_tab',
+                    tab: match.params.tab,
+                });
+            }
+
             if (match.params.listType) {
                 api.store.reduce({
                     type: 'set_list_index',
                     listType: match.params.listType,
                 });
             }
+
         })();
     }, []);
 
@@ -30,23 +38,28 @@ const AdminList = ({ match }) => {
     return(
         <div className="container">
             <Helmet>
-                <title>{`${state.user.name} (${state.user.handle})`}</title>
+                <title>
+                    {
+                        state.readOnly
+
+                        ?   `${state.user.name} (${state.user.handle})`
+
+                        :   'LyrnLink Admin'
+                    }
+                </title>
             </Helmet>
             <div id="dashboard">
-                <UserProfile 
-                    readOnly={true} 
-                />
-                <ListTabs 
-                    readOnly={true} 
-                    pathname={`/${match.params.handle}/`} 
+                <UserProfile
                 />
                 <List 
                     {...currentList} 
-                    readOnly={true}
+                    createItem={api.createItem} 
+                    destroyItem={api.destroyItem}
+                    isList={state.tab === 'lists'}
                 />
             </div>
         </div>
     );
 }
 
-export default AdminList;
+export default Page;

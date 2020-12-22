@@ -1,10 +1,11 @@
 import React, { useContext, useRef, useState } from 'react';
 import Context from '../context';
-import { Editable, ImageEditor, LikeButton } from '../components';
+import { Editable, ImageEditor, LikeButton, ProfileTabs } from '../components';
 import { Tooltip } from 'react-tippy';
 
-const UserProfile = ({ readOnly }) => {
+const UserProfile = () => {
 	const { api, state } = useContext(Context);
+	const readOnly = state.readOnly;
     const fileInput = useRef();
     const [profilePicture, setProfilePicture] = useState(null);
 	const isLoggedIn = localStorage.getItem('authToken') ? 1 : 0;
@@ -112,6 +113,9 @@ const UserProfile = ({ readOnly }) => {
 				onUpdate={updateDescription}
 				textArea={true}
 				defaultValue="I don't have a description."
+			/>
+			<ProfileTabs 
+				pathname={readOnly ? `/${state.user.handle}/` : '/admin/'}
 			/>
 		</div>
 	);

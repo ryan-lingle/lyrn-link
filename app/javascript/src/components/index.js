@@ -5,7 +5,7 @@ export {default as Table} from './table.js';
 export {default as Loader} from './loader.js';
 export {default as ErrorBox} from './error_box.js';
 export {default as SuccessBox} from './success_box.js';
-export {default as Tabs} from './tabs.js';
+export {default as ProfileTabs} from './profile_tabs.js';
 export {default as Form} from './form.js';
 export {default as MultiSelect} from './multi_select.js';
 export {default as ImageEditor} from './image_editor.js';

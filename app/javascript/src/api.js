@@ -208,6 +208,7 @@ class Api {
             store.reduce({
                 type: 'set_user',
                 user: res.user,
+                readOnly: params && params.handle ? true : false,
             });
 
             return true;
