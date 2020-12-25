@@ -5,6 +5,8 @@ class Store {
                 username: localStorage.getItem('username'),
                 lists: [],
             },
+            users: [],
+            userCount: 0,
             listIndex: 0,
             loading: {
                 user: true,
@@ -34,6 +36,11 @@ class Store {
             localStorage.setItem('authToken', event.token);
             localStorage.setItem('tokenExpires', this.tenMinFromNow());
             this.state.user = event.user;
+            break;
+        case 'set_users':
+            this.state.loading.users = false;
+            this.state.users = event.users;
+            this.state.userCount = event.count;
             break;
         case 'set_user':
             this.state.loading.login = false;

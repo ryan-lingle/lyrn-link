@@ -204,11 +204,43 @@ class Api {
             errorType: 'user',
         });
         
-        if (!res.error)
+        if (!res.error) {
             store.reduce({
                 type: 'set_user',
                 user: res.user,
             });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    getUsers = async (params) => {
+        this.setLoading('users');
+
+        const res = await this.get('users', {
+            errorType: 'users'
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_users',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+            
+        }
+
     }
 
     createList = async (list) => {

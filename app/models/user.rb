@@ -16,7 +16,15 @@ class User < ApplicationRecord
 	before_update :add_name_and_description
 
 	before_create :add_profile_picture_url
-	# before_update :add_profile_picture_url
+
+	def self.index
+		User.all.map do |user|
+			{
+				name: user.name,
+				link: user.link,
+			}
+		end
+	end
 
 	def add_name_and_description
 		self.name = twitter_client.user.name if !self.name
@@ -29,6 +37,10 @@ class User < ApplicationRecord
 			data = encode_image_url(url)
 			self.profile_picture.attach(data: data)
 		end
+	end
+
+	def admin?
+		self.admin
 	end
 
 	def lists
@@ -106,5 +118,9 @@ class User < ApplicationRecord
 			image_url: twitter_user.profile_image_url.to_s.sub('_normal', ''),
 			description: twitter_user.description,
 		}
+	end
+
+	def link
+		ENV["DOMAIN"] + "/" + self.handle
 	end
 end

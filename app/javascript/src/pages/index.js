@@ -5,3 +5,4 @@ export {default as Admin} from './admin.js';
 export {default as Profile} from './profile.js';
 export {default as TwitterCallback} from './twitter_callback.js';
 export {default as List} from './list.js';
+export {default as Users} from './users.js';
