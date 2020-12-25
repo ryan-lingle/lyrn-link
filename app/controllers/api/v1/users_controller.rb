@@ -1,6 +1,14 @@
 class Api::V1::UsersController < ApplicationController
 	skip_before_action :authenticate_request, only: [:show]
-	before_action :set_user, except: [:show]
+	before_action :set_user, except: [:show, :index]
+
+	def index
+		authorize current_user
+		render json: {
+			count: User.count,
+			users: User.index,
+		}
+	end
 
 	def show
 		if params[:handle]

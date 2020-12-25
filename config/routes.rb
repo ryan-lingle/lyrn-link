@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   		get 'current_user', to: 'users#show'
 
       # RESOURCES
-      resources :users, only: [:update, :destroy] do
+      resources :users, only: [:update, :destroy, :index] do
         member do
           post 'profile_picture', to: 'users#profile_picture'
         end

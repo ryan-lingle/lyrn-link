@@ -3,6 +3,7 @@ import {
   Admin,
   AdminList,
   List,
+  Users,
   _404_,
 } from "./pages";
 import { Route, Switch } from 'react-router-dom';
@@ -17,6 +18,7 @@ const Routes = () => {
           <div className="container">
               <ErrorBox error={state.errors.standard} />
               <Switch>
+                <PrivateRoute exact path="/users" component={Users} />
                 <PrivateRoute path="/admin" exact component={Admin} />
                 <PrivateRoute path="/admin/:listType" exact component={Admin} />
                 <Route exact path="/:handle/" component={List} />
