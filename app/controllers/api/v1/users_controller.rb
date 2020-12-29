@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+	skip_before_action :authenticate_request, only: [:show]
 	before_action :soft_authentication, only: [:show]
 	before_action :set_user, except: [:show, :index]
 
