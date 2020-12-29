@@ -28,6 +28,34 @@ const UserProfile = () => {
 
 	return(
 		<div id="user-profile">
+			<div>
+				{
+					readOnly
+
+					? 	null
+
+					:	<div className="flex">
+							<span className="text-right tiny-body" ><strong>My lyrnlink:&nbsp;</strong></span>
+							<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
+								https://lyrn.link/{state.user.handle}
+							</a>
+							<Tooltip
+						        title="Copy LyrnLink"
+						        position= "right"
+						        trigger= "mouseenter"
+						        inertia= "true"
+						        transitionFlip= "true"
+						        delay='0'
+						    >
+								<i 
+									className="far fa-copy btn-share"
+									style={{fontSize: 'small', marginLeft: '10px'}}
+									onClick={copyLyrnLink}
+								/>
+							</Tooltip>
+						</div>
+				}
+			</div>
 			<div id="profile-header">
 				<div id="user-profile-picture-wrapper">
 					<img 
@@ -70,41 +98,6 @@ const UserProfile = () => {
 						Sharing since December '20
 					</div>
 				</div>
-				<div>
-					{
-						readOnly
-
-						? 	isLoggedIn
-							
-							?	null
-
-							: 	<a className="btn-black" href="/signup" >
-									Sign Up
-								</a>
-
-						:	<div className="flex">
-								<span className="text-right tiny-body" ><strong>My lyrnlink:&nbsp;</strong></span>
-								<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
-									https://lyrn.link/{state.user.handle}
-								</a>
-								<Tooltip
-							        title="Copy LyrnLink"
-							        position= "right"
-							        trigger= "mouseenter"
-							        inertia= "true"
-							        transitionFlip= "true"
-							        delay='0'
-							    >
-									<i 
-										className="far fa-copy btn-share"
-										style={{fontSize: 'small', marginLeft: '10px'}}
-										onClick={copyLyrnLink}
-									/>
-								</Tooltip>
-							</div>
-					}
-					{readOnly ? <LikeButton authed={isLoggedIn} /> : null}
-				</div>
 			</div>
 			<Editable
 				readOnly={readOnly}
@@ -114,6 +107,7 @@ const UserProfile = () => {
 				textArea={true}
 				defaultValue="I don't have a description."
 			/>
+			{readOnly ? <LikeButton authed={isLoggedIn} /> : null}
 			<ProfileTabs 
 				pathname={readOnly ? `/${state.user.handle}/` : '/admin/'}
 			/>

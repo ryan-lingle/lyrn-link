@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import Logo from '../assets/icon.png';
+import Logo from '../assets/logo.png';
 import Context from '../context';
 
 const NavBar = ({ location }) => {
