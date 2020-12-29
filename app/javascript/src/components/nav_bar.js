@@ -3,8 +3,9 @@ import Logo from '../assets/logo.png';
 import Context from '../context';
 
 const NavBar = ({ location }) => {
-    const { api, state } = useContext(Context);
+    const { state } = useContext(Context);
     const [showHam, setShowHam] = useState(false);
+    const isLoggedIn = localStorage.getItem('authToken') ? 1 : 0;
 
     function current(path, match=null) {
         if (path == '/') {
@@ -20,8 +21,8 @@ const NavBar = ({ location }) => {
     }
 
     return(
-        <div className="nav-bg">
-            <div className="nav">
+        <div className="nav-bg fixed-top">
+            <div className="nav flex-between">
                 <div className="nav-logo">
                     <a href="/" >
                         <img 
@@ -32,49 +33,17 @@ const NavBar = ({ location }) => {
                     </a>
                 </div>
                 <div className="navlinks">
-                    <a href="/admin" className={current("/") ? "nav-current" : ""}>
-                        Admin
-                    </a>
-                </div>
-                <div className="nav-profile">
-                    <div className="nav-profile-details" >
-                        <div className="nav-name">
-                            {username()}
-                        </div>
-                        <div className="nav-agency">
-                        </div>
-                    </div>
                     {
-                        state.user.profile_picture_url
+                        isLoggedIn
 
-                        ?   <img 
-                                src={state.user.profile_picture_url} 
-                                className="nav-avatar" 
-                                onClick={() => setShowHam(prev => !prev)}
-                            />
+                            ?   <a href="/admin">
+                                    Admin
+                                </a>
 
-                        :   <i 
-                                className="far fa-user-circle" 
-                                id="default-avatar" 
-                                onClick={() => setShowHam(prev => !prev)}
-                            />
+                            :   <a href="/signup">
+                                    Sign Up
+                                </a>
                     }
-                    <div 
-                        className="hamburger-menu"
-                        style={{
-                            display: showHam ? "" : "none",
-                        }}
-                    >   
-                        <a href="/admin" className="mobile-only-link" >Admin</a>
-                        <a href="/profile" >
-                            Profile
-                        </a>
-                        <a onClick={() => {
-                            localStorage.clear();
-                            window.location.href = "/signin";
-                        }}>
-                            Sign Out</a>
-                    </div>
                 </div>
             </div>
         </div>

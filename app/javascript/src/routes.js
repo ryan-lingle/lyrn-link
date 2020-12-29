@@ -13,6 +13,7 @@ const Routes = () => {
 
     return(
       <div>
+        <Route exact component={NavBar} />
         <ErrorBox error={state.errors.standard} />
         <Switch>
           <PrivateRoute exact path="/users" component={Users} />

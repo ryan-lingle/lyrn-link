@@ -31,7 +31,13 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
         api.store.reduce({
             type: 'set_tab', tab
         });
-    };  
+    };
+
+    const icons = {
+        lists: 'fal fa-clipboard-list',
+        community: 'fal fa-project-diagram',
+        bookmarks: 'fal fa-bookmark',
+    };
 
     return(
         <div>
@@ -39,9 +45,10 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
                 {['lists', 'community', 'bookmarks'].map((tab, i) =>
                     <div 
                         key={i} 
-                        className={`profile-tab list-tab ${tab === state.tab ? 'current-list-tab' : ''}`}
+                        className={`profile-tab flex list-tab ${tab === state.tab ? 'current-list-tab' : ''}`}
                         onClick={() => setTab(tab)}
                     >
+                        <i className={icons[tab]} style={{marginRight: '10px', width: '25px'}} />
                         <div className="tabs-heading">
                             {capitalize(tab)}
                         </div>
