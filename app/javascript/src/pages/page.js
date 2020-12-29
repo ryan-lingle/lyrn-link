@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { ErrorBox, Loader, ListTabs, List, UserProfile } from '../components';
+import { ErrorBox, Loader, ListTabs, GenericTabs, List, UserProfile } from '../components';
 import Context from '../context';
 import { Helmet } from 'react-helmet';
 
@@ -34,9 +34,12 @@ const Page = ({ match }) => {
     if (error) return <ErrorBox error={error} />;
 
     const currentList = api.store.currentList();
-    
+    const pathname = state.readOnly ? `/${state.user.handle}/` : '/admin/';
+
+    console.log(currentList);
+
     return(
-        <div className="container">
+        <div>
             <Helmet>
                 <title>
                     {
@@ -48,15 +51,30 @@ const Page = ({ match }) => {
                     }
                 </title>
             </Helmet>
-            <div id="dashboard">
-                <UserProfile
-                />
-                <List 
-                    {...currentList} 
-                    createItem={api.createItem} 
-                    destroyItem={api.destroyItem}
-                    isList={state.tab === 'lists'}
-                />
+            <div id="side-nav">
+                <UserProfile />
+            </div>
+            <div className="container">
+                <div id="dashboard">
+                    {
+                        state.tab === 'lists' 
+
+                            ?   <ListTabs 
+                                    pathname={pathname + 'lists/'} 
+                                /> 
+
+                            :   <GenericTabs 
+                                    pathname={pathname + state.tab + '/'}
+                                    lists={api.store.currentTab()} 
+                                />
+                    }
+                    <List 
+                        {...currentList} 
+                        createItem={api.createItem} 
+                        destroyItem={api.destroyItem}
+                        isList={state.tab === 'lists'}
+                    />
+                </div>
             </div>
         </div>
     );

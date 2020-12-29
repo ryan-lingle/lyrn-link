@@ -3,7 +3,6 @@ import Context from '../context';
 import ListTab from './list_tab';
 import NewList from './new_list';
 import Draggable from './draggable';
-import { parseQuery } from '../utils';
 
 const ListTabs = ({ pathname="/admin/lists/" }) => {
     const { state, api } = useContext(Context);

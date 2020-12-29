@@ -6,9 +6,8 @@ const LikeButton = ({ authed }) => {
 
 	return(
 		<div className="flex" style={{marginTop: '10px'}} >
-			<div id="like-count">{state.likeCount}</div>
-			<i 
-				className={`fas fa-thumbs-up like-icon ${state.liked ? 'liked-icon' : ''}`} 
+			<div 
+				className={`follow-button ${state.liked ? 'followed' : ''}`} 
 				onClick={
 					() => 	state.liked
 
@@ -16,7 +15,9 @@ const LikeButton = ({ authed }) => {
 
 							: 	api.createLike(state.user.id)
 				}
-			/>
+			>
+				{state.liked ? 'Unfollow' : 'Follow'}
+			</div>
 		</div>
 	);
 }; 

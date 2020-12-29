@@ -35,11 +35,11 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
 
     return(
         <div>
-            <div className="flex tabs" style={{marginBottom: '40px'}} >
-                {['lists', 'following', 'bookmarks'].map((tab, i) =>
+            <div className="profile-tabs" style={{marginBottom: '40px'}} >
+                {['lists', 'community', 'bookmarks'].map((tab, i) =>
                     <div 
                         key={i} 
-                        className={`list-tab ${tab === state.tab ? 'current-list-tab' : ''}`}
+                        className={`profile-tab list-tab ${tab === state.tab ? 'current-list-tab' : ''}`}
                         onClick={() => setTab(tab)}
                     >
                         <div className="tabs-heading">
@@ -48,13 +48,6 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
                     </div>
                 )}
             </div>
-            {
-                state.tab === 'lists'
-
-                ?   <ListTabs pathname={pathname + 'lists/'} />
-
-                :   null
-            }
         </div>
     );
 };

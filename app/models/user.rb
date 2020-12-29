@@ -93,14 +93,21 @@ class User < ApplicationRecord
 			description: self.description,
 			profile_picture_url: profile_picture_url,
 			lists: list_index(current_user),
-			following: {
-				type: 'following',
-				items: following.map { |u| u.to_index_res },
-			},
-			bookmarks: {
+			community: [
+				{
+					type: 'following',
+					items: following.map { |u| u.to_index_res },
+				},
+				{
+					type: 'followers',
+					items: followers.map { |u| u.to_index_res },
+
+				}
+			],
+			bookmarks: [{
 				type: 'bookmarks',
 				items: bookmarked_items.map { |i| i.to_index_res(current_user) },
-			},
+			}],
 			uncreated_lists: uncreated_lists,
 			like_count: likes.count,
 			liked: followers.include?(current_user),

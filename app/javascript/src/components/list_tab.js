@@ -5,7 +5,7 @@ const ListTab = ({ type, onClick, onDestroy, current, readOnly }) => {
 
 	function destroy(e) {
 		e.stopPropagation();
-		if (window.confirm('Are you sure you want to delete this list?')) {
+		if (onDestroy && window.confirm('Are you sure you want to delete this list?')) {
 			onDestroy();
 		};
 	};
