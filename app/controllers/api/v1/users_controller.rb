@@ -18,13 +18,15 @@ class Api::V1::UsersController < ApplicationController
 				render json: {}, status: 404
 			else
 				render json: {
-					user: user.to_res(current_user)
+					user: user.to_res(current_user),
+					current_user_id: current_user&.id, 
 				}
 			end
 		else
 			authenticate_request
 			render json: {
-				user: current_user.to_res(current_user) 
+				user: current_user.to_res(current_user),
+				current_user_id: current_user.id, 
 			}
 		end
 	end

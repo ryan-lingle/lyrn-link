@@ -1,6 +1,7 @@
 class Store {
     constructor() {
         this.state = {
+            current_user_id: null,
             user: {
                 username: localStorage.getItem('username'),
                 lists: [],
@@ -50,6 +51,7 @@ class Store {
             this.state.loading.profile_picture = false;
             if (event.user.username) localStorage.setItem('username', event.user.username);
             this.state.user = { ...this.state.user, ...event.user };
+            this.state.current_user_id = event.current_user_id;
             this.state.readOnly = event.readOnly;
             break;
         case 'set_tab':
