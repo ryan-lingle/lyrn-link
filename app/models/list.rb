@@ -15,7 +15,7 @@ class List < ApplicationRecord
 		end
 	end
 
-	def to_res
+	def to_res(current_user=nil)
 		{
 			id: self.id,
 			index: self.index,
@@ -23,7 +23,7 @@ class List < ApplicationRecord
 			singular: singular,
 			searchable: self.respond_to?('search'),
 			icon: icon,
-			items: item_index,
+			items: item_index(current_user),
 		}
 	end
 
@@ -31,8 +31,8 @@ class List < ApplicationRecord
 		Item.where(list_id: self.id).order(index: :asc)
 	end
 
-	def item_index
-		items.map { |item| item.to_index_res }
+	def item_index(current_user=nil)
+		items.map { |item| item.to_index_res(current_user) }
 	end
 
 	def update_item_index!(items)

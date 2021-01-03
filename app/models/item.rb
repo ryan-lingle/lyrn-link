@@ -3,6 +3,8 @@ class Item < ApplicationRecord
 	include ActiveStorageSupport::SupportForBase64
 	has_one_base64_attached :image
 	belongs_to :list
+	has_many :bookmarks
+	has_many :users, through: :bookmarks
 	before_create :add_index
 	before_create :upload_image
 
@@ -21,7 +23,7 @@ class Item < ApplicationRecord
 		self.image.attachment.service_url if self.image.attachment
 	end
 
-	def to_index_res
+	def to_index_res(current_user=nil)
 		{
 			id: self.id,
 			title: self.title,
@@ -32,6 +34,7 @@ class Item < ApplicationRecord
 			url_copy: self.url_copy, 
 			index: self.index,
 			creator: self.creator,
+			bookmarked: users.include?(current_user),
 		}
 	end
 end

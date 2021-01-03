@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
 import {
-  Admin,
-  AdminList,
-  List,
   Users,
+  Page,
   _404_,
 } from "./pages";
 import { Route, Switch } from 'react-router-dom';
@@ -15,17 +13,18 @@ const Routes = () => {
 
     return(
       <div>
-          <div className="container">
-              <ErrorBox error={state.errors.standard} />
-              <Switch>
-                <PrivateRoute exact path="/users" component={Users} />
-                <PrivateRoute path="/admin" exact component={Admin} />
-                <PrivateRoute path="/admin/:listType" exact component={Admin} />
-                <Route exact path="/:handle/" component={List} />
-                <Route exact path="/:handle/:listType" component={List} />
-                <Route component={_404_} />
-              </Switch>
-          </div>
+        <Route exact component={NavBar} />
+        <ErrorBox error={state.errors.standard} />
+        <Switch>
+          <PrivateRoute exact path="/users" component={Users} />
+          <PrivateRoute path="/admin" exact component={Page} />
+          <PrivateRoute path="/admin/:tab" exact component={Page} />
+          <PrivateRoute path="/admin/:tab/:listType" exact component={Page} />
+          <Route exact path="/:handle/" component={Page} />
+          <Route exact path="/:handle/:tab" component={Page} />
+          <Route exact path="/:handle/:tab/:listType" component={Page} />
+          <Route component={_404_} />
+        </Switch>
       </div>
     )
 }

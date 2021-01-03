@@ -27,7 +27,7 @@ const Users = () => {
 	if (error) return <ErrorBox error={error} />;
 
 	return(
-		<div className="container" >
+		<div className="container">
 			<div className="card text-center" style={{marginTop: '50px', padding: '20px'}} >
 				<div className="big-heading">COUNT: {state.userCount}</div>
 			</div>

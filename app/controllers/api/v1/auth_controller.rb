@@ -64,4 +64,11 @@ class Api::V1::AuthController < ApplicationController
 		end
 	end
 
+	def sign_out
+		cookies.delete(:refresh_token)
+		render json: {
+			success: true
+		}
+	end
+
 end

@@ -1,32 +1,30 @@
 .nav {
-	max-width: 1200px;
 	padding-left: 10px;
 	padding-right: 10px;
 	margin: auto;
 }
 
 .nav-bg {
-	background-color: $white;
-	box-shadow: 0px 0px 8px $grey1, 0px 0px 16px  $grey1;
+	background-color: $grey3;
 	align-items: center;
 	padding: 10px 0px;
+	height: 50px;
 }
 
 .nav-logo {
 	height: 32px;
-	margin: auto;
+	margin-right: auto;
+	margin-left: 10px;
 }
 
 .navlinks {
 	padding: 0 20px;
-	flex-grow: 1;
-	margin: auto;
 }
 
 .navlinks a {
 	letter-spacing: 0.0275em;
 	font-feature-settings: 'tnum' on, 'lnum' on, 'ss01' on;
-	color: $blue;
+	color: $black;
 	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: normal;
@@ -39,7 +37,7 @@
 
 .navlinks a:hover {
 	text-decoration: none !important;
-	color: $grey1;
+	color: $black;
 	filter: brightness(95%);
 }
 
@@ -128,9 +126,6 @@
 }
 
 @media only screen and (max-width: 635px) {
-	.navlinks a {
-		display: none;
-	}
 
 	.mobile-only-link {
 		display: block !important;
@@ -147,3 +142,9 @@
 	cursor: pointer;
 }
 
+#side-nav {
+	background: white;
+	height: 100%;
+	padding: 0px 30px;
+	margin-top: 50px;
+}

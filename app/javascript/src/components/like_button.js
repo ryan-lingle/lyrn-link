@@ -1,26 +1,30 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context';
 
-const LikeButton = ({ authed }) => {
+const LikeButton = ({ id, liked }) => {
+
 	const { state, api } = useContext(Context);
+	const [likeState, setLikeState] = useState(liked);
 
 	useEffect(() => {
-		api.getLike(state.user.id, authed);
-	}, []);
+		setLikeState(liked);
+	}, [liked]);
+
+	async function handleClick() {
+		const res = likeState ? await api.destroyLike(id) : await api.createLike(id);
+		setLikeState(res);
+	};
+
+	if (state.user.id === id) return <div/>;
 
 	return(
-		<div className="flex" style={{marginTop: '10px'}} >
-			<div id="like-count">{state.likeCount}</div>
-			<i 
-				className={`fas fa-thumbs-up like-icon ${state.liked ? 'liked-icon' : ''}`} 
-				onClick={
-					() => 	state.liked
-
-							?	api.destroyLike(state.user.id)
-
-							: 	api.createLike(state.user.id)
-				}
-			/>
+		<div className="flex" >
+			<div 
+				className={`follow-button ${likeState ? 'followed' : ''}`} 
+				onClick={handleClick}
+			>
+				{likeState ? 'Unfollow' : 'Follow'}
+			</div>
 		</div>
 	);
 }; 

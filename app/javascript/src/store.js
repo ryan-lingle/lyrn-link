@@ -7,7 +7,10 @@ class Store {
             },
             users: [],
             userCount: 0,
+            readOnly: true,
             listIndex: 0,
+            tabIndex: 0,
+            tab: 'lists',
             loading: {
                 user: true,
             },
@@ -15,8 +18,6 @@ class Store {
             success: {},
             searchResults: {},
             scrapeResult: {},
-            likeCount: 0,
-            liked: null,
         }
 
         this.setState = () => {};
@@ -49,6 +50,14 @@ class Store {
             this.state.loading.profile_picture = false;
             if (event.user.username) localStorage.setItem('username', event.user.username);
             this.state.user = { ...this.state.user, ...event.user };
+            this.state.readOnly = event.readOnly;
+            break;
+        case 'set_tab':
+            this.state.tab = event.tab;
+            this.state.tabIndex = 0;
+            break;
+        case 'set_tab_index':
+            this.state.tabIndex = event.tabIndex;
             break;
         case 'add_list':
             this.state.loading.lists = false;
@@ -141,8 +150,14 @@ class Store {
     }
 
     currentList = () => {
-        return this.state.user.lists[this.state.listIndex];
+        if (this.state.tab === 'lists') {
+            return this.state.user.lists[this.state.listIndex];
+        } else {
+            return this.state.user[this.state.tab][this.state.tabIndex];
+        }
     }
+
+    currentTab = () => this.state.user[this.state.tab];
 
     findIndexFromType = (listType) => {
         return this.state.user.lists.findIndex(({ type }) => type === listType) || 0;

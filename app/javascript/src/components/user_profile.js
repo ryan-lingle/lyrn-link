@@ -1,13 +1,13 @@
 import React, { useContext, useRef, useState } from 'react';
 import Context from '../context';
-import { Editable, ImageEditor, LikeButton } from '../components';
+import { Editable, ImageEditor, LikeButton, ProfileTabs } from '../components';
 import { Tooltip } from 'react-tippy';
 
-const UserProfile = ({ readOnly }) => {
+const UserProfile = () => {
 	const { api, state } = useContext(Context);
+	const readOnly = state.readOnly;
     const fileInput = useRef();
     const [profilePicture, setProfilePicture] = useState(null);
-	const isLoggedIn = localStorage.getItem('authToken') ? 1 : 0;
 
 	function updateName(name) {
 		api.updateUser(state.user.id, { name });
@@ -26,63 +26,16 @@ const UserProfile = ({ readOnly }) => {
 	}
 
 	return(
-		<div id="user-profile">
-			<div id="profile-header">
-				<div id="user-profile-picture-wrapper">
-					<img 
-						src={state.user.profile_picture_url} 
-						id="user-profile-picture"
-						onClick={
-							readOnly
+		<div id="user-profile" className="mobile-flex">
+			<div>
+				{
+					readOnly
 
-							?	null
+					? 	null
 
-							: 	() => setProfilePicture(state.user.profile_picture_url || 1)
-						}
-					/>
-				</div>
-				<ImageEditor 
-					image={profilePicture} 
-					onClose={() => setProfilePicture(null)}
-				/>
-				<div className="flex-grow profile-info" >
-					<div className="user-name">
-						<Editable
-							readOnly={readOnly}
-							className="huge-heading"
-							value={state.user.name}
-							onUpdate={updateName}
-							defaultValue="( name )"
-						/>
-					</div>
-					<div className="user-handle" style={{marginTop: '-5px'}}>
-						/&nbsp;
-						<Editable
-							readOnly={readOnly}
-							className="big-heading"
-							value={state.user.handle}
-							onUpdate={updateHandle}
-							defaultValue="( handle )"
-						/>
-					</div>
-					<div className="user-since tiny-heading">
-						Sharing since December '20
-					</div>
-				</div>
-				<div>
-					{
-						readOnly
-
-						? 	isLoggedIn
-							
-							?	null
-
-							: 	<a className="btn-black" href="/signup" >
-									Sign Up
-								</a>
-
-						:	<div className="flex">
-								<span className="text-right tiny-body" ><strong>My lyrnlink:&nbsp;</strong></span>
+					:	<div style={{marginBottom: '10px'}}>
+							<div className="text-left tiny-body" ><strong>my lyrnlink:&nbsp;</strong></div>
+							<div className="flex">
 								<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
 									https://lyrn.link/{state.user.handle}
 								</a>
@@ -101,18 +54,62 @@ const UserProfile = ({ readOnly }) => {
 									/>
 								</Tooltip>
 							</div>
-					}
-					{readOnly ? <LikeButton authed={isLoggedIn} /> : null}
+						</div>
+				}
+				<div id="profile-header">
+					<div id="user-profile-picture-wrapper">
+						<img 
+							src={state.user.profile_picture_url} 
+							id="user-profile-picture"
+							onClick={
+								readOnly
+
+								?	null
+
+								: 	() => setProfilePicture(state.user.profile_picture_url || 1)
+							}
+						/>
+					</div>
+					<ImageEditor 
+						image={profilePicture} 
+						onClose={() => setProfilePicture(null)}
+					/>
+					<div className="flex-grow profile-info" >
+						<div className="user-name">
+							<Editable
+								readOnly={readOnly}
+								className="huge-heading"
+								value={state.user.name}
+								onUpdate={updateName}
+								defaultValue="( name )"
+							/>
+						</div>
+						<div className="user-handle" style={{marginTop: '-5px'}}>
+							/&nbsp;
+							<Editable
+								readOnly={readOnly}
+								className="big-heading"
+								value={state.user.handle}
+								onUpdate={updateHandle}
+								defaultValue="( handle )"
+							/>
+						</div>
+						<div className="user-since tiny-heading">
+							Sharing since {state.user.created}
+						</div>
+					</div>
 				</div>
+				<Editable
+					readOnly={readOnly}
+					className="big-body user-description"
+					value={state.user.description}
+					onUpdate={updateDescription}
+					textArea={true}
+					defaultValue="I don't have a description."
+				/>
 			</div>
-			<Editable
-				readOnly={readOnly}
-				className="big-body user-description"
-				value={state.user.description}
-				onUpdate={updateDescription}
-				textArea={true}
-				defaultValue="I don't have a description."
-			/>
+			<div style={{marginTop: '10px'}} />
+			{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : null}
 		</div>
 	);
 };
