@@ -22,6 +22,10 @@ class User < ApplicationRecord
 
 	before_create :add_profile_picture_url
 
+	def created_at_string
+		Date::MONTHNAMES[self.created_at.month] + " " + self.created_at.year.to_s
+	end
+
 	def self.index
 		User.all.map do |user|
 			{
@@ -89,6 +93,7 @@ class User < ApplicationRecord
 		{
 			id: self.id,
 			name: self.name,
+			created: created_at_string,
 			handle: self.handle,
 			description: self.description,
 			profile_picture_url: profile_picture_url,
@@ -96,11 +101,11 @@ class User < ApplicationRecord
 			community: [
 				{
 					type: 'following',
-					items: following.map { |u| u.to_index_res },
+					items: following.map { |u| u.to_index_res(current_user) },
 				},
 				{
 					type: 'followers',
-					items: followers.map { |u| u.to_index_res },
+					items: followers.map { |u| u.to_index_res(current_user) },
 
 				}
 			],
@@ -109,17 +114,17 @@ class User < ApplicationRecord
 				items: bookmarked_items.map { |i| i.to_index_res(current_user) },
 			}],
 			uncreated_lists: uncreated_lists,
-			like_count: likes.count,
 			liked: followers.include?(current_user),
 		}
 	end
 
-	def to_index_res
+	def to_index_res(current_user=nil)
 		{
 			id: self.id,
 			title: self.name,
 			url:  ENV["DOMAIN"] + '/' + self.handle,
 			image_url: profile_picture_url,
+			followed: followers.include?(current_user),
 		}
 	end
 

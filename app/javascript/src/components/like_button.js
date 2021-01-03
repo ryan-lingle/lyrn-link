@@ -1,22 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context';
 
-const LikeButton = ({ authed }) => {
+const LikeButton = ({ id, liked }) => {
+
 	const { state, api } = useContext(Context);
+	const [likeState, setLikeState] = useState(liked);
+
+	useEffect(() => {
+		setLikeState(liked);
+	}, [liked]);
+
+	async function handleClick() {
+		const res = likeState ? await api.destroyLike(id) : await api.createLike(id);
+		setLikeState(res);
+	};
+
+	// if (state.user.id === id) return <div/>;
 
 	return(
-		<div className="flex" style={{marginTop: '10px'}} >
+		<div className="flex" >
 			<div 
-				className={`follow-button ${state.liked ? 'followed' : ''}`} 
-				onClick={
-					() => 	state.liked
-
-							?	api.destroyLike(state.user.id)
-
-							: 	api.createLike(state.user.id)
-				}
+				className={`follow-button ${likeState ? 'followed' : ''}`} 
+				onClick={handleClick}
 			>
-				{state.liked ? 'Unfollow' : 'Follow'}
+				{likeState ? 'Unfollow' : 'Follow'}
 			</div>
 		</div>
 	);

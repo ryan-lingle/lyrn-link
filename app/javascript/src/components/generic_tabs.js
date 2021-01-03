@@ -42,6 +42,7 @@ const ListTabs = ({ lists, pathname="/admin/lists/" }) => {
             >
                 {lists.map((list, i) =>
                         <ListTab
+                            key={i}
                             {...list}
                             readOnly={readOnly}
                             onClick={callback(list.type, i)}

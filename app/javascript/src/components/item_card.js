@@ -1,7 +1,7 @@
 import React from 'react';
-import { BookmarkButton } from '../components';
+import { BookmarkButton, LikeButton } from '../components';
 
-const ItemCard = ({ rank=true, id, bookmarked, index, title, subtitle, image_url, url, url_copy, creator, readOnly, onDestroy }) => {
+const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, followed, index, title, subtitle, image_url, url, url_copy, creator, readOnly, onDestroy }) => {
 
     function destroy(e) {
         e.stopPropagation();
@@ -9,6 +9,18 @@ const ItemCard = ({ rank=true, id, bookmarked, index, title, subtitle, image_url
             onDestroy();
         };
     };
+
+    function button() {
+        if (bookmarkButton) {
+            return <BookmarkButton id={id} bookmarked={bookmarked} />;
+        } else if (followButton) {
+            return <LikeButton id={id} liked={followed} />;
+        } else if (readOnly) {
+            return <BookmarkButton id={id} bookmarked={bookmarked} />;
+        } else {
+            return <i className="fal fa-times icon icon-delete item-delete" onClick={destroy} />;
+        }
+    }
 
     return(
         <div className={`item-card ${readOnly ? '' : 'draggable'}`}>
@@ -22,7 +34,7 @@ const ItemCard = ({ rank=true, id, bookmarked, index, title, subtitle, image_url
 
                     :   null
                 }       
-                {readOnly ? null : <i className="fas fa-ellipsis-v icon"/>} 
+                {readOnly || !rank ? null : <i className="fas fa-ellipsis-v icon"/>} 
             </div>
             
             <div className="item-box">
@@ -44,13 +56,7 @@ const ItemCard = ({ rank=true, id, bookmarked, index, title, subtitle, image_url
                     {creator || url_copy || url}
                 </a>
             </div>
-            {
-                readOnly
-
-                ?   <BookmarkButton id={id} bookmarked={bookmarked} />
-                
-                :   <i className="fal fa-times icon icon-delete item-delete" onClick={destroy} />
-            }
+            {button()}
         </div>
     );
 };

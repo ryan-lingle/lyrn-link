@@ -8,7 +8,6 @@ const UserProfile = () => {
 	const readOnly = state.readOnly;
     const fileInput = useRef();
     const [profilePicture, setProfilePicture] = useState(null);
-	const isLoggedIn = localStorage.getItem('authToken') ? 1 : 0;
 
 	function updateName(name) {
 		api.updateUser(state.user.id, { name });
@@ -96,7 +95,7 @@ const UserProfile = () => {
 							/>
 						</div>
 						<div className="user-since tiny-heading">
-							Sharing since December '20
+							Sharing since {state.user.created}
 						</div>
 					</div>
 				</div>
@@ -109,7 +108,8 @@ const UserProfile = () => {
 					defaultValue="I don't have a description."
 				/>
 			</div>
-			{readOnly ? <LikeButton authed={isLoggedIn} /> : null}
+			<div style={{marginTop: '10px'}} />
+			{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : null}
 		</div>
 	);
 };
