@@ -1,5 +1,6 @@
 import React from 'react';
 import { BookmarkButton, LikeButton } from '../components';
+import Icon from '../assets/icon.png';
 
 const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, followed, index, title, subtitle, image_url, url, url_copy, creator, readOnly, onDestroy }) => {
 
@@ -38,7 +39,7 @@ const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, fol
             </div>
             
             <div className="item-box">
-                <img src={image_url} className="item-image" />
+                <img src={image_url || Icon} className="item-image" />
             </div>
             <div className="item-details truncate">
                 <div className="huge-body truncate">

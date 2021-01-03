@@ -15,7 +15,7 @@ class Item < ApplicationRecord
 	def upload_image
 		if self.image_url
 			data = encode_image_url(self.image_url)
-			self.image.attach(data: data)
+			self.image.attach(data: data) if data
 		end
 	end
 
