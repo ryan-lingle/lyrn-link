@@ -56,3 +56,27 @@ body {
 	padding: 10px;
 	margin: 15px auto 15px auto;
 }
+
+
+// mobile classes
+
+.mobile-only {
+	display: none;
+}
+
+@media only screen and (max-width: 600px) {
+	.non-mobile-only {
+		display: none !important;
+	}
+
+	.mobile-only {
+		display: block !important;
+	}
+
+	.mobile-flex {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+

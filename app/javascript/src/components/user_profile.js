@@ -27,7 +27,7 @@ const UserProfile = () => {
 	}
 
 	return(
-		<div id="user-profile">
+		<div id="user-profile" className="mobile-flex">
 			<div>
 				{
 					readOnly
@@ -57,62 +57,59 @@ const UserProfile = () => {
 							</div>
 						</div>
 				}
-			</div>
-			<div id="profile-header">
-				<div id="user-profile-picture-wrapper">
-					<img 
-						src={state.user.profile_picture_url} 
-						id="user-profile-picture"
-						onClick={
-							readOnly
+				<div id="profile-header">
+					<div id="user-profile-picture-wrapper">
+						<img 
+							src={state.user.profile_picture_url} 
+							id="user-profile-picture"
+							onClick={
+								readOnly
 
-							?	null
+								?	null
 
-							: 	() => setProfilePicture(state.user.profile_picture_url || 1)
-						}
+								: 	() => setProfilePicture(state.user.profile_picture_url || 1)
+							}
+						/>
+					</div>
+					<ImageEditor 
+						image={profilePicture} 
+						onClose={() => setProfilePicture(null)}
 					/>
+					<div className="flex-grow profile-info" >
+						<div className="user-name">
+							<Editable
+								readOnly={readOnly}
+								className="huge-heading"
+								value={state.user.name}
+								onUpdate={updateName}
+								defaultValue="( name )"
+							/>
+						</div>
+						<div className="user-handle" style={{marginTop: '-5px'}}>
+							/&nbsp;
+							<Editable
+								readOnly={readOnly}
+								className="big-heading"
+								value={state.user.handle}
+								onUpdate={updateHandle}
+								defaultValue="( handle )"
+							/>
+						</div>
+						<div className="user-since tiny-heading">
+							Sharing since December '20
+						</div>
+					</div>
 				</div>
-				<ImageEditor 
-					image={profilePicture} 
-					onClose={() => setProfilePicture(null)}
+				<Editable
+					readOnly={readOnly}
+					className="big-body user-description"
+					value={state.user.description}
+					onUpdate={updateDescription}
+					textArea={true}
+					defaultValue="I don't have a description."
 				/>
-				<div className="flex-grow profile-info" >
-					<div className="user-name">
-						<Editable
-							readOnly={readOnly}
-							className="huge-heading"
-							value={state.user.name}
-							onUpdate={updateName}
-							defaultValue="( name )"
-						/>
-					</div>
-					<div className="user-handle" style={{marginTop: '-5px'}}>
-						/&nbsp;
-						<Editable
-							readOnly={readOnly}
-							className="big-heading"
-							value={state.user.handle}
-							onUpdate={updateHandle}
-							defaultValue="( handle )"
-						/>
-					</div>
-					<div className="user-since tiny-heading">
-						Sharing since December '20
-					</div>
-				</div>
 			</div>
-			<Editable
-				readOnly={readOnly}
-				className="big-body user-description"
-				value={state.user.description}
-				onUpdate={updateDescription}
-				textArea={true}
-				defaultValue="I don't have a description."
-			/>
 			{readOnly ? <LikeButton authed={isLoggedIn} /> : null}
-			<ProfileTabs 
-				pathname={readOnly ? `/${state.user.handle}/` : '/admin/'}
-			/>
 		</div>
 	);
 };

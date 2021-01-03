@@ -1,10 +1,17 @@
-import React, { useEffect, useContext } from 'react';
-import { ErrorBox, Loader, ListTabs, GenericTabs, List, UserProfile } from '../components';
+import React, { useEffect, useContext, useState } from 'react';
+import { ErrorBox, Loader, ListTabs, GenericTabs, ProfileTabs, MobileTabs, List, UserProfile } from '../components';
 import Context from '../context';
 import { Helmet } from 'react-helmet';
 
 const Page = ({ match }) => {
     const { api, state } = useContext(Context);
+    const [pageHeight, setPageHeight] = useState(window.innerHeight - 50);
+
+    useEffect(() => {
+        window.onresize = () => {
+            setPageHeight(window.innerHeight - 50);
+        };
+    }, []);
 
     useEffect(() => {
         (async function() {
@@ -49,11 +56,22 @@ const Page = ({ match }) => {
                     }
                 </title>
             </Helmet>
-            <div style={{ display: 'flex', height: `${window.innerHeight - 50}px` }} >
-                <div id="side-nav">
+            <div style={{ display: 'flex', height: `${pageHeight}px` }} >
+                <div id="side-nav" className="non-mobile-only">
                     <UserProfile />
+                    <ProfileTabs 
+                        pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
+                    />
+                </div>
+                <div className="mobile-only">
+                    <MobileTabs 
+                        pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
+                    />
                 </div>
                 <div className="container">
+                    <div className="mobile-only">
+                        <UserProfile />
+                    </div>
                     {
                         state.tab === 'lists' 
 
