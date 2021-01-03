@@ -46,7 +46,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
 
     return(
-        <div id="listy" >
+        <div id="list" >
             {
                 isList
 

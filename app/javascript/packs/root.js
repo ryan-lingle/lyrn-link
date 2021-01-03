@@ -47,10 +47,10 @@ class Root extends Component {
               <Route component={Routes}/>
             </Switch>
           </Router>
-          <footer>
+          {/*<footer>
             {localStorage.getItem('authToken') ? <a id="sign-out" onClick={this.signOut} href="#" >Sign Out</a> : null}
             <div id="footer-text">Always Learning, © 2020 Lyrn Link.</div>
-          </footer>
+          </footer>*/}
         </DndProvider>
       </Context.Provider>
     );

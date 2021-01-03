@@ -34,25 +34,27 @@ const UserProfile = () => {
 
 					? 	null
 
-					:	<div className="flex">
-							<span className="text-right tiny-body" ><strong>My lyrnlink:&nbsp;</strong></span>
-							<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
-								https://lyrn.link/{state.user.handle}
-							</a>
-							<Tooltip
-						        title="Copy LyrnLink"
-						        position= "right"
-						        trigger= "mouseenter"
-						        inertia= "true"
-						        transitionFlip= "true"
-						        delay='0'
-						    >
-								<i 
-									className="far fa-copy btn-share"
-									style={{fontSize: 'small', marginLeft: '10px'}}
-									onClick={copyLyrnLink}
-								/>
-							</Tooltip>
+					:	<div style={{marginBottom: '10px'}}>
+							<div className="text-left tiny-body" ><strong>my lyrnlink:&nbsp;</strong></div>
+							<div className="flex">
+								<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
+									https://lyrn.link/{state.user.handle}
+								</a>
+								<Tooltip
+							        title="Copy LyrnLink"
+							        position= "right"
+							        trigger= "mouseenter"
+							        inertia= "true"
+							        transitionFlip= "true"
+							        delay='0'
+							    >
+									<i 
+										className="far fa-copy btn-share"
+										style={{fontSize: 'small', marginLeft: '10px'}}
+										onClick={copyLyrnLink}
+									/>
+								</Tooltip>
+							</div>
 						</div>
 				}
 			</div>

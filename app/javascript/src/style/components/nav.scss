@@ -5,14 +5,16 @@
 }
 
 .nav-bg {
-	background-color: $black;
+	background-color: $grey4;
 	align-items: center;
 	padding: 10px 0px;
+	height: 50px;
 }
 
 .nav-logo {
 	height: 32px;
-	margin: auto;
+	margin-right: auto;
+	margin-left: 10px;
 }
 
 .navlinks {
@@ -22,7 +24,7 @@
 .navlinks a {
 	letter-spacing: 0.0275em;
 	font-feature-settings: 'tnum' on, 'lnum' on, 'ss01' on;
-	color: $white;
+	color: $black;
 	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: normal;
@@ -35,7 +37,7 @@
 
 .navlinks a:hover {
 	text-decoration: none !important;
-	color: $grey1;
+	color: $black;
 	filter: brightness(95%);
 }
 
@@ -146,10 +148,6 @@
 #side-nav {
 	background: white;
 	height: 100%;
-	position: fixed;
-	z-index: 1;
-	top: 52px;
-	left: 0;
 	padding: 0px 20px;
-	width: 300px;
+	margin-top: 50px;
 }

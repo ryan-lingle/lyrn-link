@@ -36,8 +36,6 @@ const Page = ({ match }) => {
     const currentList = api.store.currentList();
     const pathname = state.readOnly ? `/${state.user.handle}/` : '/admin/';
 
-    console.log(currentList);
-
     return(
         <div>
             <Helmet>
@@ -51,11 +49,11 @@ const Page = ({ match }) => {
                     }
                 </title>
             </Helmet>
-            <div id="side-nav">
-                <UserProfile />
-            </div>
-            <div className="container">
-                <div id="dashboard">
+            <div style={{ display: 'flex', height: `${window.innerHeight - 50}px` }} >
+                <div id="side-nav">
+                    <UserProfile />
+                </div>
+                <div className="container">
                     {
                         state.tab === 'lists' 
 

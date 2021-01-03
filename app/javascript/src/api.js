@@ -139,6 +139,24 @@ class Api {
 
     }
 
+    signOut = async () => {
+        const res = await this.post('sign_out', {
+            checkRefresh: false
+        });
+
+        if (!res.error) {
+
+            localStorage.clear();
+            window.location.href = "/";
+            return res.success;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
     updateUser = async (id, user, type='update_user') => {
         this.setLoading(type);
 
