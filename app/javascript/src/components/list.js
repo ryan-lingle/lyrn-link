@@ -3,9 +3,10 @@ import { Search, Scraper, Draggable, ItemCard } from '../components';
 import Context from '../context';
 import { capitalize } from '../utils';
 
-const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, readOnly }) => {
+const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, isList }) => {
     const [add, setAdd] = useState(false);
-    const { api } = useContext(Context);
+    const { state, api } = useContext(Context);
+    const readOnly = state.readOnly;
 
     useEffect(() => {
         setAdd(false);
@@ -25,7 +26,15 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     }
 
     if (!type) return(
-        <div className="big-heading no-list" style={{marginTop: '40px'}} ></div>
+        <div className="big-heading no-list" style={{marginTop: '40px'}} >
+            NO LIST STATE
+        </div>
+    );
+
+    if (items.length === 0) return(
+        <div className="big-heading no-list" style={{marginTop: '40px'}} >
+            NO ITEM STATE
+        </div>
     );
 
     function onMove(dragIndex, hoverIndex) {
@@ -37,14 +46,20 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
 
     return(
-        <div id="listy" >
-            <div className="flex-between">
-                <div className="main-heading">
-                    <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
-                    <b>My Top {items.length} {capitalize(type)}</b>
-                </div>
-                {addBtn()}
-            </div>
+        <div id="list" >
+            {
+                isList
+
+                ?   <div className="flex-between">
+                        <div className="main-heading">
+                            <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
+                            <strong>My Top {items.length} {capitalize(type)}</strong>
+                        </div>
+                        {addBtn()}
+                    </div>
+
+                :   null
+            }
             {   
                 add
 
@@ -81,13 +96,16 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                     type="item"
                     id={item.id}
                     index={item.index}
-                    disable={readOnly} 
+                    disable={readOnly || !isList} 
                     onDrop={() => api.updateItemIndex()} 
                     onMove={onMove}
                 >
                     <ItemCard
                         readOnly={readOnly}
+                        rank={isList}
                         onDestroy={() => destroyItem(type, item.id)}
+                        followButton={['following', 'followers'].includes(type)}
+                        bookmarkButton={type === 'bookmarks'}
                         {...item} 
                     />
                 </Draggable>

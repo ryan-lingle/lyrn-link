@@ -13,8 +13,10 @@ body {
 	@media only screen and (max-width: 600px)  {
 		width: 100%;
 		padding: 10px;
+		margin-top: 50px;
 	}
 	min-height: calc(100vh - 180px);
+	margin-top: 100px;
 }
 
 // page heading // 
@@ -55,3 +57,27 @@ body {
 	padding: 10px;
 	margin: 15px auto 15px auto;
 }
+
+
+// mobile classes
+
+.mobile-only {
+	display: none;
+}
+
+@media only screen and (max-width: 600px) {
+	.non-mobile-only {
+		display: none !important;
+	}
+
+	.mobile-only {
+		display: block !important;
+	}
+
+	.mobile-flex {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+

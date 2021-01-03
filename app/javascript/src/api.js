@@ -139,6 +139,24 @@ class Api {
 
     }
 
+    signOut = async () => {
+        const res = await this.post('sign_out', {
+            checkRefresh: false
+        });
+
+        if (!res.error) {
+
+            localStorage.clear();
+            window.location.href = "/";
+            return res.success;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
     updateUser = async (id, user, type='update_user') => {
         this.setLoading(type);
 
@@ -208,6 +226,7 @@ class Api {
             store.reduce({
                 type: 'set_user',
                 user: res.user,
+                readOnly: params && params.handle ? true : false,
             });
 
             return true;
@@ -444,10 +463,7 @@ class Api {
 
         if (!res.error) {
 
-            store.reduce({
-                type: 'set_liked',
-                ...res,
-            });
+            return res.liked;
 
         } else {
 
@@ -464,12 +480,7 @@ class Api {
 
         if (!res.error) {
 
-            store.reduce({
-                type: 'set_liked',
-                ...res,
-            });
-
-            return true;
+            return res.liked;
 
         } else {
 
@@ -478,19 +489,32 @@ class Api {
         }
     }
 
-    getLike = async (id, authed=false) => {
-        const res = await this.get(`likes/${id}`, {
-            params: { authed },
-            checkRefresh: false,
-            errorType: 'likes',
+    createBookmark = async (id) => {
+        const res = await this.post('bookmarks', {
+            params: { bookmark: { item_id: id } },
+            errorType: 'bookmarks',
         });
 
         if (!res.error) {
 
-            store.reduce({
-                type: 'set_liked',
-                ...res,
-            });
+            return res.bookmarked;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    destroyBookmark = async (id) => {
+        const res = await this.get(`bookmarks/${id}`, {
+            method: 'DELETE',
+            errorType: 'bookmarks',
+        });
+
+        if (!res.error) {
+
+            return res.bookmarked;
 
         } else {
 

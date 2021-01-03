@@ -10,12 +10,21 @@ class User < ApplicationRecord
 	has_many :likes, class_name: "Like", foreign_key: "like_id"
 	has_many :likers, class_name: "Like", foreign_key: "link_id"
 
+	has_many :following, through: :likes, source: :link
+	has_many :followers, through: :likers, source: :like
+
 	has_many :lists, dependent: :destroy
+	has_many :bookmarks, dependent: :destroy
+	has_many :bookmarked_items, through: :bookmarks, source: :item
 
 	before_create :add_name_and_description
 	before_update :add_name_and_description
 
 	before_create :add_profile_picture_url
+
+	def created_at_string
+		Date::MONTHNAMES[self.created_at.month] + " " + self.created_at.year.to_s
+	end
 
 	def self.index
 		User.all.map do |user|
@@ -62,8 +71,8 @@ class User < ApplicationRecord
 		end
 	end
 
-	def list_index
-		lists.map { |list| list.to_res }
+	def list_index(current_user=nil)
+		lists.map { |list| list.to_res(current_user) }
 	end
 
 	def uncreated_lists
@@ -80,16 +89,42 @@ class User < ApplicationRecord
 	    self.profile_picture.variant(resize_to_limit: [100, 100]).processed.service_url if self.profile_picture.attachment
 	end
 
-	def to_res
+	def to_res(current_user=nil)
 		{
 			id: self.id,
 			name: self.name,
+			created: created_at_string,
 			handle: self.handle,
 			description: self.description,
-			email: self.email,
 			profile_picture_url: profile_picture_url,
-			lists: list_index,
+			lists: list_index(current_user),
+			community: [
+				{
+					type: 'following',
+					items: following.map { |u| u.to_index_res(current_user) },
+				},
+				{
+					type: 'followers',
+					items: followers.map { |u| u.to_index_res(current_user) },
+
+				}
+			],
+			bookmarks: [{
+				type: 'bookmarks',
+				items: bookmarked_items.map { |i| i.to_index_res(current_user) },
+			}],
 			uncreated_lists: uncreated_lists,
+			liked: followers.include?(current_user),
+		}
+	end
+
+	def to_index_res(current_user=nil)
+		{
+			id: self.id,
+			title: self.name,
+			url:  ENV["DOMAIN"] + '/' + self.handle,
+			image_url: profile_picture_url,
+			followed: followers.include?(current_user),
 		}
 	end
 
