@@ -59,7 +59,6 @@ class Api {
             store.reduce({
                 type: 'login',
                 token: res.auth_token,
-                user: res.user,
             });
 
         }
@@ -221,6 +220,8 @@ class Api {
             checkRefresh: params && params.handle ? false : true,
             errorType: 'user',
         });
+
+        console.log(res);
         
         if (!res.error) {
             store.reduce({

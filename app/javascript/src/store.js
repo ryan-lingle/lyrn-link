@@ -34,10 +34,10 @@ class Store {
         switch (event.type) {
         case 'login':
             this.state.loading.login = false;
-            localStorage.setItem('username', event.user.username);
+            if (event.user) localStorage.setItem('username', event.user.username);
             localStorage.setItem('authToken', event.token);
             localStorage.setItem('tokenExpires', this.tenMinFromNow());
-            this.state.user = event.user;
+            this.state.user = { ...event.user, ...this.state.user };
             break;
         case 'set_users':
             this.state.loading.users = false;

@@ -56,7 +56,7 @@ const Page = ({ match }) => {
                     }
                 </title>
             </Helmet>
-            <div style={{ display: 'flex', height: `${pageHeight}px` }} >
+            <div className="page" style={{ height: `${pageHeight}px` }} >
                 <div id="side-nav" className="non-mobile-only">
                     <UserProfile />
                     <ProfileTabs 
