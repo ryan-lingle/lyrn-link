@@ -463,10 +463,7 @@ class Api {
 
         if (!res.error) {
 
-            store.reduce({
-                type: 'set_liked',
-                ...res,
-            });
+            return res.liked;
 
         } else {
 
@@ -483,12 +480,7 @@ class Api {
 
         if (!res.error) {
 
-            store.reduce({
-                type: 'set_liked',
-                ...res,
-            });
-
-            return true;
+            return res.liked;
 
         } else {
 

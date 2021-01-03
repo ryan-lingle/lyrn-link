@@ -104,6 +104,8 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                         readOnly={readOnly}
                         rank={isList}
                         onDestroy={() => destroyItem(type, item.id)}
+                        followButton={['following', 'followers'].includes(type)}
+                        bookmarkButton={type === 'bookmarks'}
                         {...item} 
                     />
                 </Draggable>

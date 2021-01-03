@@ -1,8 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Context from '../context';
 
 const BookmarkButton = ({ id, bookmarked, authed }) => {
-	const { state, api } = useContext(Context);
+
+	useEffect(() => {
+		setBookmarkState(bookmarked);
+	}, [bookmarked]);
+
+	const { api } = useContext(Context);
 	const [bookmarkState, setBookmarkState] = useState(bookmarked);
 
 	async function handleClick() {

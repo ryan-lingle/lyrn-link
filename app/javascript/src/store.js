@@ -18,8 +18,6 @@ class Store {
             success: {},
             searchResults: {},
             scrapeResult: {},
-            likeCount: 0,
-            liked: null,
         }
 
         this.setState = () => {};
@@ -53,8 +51,6 @@ class Store {
             if (event.user.username) localStorage.setItem('username', event.user.username);
             this.state.user = { ...this.state.user, ...event.user };
             this.state.readOnly = event.readOnly;
-            this.state.liked = event.user.liked;
-            this.state.likeCount = event.user.like_count;
             break;
         case 'set_tab':
             this.state.tab = event.tab;
