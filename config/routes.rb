@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   		post 'request_token', to: 'auth#request_token'
       post 'access_token', to: 'auth#access_token'
   		get 'refresh_token', to: 'auth#refresh_token'
-      
+      post 'sign_out', to: 'auth#sign_out'
   		get 'current_user', to: 'users#show'
 
       # RESOURCES

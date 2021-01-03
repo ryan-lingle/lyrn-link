@@ -3,7 +3,7 @@ import Logo from '../assets/logo.png';
 import Context from '../context';
 
 const NavBar = ({ location }) => {
-    const { state } = useContext(Context);
+    const { api, state } = useContext(Context);
     const [showHam, setShowHam] = useState(false);
     const isLoggedIn = localStorage.getItem('authToken') ? 1 : 0;
 
@@ -36,13 +36,23 @@ const NavBar = ({ location }) => {
                     {
                         isLoggedIn
 
-                            ?   <a href="/admin">
-                                    Admin
-                                </a>
+                            ?   <div className="navlinks">
+                                    <a href="/admin">
+                                        Admin
+                                    </a>
+                                    <a href="#" onClick={api.signOut}>
+                                        Sign Out
+                                    </a>
+                                </div>
 
-                            :   <a href="/signup">
-                                    Sign Up
-                                </a>
+                            :   <div className="navlinks">
+                                    <a href="/signup">
+                                        Sign Up
+                                    </a>
+                                    <a href="/signin">
+                                        Sign In
+                                    </a>
+                                </div>
                     }
                 </div>
             </div>
