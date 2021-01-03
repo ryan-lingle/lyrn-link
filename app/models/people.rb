@@ -9,6 +9,6 @@ class People < List
 	end
 
 	def icon
-		"fal fa-at"
+		"fab fa-twitter"
 	end
 end
