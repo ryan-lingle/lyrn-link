@@ -15,7 +15,7 @@ const LikeButton = ({ id, liked }) => {
 		setLikeState(res);
 	};
 
-	if (state.user.id === id) return <div/>;
+	if (state.current_user_id === id) return <div/>;
 
 	return(
 		<div className="flex" >

@@ -226,6 +226,7 @@ class Api {
             store.reduce({
                 type: 'set_user',
                 user: res.user,
+                current_user_id: res.current_user_id,
                 readOnly: params && params.handle ? true : false,
             });
 
