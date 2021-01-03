@@ -8,6 +8,8 @@ const UserProfile = () => {
 	const readOnly = state.readOnly;
     const fileInput = useRef();
     const [profilePicture, setProfilePicture] = useState(null);
+    const link = 'https://lyrn.link/' + state.user.handle;
+    const tweetText = `Check out my LyrnLink: ${link}`;
 
 	function updateName(name) {
 		api.updateUser(state.user.id, { name });
@@ -22,7 +24,7 @@ const UserProfile = () => {
 	};
 
 	function copyLyrnLink() {
-		navigator.clipboard.writeText('https://lyrn.link/' + state.user.handle);
+		navigator.clipboard.writeText(link);
 	}
 
 	return(
@@ -33,27 +35,30 @@ const UserProfile = () => {
 
 					? 	null
 
-					:	<div style={{marginBottom: '10px'}}>
-							<div className="text-left tiny-body" ><strong>my lyrnlink:&nbsp;</strong></div>
-							<div className="flex">
-								<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
-									https://lyrn.link/{state.user.handle}
-								</a>
-								<Tooltip
-							        title="Copy LyrnLink"
-							        position= "right"
-							        trigger= "mouseenter"
-							        inertia= "true"
-							        transitionFlip= "true"
-							        delay='0'
-							    >
-									<i 
-										className="far fa-copy btn-share"
-										style={{fontSize: 'small', marginLeft: '10px'}}
-										onClick={copyLyrnLink}
-									/>
-								</Tooltip>
+					:	<div className="flex-between" style={{marginBottom: '10px'}}>
+							<div>
+								<div className="text-left tiny-body" ><strong>my lyrnlink:&nbsp;</strong></div>
+								<div className="flex">
+									<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
+										https://lyrn.link/{state.user.handle}
+									</a>
+									<Tooltip
+								        title="Copy LyrnLink"
+								        position= "right"
+								        trigger= "mouseenter"
+								        inertia= "true"
+								        transitionFlip= "true"
+								        delay='0'
+								    >
+										<i 
+											className="far fa-copy btn-share"
+											style={{fontSize: 'small', marginLeft: '10px'}}
+											onClick={copyLyrnLink}
+										/>
+									</Tooltip>
+								</div>
 							</div>
+							<a className="btn-item" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>Share <i className="fab fa-twitter" /></a>
 						</div>
 				}
 				<div id="profile-header">
