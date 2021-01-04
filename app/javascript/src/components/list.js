@@ -25,12 +25,14 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         }
     }
 
+    // NO LIST STATE
     if (!type) return(
         <div className="big-heading no-list" style={{marginTop: '40px'}} >
             NO LIST STATE
         </div>
     );
 
+    // NO ITEM STATE
     if (items.length === 0) return(
         <div className="big-heading no-list" style={{marginTop: '40px'}} >
             NO ITEM STATE

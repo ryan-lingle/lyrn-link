@@ -110,8 +110,7 @@ const UserProfile = () => {
 			/>
 			<div style={{marginTop: '10px'}} />
 			<div className="profile-buttons">
-				<a className="btn-share" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>Share <i className="fab fa-twitter" /></a>
-				{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : null}
+				{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : <a className="btn-share" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>Share <i className="fab fa-twitter" /></a>}
 			</div>
 		</div>
 	);
