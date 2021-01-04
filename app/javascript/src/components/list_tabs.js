@@ -68,7 +68,6 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                             {...list} 
                             readOnly={readOnly}
                             onClick={listCallback(list)}
-                            onDestroy={() => api.destroyList(list.type)}
                             current={list.index == state.listIndex}
                         />
                     </Draggable>

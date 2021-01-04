@@ -1,14 +1,7 @@
 import React from 'react';
 import { capitalize } from '../utils';
 
-const ListTab = ({ type, onClick, onDestroy, current, readOnly }) => {
-
-	function destroy(e) {
-		e.stopPropagation();
-		if (onDestroy && window.confirm('Are you sure you want to delete this list?')) {
-			onDestroy();
-		};
-	};
+const ListTab = ({ type, onClick, current, readOnly }) => {
 
     return(
         <div 
@@ -17,7 +10,6 @@ const ListTab = ({ type, onClick, onDestroy, current, readOnly }) => {
         >
         	<div className="tabs-heading">
 	            <div>{capitalize(type)}</div>
-				<div>{readOnly ? null : <i className="fas fa-times-circle delete-list icon-delete" onClick={destroy} />}</div>
 	        </div>
 	        
         </div>

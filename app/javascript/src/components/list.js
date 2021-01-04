@@ -12,6 +12,12 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         setAdd(false);
     }, [type]);
 
+    function destroyList() {
+        if (window.confirm('Are you sure you want to delete this list?')) {
+            api.destroyList(type);
+        };
+    };
+
     function addBtn() {
         if (readOnly) {
             return null;
@@ -25,6 +31,39 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         }
     }
 
+    function addItem() {
+        if (add) {
+
+            if (searchable) {
+
+                return <Search type={type} item={singular} >
+                    {(result, clearResults) =>
+                        <div onClick={() => {
+                            createItem(type, result);
+                            setAdd(false);
+                            clearResults();
+                        }} >
+                            <ItemCard
+                                readOnly={true}
+                                rank={false}
+                                {...result}
+                            />
+                        </div>
+                    }
+                </Search>;
+
+            } else {
+
+                return <Scraper onSubmit={(result) => {
+                        createItem(type, result);
+                        setAdd(false);
+                    }} 
+                />;
+
+            }
+        }
+    }
+
     // NO LIST STATE
     if (!type) return(
         <div className="big-heading no-list" style={{marginTop: '40px'}} >
@@ -35,7 +74,9 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     // NO ITEM STATE
     if (items.length === 0) return(
         <div className="big-heading no-list" style={{marginTop: '40px'}} >
-            NO ITEM STATE
+            NO ITEM STATE 
+            {addBtn()}
+            {addItem()}
         </div>
     );
 
@@ -57,41 +98,17 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                             <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
                             <strong>My Top {items.length} {capitalize(type)}</strong>
                         </div>
-                        {addBtn()}
+                        <div className="flex-between">
+                            <button onClick={destroyList} className="btn-black" style={{marginRight: '10px'}}>
+                                Delete List
+                            </button>
+                            {addBtn()}
+                        </div>
                     </div>
 
                 :   null
             }
-            {   
-                add
-
-                ?
-                    searchable
-
-                    ?   <Search type={type} item={singular} >
-                            {(result, clearResults) =>
-                                <div onClick={() => {
-                                    createItem(type, result);
-                                    setAdd(false);
-                                    clearResults();
-                                }} >
-                                    <ItemCard
-                                        readOnly={true}
-                                        rank={false}
-                                        {...result}
-                                    />
-                                </div>
-                            }
-                        </Search>
-
-                    :   <Scraper onSubmit={(result) => {
-                                createItem(type, result);
-                                setAdd(false);
-                            }} 
-                        />
-
-                :   null
-            }
+            {addItem()}
             {items.map((item, i) => 
                 <Draggable 
                     key={i} 
