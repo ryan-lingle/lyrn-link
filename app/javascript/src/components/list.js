@@ -18,14 +18,19 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         };
     };
 
-    function addBtn() {
+    function editBtns() {
         if (readOnly) {
             return null;
         } else {
             return(
-                <div className="btn-black" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
-                    <i className="far fa-plus-circle" style={{marginRight: '5px'}} />
-                    {capitalize(singular)}
+                <div className="flex-between">
+                    <button onClick={destroyList} className="btn-black" style={{marginRight: '10px'}}>
+                        Delete List
+                    </button>
+                    <div className="btn-black" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
+                        <i className="far fa-plus-circle" style={{marginRight: '5px'}} />
+                        {capitalize(singular)}
+                    </div>
                 </div>
             );
         }
@@ -75,7 +80,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     if (items.length === 0) return(
         <div className="big-heading no-list" style={{marginTop: '40px'}} >
             NO ITEM STATE 
-            {addBtn()}
+            {editBtns()}
             {addItem()}
         </div>
     );
@@ -98,12 +103,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                             <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
                             <strong>My Top {items.length} {capitalize(type)}</strong>
                         </div>
-                        <div className="flex-between">
-                            <button onClick={destroyList} className="btn-black" style={{marginRight: '10px'}}>
-                                Delete List
-                            </button>
-                            {addBtn()}
-                        </div>
+                        {editBtns()}
                     </div>
 
                 :   null
