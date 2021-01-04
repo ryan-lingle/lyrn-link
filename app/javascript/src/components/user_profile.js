@@ -28,93 +28,91 @@ const UserProfile = () => {
 	}
 
 	return(
-		<div id="user-profile" className="mobile-flex">
-			<div>
-				{
-					readOnly
+		<div id="user-profile">
+			{
+				readOnly
 
-					? 	null
+				? 	null
 
-					:	<div className="flex-between" style={{marginBottom: '10px'}}>
-							<div>
-								<div className="text-left tiny-body" ><strong>my lyrnlink:&nbsp;</strong></div>
-								<div className="flex">
-									<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
-										https://lyrn.link/{state.user.handle}
-									</a>
-									<Tooltip
-								        title="Copy LyrnLink"
-								        position= "right"
-								        trigger= "mouseenter"
-								        inertia= "true"
-								        transitionFlip= "true"
-								        delay='0'
-								    >
-										<i 
-											className="far fa-copy btn-share"
-											style={{fontSize: 'small', marginLeft: '10px'}}
-											onClick={copyLyrnLink}
-										/>
-									</Tooltip>
-								</div>
-							</div>
-							<a className="btn-item" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>Share <i className="fab fa-twitter" /></a>
+				:	<div className="flex-between" style={{marginBottom: '10px'}}>
+						<div className="flex text-left tiny-body">
+							<strong>my link:&nbsp;</strong>
+							<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
+								{state.user.handle}
+							</a>
+							<Tooltip
+								title="Copy LyrnLink"
+								position= "right"
+								trigger= "mouseenter"
+								inertia= "true"
+								transitionFlip= "true"
+								delay='0'
+							>
+								<i 
+									className="far fa-copy btn-copy"
+									style={{fontSize: 'x-small', marginLeft: '5px'}}
+									onClick={copyLyrnLink}
+								/>
+							</Tooltip>
 						</div>
-				}
-				<div id="profile-header">
-					<div id="user-profile-picture-wrapper">
-						<img 
-							src={state.user.profile_picture_url} 
-							id="user-profile-picture"
-							onClick={
-								readOnly
+					</div>
+			}
+			<div id="profile-header">
+				<div id="user-profile-picture-wrapper">
+					<img 
+						src={state.user.profile_picture_url} 
+						id="user-profile-picture"
+						onClick={
+							readOnly
 
-								?	null
+							?	null
 
-								: 	() => setProfilePicture(state.user.profile_picture_url || 1)
-							}
+							: 	() => setProfilePicture(state.user.profile_picture_url || 1)
+						}
+					/>
+				</div>
+				<ImageEditor 
+					image={profilePicture} 
+					onClose={() => setProfilePicture(null)}
+				/>
+				<div className="flex-grow profile-info" >
+					<div className="user-name">
+						<Editable
+							readOnly={readOnly}
+							className="big-heading"
+							value={state.user.name}
+							onUpdate={updateName}
+							defaultValue="( name )"
 						/>
 					</div>
-					<ImageEditor 
-						image={profilePicture} 
-						onClose={() => setProfilePicture(null)}
-					/>
-					<div className="flex-grow profile-info" >
-						<div className="user-name">
-							<Editable
-								readOnly={readOnly}
-								className="huge-heading"
-								value={state.user.name}
-								onUpdate={updateName}
-								defaultValue="( name )"
-							/>
-						</div>
-						<div className="user-handle" style={{marginTop: '-5px'}}>
-							/&nbsp;
-							<Editable
-								readOnly={readOnly}
-								className="big-heading"
-								value={state.user.handle}
-								onUpdate={updateHandle}
-								defaultValue="( handle )"
-							/>
-						</div>
-						<div className="user-since tiny-heading">
-							Sharing since {state.user.created}
-						</div>
+					<div className="user-handle" style={{marginTop: '-5px'}}>
+						<span className="main-heading">/</span>
+						<Editable
+							readOnly={readOnly}
+							className="main-heading"
+							value={state.user.handle}
+							onUpdate={updateHandle}
+							defaultValue="( handle )"
+						/>
+					</div>
+					<div className="user-since tiny-heading">
+						Sharing since {state.user.created}
 					</div>
 				</div>
-				<Editable
-					readOnly={readOnly}
-					className="big-body user-description"
-					value={state.user.description}
-					onUpdate={updateDescription}
-					textArea={true}
-					defaultValue="I don't have a description."
-				/>
 			</div>
+			<Editable
+				readOnly={readOnly}
+				className="big-body user-description"
+				value={state.user.description}
+				onUpdate={updateDescription}
+				textArea={true}
+				defaultValue="I don't have a description."
+			/>
 			<div style={{marginTop: '10px'}} />
-			{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : null}
+			<div className="profile-buttons">
+				<a className="btn-share" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>Share <i className="fab fa-twitter" /></a>
+				{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : null}
+			</div>
 		</div>
 	);
 };
