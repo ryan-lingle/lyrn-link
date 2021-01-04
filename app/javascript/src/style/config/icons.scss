@@ -11,13 +11,16 @@
     &-grey {
         color: $grey1;
     }
+    &-black {
+        color: $black;
+    }
     &-small {
         font-size: x-small;
         vertical-align: top;
         color: $red;
     }
     &-delete {
-        color: $grey4;
+        color: lighten($red,15%);
         &:hover {
             color: $red;
             cursor: pointer;

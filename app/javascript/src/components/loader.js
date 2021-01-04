@@ -3,7 +3,8 @@ import Spinner from '../assets/spinner.svg';
 
 const Loader = () => (
     <div style={{ textAlign: 'center' }} className="spinner" >
-        <img src={Spinner} alt="loading" />
+        <div><img src={Spinner} alt="loading" /></div>
+        <div className="huge-heading" style={{fontWeight:'bold'}}>Hold tight. We're turning the page...</div>
     </div>
 );
 
