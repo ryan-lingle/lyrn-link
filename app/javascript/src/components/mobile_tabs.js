@@ -35,7 +35,7 @@ const MobileTabs = ({ pathname="/admin/" }) => {
 
     const icons = {
         lists: 'fal fa-clipboard-list',
-        community: 'fal fa-project-diagram',
+        community: 'fal fa-chart-network',
         bookmarks: 'fal fa-bookmark',
     };
 
@@ -49,9 +49,6 @@ const MobileTabs = ({ pathname="/admin/" }) => {
                         onClick={() => setTab(tab)}
                     >
                         <i className={icons[tab]} style={{width: '25px'}} />
-                        <div className="tabs-heading">
-                            {capitalize(tab)}
-                        </div>
                     </div>
                 )}
             </div>

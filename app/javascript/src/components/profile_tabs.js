@@ -35,26 +35,24 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
 
     const icons = {
         lists: 'fal fa-clipboard-list',
-        community: 'fal fa-project-diagram',
+        community: 'fal fa-chart-network',
         bookmarks: 'fal fa-bookmark',
     };
 
     return(
-        <div>
-            <div className="profile-tabs" style={{marginBottom: '40px'}} >
-                {['lists', 'community', 'bookmarks'].map((tab, i) =>
-                    <div 
-                        key={i} 
-                        className={`profile-tab flex list-tab ${tab === state.tab ? 'current-list-tab' : ''}`}
-                        onClick={() => setTab(tab)}
-                    >
-                        <i className={icons[tab]} style={{marginRight: '10px', width: '25px'}} />
-                        <div className="tabs-heading">
-                            {capitalize(tab)}
-                        </div>
+        <div className="profile-tabs" style={{marginBottom: '40px'}} >
+            {['lists', 'community', 'bookmarks'].map((tab, i) =>
+                <div 
+                    key={i} 
+                    className={`profile-tab flex list-tab ${tab === state.tab ? 'current-list-tab' : ''}`}
+                    onClick={() => setTab(tab)}
+                >
+                    <i className={icons[tab]} style={{marginRight: '10px', width: '25px'}} />
+                    <div className="tabs-heading">
+                        {capitalize(tab)}
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 };
