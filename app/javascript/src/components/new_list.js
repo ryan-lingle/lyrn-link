@@ -14,8 +14,7 @@ const NewList = () => {
             className="btn-list new-list" 
             onClick={() => setShow(prev => !prev)} 
         >
-            <i className="far fa-plus-circle" style={{marginRight: '5px'}} />
-            List
+            <i className="far fa-plus-circle icon-black" style={{fontSize: 'larger'}} />
             {
                 show
 

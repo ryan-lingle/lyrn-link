@@ -38,12 +38,13 @@
 
 .item-delete {
 	display: flex;
-	margin-left: 5px;
 	font-weight: normal;
 	font-size: small;
 	text-align: center;
 	padding: 10px;
 	align-items: center;
+	margin-left: 20px;
+	font-size: small;
 }
 
 
@@ -116,18 +117,6 @@
 
 .item-subtitle {
 	font-weight: lighter;
-}
-
-.item-delete {
-	display: flex;
-	margin-left: 20px;
-	font-weight: bold;
-	font-size: small;
-	color: $grey4;
-	&-hover {
-		color: $red;
-		cursor: pointer;
-	}
 }
 
 .bookmark-icon {
