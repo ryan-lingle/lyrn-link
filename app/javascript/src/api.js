@@ -217,11 +217,9 @@ class Api {
 
         const res = await this.get('current_user', {
             params,
-            checkRefresh: params && params.handle ? false : true,
+            checkRefresh: this.authToken ? true : false,
             errorType: 'user',
         });
-
-        console.log(res);
         
         if (!res.error) {
             store.reduce({
