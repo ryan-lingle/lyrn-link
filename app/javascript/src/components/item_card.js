@@ -19,24 +19,24 @@ const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, fol
         } else if (readOnly) {
             return <BookmarkButton id={id} bookmarked={bookmarked} />;
         } else {
-            return <i className="fal fa-times icon icon-delete item-delete" onClick={destroy} />;
+            return <i className="far fa-times icon icon-delete item-delete" onClick={destroy} />;
         }
     }
 
     return(
         <div className={`item-card ${readOnly ? '' : 'draggable'}`}>
-            <div className="item-ranking">
-                {
-                    rank
+            {
+                rank
 
-                    ?   <div className="item-rank">
+                ?   <div className="item-ranking">
+                        <div className="item-rank">
                             {index + 1}
                         </div>
+                        {readOnly || !rank ? null : <i className="fas fa-ellipsis-v icon"/>}              
+                    </div>
 
-                    :   null
-                }       
-                {readOnly || !rank ? null : <i className="fas fa-ellipsis-v icon"/>} 
-            </div>
+                :   null
+            }
             
             <div className="item-box">
                 <img src={image_url || Icon} className="item-image" />
