@@ -50,7 +50,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             {
                 isList
 
-                ?   <div className="flex-between">
+                ?   <div className="flex-between" style={{marginBottom: '20px'}}>
                         <div className="main-heading">
                             <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
                             <strong>My Top {items.length} {capitalize(type)}</strong>
