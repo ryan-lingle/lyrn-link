@@ -123,6 +123,7 @@ class User < ApplicationRecord
 			id: self.id,
 			title: self.name,
 			url:  ENV["DOMAIN"] + '/' + self.handle,
+			internal_url: true,
 			image_url: profile_picture_url,
 			followed: followers.include?(current_user),
 		}

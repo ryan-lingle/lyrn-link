@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { BookmarkButton, LikeButton } from '../components';
 import Icon from '../assets/icon.png';
 
-const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, followed, index, title, subtitle, image_url, url, url_copy, creator, readOnly, onDestroy }) => {
+const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, followed, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, onDestroy }) => {
+    const link = useRef();
 
     function destroy(e) {
         e.stopPropagation();
@@ -10,6 +11,10 @@ const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, fol
             onDestroy();
         };
     };
+
+    function go() {
+        if (url) link.current.click();
+    }
 
     function button() {
         if (bookmarkButton) {
@@ -24,7 +29,7 @@ const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, fol
     }
 
     return(
-        <div className={`item-card ${readOnly ? '' : 'draggable'}`}>
+        <div className={`item-card ${readOnly ? '' : 'draggable'}`} onClick={go} >
             {
                 rank
 
@@ -52,7 +57,8 @@ const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, fol
                 <a 
                     className={`big-body ${!creator ? '' : 'no-decoration'}`}
                     href={url} 
-                    target="_blank" 
+                    ref={link}
+                    target={internal_url ? "" : "_blank"}
                 >
                     {creator || url_copy || url}
                 </a>
