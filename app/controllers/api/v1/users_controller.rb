@@ -22,8 +22,7 @@ class Api::V1::UsersController < ApplicationController
 					current_user_id: current_user&.id, 
 				}
 			end
-		else
-			authenticate_request
+		elsif authenticate_request
 			render json: {
 				user: current_user.to_res(current_user),
 				current_user_id: current_user.id, 

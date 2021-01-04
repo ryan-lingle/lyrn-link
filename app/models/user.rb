@@ -98,7 +98,7 @@ class User < ApplicationRecord
 			description: self.description,
 			profile_picture_url: profile_picture_url,
 			lists: list_index(current_user),
-			community: [
+			circles: [
 				{
 					type: 'following',
 					items: following.map { |u| u.to_index_res(current_user) },

@@ -35,13 +35,13 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
 
     const icons = {
         lists: 'far fa-clipboard-list',
-        community: 'far fa-chart-network',
+        circles: 'far fa-chart-network',
         bookmarks: 'far fa-bookmark',
     };
 
     return(
         <div className="profile-tabs" style={{marginBottom: '40px'}} >
-            {['lists', 'community', 'bookmarks'].map((tab, i) =>
+            {['lists', 'circles', 'bookmarks'].map((tab, i) =>
                 <div 
                     key={i} 
                     className={`profile-tab flex list-tab ${tab === state.tab ? 'current-list-tab' : ''}`}
