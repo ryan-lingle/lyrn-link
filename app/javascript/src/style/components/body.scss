@@ -10,12 +10,12 @@ body {
 
 .container {
 	max-width: 800px;
-	@media only screen and (max-width: 950px)  {
-		width: 100%;
-		margin-top: 80px;
-	}
 	min-height: calc(100vh - 180px);
 	margin-top: 80px;
+	@media only screen and (max-width: 950px)  {
+		width: 100%;
+		margin-top: 60px;
+	}
 }
 
 .page {

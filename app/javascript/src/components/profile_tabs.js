@@ -34,9 +34,9 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
     };
 
     const icons = {
-        lists: 'fal fa-clipboard-list',
-        community: 'fal fa-chart-network',
-        bookmarks: 'fal fa-bookmark',
+        lists: 'far fa-clipboard-list',
+        community: 'far fa-chart-network',
+        bookmarks: 'far fa-bookmark',
     };
 
     return(
