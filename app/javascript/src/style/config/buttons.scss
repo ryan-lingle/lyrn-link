@@ -44,7 +44,7 @@
     cursor:pointer;
     text-decoration: none;
 
-    @media only screen and (max-width: 600px)  {
+    @media only screen and (max-width: 950px)  {
         font-size: small;
     }
 
@@ -72,7 +72,7 @@
     cursor:pointer;
     text-decoration: none;
 
-    @media only screen and (max-width: 600px)  {
+    @media only screen and (max-width: 950px)  {
         font-size: small;
     }
 
@@ -85,7 +85,7 @@
     }
 }
 
-.btn-share {
+.btn-copy {
     color: $grey3;
     padding: auto;
     text-align: center;
@@ -111,6 +111,71 @@
     -moz-text-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10);
     }
 }
+
+.btn-share {
+    color: $white;
+    background: $blue;
+    padding: 4px 6px;
+    margin-right: 10px;
+    text-align: center;
+    align-items: center;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-size: small;
+    font-weight: bold;
+    -webkit-transition: (0.2s ease-in-out);
+    -moz-transition: (0.2s ease-in-out); 
+    -o-transition: (0.2s ease-in-out); 
+    transition: (0.2s ease-in-out);  
+    cursor:pointer;
+    text-decoration: none;
+    @media only screen and (max-width: 950px)  {
+        font-size: x-small;
+    }
+
+    &:hover {
+    color: darken($white,10%);
+    text-decoration: none;
+    text-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10);
+    -webkit-text-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10);
+    -moz-text-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10);
+    }
+}
+
+.btn-follow {
+    color: $white;
+    background: $green;
+    padding: 4px 6px;
+    margin-right: 10px;
+    text-align: center;
+    align-items: center;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-size: small;
+    font-weight: bold;
+    -webkit-transition: (0.2s ease-in-out);
+    -moz-transition: (0.2s ease-in-out); 
+    -o-transition: (0.2s ease-in-out); 
+    transition: (0.2s ease-in-out);  
+    cursor:pointer;
+    text-decoration: none;
+    @media only screen and (max-width: 950px)  {
+        font-size: x-small;
+    }
+
+    &:hover {
+    color: darken($white,10%);
+    text-decoration: none;
+    text-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10);
+    -webkit-text-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10);
+    -moz-text-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10);
+    }
+}
+
 
 .remove-item {
     color: $red !important;

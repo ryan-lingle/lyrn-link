@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import Logo from '../assets/logo.png';
+import Logo from '../assets/whitelogo.svg';
 import Context from '../context';
 
 const NavBar = ({ location }) => {
@@ -38,10 +38,10 @@ const NavBar = ({ location }) => {
 
                             ?   <div className="navlinks">
                                     <a href="/admin">
-                                        Admin
+                                        <i className="fal fa-user-circle" style={{marginRight: '5px'}} />
                                     </a>
                                     <a href="#" onClick={api.signOut}>
-                                        Sign Out
+                                        <i className="fal fa-sign-out-alt"/>
                                     </a>
                                 </div>
 

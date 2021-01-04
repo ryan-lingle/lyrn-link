@@ -15,7 +15,7 @@ $fa-font-path: "webfonts";
 	font-style: normal;
 	font-weight: bold;
 	font-size: xx-large;
-	@media only screen and (max-width: 600px)  {
+	@media only screen and (max-width: 950px)  {
 		font-size: large;
 	}
 }
@@ -24,7 +24,7 @@ $fa-font-path: "webfonts";
 	font-style: normal;
 	font-weight: lighter;
 	font-size: x-large;
-	@media only screen and (max-width: 600px)  {
+	@media only screen and (max-width: 950px)  {
 		font-size: large;
 	}
 }
@@ -34,8 +34,11 @@ $fa-font-path: "webfonts";
 	font-style: normal;
 	font-weight: bold;
 	font-size: large;
-	@media only screen and (max-width: 600px)  {
-		font-size: small;
+	@media only screen and (max-width: 950px)  {
+		font-size: medium;
+	}
+	&:hover {
+		filter: brightness(75%);
 	}
 }
 
@@ -44,7 +47,7 @@ $fa-font-path: "webfonts";
 	font-style: normal;
 	font-weight: bold;
 	font-size: large;
-	@media only screen and (max-width: 600px)  {
+	@media only screen and (max-width: 950px)  {
 		font-size: medium;
 	}
 }
@@ -54,7 +57,7 @@ $fa-font-path: "webfonts";
 	font-style: normal;
 	font-weight: normal;
 	font-size: medium;
-	@media only screen and (max-width: 600px)  {
+	@media only screen and (max-width: 950px)  {
 		font-size: small;
 	}
 }
@@ -64,7 +67,7 @@ $fa-font-path: "webfonts";
 	font-style: normal;
 	font-weight: bold;
 	font-size: small;
-	@media only screen and (max-width: 600px)  {
+	@media only screen and (max-width: 950px)  {
 		font-size: x-small;
 	}
 }
@@ -73,7 +76,7 @@ $fa-font-path: "webfonts";
 	font-family: 'Open Sans';
 	font-size: x-small;
 	font-weight: lighter;
-	@media only screen and (max-width: 600px)  {
+	@media only screen and (max-width: 950px)  {
 		font-size: xx-small;
 	}
 }
@@ -84,7 +87,7 @@ $fa-font-path: "webfonts";
 	font-style: normal;
 	font-weight: bold;
 	font-size: medium;
-	@media only screen and (max-width: 600px)  {
+	@media only screen and (max-width: 950px)  {
 		font-size: small;
 	}
 }
@@ -94,7 +97,7 @@ $fa-font-path: "webfonts";
 	font-weight: normal;
 	font-size: small;
 	color: $grey5;
-	@media only screen and (max-width: 600px)  {
+	@media only screen and (max-width: 950px)  {
 		font-size: x-small;
 	}
 }
@@ -105,7 +108,7 @@ $fa-font-path: "webfonts";
 	font-weight: normal;
 	font-size: x-small;
 	color: $grey4;
-	@media only screen and (max-width: 600px)  {
+	@media only screen and (max-width: 950px)  {
 		font-size: xx-small;
 	}
 }
@@ -139,7 +142,7 @@ $fa-font-path: "webfonts";
 	&-itemtitle {
 		font-size: medium;
 		font-weight: bold;
-		@media only screen and (max-width: 600px)  {
+		@media only screen and (max-width: 950px)  {
 			font-size: smaller;
 		}
 	}
@@ -149,7 +152,7 @@ $fa-font-path: "webfonts";
 		align-items: center;
 		text-align: center;
 		padding-right: 10px;
-		@media only screen and (max-width: 600px)  {
+		@media only screen and (max-width: 950px)  {
 			font-size: smaller;
 		}
 	}
@@ -181,7 +184,7 @@ $fa-font-path: "webfonts";
 		font-weight: normal;
 		line-height: normal;
 
-		@media only screen and (max-width: 600px)  {
+		@media only screen and (max-width: 950px)  {
 			font-size: smaller;
 		}
 	}
