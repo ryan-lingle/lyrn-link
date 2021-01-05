@@ -19,7 +19,8 @@ class Api::V1::UsersController < ApplicationController
 			else
 				render json: {
 					user: user.to_res(current_user),
-					current_user_id: current_user&.id, 
+					current_user_id: current_user&.id,
+					current_user_profile_picture: current_user&.profile_picture_url,
 				}
 			end
 		elsif authenticate_request
