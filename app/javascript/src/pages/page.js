@@ -63,7 +63,13 @@ const Page = ({ match }) => {
                         pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
                     />
                     <div className="nav-footer">
-                        <span style={{fontWeight: 'bolder'}}>© 2021 - Lyrnlink</span>
+                        <div>
+                            <span style={{fontWeight: 'bolder'}}>© 2021 - Lyrnlink</span>
+                        </div>
+                        <div>
+                            <a href="https://www.lyrn.link/privacy">Privacy Policy&nbsp;</a>
+                            <a href="https://www.lyrn.link/terms">&nbsp;Terms of Use</a>
+                        </div>
                     </div>
                 </div>
                 <div className="mobile-only">
@@ -93,6 +99,7 @@ const Page = ({ match }) => {
                         destroyItem={api.destroyItem}
                         isList={state.tab === 'lists'}
                     />
+                    
                 </div>
             </div>
         </div>

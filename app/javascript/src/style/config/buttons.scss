@@ -175,9 +175,10 @@
     }
 }
 
-.btn-following {
+.btn-follow {
     color: $green;
     background: $white;
+    border: $green solid 2px;
     padding: 2px 4px;
     margin-right: 10px;
     text-align: center;
@@ -208,7 +209,7 @@
     }
 }
 
-.btn-follow {
+.btn-following {
     color: $white;
     background: $green;
     border: $green solid 2px;
