@@ -37,10 +37,10 @@ const NavBar = ({ location }) => {
 
                     ?   <div className="nav-profile">
                             {
-                                state.user.profile_picture_url
+                                state.current_user_profile_picture
 
                                 ?   <img 
-                                        src={state.user.profile_picture_url} 
+                                        src={state.current_user_profile_picture} 
                                         className="nav-avatar" 
                                         onClick={() => setShowHam(prev => !prev)}
                                     />
