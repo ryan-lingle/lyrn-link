@@ -6,9 +6,19 @@ import Routes from "../src/routes";
 import { store } from '../src/store';
 import { api } from '../src/api';
 import Context from '../src/context';
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
+import { DndProvider } from 'react-dnd';
 import 'react-tippy/dist/tippy.css';
+
+const isTouchDevice = (function() { 
+  try {  
+    document.createEvent("TouchEvent");  
+    return true;  
+  } catch (e) {  
+    return false;  
+  }  
+})();
 
 class Root extends Component {
   constructor(props) {
@@ -34,10 +44,12 @@ class Root extends Component {
     window.location.href = "/";
   }
 
+
   render() {
+
     return (
       <Context.Provider value={{ api, state: this.state }} >
-        <DndProvider backend={HTML5Backend}>
+        <DndProvider backend={isTouchDevice ? TouchBackend : HTML5Backend}>
           <Router>
             <Switch>
               <Route exact path="/" component={Login}/>
@@ -47,10 +59,6 @@ class Root extends Component {
               <Route component={Routes}/>
             </Switch>
           </Router>
-          {/*<footer>
-            {localStorage.getItem('authToken') ? <a id="sign-out" onClick={this.signOut} href="#" >Sign Out</a> : null}
-            <div id="footer-text">Always Learning, © 2020 Lyrn Link.</div>
-          </footer>*/}
         </DndProvider>
       </Context.Provider>
     );
