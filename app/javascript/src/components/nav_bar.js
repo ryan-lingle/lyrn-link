@@ -24,11 +24,11 @@ const NavBar = ({ location }) => {
         <div className="nav-bg fixed-top">
             <div className="nav flex-between">
                 <div className="nav-logo">
-                    <a href="/" >
+                    <a href={isLoggedIn ? '/admin' : '/'} >
                         <img 
                             className="nav-logo"
                             src={Logo} 
-                            alt="[app name] logo" 
+                            alt="Lyrn Link Logo" 
                         />
                     </a>
                 </div>
