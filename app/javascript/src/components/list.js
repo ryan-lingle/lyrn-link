@@ -72,17 +72,19 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             <div className="main-heading">
                 You haven't created any lists, yet. Click the add button to get started! 
             </div>
-            {addBtn()}
         </div>
     );
 
     // NO ITEM STATE
     if (items.length === 0) return(
-        <div className="todo-card" style={{marginTop: '40px'}} >
-            <div className="main-heading">
-                You haven't added any items to your list. Click the add button to get started! 
+        <div>
+            {addItem()}
+            <div className="todo-card" style={{marginTop: '40px'}} >
+                <div className="main-heading">
+                    You haven't added any items to your list. Click the add button to get started! 
+                </div>
+                {editBtns()}
             </div>
-            {editBtns()}
         </div>
     );
 
