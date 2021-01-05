@@ -10,7 +10,8 @@ const BookmarkButton = ({ id, bookmarked, authed }) => {
 	const { api } = useContext(Context);
 	const [bookmarkState, setBookmarkState] = useState(bookmarked);
 
-	async function handleClick() {
+	async function handleClick(e) {
+		e.stopPropagation();
 		const res = bookmarkState ? await api.destroyBookmark(id) : await api.createBookmark(id);
 		setBookmarkState(res);
 	};
