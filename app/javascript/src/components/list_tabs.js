@@ -3,6 +3,7 @@ import Context from '../context';
 import ListTab from './list_tab';
 import NewList from './new_list';
 import Draggable from './draggable';
+import NoLists from '../assets/nolists.png';
 
 const ListTabs = ({ pathname="/admin/lists/" }) => {
     const { state, api } = useContext(Context);
@@ -45,6 +46,32 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
             dragIndex, hoverIndex,
         });
     }
+
+    if (lists.length === 0) return(
+        <div className="todo-card" style={{marginTop: '40px'}} >
+            <img 
+                className="todo-img"
+                src={NoLists} 
+                alt="Lyrn Link No Lists" 
+            />
+            <div className="big-heading" style={{marginBottom: '20px'}} >
+                {
+                    readOnly
+
+                    ?   "They don't have any lists yet... stay tuned!"
+
+                    :   "Welcome to Lyrnlink, It's time to create your first list!"
+                }
+            </div>
+            <NewList id={'empty-state-new-list'} >
+                <div className="btn-black" style={{width: '80px', margin: 'auto'}} >
+                  <i className="far fa-plus-circle" style={{marginRight: '5px'}}/>
+                  List
+                </div>
+            </NewList>
+        </div>
+    );
+
     return(
         <div className="flex-between tabs">
             <div 

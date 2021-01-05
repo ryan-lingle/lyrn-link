@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import Context from '../context';
 const maxListsLength = 5;
 
-const NewList = () => {
+const NewList = ({ children, id }) => {
     const { state, api } = useContext(Context);
     const [show, setShow] = useState(false);
     const lists = state.user.uncreated_lists;
@@ -12,9 +12,10 @@ const NewList = () => {
     return(
         <div 
             className="btn-list new-list" 
+            id={id}
             onClick={() => setShow(prev => !prev)} 
         >
-            <i className="fas fa-plus-circle icon-black" style={{fontSize: 'large'}} />
+            {children || <i className="fas fa-plus-circle icon-black" style={{fontSize: 'large'}} />}
             {
                 show
 
