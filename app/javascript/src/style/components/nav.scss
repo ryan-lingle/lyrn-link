@@ -10,11 +10,11 @@
 	background-color: $black;
 	align-items: center;
 	padding: 10px 0px;
-	height: 50px;
+	height: 60px;
 }
 
 .nav-logo {
-	height: 32px;
+	height: 35px;
 }
 
 .navlinks {
@@ -68,7 +68,8 @@
 .nav-avatar {
 	width: 40px;
 	height: 40px;
-	border-radius: 100px;
+	border-radius: 4px;
+	border: 1px solid $white;
 	margin-left: 15px;
 }
 
@@ -80,7 +81,7 @@
 .nav-profile {
 	display: flex;
 	position: relative;
-	margin: auto;
+	margin-left: auto;
 }
 
 .nav-footer {
@@ -117,6 +118,7 @@
 	background: $white;
     box-shadow: 0px 0px 8px rgba(58, 58, 68, 0.1), 0px 0px 16px rgba(90, 91, 106, 0.1);
     border-radius: 5px;
+    width: 110px;
 }
 
 .hamburger-menu a {
@@ -125,7 +127,7 @@
 	font-family: 'Open Sans';
     font-weight: normal;
     font-size: small;
-    color: $blue !important;
+    color: $black !important;
 }
 
 .hamburger-menu a:hover {
@@ -148,7 +150,7 @@
 #default-avatar {
 	font-size: xx-large;
 	margin-left: 15px;
-	color: $blue;
+	color: $white;
 }
 
 #default-avatar:hover {
