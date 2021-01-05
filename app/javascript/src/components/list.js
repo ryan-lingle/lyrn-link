@@ -38,6 +38,22 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         }
     }
 
+    function editItems() {
+        if (readOnly) {
+            return null;
+        } else {
+            return(
+                <div className="flex-between">
+                    <div className="btn-black" onClick={() => setAdd(prev => !prev)} >
+                      <i className="far fa-plus-circle" style={{marginRight: '5px'}}/>
+                      Item
+                    </div>
+                    <i className="far fa-trash icon-delete" onClick={destroyList} style={{marginLeft: '10px'}} />
+                </div>
+            );
+        }
+    }
+
     function addItem() {
         if (add) {
 
@@ -131,7 +147,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                             <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
                             <strong>My Top {items.length} {capitalize(type)}</strong>
                         </div>
-                        <div>{editBtns()}</div>
+                        <div>{editItems()}</div>
                     </div>
 
                 :   null
