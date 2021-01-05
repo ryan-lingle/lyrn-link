@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Search, Scraper, Draggable, ItemCard } from '../components';
+import NoLists from '../assets/nolists.png';
+import NoItems from '../assets/noitemsonlist.png';
 import Context from '../context';
 import { capitalize } from '../utils';
 
@@ -23,11 +25,14 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return null;
         } else {
             return(
-                <div className="flex-between">
-                    <div className="icon" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
-                      <i className="far fa-plus-circle icon-black"/>
+                <div className="todo-text">
+                    <div className="btn-red" style={{marginRight: '10px'}} onClick={destroyList}>
+                        Delete
                     </div>
-                    <i className="far fa-trash icon-delete" onClick={destroyList} style={{marginLeft: '10px'}} />
+                    <div className="btn-black" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
+                      <i className="far fa-plus-circle" style={{marginRight: '5px'}}/>
+                      Item
+                    </div>
                 </div>
             );
         }
@@ -68,13 +73,18 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
     if (!type) return(
         <div className="todo-card" style={{marginTop: '40px'}} >
-            <div className="main-heading">
+            <img 
+                className="todo-img"
+                src={NoLists} 
+                alt="Lyrn Link No Lists" 
+            />
+            <div className="big-heading" style={{marginBottom: '20px'}} >
                 {
                     readOnly
 
-                    ?   `${state.user.name} doesn't have any lists yet!`
+                    ?   "They don't have any lists yet... stay tuned!"
 
-                    :   "You haven't created any lists, yet. Click the add button to get started!"
+                    :   "Welcome to Lyrnlink, It's time to create your first list!"
                 }
             </div>
         </div>
@@ -84,16 +94,21 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         <div>
             {addItem()}
             <div className="todo-card" style={{marginTop: '40px'}} >
-                <div className="main-heading">
+                <img 
+                    className="todo-img"
+                    src={NoItems} 
+                    alt="Lyrn Link No Items" 
+                />
+                <div className="big-heading">
                     {
                         readOnly
 
-                        ?   "This list doesn't have any items yet!"
+                        ?   "Don't worry, they're working on their list."
 
-                        :   "You haven't added any items to your list. Click the add button to get started!"
+                        :   "Congrats, you added a list! Let's add your favorite items."
                     }
+                    <div className="text-center" style={{marginTop: '20px'}}>{editBtns()}</div>
                 </div>
-                {editBtns()}
             </div>
         </div>
     );
@@ -111,12 +126,12 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             {
                 isList
 
-                ?   <div className="flex-between" style={{marginBottom: '20px'}}>
+                ?   <div className="list-heading">
                         <div className="main-heading">
                             <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
                             <strong>My Top {items.length} {capitalize(type)}</strong>
                         </div>
-                        {editBtns()}
+                        <div>{editBtns()}</div>
                     </div>
 
                 :   null

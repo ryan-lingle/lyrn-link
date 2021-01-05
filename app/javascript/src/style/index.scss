@@ -11,7 +11,7 @@ $fa-font-path: "webfonts";
 @import "components";
 
 .mega-heading {
-	font-family: Raleway;
+	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: bold;
 	font-size: xx-large;
@@ -20,7 +20,7 @@ $fa-font-path: "webfonts";
 	}
 }
 .huge-heading {
-	font-family: Raleway;
+	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: lighter;
 	font-size: x-large;
@@ -30,20 +30,20 @@ $fa-font-path: "webfonts";
 }
 
 .tabs-heading {
-	font-family: Raleway;
+	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: bold;
 	font-size: large;
 	@media only screen and (max-width: 950px)  {
 		font-size: medium;
 	}
-	&:hover {
-		filter: brightness(75%);
+	@media only screen and (max-width: 500px)  {
+		font-size: small;
 	}
 }
 
 .big-heading {
-	font-family: Raleway;
+	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: bold;
 	font-size: large;

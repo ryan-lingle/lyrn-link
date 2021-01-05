@@ -1,20 +1,20 @@
 // list tabs
 
 .tabs {
-	border-bottom: solid 1px $black;
-	padding-bottom: 5px;
+	border-bottom: 1.5px solid $black;
+	padding-bottom: 3px;
 	box-sizing: border-box;
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 }
 
 .list-tab {
 	width: 100%;
 	color: $grey3;
 	text-align: center;
-	padding-right: 20px;
+	padding-right: 18px;
 	position: relative;
 	@media only screen and (max-width: 950px)  {
-		padding-right: 10px;
+		padding-right: 8px;
 	}
 }
 
@@ -40,6 +40,13 @@
 	overflow-y: scroll;
 	height: 100%;
 	padding-bottom: 80px;
+}
+
+.list-heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
 }
 
 .new-list {

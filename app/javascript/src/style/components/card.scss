@@ -3,10 +3,8 @@
 //
 
 .todo-card {
-	display: flex;
 	align-items: center;
 	text-align: center;
-	justify-content: space-between;
 	background: $white;
 	border-radius: 4px;
 	margin: 20px auto;
@@ -17,7 +15,16 @@
 }
 
 .todo-text {
-	text-align: left;
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+}
+
+.todo-img {
+	text-align: center;
+	margin: 20px;
+	max-width: 150px;
 }
 
 .todo-btn {
