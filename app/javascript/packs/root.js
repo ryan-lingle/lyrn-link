@@ -7,18 +7,8 @@ import { store } from '../src/store';
 import { api } from '../src/api';
 import Context from '../src/context';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { TouchBackend } from 'react-dnd-touch-backend';
 import { DndProvider } from 'react-dnd';
 import 'react-tippy/dist/tippy.css';
-
-const isTouchDevice = (function() { 
-  try {  
-    document.createEvent("TouchEvent");  
-    return true;  
-  } catch (e) {  
-    return false;  
-  }  
-})();
 
 class Root extends Component {
   constructor(props) {
@@ -49,7 +39,7 @@ class Root extends Component {
 
     return (
       <Context.Provider value={{ api, state: this.state }} >
-        <DndProvider backend={isTouchDevice ? TouchBackend : HTML5Backend}>
+        <DndProvider backend={HTML5Backend}>
           <Router>
             <Switch>
               <Route exact path="/" component={Login}/>
