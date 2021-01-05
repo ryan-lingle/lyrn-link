@@ -10,7 +10,8 @@ const LikeButton = ({ id, liked }) => {
 		setLikeState(liked);
 	}, [liked]);
 
-	async function handleClick() {
+	async function handleClick(e) {
+		e.stopPropagation();
 		const res = likeState ? await api.destroyLike(id) : await api.createLike(id);
 		setLikeState(res);
 	};
