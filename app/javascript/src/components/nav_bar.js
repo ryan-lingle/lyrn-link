@@ -46,7 +46,7 @@ const NavBar = ({ location }) => {
                                     />
 
                                 :   <i 
-                                        className="fad fa-user" 
+                                        className="fas fa-smile-wink" 
                                         id="default-avatar" 
                                         onClick={() => setShowHam(prev => !prev)}
                                     />
@@ -58,7 +58,7 @@ const NavBar = ({ location }) => {
                                 }}
                             >   
                                 <a href="/admin" >
-                                    <i className="fas fa-user-circle" style={{marginRight: '5px'}} />
+                                    <i className="fas fa-link" style={{marginRight: '5px'}} />
                                     My Link
                                 </a>
                                 <a href="#" onClick={api.signOut} >
