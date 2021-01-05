@@ -66,22 +66,32 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         }
     }
 
-    // NO LIST STATE
     if (!type) return(
         <div className="todo-card" style={{marginTop: '40px'}} >
             <div className="main-heading">
-                You haven't created any lists, yet. Click the add button to get started! 
+                {
+                    readOnly
+
+                    ?   `${state.user.name} doesn't have any lists yet!`
+
+                    :   "You haven't created any lists, yet. Click the add button to get started!"
+                }
             </div>
         </div>
     );
 
-    // NO ITEM STATE
     if (items.length === 0) return(
         <div>
             {addItem()}
             <div className="todo-card" style={{marginTop: '40px'}} >
                 <div className="main-heading">
-                    You haven't added any items to your list. Click the add button to get started! 
+                    {
+                        readOnly
+
+                        ?   "This list doesn't have any items yet!"
+
+                        :   "You haven't added any items to your list. Click the add button to get started!"
+                    }
                 </div>
                 {editBtns()}
             </div>
