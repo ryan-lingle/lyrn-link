@@ -21,7 +21,7 @@ const LikeButton = ({ id, liked }) => {
 	return(
 		<div className="flex" >
 			<div 
-				className={`btn-follow ${likeState ? 'followed' : ''}`} 
+				className={likeState ? 'btn-following' : 'btn-follow'}
 				onClick={handleClick}
 			>
 				{likeState ? 'Following' : 'Follow'}
