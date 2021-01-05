@@ -18,13 +18,16 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         };
     };
 
-    function addBtn() {
+    function editBtns() {
         if (readOnly) {
             return null;
         } else {
             return(
-                <div className="icon" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
-                    <i className="far fa-plus-circle icon-black"/>
+                <div className="flex-between">
+                    <div className="icon" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
+                      <i className="far fa-plus-circle icon-black"/>
+                    </div>
+                    <i className="far fa-trash icon-delete" onClick={destroyList} style={{marginLeft: '10px'}} />
                 </div>
             );
         }
@@ -79,7 +82,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             <div className="main-heading">
                 You haven't added any items to your list. Click the add button to get started! 
             </div>
-            {addItem()}
+            {editBtns()}
         </div>
     );
 
@@ -101,10 +104,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                             <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
                             <strong>My Top {items.length} {capitalize(type)}</strong>
                         </div>
-                        <div className="flex-between">
-                            {addBtn()}
-                            <i className="far fa-trash icon-delete" onClick={destroyList} style={{marginLeft: '10px'}} />
-                        </div>
+                        {editBtns()}
                     </div>
 
                 :   null
