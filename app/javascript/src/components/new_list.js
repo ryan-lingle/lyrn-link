@@ -3,7 +3,7 @@ import Context from '../context';
 const maxListsLength = 5;
 
 const NewList = () => {
-    const { state, api, store } = useContext(Context);
+    const { state, api } = useContext(Context);
     const [show, setShow] = useState(false);
     const lists = state.user.uncreated_lists;
     const maxLists = lists && lists.length === maxListsLength;
@@ -24,7 +24,7 @@ const NewList = () => {
                         {lists.map((list, i) =>
                             <div key={i} onClick={async () => {
                                 await api.createList({ type: list });
-                                store.reduce({
+                                api.store.reduce({
                                     type: 'set_list_index',
                                     listType: list,
                                 });

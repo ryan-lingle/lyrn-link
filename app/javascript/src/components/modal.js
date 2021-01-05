@@ -1,8 +1,6 @@
 import React from 'react';
 
 const Modal = ({ heading, children, show, onClose }) => {
-
-	console.log(show);
 	
 	return(
 		<div>

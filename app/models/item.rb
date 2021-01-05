@@ -3,7 +3,7 @@ class Item < ApplicationRecord
 	include ActiveStorageSupport::SupportForBase64
 	has_one_base64_attached :image
 	belongs_to :list
-	has_many :bookmarks
+	has_many :bookmarks, dependent: :destroy
 	has_many :users, through: :bookmarks
 	before_create :add_index
 	before_create :upload_image
