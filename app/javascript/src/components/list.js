@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Search, Scraper, Draggable, ItemCard } from '../components';
-import NoLists from '../assets/nolists.png';
 import NoItems from '../assets/noitemsonlist.png';
 import Context from '../context';
 import { capitalize } from '../utils';
@@ -27,7 +26,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return(
                 <div className="todo-text">
                     <div className="btn-red" style={{marginRight: '10px'}} onClick={destroyList}>
-                        Delete
+                        Delete List
                     </div>
                     <div className="btn-black" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
                       <i className="far fa-plus-circle" style={{marginRight: '5px'}}/>
@@ -71,24 +70,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         }
     }
 
-    if (!type) return(
-        <div className="todo-card" style={{marginTop: '40px'}} >
-            <img 
-                className="todo-img"
-                src={NoLists} 
-                alt="Lyrn Link No Lists" 
-            />
-            <div className="big-heading" style={{marginBottom: '20px'}} >
-                {
-                    readOnly
-
-                    ?   "They don't have any lists yet... stay tuned!"
-
-                    :   "Welcome to Lyrnlink, It's time to create your first list!"
-                }
-            </div>
-        </div>
-    );
+    if (!type) return <div/>;
 
     if (items.length === 0) return(
         <div>

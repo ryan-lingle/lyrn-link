@@ -98,8 +98,15 @@
 	cursor: pointer;
 }
 
+#empty-state-new-list {
+	width: 100px;
+	margin: auto;
 
-
+	.new-list-menu {
+		left: 0px;
+		top: 35px;
+	}
+}
 
 
 .delete-list {
