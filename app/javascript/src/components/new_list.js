@@ -14,7 +14,7 @@ const NewList = () => {
             className="btn-list new-list" 
             onClick={() => setShow(prev => !prev)} 
         >
-            <i className="far fa-plus-circle icon-black" style={{fontSize: 'larger'}} />
+            <i className="fas fa-plus-circle icon-black" style={{fontSize: 'large'}} />
             {
                 show
 
