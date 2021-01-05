@@ -28,8 +28,8 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                     <div className="btn-red" style={{marginRight: '10px'}} onClick={destroyList}>
                         Delete List
                     </div>
-                    <div className="btn-black" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
-                      <i className="far fa-plus-circle" style={{marginRight: '5px'}}/>
+                    <div className="btn-black" onClick={() => setAdd(prev => !prev)} >
+                      <i className={`far fa-${add ? 'minus' : 'plus'}-circle`} style={{marginRight: '5px'}}/>
                       Item
                     </div>
                 </div>
