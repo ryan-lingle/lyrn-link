@@ -62,6 +62,9 @@ const Page = ({ match }) => {
                     <ProfileTabs 
                         pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
                     />
+                    <div className="nav-footer">
+                        <span style={{fontWeight: 'bolder'}}>© 2021 - Lyrnlink</span>
+                    </div>
                 </div>
                 <div className="mobile-only">
                     <MobileTabs 

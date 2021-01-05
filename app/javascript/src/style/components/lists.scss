@@ -67,27 +67,27 @@
 .new-list-menu {
 	position: absolute;
 	margin: 0;
-	width: 90px;
+	width: auto;
 	z-index: 120;
-	right: 0px;
-	background: $white;
+	right: 3px;
+	background: darken($grey1, 10%);
     box-shadow: 0px 0px 8px rgba(58, 58, 68, 0.1), 0px 0px 16px rgba(90, 91, 106, 0.1);
     border-radius: 5px;
 }
 
 .new-list-menu div {
 	display: block;
-	padding: 4px 15px;
+	padding: 8px 12px;
 	font-family: 'Raleway';
     font-weight: bold;
     font-size: small;
     color: $black !important;
-    text-align: right;
-    border-radius: 3px;
+    text-align: center;
+    border-radius: 5px;
 }
 
 .new-list-menu div:hover {
-	background: #f1f2f4;
+	background:darken($grey1, 15%);
 	cursor: pointer;
 }
 

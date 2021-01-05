@@ -23,7 +23,7 @@ const LikeButton = ({ id, liked }) => {
 				className={`btn-follow ${likeState ? 'followed' : ''}`} 
 				onClick={handleClick}
 			>
-				{likeState ? 'Unfollow' : 'Follow'}
+				{likeState ? 'Following' : 'Follow'}
 			</div>
 		</div>
 	);
