@@ -24,13 +24,10 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         } else {
             return(
                 <div className="flex-between">
-                    <button onClick={destroyList} className="btn-black" style={{marginRight: '10px'}}>
-                        Delete List
-                    </button>
-                    <div className="btn-black" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
-                        <i className="far fa-plus-circle" style={{marginRight: '5px'}} />
-                        {capitalize(singular)}
+                    <div className="icon" style={{ color: add ? '#999999' : '' }} onClick={() => setAdd(prev => !prev)} >
+                      <i className="far fa-plus-circle icon-black"/>
                     </div>
+                    <i className="far fa-trash icon-delete" onClick={destroyList} style={{marginLeft: '10px'}} />
                 </div>
             );
         }
@@ -71,17 +68,21 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
     // NO LIST STATE
     if (!type) return(
-        <div className="big-heading no-list" style={{marginTop: '40px'}} >
-            NO LIST STATE
+        <div className="todo-card" style={{marginTop: '40px'}} >
+            <div className="main-heading">
+                You haven't created any lists, yet. Click the add button to get started! 
+            </div>
+            {addBtn()}
         </div>
     );
 
     // NO ITEM STATE
     if (items.length === 0) return(
-        <div className="big-heading no-list" style={{marginTop: '40px'}} >
-            NO ITEM STATE 
+        <div className="todo-card" style={{marginTop: '40px'}} >
+            <div className="main-heading">
+                You haven't added any items to your list. Click the add button to get started! 
+            </div>
             {editBtns()}
-            {addItem()}
         </div>
     );
 

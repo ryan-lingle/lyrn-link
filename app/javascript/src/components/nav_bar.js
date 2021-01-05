@@ -38,10 +38,10 @@ const NavBar = ({ location }) => {
 
                             ?   <div className="navlinks">
                                     <a href="/admin">
-                                        <i className="far fa-user-circle" style={{marginRight: '5px'}} />
+                                        <i className="fas fa-user-circle" style={{marginRight: '5px'}} />
                                     </a>
                                     <a href="#" onClick={api.signOut}>
-                                        <i className="far fa-sign-out-alt"/>
+                                        <i className="fas fa-sign-out-alt"/>
                                     </a>
                                 </div>
 
