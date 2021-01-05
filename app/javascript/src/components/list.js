@@ -72,28 +72,50 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
     if (!type) return <div/>;
 
-    if (items.length === 0) return(
-        <div>
-            {addItem()}
-            <div className="todo-card" style={{marginTop: '40px'}} >
-                <img 
-                    className="todo-img"
-                    src={NoItems} 
-                    alt="Lyrn Link No Items" 
-                />
-                <div className="big-heading">
-                    {
-                        readOnly
+    if (items.length === 0) {
+        
+        if (isList) {
 
-                        ?   "Don't worry, they're working on their list."
+            return(
+                <div>
+                    {addItem()}
+                    <div className="todo-card" style={{marginTop: '40px'}} >
+                        <img 
+                            className="todo-img"
+                            src={NoItems} 
+                            alt="Lyrn Link No Items" 
+                        />
+                        <div className="big-heading">
+                            {
+                                readOnly
 
-                        :   "Congrats, you added a list! Let's add your favorite items."
-                    }
-                    <div className="text-center" style={{marginTop: '20px'}}>{editBtns()}</div>
+                                ?   "Don't worry, they're working on their list."
+
+                                :   "Congrats, you added a list! Let's add your favorite items."
+                            }
+                            <div className="text-center" style={{marginTop: '20px'}}>{editBtns()}</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    );
+            )
+
+        } else {
+
+            return(
+                <div>
+                    <div className="todo-card" style={{marginTop: '40px'}} >
+                        <img 
+                            className="todo-img"
+                            src={NoItems} 
+                            alt="Lyrn Link No Items" 
+                        />
+                        <div className="big-heading">Nothing to see hear yet!</div>
+                    </div>
+                </div>
+            )
+
+        }
+    };
 
     function onMove(dragIndex, hoverIndex) {
         api.store.reduce({
