@@ -32,29 +32,52 @@ const NavBar = ({ location }) => {
                         />
                     </a>
                 </div>
-                <div className="navlinks">
-                    {
-                        isLoggedIn
+                {
+                    isLoggedIn
 
-                            ?   <div className="navlinks">
-                                    <a href="/admin">
-                                        <i className="fas fa-user-circle" style={{marginRight: '5px'}} />
-                                    </a>
-                                    <a href="#" onClick={api.signOut}>
-                                        <i className="fas fa-sign-out-alt"/>
-                                    </a>
-                                </div>
+                    ?   <div className="nav-profile">
+                            {
+                                state.user.profile_picture_url
 
-                            :   <div className="navlinks">
-                                    <a href="/signup">
-                                        Sign Up
-                                    </a>
-                                    <a href="/signin">
-                                        Sign In
-                                    </a>
-                                </div>
-                    }
-                </div>
+                                ?   <img 
+                                        src={state.user.profile_picture_url} 
+                                        className="nav-avatar" 
+                                        onClick={() => setShowHam(prev => !prev)}
+                                    />
+
+                                :   <i 
+                                        className="fad fa-user" 
+                                        id="default-avatar" 
+                                        onClick={() => setShowHam(prev => !prev)}
+                                    />
+                            }
+                            <div 
+                                className="hamburger-menu"
+                                style={{
+                                    display: showHam ? "" : "none",
+                                }}
+                            >   
+                                <a href="/admin" >
+                                    <i className="fas fa-user-circle" style={{marginRight: '5px'}} />
+                                    My Link
+                                </a>
+                                <a href="#" onClick={api.signOut} >
+                                    <i className="fas fa-sign-out-alt" style={{marginRight: '5px'}} />
+                                    Sign Out
+                                </a>
+                            </div>
+                         </div>
+
+                    :   <div className="navlinks">
+                            <a href="/signup">
+                                Sign Up
+                            </a>
+                            <a href="/signin">
+                                Sign In
+                            </a>
+                        </div>
+                }
+                 
             </div>
         </div>
     );
