@@ -27,6 +27,12 @@ const UserProfile = () => {
 		navigator.clipboard.writeText(link);
 	}
 
+	const profileButtons = (
+		<div className="profile-buttons" >
+			{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : <a className="btn-share" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>Share <i className="fab fa-twitter" /></a>}
+		</div>
+	);
+
 	return(
 		<div id="user-profile">
 			{
@@ -99,6 +105,9 @@ const UserProfile = () => {
 						Sharing since {state.user.created}
 					</div>
 				</div>
+				<div className="mobile-only" >
+					{profileButtons}
+				</div>
 			</div>
 			<Editable
 				readOnly={readOnly}
@@ -108,9 +117,8 @@ const UserProfile = () => {
 				textArea={true}
 				defaultValue="I don't have a description."
 			/>
-			<div style={{marginTop: '10px'}} />
-			<div className="profile-buttons">
-				{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : <a className="btn-share" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>Share <i className="fab fa-twitter" /></a>}
+			<div className="non-mobile-only" style={{marginTop: '10px'}}>
+				{profileButtons}
 			</div>
 		</div>
 	);
