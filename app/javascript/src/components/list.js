@@ -165,11 +165,13 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                     onMove={onMove}
                 >
                     <ItemCard
+                        onMove={onMove}
                         readOnly={readOnly}
                         rank={isList}
                         onDestroy={() => destroyItem(type, item.id)}
                         followButton={['following', 'followers'].includes(type)}
                         bookmarkButton={type === 'bookmarks'}
+                        lastItem={items.length === i + 1}
                         {...item} 
                     />
                 </Draggable>
