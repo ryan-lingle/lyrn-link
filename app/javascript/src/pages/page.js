@@ -52,7 +52,7 @@ const Page = ({ match }) => {
 
                         ?   `${state.user.name} (${state.user.handle})`
 
-                        :   'LyrnLink Admin'
+                        :   'lyrnlink'
                     }
                 </title>
             </Helmet>

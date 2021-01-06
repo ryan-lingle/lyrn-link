@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { BookmarkButton, LikeButton } from '../components';
 import Icon from '../assets/icon.png';
 
-const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, followed, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, searchResult, onDestroy }) => {
+const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, followed, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, searchResult, lastItem, onDestroy, onMove }) => {
     const link = useRef();
 
     function destroy(e) {
@@ -31,41 +31,53 @@ const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, fol
     }
 
     return(
-        <div className={`item-card ${readOnly ? '' : 'draggable'}`} onClick={go} >
+        <div className="item-card-wrapper">
             {
-                rank
+                rank && !readOnly
 
-                ?   <div className="item-ranking">
-                        <div className="item-rank">
-                            {index + 1}
-                        </div>
-                        {readOnly || !rank ? null : <i className="fas fa-ellipsis-v icon"/>}              
+                ?   <div className="sort-arrows">
+                        <i className="fas fa-sort-up sort-arrow item-up" onClick={index === 0 ? null : () => onMove(index, index - 1)} />
+                        <i className="fas fa-sort-down sort-arrow item-down" onClick={lastItem ? null : () => onMove(index, index + 1)} />
                     </div>
 
                 :   null
             }
-            
-            <div className="item-box">
-                <img src={image_url || Icon} className="item-image" />
-            </div>
-            <div className="item-details truncate">
-                <div className="huge-body truncate">
-                    {title}
-                    {subtitle ? '   ' : ''}
-                    <span className="main-body">
-                        {subtitle}
-                    </span>
+            <div className={`item-card ${readOnly ? '' : 'draggable'}`} onClick={go} style={{marginLeft: rank && !readOnly ? '25px' : ''}} >
+                {
+                    rank
+
+                    ?   <div className="item-ranking">
+                            <div className="item-rank">
+                                {index + 1}
+                            </div>
+                            {readOnly || !rank ? null : <i className="fas fa-ellipsis-v icon"/>}              
+                        </div>
+
+                    :   null
+                }
+                
+                <div className="item-box">
+                    <img src={image_url || Icon} className="item-image" />
                 </div>
-                <a 
-                    className={`big-body ${!creator ? '' : 'no-decoration'}`}
-                    href={url} 
-                    ref={link}
-                    target={internal_url ? "" : "_blank"}
-                >
-                    {creator || url_copy || url}
-                </a>
+                <div className="item-details truncate">
+                    <div className="huge-body truncate">
+                        {title}
+                        {subtitle ? '   ' : ''}
+                        <span className="main-body">
+                            {subtitle}
+                        </span>
+                    </div>
+                    <a 
+                        className={`big-body ${!creator ? '' : 'no-decoration'}`}
+                        href={url} 
+                        ref={link}
+                        target={internal_url ? "" : "_blank"}
+                    >
+                        {creator || url_copy || url}
+                    </a>
+                </div>
+                {button()}
             </div>
-            {button()}
         </div>
     );
 };

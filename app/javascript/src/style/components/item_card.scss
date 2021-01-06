@@ -127,3 +127,38 @@
 	cursor: pointer !important;
 }
 
+
+.sort-arrows {
+	font-size: 35px;
+	color: $grey2;
+	margin-bottom: 15px;
+}
+
+.sort-arrow {
+	position: absolute;
+}
+
+.sort-arrow:hover {
+	color: $grey3;
+	cursor: pointer;
+}
+
+.item-card-wrapper {
+	position: relative;
+}
+
+.item-up {
+	top: 13px;
+	left: 0px;
+	@media only screen and (max-width: 950px)  {
+		top: 8px;
+	}
+}
+
+.item-down {
+	top: 24px;
+	left: 0px;
+	@media only screen and (max-width: 950px)  {
+		top: 19px;
+	}
+}
