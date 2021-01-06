@@ -1,14 +1,10 @@
 #user-profile {
-	background: $white;
-	margin-top: 30px;
+	margin: 35px auto;
 	max-width: 100%;
 	padding-bottom: 20px;
 	border-bottom: solid $grey2 1px;
 	@media only screen and (max-width: 950px)  {
-		border: none;
-		margin-top: 85px;
-		margin-bottom: 20px;
-
+		margin: auto auto 30px auto;
 	}
 }
 
