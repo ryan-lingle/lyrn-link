@@ -2,14 +2,6 @@
     &-green {
         color: $green;
     }
-    &-sort {
-        color: $grey3;
-        &:hover {
-            color: lighten($grey3, 15%);
-            cursor: pointer;
-            text-decoration: !important;
-        }
-    }
     &-yellow {
         color: $yellow;
     }
