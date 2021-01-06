@@ -164,7 +164,7 @@
 
 .mobile-nav-footer {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	text-align: center;
 	color: $grey3;
 	margin: auto;
@@ -172,8 +172,5 @@
 	font-size: x-small;
 	font-family: 'Open Sans';
 	font-weight: normal;
-	z-index: inherit;
-	position: fixed;
-	bottom: 0;
 }
 

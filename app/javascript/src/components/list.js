@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Search, Scraper, Draggable, ItemCard } from '../components';
-import NoItems from '../assets/noitemsonlist.png';
+import NoItems from '../assets/noitems.png';
+import NoItemsUser from '../assets/noitemsuser.png';
 import Context from '../context';
 import { capitalize } from '../utils';
 
@@ -24,7 +25,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return null;
         } else {
             return(
-                <div className="todo-text">
+                <div className="todo-btns">
                     <div className="btn-red" style={{marginRight: '10px'}} onClick={destroyList}>
                         Delete List
                     </div>
@@ -79,23 +80,34 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return(
                 <div>
                     {addItem()}
-                    <div className="todo-card" style={{marginTop: '40px'}} >
-                        <img 
-                            className="todo-img"
-                            src={NoItems} 
-                            alt="Lyrn Link No Items" 
-                        />
-                        <div className="big-heading">
-                            {
-                                readOnly
+                    {
+                        readOnly
 
-                                ?   "Don't worry, they're working on their list."
+                        ?   <div className="todo-card" >
+                                <img 
+                                    className="todo-img"
+                                    src={NoItems} 
+                                    alt="Lyrn Link No Items" 
+                                />
+                                <div className="todo-text">
+                                    <div className="big-heading"> Hold tight, please?</div>
+                                    <div className="main-heading">{state.user.name} is working hard on this list...</div>
+                                </div>
+                            </div>
 
-                                :   "Congrats, you added a list! Let's add your favorite items."
-                            }
-                            <div className="text-center" style={{marginTop: '20px'}}>{editBtns()}</div>
-                        </div>
-                    </div>
+                        :   <div className="todo-card" >
+                                <img 
+                                    className="todo-img"
+                                    src={NoItemsUser} 
+                                    alt="Lyrn Link No Items" 
+                                />
+                                <div className="todo-text">
+                                    <div className="big-heading">🎉 Congrats, you've made a new list!</div>
+                                    <div className="main-heading">Go ahead and add some of your favorites to it, don't be shy.</div>
+                                </div>
+                                <div className="text-center" style={{marginTop: '20px'}}>{editBtns()}</div>
+                            </div>
+                    }
                 </div>
             )
 
@@ -103,7 +115,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
             return(
                 <div>
-                    <div className="todo-card" style={{marginTop: '40px'}} >
+                    <div className="todo-card" >
                         <img 
                             className="todo-img"
                             src={NoItems} 
@@ -133,7 +145,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 ?   <div className="list-heading">
                         <div className="main-heading">
                             <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
-                            <strong>My Top {items.length} {capitalize(type)}</strong>
+                            <strong>Favorite {items.length} {capitalize(type)} by {state.user.name.first}</strong>
                         </div>
                         <div>{editBtns()}</div>
                     </div>

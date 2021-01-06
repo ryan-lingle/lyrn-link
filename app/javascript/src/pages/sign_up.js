@@ -26,19 +26,14 @@ const Login = ({ location }) => {
             <div className="auth-card">
                 <ErrorBox error={error} />
                 <div className="auth-description huge-body" style={{fontWeight: 'normal'}}>
-                    Currently, we require you to sign up with your <b>Twitter</b> account. The twitter universe lends itself to be a rich community of learners, which bodes well for lyrnlink. Authentication via Twitter allows us to ensure you a seamless onboarding experience.
+                    We currently require you to sign up with <b>Twitter</b>. The twitter-verse is a rich community of learners, which bodes well for lyrnlink. Authentication via Twitter allows us to ensure you a seamless onboarding experience.
                 </div>
                 <div className="btn-item auth-button" onClick={() => api.requestToken()}>
                     <i className="fab fa-twitter" style={{marginRight: '10px'}} />
                     Sign Up with Twitter
                 </div>
                 <div className="auth-button main-body">
-                    We won't post anything to your account without your permission.
-                </div>
-            </div>
-            <div className="auth-footing">
-                <div className="tiny-heading">
-                        By signing up for lyrnlink, you agree to our Privacy Policy and Terms of Use.
+                    By signing up for lyrnlink, you agree to our <a href="https://www.lyrn.link/privacy">Privacy Poloicy</a> and <a href="https://www.lyrn.link/terms">Terms of Use</a>. We won't post anything to twitter without your permission.
                 </div>
                 <div className="little-body" style={{marginTop: '15px'}}>
                         Already got a lyrnlink? <a href="/signin">Sign In</a>

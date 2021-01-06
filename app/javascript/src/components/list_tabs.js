@@ -3,7 +3,8 @@ import Context from '../context';
 import ListTab from './list_tab';
 import NewList from './new_list';
 import Draggable from './draggable';
-import NoLists from '../assets/nolists.png';
+import NoLists from '../assets/nolist.png';
+import NoListsUser from '../assets/nolistuser.png'
 
 const ListTabs = ({ pathname="/admin/lists/" }) => {
     const { state, api } = useContext(Context);
@@ -48,27 +49,40 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
     }
 
     if (lists.length === 0) return(
-        <div className="todo-card" style={{marginTop: '40px'}} >
-            <img 
-                className="todo-img"
-                src={NoLists} 
-                alt="Lyrn Link No Lists" 
-            />
-            <div className="big-heading" style={{marginBottom: '20px'}} >
-                {
-                    readOnly
+        <div>
+            {
+                readOnly
 
-                    ?   "They don't have any lists yet... stay tuned!"
+                ?   <div className="todo-card" >
+                        <img 
+                            className="todo-img"
+                            src={NoLists} 
+                            alt="Lyrn Link No Lists" 
+                        />
+                        <div className="todo-text">
+                            <div className="big-heading">You'll have to wait a moment...</div>
+                            <div className="main-heading">{state.user.name} is just getting started with lyrnlink and hasn't created a list yet.</div>
+                        </div>
+                    </div>
 
-                    :   "Welcome to Lyrnlink, It's time to create your first list!"
-                }
-            </div>
-            <NewList id={'empty-state-new-list'} >
-                <div className="btn-black" style={{width: '80px', margin: 'auto'}} >
-                  <i className="far fa-plus-circle" style={{marginRight: '5px'}}/>
-                  List
-                </div>
-            </NewList>
+                :   <div className="todo-card" >
+                        <img 
+                            className="todo-img"
+                            src={NoListsUser} 
+                            alt="Lyrn Link No Lists" 
+                        />
+                        <div className="todo-text">
+                            <div className="big-heading">👋 Welcome to the family!</div>
+                            <div className="main-heading">Now that you're logged in, you can begin creating your lists.</div>
+                        </div>
+                        <NewList id={'empty-state-new-list'} >
+                            <div className="btn-black" style={{width: '80px', margin: 'auto'}} >
+                            <i className="far fa-plus-circle" style={{marginRight: '5px'}}/>
+                            List
+                            </div>
+                        </NewList>
+                    </div>
+            }
         </div>
     );
 
