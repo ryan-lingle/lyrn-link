@@ -15,26 +15,25 @@ class Item < ApplicationRecord
 	def upload_image
 		if self.image_url
 			data = encode_image_url(self.image_url)
-			self.image.attach(data: data) if data
+			if data
+				self.image.attach(data: data)
+				self.image_url = "https://lyrn-link.s3.us-east-2.amazonaws.com/" + self.image.attachment.blob.key
+			end
 		end
 	end
 
-	def hosted_image_url
-		self.image.attachment.service_url if self.image.attachment
-	end
-
-	def to_index_res(current_user=nil)
+	def to_index_res(bookmarks=[])
 		{
 			id: self.id,
 			title: self.title,
 			subtitle: self.subtitle,
 			description: self.description,
-			image_url: hosted_image_url,
+			image_url: self.image_url,
 			url: self.url,
 			url_copy: self.url_copy, 
 			index: self.index,
 			creator: self.creator,
-			bookmarked: users.include?(current_user),
+			bookmarked: bookmarks.include?(self.id),
 		}
 	end
 end

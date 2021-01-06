@@ -13,6 +13,8 @@ amazon:
   secret_access_key: "c6bosF0ZD3+uJgGTyW3iEpAa+gm9myfTeasd9Nud"
   region: us-east-2
   bucket: lyrn-link
+  upload:
+    acl: "public-read"
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:

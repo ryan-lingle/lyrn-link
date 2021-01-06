@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
 	# TODO: HANDLE USER VALIDATIONS
 	# validates :username, :email, :password_digest, presence: true
-	# validates :username, :email, uniqueness: true
+	validates :handle, uniqueness: true
 
 	has_many :likes, class_name: "Like", foreign_key: "like_id"
 	has_many :likers, class_name: "Like", foreign_key: "link_id"
@@ -71,8 +71,8 @@ class User < ApplicationRecord
 		end
 	end
 
-	def list_index(current_user=nil)
-		lists.map { |list| list.to_res(current_user) }
+	def list_index(bis=[])
+		lists.map { |list| list.to_res(bis) }
 	end
 
 	def uncreated_lists
@@ -85,11 +85,9 @@ class User < ApplicationRecord
 		end
 	end
 
-	def profile_picture_url
-	    self.profile_picture.variant(resize_to_limit: [100, 100]).processed.service_url if self.profile_picture.attachment
-	end
-
 	def to_res(current_user=nil)
+		bis = current_user&.bookmarked_items&.pluck(:id) || []
+		flwing = current_user&.following&.pluck(:id) || []
 		{
 			id: self.id,
 			name: self.name,
@@ -97,35 +95,35 @@ class User < ApplicationRecord
 			handle: self.handle,
 			description: self.description,
 			profile_picture_url: profile_picture_url,
-			lists: list_index(current_user),
+			lists: list_index(bis),
 			circles: [
 				{
 					type: 'following',
-					items: following.map { |u| u.to_index_res(current_user) },
+					items: following.map { |u| u.to_index_res(flwing) },
 				},
 				{
 					type: 'followers',
-					items: followers.map { |u| u.to_index_res(current_user) },
+					items: followers.map { |u| u.to_index_res(flwing) },
 
 				}
 			],
 			bookmarks: [{
 				type: 'bookmarks',
-				items: bookmarked_items.map { |i| i.to_index_res(current_user) },
+				items: bookmarked_items.map { |i| i.to_index_res(bis) },
 			}],
 			uncreated_lists: uncreated_lists,
-			liked: followers.include?(current_user),
+			liked: flwing.include?(self.id),
 		}
 	end
 
-	def to_index_res(current_user=nil)
+	def to_index_res(flwing=[])
 		{
 			id: self.id,
 			title: self.name,
 			url:  ENV["DOMAIN"] + '/' + self.handle,
 			internal_url: true,
 			image_url: profile_picture_url,
-			followed: followers.include?(current_user),
+			followed: flwing.include?(self.id),
 		}
 	end
 
