@@ -53,6 +53,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                             <ItemCard
                                 readOnly={true}
                                 rank={false}
+                                searchResult={true}
                                 {...result}
                             />
                         </div>
