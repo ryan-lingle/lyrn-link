@@ -34,7 +34,7 @@ const UserProfile = () => {
 
 				? 	null
 
-				:	<div className="flex-between" style={{marginBottom: '10px'}}>
+				:	<div className="flex-between" style={{marginBottom: '15px'}}>
 						<div className="flex text-left tiny-body">
 							<strong>my link:&nbsp;</strong>
 							<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
@@ -99,6 +99,9 @@ const UserProfile = () => {
 						Sharing since {state.user.created}
 					</div>
 				</div>
+				<div className="profile-buttons">
+					{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : <a className="btn-share" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>Share <i className="fab fa-twitter" /></a>}
+				</div>
 			</div>
 			<Editable
 				readOnly={readOnly}
@@ -108,10 +111,6 @@ const UserProfile = () => {
 				textArea={true}
 				defaultValue="I don't have a description."
 			/>
-			<div style={{marginTop: '10px'}} />
-			<div className="profile-buttons">
-				{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : <a className="btn-share" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>Share <i className="fab fa-twitter" /></a>}
-			</div>
 		</div>
 	);
 };

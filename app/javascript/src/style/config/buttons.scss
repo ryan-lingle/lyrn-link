@@ -147,14 +147,14 @@
     color: $white;
     background: $blue;
     padding: 4px 6px;
-    margin-right: 10px;
+    margin-left: 10px;
     text-align: center;
     align-items: center;
     border-radius: 4px;
     box-sizing: border-box;
     font-family: 'Open Sans';
     font-style: normal;
-    font-size: small;
+    font-size: x-small;
     font-weight: bold;
     -webkit-transition: (0.2s ease-in-out);
     -moz-transition: (0.2s ease-in-out); 
@@ -180,7 +180,7 @@
     background: $white;
     border: $green solid 2px;
     padding: 2px 4px;
-    margin-right: 10px;
+    margin-left: 10px;
     text-align: center;
     align-items: center;
     border-radius: 4px;
