@@ -145,7 +145,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 ?   <div className="list-heading">
                         <div className="main-heading">
                             <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
-                            <strong>Favorite {items.length} {capitalize(type)} by {state.user.name.first}</strong>
+                            <strong>My Top {items.length} {capitalize(type)}</strong>
                         </div>
                         <div>{editBtns()}</div>
                     </div>
