@@ -5,7 +5,7 @@ import Context from '../context';
 const NavBar = ({ location }) => {
     const { api, state } = useContext(Context);
     const [showHam, setShowHam] = useState(false);
-    const isLoggedIn = localStorage.getItem('authToken') ? 1 : 0;
+    const isLoggedIn = state.current_user_id ? 1 : 0;
 
     function current(path, match=null) {
         if (path == '/') {
