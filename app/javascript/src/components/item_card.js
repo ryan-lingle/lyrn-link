@@ -29,41 +29,51 @@ const ItemCard = ({ rank=true, id, bookmarkButton, bookmarked, followButton, fol
     }
 
     return(
-        <div className={`item-card ${readOnly ? '' : 'draggable'}`} onClick={go} >
-            {
-                rank
-
-                ?   <div className="item-ranking">
-                        <div className="item-rank">
-                            {index + 1}
-                        </div>
-                        {readOnly || !rank ? null : <i className="fas fa-ellipsis-v icon"/>}              
-                    </div>
-
-                :   null
-            }
-            
-            <div className="item-box">
-                <img src={image_url || Icon} className="item-image" />
-            </div>
-            <div className="item-details truncate">
-                <div className="huge-body truncate">
-                    {title}
-                    {subtitle ? '   ' : ''}
-                    <span className="main-body">
-                        {subtitle}
-                    </span>
+        <div className={`item-container ${readOnly ? '' : 'draggable'}`} onClick={go} >
+            <div className="item-sort">
+                <div>
+                    <i className="fas fa-caret-up icon-sort"></i>
                 </div>
-                <a 
-                    className={`big-body ${!creator ? '' : 'no-decoration'}`}
-                    href={url} 
-                    ref={link}
-                    target={internal_url ? "" : "_blank"}
-                >
-                    {creator || url_copy || url}
-                </a>
+                <div>
+                    <i className="fas fa-caret-down icon-sort"></i>
+                </div>
             </div>
-            {button()}
+            <div className="item-card">
+                {
+                    rank
+
+                    ?   <div className="item-ranking">
+                            <div className="item-rank">
+                                {index + 1}
+                            </div>
+                            {readOnly || !rank ? null : <i className="fas fa-ellipsis-v icon"/>}              
+                        </div>
+
+                    :   null
+                }
+                
+                <div className="item-box">
+                    <img src={image_url || Icon} className="item-image" />
+                </div>
+                <div className="item-details truncate">
+                    <div className="huge-body truncate">
+                        {title}
+                        {subtitle ? '   ' : ''}
+                        <span className="main-body">
+                            {subtitle}
+                        </span>
+                    </div>
+                    <a 
+                        className={`big-body ${!creator ? '' : 'no-decoration'}`}
+                        href={url} 
+                        ref={link}
+                        target={internal_url ? "" : "_blank"}
+                    >
+                        {creator || url_copy || url}
+                    </a>
+                </div>
+                {button()}
+            </div>
         </div>
     );
 };
