@@ -68,13 +68,14 @@
 .nav-avatar {
 	width: 40px;
 	height: 40px;
-	border-radius: 4px;
+	border-radius: 50px;
 	border: 1px solid $white;
 	margin-left: 15px;
 }
 
 .nav-avatar:hover {
 	cursor: pointer;
+	border: 1.5px solid $white;
 	filter: brightness(95%);
 }
 
@@ -85,7 +86,7 @@
 }
 
 .nav-footer {
-	display: flex;
+	display: block;
 	color: $grey3;
 	margin-left: 30px;
 	margin-bottom: 15px;
@@ -148,13 +149,14 @@
 }
 
 #default-avatar {
-	font-size: xx-large;
+	font-size: 40px;
 	margin-left: 15px;
 	color: $white;
 }
 
 #default-avatar:hover {
 	cursor: pointer;
+	filter: brightness(95%);
 }
 
 #side-nav {
