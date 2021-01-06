@@ -77,10 +77,10 @@ const Page = ({ match }) => {
                         pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
                     />
                 </div>
+                <div className="mobile-only">
+                    <UserProfile />
+                </div>
                 <div className="container">
-                    <div className="mobile-only">
-                        <UserProfile />
-                    </div>
                     {
                         state.tab === 'lists' 
 
