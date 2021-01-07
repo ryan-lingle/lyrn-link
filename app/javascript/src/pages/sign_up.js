@@ -1,13 +1,19 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useState } from 'react';
 import Context from '../context';
 import Logo from '../assets/logo.png';
-import { Submit, ErrorBox } from '../components';
+import { ErrorBox, Form, PasswordConditions } from '../components';
 
 const Login = ({ location }) => {
     const { api, state } = useContext(Context);
 
-    async function loginWithTwitter() {
-        api.request
+    const [password, setPassword] = useState('');
+    const [passwordCopy, setPasswordCopy] = useState('');
+
+    async function onSubmit(params) {
+        if (PasswordConditions.allConditionsPass(password, passwordCopy)) {
+            params.password = password;
+            api.createUser(params);
+        }
     }
 
     const loading = state.loading.login;
@@ -32,10 +38,53 @@ const Login = ({ location }) => {
                     <i className="fab fa-twitter" style={{marginRight: '10px'}} />
                     Sign Up with Twitter
                 </div>
-                <a className="auth-button btn-access" href="https://www.lyrn.link/access">
-                    I don't have twitter..
-                </a>
-                <div className="auth-description main-body">
+                <Form
+                    onSubmit={onSubmit}
+                    submitCopy="Sign Up"
+                    type="login"
+                    col="12"
+                    inputs={[
+                        {
+                            label: 'Name',
+                            type: 'text',
+                            key: 'name',
+                            placeholder: 'Hiro Protagonist'
+                        },
+                        {
+                            label: 'Handle',
+                            type: 'text',
+                            key: 'handle',
+                            placeholder: '/the_deliverator'
+                        },
+                        {
+                            label: 'Email',
+                            type: 'email',
+                            key: 'email',
+                            placeholder: 'hiro@the.black.sun'
+                        }
+                    ]}
+                >
+                    <div className="col-md-12">
+                        <div className="input-primary">
+                            <label>Password</label>
+                            <input 
+                                value={password}
+                                onChange={({ target }) => setPassword(target.value)} 
+                                type="password"
+                            />
+                        </div>
+                        <div className="input-primary">
+                            <label>Verify Password</label>
+                            <input 
+                                value={passwordCopy}  
+                                onChange={({ target }) => setPasswordCopy(target.value)} 
+                                type="password"
+                            />
+                        </div>
+                        <PasswordConditions password={password} passwordCopy={passwordCopy} />
+                    </div>
+                </Form>
+                <div className="auth-button main-body">
                     By signing up for lyrnlink, you agree to our <a href="https://www.lyrn.link/privacy">Privacy Poloicy</a> and <a href="https://www.lyrn.link/terms">Terms of Use</a>. We won't post anything to twitter without your permission.
                 </div>
                 <div className="little-body" style={{marginTop: '15px'}}>

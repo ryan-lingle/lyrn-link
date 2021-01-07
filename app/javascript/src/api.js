@@ -138,6 +138,34 @@ class Api {
 
     }
 
+    createUser = async (user) => {
+        this.setLoading('login');
+
+        const res = await this.post('sign_up', { 
+            params: { user },
+            errorType: 'login',
+            checkRefresh: false,
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'login',
+                token: res.auth_token,
+                user: res.user,
+            });
+
+            window.location.href = "/admin";
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
     signOut = async () => {
         const res = await this.post('sign_out', {
             checkRefresh: false

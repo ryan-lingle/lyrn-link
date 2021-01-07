@@ -39,3 +39,19 @@
 	width: 150px;
 	margin-top: 40px;
 }
+
+.password-conditions {
+	align-items: center;
+	text-align: left;
+}
+
+.password-condition {
+	display: 'flex';
+	align-items: 'center';
+	padding: auto 5px;
+	margin: auto;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-size: x-small;
+	font-weight: normal;
+}

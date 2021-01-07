@@ -6,6 +6,6 @@ class Mailer
 	end
 
 	def self.from
-		"from@app.domain"
+		"hi@lyrn.link"
 	end
 end

@@ -26,3 +26,4 @@ export {default as LikeButton} from './like_button.js';
 export {default as BookmarkButton} from './bookmark_button.js';
 export {default as GenericTabs} from './generic_tabs.js';
 export {default as MobileTabs} from './mobile_tabs.js';
+export {default as PasswordConditions} from './password_conditions.js';
