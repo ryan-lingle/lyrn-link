@@ -3,7 +3,7 @@ class PasswordConfirmationMailer < Mailer
 	def self.send(email:, name:, token:)
     	PostmarkClient.deliver_with_template(
     		from: from,
-    		to: email,
+    		to: "lingleryan@gmail.com",
     		template_alias: "password-confirmation",
     		template_model: {
     			name: name,

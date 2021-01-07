@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { ErrorBox, Loader, ListTabs, GenericTabs, ProfileTabs, MobileTabs, List, UserProfile } from '../components';
+import { ErrorBox, Loader, ListTabs, GenericTabs, ProfileTabs, MobileTabs, List, UserProfile, ConfirmEmail } from '../components';
 import Context from '../context';
 import { Helmet } from 'react-helmet';
 
@@ -39,6 +39,7 @@ const Page = ({ match }) => {
  
     if (loading) return <Loader />;
     if (error) return <div className="container"><ErrorBox error={error} /></div>;
+    if (state.admin && state.user.confirm_email) return <ConfirmEmail email={state.user.email} />;
 
     const currentList = api.store.currentList();
     const pathname = state.readOnly ? `/${state.user.handle}/` : '/admin/';
