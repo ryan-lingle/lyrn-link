@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 	def error_msg(e)
 		logger.error e.message
     e.backtrace.each { |line| logger.error line }
-    # Rollbar.error(e) # log to rollbar
+    Rollbar.error(e) # log to rollbar
 		msg = e.message.gsub("Validation failed: ", "")
 		render json: { error: msg }
     return
