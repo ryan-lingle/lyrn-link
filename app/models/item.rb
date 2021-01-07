@@ -17,7 +17,7 @@ class Item < ApplicationRecord
 			data = encode_image_url(self.image_url)
 			if data
 				self.image.attach(data: data)
-				self.image_url = "https://lyrn-link.s3.us-east-2.amazonaws.com/" + self.image.attachment.blob.key
+				self.image_url = ENV["S3_BUCKET"] + self.image.attachment.blob.key
 			end
 		end
 	end

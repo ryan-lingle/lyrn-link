@@ -35,6 +35,12 @@ class User < ApplicationRecord
 		end
 	end
 
+	def update_profile_picture(image)
+		self.profile_picture.attach(data: image)
+		self.profile_picture_url = ENV["S3_BUCKET"] + self.profile_picture.attachment.blob.key
+		self.save
+	end
+
 	def add_name_and_description
 		self.name = twitter_client.user.name if !self.name
 		self.description = twitter_client.user.description if !self.description
@@ -45,6 +51,7 @@ class User < ApplicationRecord
 			url = twitter_client.user.profile_image_url.to_s.sub('_normal', '')
 			data = encode_image_url(url)
 			self.profile_picture.attach(data: data)
+			self.profile_picture_url = ENV["S3_BUCKET"] + self.profile_picture.attachment.blob.key
 		end
 	end
 

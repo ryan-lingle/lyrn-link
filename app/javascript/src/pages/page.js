@@ -38,7 +38,7 @@ const Page = ({ match }) => {
     const error = state.errors.user;
  
     if (loading) return <Loader />;
-    if (error) return <ErrorBox error={error} />;
+    if (error) return <div className="container"><ErrorBox error={error} /></div>;
 
     const currentList = api.store.currentList();
     const pathname = state.readOnly ? `/${state.user.handle}/` : '/admin/';
