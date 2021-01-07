@@ -44,7 +44,7 @@ const UserProfile = () => {
 						<div className="flex text-left tiny-body">
 							<strong>my link:&nbsp;</strong>
 							<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
-								{state.user.handle}
+								https://lyrn.link/{state.user.handle}
 							</a>
 							<Tooltip
 								title="Copy LyrnLink"
