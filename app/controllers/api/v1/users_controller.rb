@@ -42,7 +42,7 @@ class Api::V1::UsersController < ApplicationController
 
 	def profile_picture
 		authorize @user
-		@user.profile_picture.attach(data: params[:image])
+		@user.update_profile_picture(params[:image])
 		render json: {
 			user: @user.to_res,
 		}
