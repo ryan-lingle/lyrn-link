@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+	HANDLE_WHITELIST = %w(a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 _)
 	include EncodeImageUrl
 	include ActiveStorageSupport::SupportForBase64
 	has_one_base64_attached :profile_picture
@@ -15,6 +16,16 @@ class User < ApplicationRecord
 	has_many :lists, dependent: :destroy
 	has_many :bookmarks, dependent: :destroy
 	has_many :bookmarked_items, through: :bookmarks, source: :item
+
+	before_create :clean_handle
+	before_update :clean_handle
+
+	def clean_handle
+		split = self.handle.downcase.gsub('-', '_').gsub(' ', '_').split('').select do |l|
+			HANDLE_WHITELIST.include?(l)
+		end
+		self.handle = split.join('')
+	end
 
 	def created_at_string
 		Date::MONTHNAMES[self.created_at.month] + " " + self.created_at.year.to_s
@@ -105,6 +116,8 @@ class User < ApplicationRecord
 			}],
 			uncreated_lists: uncreated_lists,
 			liked: flwing.include?(self.id),
+			email: self.email,
+			confirm_email: !self.email_confirmed && confirm_email,
 		}
 	end
 
@@ -149,5 +162,11 @@ class User < ApplicationRecord
 
 	def link
 		ENV["DOMAIN"] + "/" + self.handle
+	end
+
+	private
+
+	def confirm_email
+		true
 	end
 end

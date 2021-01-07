@@ -54,6 +54,9 @@ class Store {
             this.state.user = { ...this.state.user, ...event.user };
             this.state.current_user_id = event.current_user_id || this.state.current_user_id;
             this.state.current_user_profile_picture = event.current_user_profile_picture || this.state.current_user_profile_picture;
+            this.state.admin = event.admin;
+            this.state.current_user_id = event.current_user_id;
+            this.state.current_user_profile_picture = event.current_user_profile_picture;
             this.state.readOnly = event.readOnly;
             break;
         case 'set_tab':

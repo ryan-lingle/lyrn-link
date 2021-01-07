@@ -1,8 +1,9 @@
 class TwitterUser < User 
 	before_create :add_name_and_description
 	before_update :add_name_and_description
-
 	before_create :add_profile_picture_url
+
+	private
 
 	def add_name_and_description
 		self.name = twitter_client.user.name if !self.name
@@ -23,8 +24,11 @@ class TwitterUser < User
 		end
 	end
 
+	def confirm_email
+		false
+	end
+
 	def all_list_strings
 		%w(books podcasts articles videos people)
 	end
-
 end

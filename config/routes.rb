@@ -15,6 +15,9 @@ Rails.application.routes.draw do
         member do
           post 'profile_picture', to: 'users#profile_picture'
         end
+        collection do 
+          post 'send_confirmation_email', to: 'users#send_confirmation_email'
+        end
       end
       resources :lists, only: [:create, :destroy], param: :type do 
         collection do
