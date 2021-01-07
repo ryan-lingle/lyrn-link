@@ -1,0 +1,1 @@
+class EmailUserPolicy < UserPolicy; end

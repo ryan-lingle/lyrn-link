@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       # AUTH ROUTES
   		post 'request_token', to: 'auth#request_token'
       post 'access_token', to: 'auth#access_token'
+      post 'sign_up', to: 'auth#sign_up'
   		get 'refresh_token', to: 'auth#refresh_token'
       post 'sign_out', to: 'auth#sign_out'
   		get 'current_user', to: 'users#show'
