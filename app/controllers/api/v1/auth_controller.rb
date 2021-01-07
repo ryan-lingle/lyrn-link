@@ -52,7 +52,6 @@ class Api::V1::AuthController < ApplicationController
 			forbidden
 			return
 		end
-		# handle missing user id error ???
 		@user = User.find(decoded_refresh[:user_id])
 		if @user
 	 		render json: {
