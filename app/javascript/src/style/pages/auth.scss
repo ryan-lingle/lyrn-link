@@ -18,7 +18,11 @@
 }
 
 .auth-button {
+	display: flex;
 	margin: 20px;
+	align-items: center;
+	text-align: center;
+	justify-content: center;
 }
 
 .auth-description {

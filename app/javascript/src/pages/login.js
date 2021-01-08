@@ -31,6 +31,10 @@ const Login = ({ location }) => {
                     <i className="fab fa-twitter" style={{marginRight: '10px'}} />
                     Sign in with Twitter
                 </div>
+                <a className="auth-button btn-access" href="https://www.lyrn.link/access">
+                    <i className="far fa-flushed" style={{marginRight: '10px'}} />
+                    I don't have twitter...
+                </a>
                 <div className="auth-button main-body">
                     Remember, we won't post anything to Twitter without your permission.
                 </div>
