@@ -26,12 +26,13 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         } else {
             return(
                 <div className="flex todo-btns">
-                    <div className="btn-red" style={{marginRight: '10px'}} onClick={destroyList}>
-                        Delete List
+                    <div className="btn-red" style={{marginRight: '5px'}} onClick={destroyList}>
+                        <i className="far fa-trash" style={{marginRight: '4px'}}/>
+                        List
                     </div>
                     <div className="btn-black" onClick={() => setAdd(prev => !prev)} >
-                      <i className={`far fa-${add ? 'times' : 'plus'}`} style={{marginRight: '5px'}}/>
-                      Item
+                        <i className={`far fa-${add ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
+                        Item
                     </div>
                 </div>
             );
@@ -91,8 +92,8 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                                     alt="Lyrn Link No Items" 
                                 />
                                 <div className="todo-text">
-                                    <div className="big-heading"> Hold tight, please?</div>
-                                    <div className="main-heading">{state.user.name} is working hard on this list...</div>
+                                    <div className="todo-heading"> Hold tight, please?</div>
+                                    <div className="todo-body">{state.user.name} is working hard on this list...</div>
                                 </div>
                             </div>
 
@@ -103,8 +104,8 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                                     alt="Lyrn Link No Items" 
                                 />
                                 <div className="todo-text">
-                                    <div className="big-heading">🎉 Congrats, you've made a new list!</div>
-                                    <div className="main-heading">Go ahead and add some of your favorites to it, don't be shy.</div>
+                                    <div className="todo-heading">🎉 Congrats, you've made a new list!</div>
+                                    <div className="todo-body">Go ahead and add some of your favorites to it... don't be shy.</div>
                                 </div>
                                 <div className="text-center" style={{marginTop: '20px'}}>{editBtns()}</div>
                             </div>

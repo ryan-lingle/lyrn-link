@@ -116,7 +116,7 @@
 }
 
 .btn-copy {
-    color: $grey3;
+    color: $black;
     padding: auto;
     text-align: center;
     align-items: center;
@@ -211,7 +211,6 @@
     background: $green;
     border: $green solid 2px;
     padding: 2px 4px;
-    margin-right: 10px;
     width: 70px;
     text-align: center;
     align-items: center;
@@ -220,7 +219,7 @@
     font-family: 'Open Sans';
     font-style: normal;
     font-size: x-small;
-    font-weight: bold;
+    font-weight: normal;
     -webkit-transition: (0.2s ease-in-out);
     -moz-transition: (0.2s ease-in-out); 
     -o-transition: (0.2s ease-in-out); 

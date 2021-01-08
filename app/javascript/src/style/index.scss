@@ -57,6 +57,9 @@ $fa-font-path: "webfonts";
 	@media only screen and (max-width: 950px)  {
 		font-size: small;
 	}
+	@media only screen and (max-width: 600px)  {
+		font-size: x-small;
+	}
 }
 
 
@@ -140,6 +143,18 @@ $fa-font-path: "webfonts";
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+
+
+.mylink {
+	display: block;
+	text-align: left;
+	margin-top: 60px;
+	padding: 7px 20px;
+	background: lighten($blue,30%);
+	color: $black;
+	width: 100%;
 }
 
 

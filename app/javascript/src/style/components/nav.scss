@@ -88,8 +88,7 @@
 .nav-footer {
 	display: block;
 	color: $black;
-	margin-left: 30px;
-	margin-bottom: 15px;
+	padding-left: 20px;
 	font-size: x-small;
 	font-family: 'Open Sans';
 	font-weight: normal;
@@ -162,8 +161,6 @@
 #side-nav {
 	background: white;
 	height: 100%;
-	padding: 0px 30px;
-	margin-top: 50px;
-	max-width: 350px;
-	min-width: 350px;
+	max-width: 320px;
+	min-width: 320px;
 }
