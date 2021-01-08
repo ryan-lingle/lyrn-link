@@ -32,7 +32,10 @@ const Login = ({ location }) => {
                     <i className="fab fa-twitter" style={{marginRight: '10px'}} />
                     Sign Up with Twitter
                 </div>
-                <div className="auth-button main-body">
+                <a className="auth-button btn-access" href="https://www.lyrn.link/access">
+                    I don't have twitter..
+                </a>
+                <div className="auth-description main-body">
                     By signing up for lyrnlink, you agree to our <a href="https://www.lyrn.link/privacy">Privacy Poloicy</a> and <a href="https://www.lyrn.link/terms">Terms of Use</a>. We won't post anything to twitter without your permission.
                 </div>
                 <div className="little-body" style={{marginTop: '15px'}}>

@@ -38,7 +38,7 @@ const UserProfile = () => {
 			{
 				readOnly
 
-				? 	null
+				? 	<div style={{marginBottom: "60px"}}/>
 
 				:	<div className="mylink">
 						<div className="flex-between big-body">
@@ -85,7 +85,7 @@ const UserProfile = () => {
 						onClose={() => setProfilePicture(null)}
 					/>
 					<div className="flex-grow profile-info" >
-						<div className="user-name">
+						<div className="user-name truncate">
 							<Editable
 								readOnly={readOnly}
 								className="big-heading"
@@ -111,7 +111,7 @@ const UserProfile = () => {
 				</div>
 				<Editable
 					readOnly={readOnly}
-					className="big-body user-description"
+					className="user-description"
 					value={state.user.description}
 					onUpdate={updateDescription}
 					textArea={true}
