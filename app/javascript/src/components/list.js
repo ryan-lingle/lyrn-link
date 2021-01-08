@@ -166,7 +166,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                     onMove={onMove}
                 >
                     <ItemCard
-                        onMove={onMove}
+                        onMove={(d, h) => { onMove(d, h); api.updateItemIndex(); }}
                         readOnly={readOnly}
                         rank={isList}
                         onDestroy={() => destroyItem(type, item.id)}
