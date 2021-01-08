@@ -18,6 +18,8 @@ class Item < ApplicationRecord
 			if data
 				self.image.attach(data: data)
 				self.image_url = ENV["S3_BUCKET"] + self.image.attachment.blob.key
+			else
+				self.image_url = nil
 			end
 		end
 	end
