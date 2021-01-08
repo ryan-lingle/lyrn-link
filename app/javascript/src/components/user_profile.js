@@ -38,7 +38,7 @@ const UserProfile = () => {
 			{
 				readOnly
 
-				? 	<div style={{marginBottom: "60px"}}/>
+				? 	null
 
 				:	<div className="mylink">
 						<div className="flex-between big-body">
