@@ -40,7 +40,7 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
     };
 
     return(
-        <div className="profile-tabs" style={{marginBottom: '40px'}} >
+        <div className="profile-tabs" >
             {['lists', 'circle', 'bookmarks'].map((tab, i) =>
                 <div 
                     key={i} 

@@ -5,11 +5,11 @@ import { Helmet } from 'react-helmet';
 
 const Page = ({ match }) => {
     const { api, state } = useContext(Context);
-    const [pageHeight, setPageHeight] = useState(window.innerHeight - 50);
+    const [pageHeight, setPageHeight] = useState(window.innerHeight - 60);
 
     useEffect(() => {
         window.onresize = () => {
-            setPageHeight(window.innerHeight - 50);
+            setPageHeight(window.innerHeight - 60);
         };
     }, []);
 

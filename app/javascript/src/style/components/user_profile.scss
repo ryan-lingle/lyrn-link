@@ -16,6 +16,16 @@
 	justify-content: space-between;
 }
 
+
+.mylink {
+	display: block;
+	text-align: left;
+	padding: 7px 20px;
+	background: lighten($blue,30%);
+	color: $black;
+	width: 100%;
+}
+
 .header-logo {
 	max-height: 30px;
 

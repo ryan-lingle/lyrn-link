@@ -52,8 +52,8 @@ class Store {
             this.state.loading.profile_picture = false;
             if (event.user.username) localStorage.setItem('username', event.user.username);
             this.state.user = { ...this.state.user, ...event.user };
-            this.state.current_user_id = event.current_user_id;
-            this.state.current_user_profile_picture = event.current_user_profile_picture;
+            this.state.current_user_id = event.current_user_id || this.state.current_user_id;
+            this.state.current_user_profile_picture = event.current_user_profile_picture || this.state.current_user_profile_picture;
             this.state.readOnly = event.readOnly;
             break;
         case 'set_tab':
