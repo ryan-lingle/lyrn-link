@@ -2,6 +2,7 @@
 
 .tabs {
 	display: flex;
+	max-width: 100%;
 	text-align: center;
 	border: 3px solid $black;
 	border-radius: 4px;
@@ -9,15 +10,14 @@
 }
 
 .list-tab {
+	display: flex;
 	width: 100%;
-	color: $grey4;
+	color: $black;
 	text-align: center;
-	padding: 4px 20px;
-	border-left: solid $grey2 1px;
-	border-right:solid $grey2 1px;
+	padding: 6px 12px;
 	
 	@media only screen and (max-width: 950px)  {
-		padding: 4px 12px;
+		padding: 4px 8px;
 	}
 }
 

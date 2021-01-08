@@ -1,16 +1,15 @@
 #user-profile {
-	margin: 35px auto;
+	margin: auto;
 	max-width: 100%;
-	padding-bottom: 20px;
+	padding: 20px;
 	border-bottom: solid $grey2 1px;
 	background: white;
 	@media only screen and (max-width: 950px)  {
-		margin: 50px auto auto auto;
+		margin: auto;
 		border-bottom: none;
 		padding: 20px;
 	}
 }
-
 
 #profile-header {
 	display: flex;
@@ -146,7 +145,6 @@
 
 .mobile-tabs {
 	width: 100%;
-	padding: 10px;
 	background: white;
 	display: flex;
 	align-items: center;
@@ -169,3 +167,6 @@
 	font-weight: normal;
 }
 
+.tabs-icon {
+	font-size: x-large;
+}
