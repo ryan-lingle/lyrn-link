@@ -64,21 +64,20 @@ const Page = ({ match }) => {
                     />
                     <div className="nav-footer">
                         <div>
-                            <span style={{fontWeight: 'bolder'}}>© 2021 - Lyrnlink</span>
+                            <a style={{fontWeight: 'bolder'}}>© 2021 - Lyrnlink</a>
                         </div>
                         <div>
-                            <a href="https://www.lyrn.link/privacy">Privacy Policy&nbsp;</a>
-                            <a href="https://www.lyrn.link/terms">&nbsp;Terms of Use</a>
+                            <a style={{color: '#333333'}} href="https://www.lyrn.link/privacy">Privacy Policy</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style={{color: '#333333'}} href="https://www.lyrn.link/terms">Terms of Use</a>
                         </div>
                     </div>
                 </div>
                 <div className="mobile-only">
+                    <UserProfile />
                     <MobileTabs 
                         pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
                     />
-                </div>
-                <div className="mobile-only">
-                    <UserProfile />
                 </div>
                 <div className="container">
                     {

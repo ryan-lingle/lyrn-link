@@ -45,11 +45,12 @@ const MobileTabs = ({ pathname="/admin/" }) => {
                 {['lists', 'circle', 'bookmarks'].map((tab, i) =>
                     <div 
                         key={i} 
-                        className={`mobile-tab list-tab ${tab === state.tab ? 'current-list-tab' : ''}`}
+                        className={`mobile-tab tabs-heading section-tab ${tab === state.tab ? 'current-section-tab' : ''}`}
                         onClick={() => setTab(tab)}
                     >
-                        <i className={icons[tab]} style={{width: '25px'}} />
-                    </div>
+                        <i className={icons[tab]} style={{width: '25px', marginRight: '5px'}} />
+                        {capitalize(tab)}
+                    </div>                
                 )}
             </div>
         </div>

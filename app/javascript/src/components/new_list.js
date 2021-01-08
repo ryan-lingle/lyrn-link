@@ -20,12 +20,14 @@ const NewList = ({ children, id }) => {
 
 
     return(
-        <div 
-            className="btn-list new-list" 
+        <div className="new-list"
             id={id}
             onClick={() => setShow(prev => !prev)} 
         >
-            {children || <i className={`fas fa-${show ? 'minus' : 'plus'}-circle icon-black`} style={{fontSize: 'large'}} />}
+            <div className="new-list text-right tab-heading" style={{color: '#6FCF97', marginBottom: '15px'}}>
+                {children || <i className={`fas fa-${show ? 'times' : 'plus'}-circle`} style={{marginRight: '10px'}} />}
+                List
+            </div>
             {
                 show
 

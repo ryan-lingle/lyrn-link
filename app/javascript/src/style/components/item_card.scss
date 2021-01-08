@@ -38,13 +38,11 @@
 
 .item-delete {
 	display: flex;
+	align-items: flex-start;
 	font-weight: normal;
 	font-size: small;
-	text-align: center;
 	padding: 10px;
-	align-items: center;
-	margin-left: 20px;
-	font-size: small;
+	margin-bottom: 20px;
 }
 
 
@@ -129,9 +127,11 @@
 
 
 .sort-arrows {
-	font-size: 35px;
+	font-size: x-large;
 	color: $grey2;
-	margin-bottom: 15px;
+	align-items: center;
+	margin: 15px;
+
 }
 
 .sort-arrow {
