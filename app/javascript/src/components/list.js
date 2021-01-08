@@ -25,12 +25,12 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return null;
         } else {
             return(
-                <div className="todo-btns">
+                <div className="flex todo-btns">
                     <div className="btn-red" style={{marginRight: '10px'}} onClick={destroyList}>
                         Delete List
                     </div>
                     <div className="btn-black" onClick={() => setAdd(prev => !prev)} >
-                      <i className={`far fa-${add ? 'minus' : 'plus'}-circle`} style={{marginRight: '5px'}}/>
+                      <i className={`far fa-${add ? 'times' : 'plus'}`} style={{marginRight: '5px'}}/>
                       Item
                     </div>
                 </div>
