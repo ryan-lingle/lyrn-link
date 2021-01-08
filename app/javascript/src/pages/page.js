@@ -75,9 +75,11 @@ const Page = ({ match }) => {
                 </div>
                 <div className="mobile-only">
                     <UserProfile />
-                    <MobileTabs 
-                        pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
-                    />
+                    <div className="mobile-only">
+                        <MobileTabs 
+                            pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
+                        />
+                    </div>
                 </div>
                 <div className="container">
                     {
