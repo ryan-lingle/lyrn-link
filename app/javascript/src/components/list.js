@@ -123,7 +123,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                             src={NoItems} 
                             alt="Lyrn Link No Items" 
                         />
-                        <div className="big-heading">Nothing to see hear yet!</div>
+                        <div className="big-heading">Nothing to see here yet!</div>
                     </div>
                 </div>
             )
