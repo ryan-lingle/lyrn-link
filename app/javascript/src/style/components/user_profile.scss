@@ -5,7 +5,7 @@
 	border-bottom: solid $grey2 1px;
 	background: white;
 	@media only screen and (max-width: 950px)  {
-		margin: 50px auto 0px auto;
+		margin: auto;
 		border-bottom: none;
 		padding: 20px;
 	}
@@ -15,6 +15,14 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+@media only screen and (max-width: 950px)  {
+	#lyrn {
+		margin-top: 60px;
+	}
+}
+
+
 
 
 .mylink {
