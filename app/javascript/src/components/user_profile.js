@@ -40,11 +40,11 @@ const UserProfile = () => {
 
 				? 	null
 
-				:	<div className="flex-between" style={{marginBottom: '10px'}}>
+				:	<div className="flex-betweend" style={{marginBottom: '10px'}}>
 						<div className="flex text-left tiny-body">
 							<strong>my link:&nbsp;</strong>
 							<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
-								https://lyrn.link/{state.user.handle}
+								https://lyrn.link/{state.user.handle}d
 							</a>
 							<Tooltip
 								title="Copy LyrnLink"
@@ -100,9 +100,6 @@ const UserProfile = () => {
 							onUpdate={updateHandle}
 							defaultValue="( handle )"
 						/>
-					</div>
-					<div className="user-since tiny-heading">
-						Sharing since {state.user.created}
 					</div>
 				</div>
 				<div className="mobile-only" >

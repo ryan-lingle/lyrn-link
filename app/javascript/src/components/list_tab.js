@@ -8,10 +8,9 @@ const ListTab = ({ type, onClick, current, readOnly }) => {
             className={`list-tab ${current ? 'current-list-tab' : ''}`}
             onClick={onClick}
         >
-        	<div className="tabs-heading">
+        	<div className="tab-heading">
 	            <div>{capitalize(type)}</div>
 	        </div>
-	        
         </div>
     );
 };

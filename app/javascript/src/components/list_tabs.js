@@ -76,9 +76,11 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                             <div className="main-heading">Now that you're logged in, you can begin creating your lists.</div>
                         </div>
                         <NewList id={'empty-state-new-list'} >
-                            <div className="btn-black" style={{width: '80px', margin: 'auto'}} >
-                            <i className="far fa-plus-circle" style={{marginRight: '5px'}}/>
-                            List
+                            <div className="flex todo-btns">
+                                <div className="btn-black" style={{width: '80px', margin: 'auto'}} >
+                                <i className="far fa-plus-circle" style={{marginRight: '5px'}}/>
+                                List
+                                </div>
                             </div>
                         </NewList>
                     </div>
@@ -87,9 +89,9 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
     );
 
     return(
-        <div className="flex-between tabs">
+        <div className="flex-between" style={{alignItems: 'center'}}>
             <div 
-                className="flex"
+                className="tabs"
                 style={{
                     display: lists.length === 0 ? 'none' : '',
                 }}
@@ -112,9 +114,12 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                             current={list.index == state.listIndex}
                         />
                     </Draggable>
+                    
                 )}
             </div>
-            {readOnly ? null : <NewList />}
+            <div>
+                {readOnly ? null : <NewList />}
+            </div>
         </div>
     );
 };
