@@ -91,6 +91,14 @@
 
 .user-description {
 	margin-top: 10px;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: normal;
+	font-size: medium;
+	color: $grey5;
+	@media only screen and (max-width: 950px) {
+		font-size: small;
+	}
 }
 
 .user-handle .little-heading {
