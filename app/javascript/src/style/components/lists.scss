@@ -1,36 +1,68 @@
 // list tabs
 
 .tabs {
-	border-bottom: 1.5px solid $black;
-	padding-bottom: 3px;
-	box-sizing: border-box;
+	display: flex;
+	text-align: center;
+	border: 3px solid $black;
+	border-radius: 4px;
 	margin-bottom: 15px;
 }
 
 .list-tab {
 	width: 100%;
-	color: $grey3;
+	color: $grey4;
 	text-align: center;
-	padding-right: 18px;
-	position: relative;
+	padding: 4px 20px;
+	border-left: solid $grey2 1px;
+	border-right:solid $grey2 1px;
+	
 	@media only screen and (max-width: 950px)  {
-		padding-right: 8px;
+		padding: 4px 12px;
+	}
+}
+
+.section-tab {
+	width: 100%;
+	color: $grey2;
+	text-align: center;
+	padding: 6px 18px;
+	border: none;
+	
+	@media only screen and (max-width: 950px)  {
+		padding: 4px 12px;
 	}
 }
 
 .list-tab:hover {
 	cursor: pointer;
+	color: $grey3;
+}
 
-	.delete-list {
-		display: block;
-		position: absolute;
-	}
+.section-tab:hover {
+	cursor: pointer;
 }
 
 .current-list-tab {
-	color: $black;
+	color: $white;
+	font-weight: bold;
+	background: $black;
+	border: none;
+	&:hover {
+		color:$white;
+	}
 }
 
+.current-section-tab {
+	color: $black;
+	border: none;
+	margin-top: none;
+	margin-bottom: none;
+}
+
+.vl {
+	border-left: 1.5px solid $grey2;
+	height: 80%;
+  }
 
 // lists
 

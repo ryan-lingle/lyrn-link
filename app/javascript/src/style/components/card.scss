@@ -5,7 +5,6 @@
 .todo-card {
 	min-height: 300px;
 	align-items: center;
-	padding: 20px;
 	text-align: center;
 	vertical-align: middle;
 	background: $white;
@@ -25,6 +24,9 @@
 	text-align: center;
 	margin: 20px;
 	max-height: 200px;
+	@media only screen and (max-width: 950px)  {
+		max-height: 100px;
+	}
 }
 
 .todo-btns {
@@ -32,5 +34,5 @@
 	text-align: center;
 	align-items: center;
 	justify-content: center;
-	padding: 20px;
+	padding-bottom: 20px;
 }

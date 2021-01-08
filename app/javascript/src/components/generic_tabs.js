@@ -36,9 +36,9 @@ const ListTabs = ({ lists, pathname="/admin/lists/" }) => {
     }
 
     return(
-        <div className="flex-between tabs">
+        <div className="flex-between">
             <div 
-                className="flex"
+                className="tabs"
             >
                 {lists.map((list, i) =>
                         <ListTab
