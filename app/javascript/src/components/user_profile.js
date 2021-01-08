@@ -34,18 +34,20 @@ const UserProfile = () => {
 	);
 
 	return(
-		<div id="user-profile">
+		<div id="lyrn">
 			{
 				readOnly
 
 				? 	null
 
-				:	<div className="flex-betweend" style={{marginBottom: '10px'}}>
-						<div className="flex text-left tiny-body">
-							<strong>my link:&nbsp;</strong>
-							<a className="text-right tiny-body" href={`/${state.user.handle}`} target="_blank" >
-								https://lyrn.link/{state.user.handle}d
-							</a>
+				:	<div className="mylink">
+						<div className="flex-between big-body">
+							<div>
+								<strong>My Link:&nbsp;</strong>
+								<a className="big-body" href={`/${state.user.handle}`} target="_blank" >
+									https://lyrn.link/{state.user.handle}
+								</a>
+							</div>
 							<Tooltip
 								title="Copy LyrnLink"
 								position= "right"
@@ -63,59 +65,61 @@ const UserProfile = () => {
 						</div>
 					</div>
 			}
-			<div id="profile-header">
-				<div id="user-profile-picture-wrapper">
-					<img 
-						src={state.user.profile_picture_url} 
-						id="user-profile-picture"
-						onClick={
-							readOnly
+			<div id="user-profile">
+				<div id="profile-header">
+					<div id="user-profile-picture-wrapper">
+						<img 
+							src={state.user.profile_picture_url} 
+							id="user-profile-picture"
+							onClick={
+								readOnly
 
-							?	null
+								?	null
 
-							: 	() => setProfilePicture(state.user.profile_picture_url || 1)
-						}
+								: 	() => setProfilePicture(state.user.profile_picture_url || 1)
+							}
+						/>
+					</div>
+					<ImageEditor 
+						image={profilePicture} 
+						onClose={() => setProfilePicture(null)}
 					/>
+					<div className="flex-grow profile-info" >
+						<div className="user-name">
+							<Editable
+								readOnly={readOnly}
+								className="big-heading"
+								value={state.user.name}
+								onUpdate={updateName}
+								defaultValue="( name )"
+							/>
+						</div>
+						<div className="user-handle" style={{marginTop: '-5px'}}>
+							<span className="main-heading">/</span>
+							<Editable
+								readOnly={readOnly}
+								className="main-heading"
+								value={state.user.handle}
+								onUpdate={updateHandle}
+								defaultValue="( handle )"
+							/>
+						</div>
+					</div>
+					<div className="mobile-only" >
+						{profileButtons}
+					</div>
 				</div>
-				<ImageEditor 
-					image={profilePicture} 
-					onClose={() => setProfilePicture(null)}
+				<Editable
+					readOnly={readOnly}
+					className="big-body user-description"
+					value={state.user.description}
+					onUpdate={updateDescription}
+					textArea={true}
+					defaultValue="I don't have a description."
 				/>
-				<div className="flex-grow profile-info" >
-					<div className="user-name">
-						<Editable
-							readOnly={readOnly}
-							className="big-heading"
-							value={state.user.name}
-							onUpdate={updateName}
-							defaultValue="( name )"
-						/>
-					</div>
-					<div className="user-handle" style={{marginTop: '-5px'}}>
-						<span className="main-heading">/</span>
-						<Editable
-							readOnly={readOnly}
-							className="main-heading"
-							value={state.user.handle}
-							onUpdate={updateHandle}
-							defaultValue="( handle )"
-						/>
-					</div>
-				</div>
-				<div className="mobile-only" >
+				<div className="non-mobile-only" style={{marginTop: '10px'}}>
 					{profileButtons}
 				</div>
-			</div>
-			<Editable
-				readOnly={readOnly}
-				className="big-body user-description"
-				value={state.user.description}
-				onUpdate={updateDescription}
-				textArea={true}
-				defaultValue="I don't have a description."
-			/>
-			<div className="non-mobile-only" style={{marginTop: '10px'}}>
-				{profileButtons}
 			</div>
 		</div>
 	);

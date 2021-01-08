@@ -60,8 +60,8 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                             alt="Lyrn Link No Lists" 
                         />
                         <div className="todo-text">
-                            <div className="big-heading">You'll have to wait a moment...</div>
-                            <div className="main-heading">{state.user.name} is just getting started with lyrnlink and hasn't created a list yet.</div>
+                            <div className="todo-heading">You'll have to wait a moment...</div>
+                            <div className="todo-heading">{state.user.name} is just getting started with lyrnlink and hasn't created a list yet.</div>
                         </div>
                     </div>
 
@@ -72,8 +72,8 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                             alt="Lyrn Link No Lists" 
                         />
                         <div className="todo-text">
-                            <div className="big-heading">👋 Welcome to the family!</div>
-                            <div className="main-heading">Now that you're logged in, you can begin creating your lists.</div>
+                            <div className="todo-heading">👋 Welcome to the family!</div>
+                            <div className="todo-heading">Now that you're logged in, you can begin creating your lists.</div>
                         </div>
                         <NewList id={'empty-state-new-list'} >
                             <div className="flex todo-btns">
