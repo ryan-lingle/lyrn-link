@@ -4,10 +4,11 @@ class EmailUser < User
 	after_create :send_confirmation_email
 
 	def send_confirmation_email
+		token = Token.create(metadata: { user_id: self.id })
 		PasswordConfirmationMailer.send(
 			email: self.email,
 			name: self.name,
-			token: 'test_token',
+			token: token.key,
 		)
 	end
 

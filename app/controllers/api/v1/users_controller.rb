@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
 	skip_before_action :authenticate_request, only: [:show]
 	before_action :soft_authentication, only: [:show]
-	before_action :set_user, except: [:show, :index, :send_confirmation_email]
+	before_action :set_user, except: [:show, :index, :send_confirmation_email, :confirm_email]
 
 	def index
 		authorize current_user
@@ -63,6 +63,23 @@ class Api::V1::UsersController < ApplicationController
 		render json: {
 			success: true
 		}
+	end
+
+	def confirm_email
+		token = Token.get(params[:token])
+		user = User.find(token[:user_id])
+		if user
+			user.email_confirmed = true
+			user.save!
+			Token.destroy(params[:token])
+			render json: {
+				success: true,
+			}
+		else
+			render json: {
+				success: false
+			}
+		end
 	end
 
 	private

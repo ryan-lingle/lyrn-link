@@ -52,6 +52,18 @@ class Api::V1::AuthController < ApplicationController
 	    }
   	end
 
+  	def login
+  		@user = User.find_by(email: user_params[:email])
+  		if @user && @user.authenticate(user_params[:password])
+  	 		render json: {
+  		    	auth_token: new_jwt,
+  		    	user: @user.to_res
+  		    }
+  		else
+  	 		raise "Invalid email and/or password"
+  		end
+  	end
+
 	def refresh_token
 		decoded_refresh = JsonWebToken.decode(cookies[:refresh_token])
 		# raise forbidden if missing or expired refresh token

@@ -138,6 +138,34 @@ class Api {
 
     }
 
+    login = async (user, redirectTo="/admin") => {
+        this.setLoading('login');
+
+        const res = await this.post('login', {
+            params: { user },
+            errorType: 'login',
+            checkRefresh: false,
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'login',
+                token: res.auth_token,
+                user: res.user,
+            });
+
+            window.location.href = redirectTo;
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
     createUser = async (user) => {
         this.setLoading('login');
 
@@ -168,6 +196,15 @@ class Api {
 
     sendConfirmationEmail = async () => {
         const res = await this.post('users/send_confirmation_email');
+
+        return res.success;
+    }
+
+    confirmEmail = async (token) => {
+        const res = await this.post('users/confirm_email', {
+            params: { token },
+            errorType: 'confirm_email',
+        });
 
         return res.success;
     }
