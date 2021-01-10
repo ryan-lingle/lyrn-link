@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Context from '../context';
 import NoItemsUser from '../assets/noitemsuser.png';
 
-const ConfirmEmail = ({ email }) => {
+const UnconfirmedEmail = ({ email }) => {
     const { api, state } = useContext(Context);
 
 	return(
@@ -27,4 +27,4 @@ const ConfirmEmail = ({ email }) => {
 	);
 };
 
-export default ConfirmEmail;
+export default UnconfirmedEmail;

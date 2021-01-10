@@ -1,14 +1,10 @@
 import React, { useContext, useRef } from 'react';
 import Context from '../context';
 import Logo from '../assets/logo.png';
-import { ErrorBox } from '../components';
+import { ErrorBox, Form } from '../components';
 
 const Login = ({ location }) => {
     const { api, state } = useContext(Context);
-
-    async function loginWithTwitter() {
-        api.request
-    }
 
     const loading = state.loading.login;
     const error = state.errors.login;
@@ -31,10 +27,25 @@ const Login = ({ location }) => {
                     <i className="fab fa-twitter" style={{marginRight: '10px'}} />
                     Sign in with Twitter
                 </div>
-                <a className="auth-button btn-access" href="https://www.lyrn.link/access">
-                    <i className="far fa-flushed" style={{marginRight: '10px'}} />
-                    I don't have twitter...
-                </a>
+                <Form
+                    onSubmit={api.login}
+                    submitCopy="Sign In"
+                    type="login"
+                    col="12"
+                    inputs={[
+                        {
+                            label: 'Email',
+                            type: 'email',
+                            key: 'email',
+                            placeholder: 'hiro@the.black.sun'
+                        },
+                        {
+                            label: 'Password',
+                            type: 'password',
+                            key: 'password',
+                        }
+                    ]}
+                />
                 <div className="auth-button main-body">
                     Remember, we won't post anything to Twitter without your permission.
                 </div>
