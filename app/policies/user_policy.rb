@@ -1,9 +1,9 @@
 class UserPolicy < ApplicationPolicy
-	def index?
-		user.admin?
-	end
+  	def index?
+  		user.admin?
+  	end
 
-	def update?
+	  def update?
     	record.id == user.id
   	end
 
