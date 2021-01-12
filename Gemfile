@@ -30,9 +30,9 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'pry-rails' , groups: [:development, :test]
 gem 'rspec-rails' , groups: [:development, :test]
 gem 'awesome_print'
-# gem 'bcrypt'
+gem 'bcrypt'
 gem 'jwt'
-# gem 'postmark'
+gem 'postmark'
 gem 'pundit'
 gem 'aws-sdk-s3'
 gem 'active_storage_base64'

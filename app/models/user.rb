@@ -1,10 +1,10 @@
 class User < ApplicationRecord
+	HANDLE_WHITELIST = %w(a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 _)
 	include EncodeImageUrl
 	include ActiveStorageSupport::SupportForBase64
 	has_one_base64_attached :profile_picture
 
-	# TODO: HANDLE USER VALIDATIONS
-	# validates :username, :email, :password_digest, presence: true
+	validates :handle, presence: true
 	validates :handle, uniqueness: true
 
 	has_many :likes, class_name: "Like", foreign_key: "like_id"
@@ -17,10 +17,15 @@ class User < ApplicationRecord
 	has_many :bookmarks, dependent: :destroy
 	has_many :bookmarked_items, through: :bookmarks, source: :item
 
-	before_create :add_name_and_description
-	before_update :add_name_and_description
+	before_create :clean_handle
+	before_update :clean_handle
 
-	before_create :add_profile_picture_url
+	def clean_handle
+		split = self.handle.downcase.gsub('-', '_').gsub(' ', '_').split('').select do |l|
+			HANDLE_WHITELIST.include?(l)
+		end
+		self.handle = split.join('')
+	end
 
 	def created_at_string
 		Date::MONTHNAMES[self.created_at.month] + " " + self.created_at.year.to_s
@@ -46,26 +51,7 @@ class User < ApplicationRecord
 		self.profile_picture_url = ENV["S3_BUCKET"] + self.profile_picture.attachment.blob.key
 		self.save
 	end
-
-	def add_name_and_description
-		self.name = twitter_client.user.name if !self.name
-		self.description = twitter_client.user.description if !self.description
-		self.twitter_handle = twitter_client.user.screen_name
-	end
-
-	def add_profile_picture_url
-		if !self.profile_picture.attachment
-			url = twitter_client.user.profile_image_url.to_s.sub('_normal', '')
-			data = encode_image_url(url)
-			if data
-				self.profile_picture.attach(data: data)
-				self.profile_picture_url = ENV["S3_BUCKET"] + self.profile_picture.attachment.blob.key
-			else
-				self.profile_picture_url = nil
-			end
-		end
-	end
-
+	
 	def admin?
 		self.admin
 	end
@@ -94,7 +80,6 @@ class User < ApplicationRecord
 	end
 
 	def uncreated_lists
-		all_list_strings = %w(books podcasts articles videos people)
 		my_list_strings = lists.map do |list|
 			list.type.downcase
 		end
@@ -131,6 +116,8 @@ class User < ApplicationRecord
 			}],
 			uncreated_lists: uncreated_lists,
 			liked: flwing.include?(self.id),
+			email: self.email,
+			confirm_email: !self.email_confirmed && confirm_email,
 		}
 	end
 
@@ -144,7 +131,6 @@ class User < ApplicationRecord
 			followed: flwing.include?(self.id),
 		}
 	end
-
 
 	def search_people(term, page: 1)
 		twitter_client.user_search(term, count: 20, page: page).map do |twitter_user|
@@ -176,5 +162,11 @@ class User < ApplicationRecord
 
 	def link
 		ENV["DOMAIN"] + "/" + self.handle
+	end
+
+	private
+
+	def confirm_email
+		true
 	end
 end

@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       # AUTH ROUTES
   		post 'request_token', to: 'auth#request_token'
       post 'access_token', to: 'auth#access_token'
+      post 'sign_up', to: 'auth#sign_up'
+      post 'login', to: 'auth#login'
   		get 'refresh_token', to: 'auth#refresh_token'
       post 'sign_out', to: 'auth#sign_out'
   		get 'current_user', to: 'users#show'
@@ -13,6 +15,10 @@ Rails.application.routes.draw do
       resources :users, only: [:update, :destroy, :index] do
         member do
           post 'profile_picture', to: 'users#profile_picture'
+        end
+        collection do 
+          post 'send_confirmation_email', to: 'users#send_confirmation_email'
+          post 'confirm_email', to: 'users#confirm_email'
         end
       end
       resources :lists, only: [:create, :destroy], param: :type do 
