@@ -223,7 +223,19 @@ class Api {
             errorType: 'confirm_email',
         });
 
-        return res.success;
+        if (!res.error) {
+
+            store.reduce({
+                type: 'login',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+        }
     }
 
     signOut = async () => {
