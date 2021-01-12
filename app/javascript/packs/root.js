@@ -1,7 +1,7 @@
 import React, { Component, createContext } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Login, SignUp, TwitterCallback, List } from "../src/pages";
+import { Login, SignUp, TwitterCallback, ConfirmEmail } from "../src/pages";
 import Routes from "../src/routes";
 import { store } from '../src/store';
 import { api } from '../src/api';
@@ -42,10 +42,10 @@ class Root extends Component {
         <DndProvider backend={HTML5Backend}>
           <Router>
             <Switch>
-              <Route exact path="/" component={Login}/>
               <Route exact path="/signin" component={Login}/>
               <Route exact path="/signup" component={SignUp}/>
               <Route exact path="/twitter/callback" component={TwitterCallback} />
+              <Route exact path="/confirm_email/:token" component={ConfirmEmail} />
               <Route component={Routes}/>
             </Switch>
           </Router>

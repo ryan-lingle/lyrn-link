@@ -1,14 +1,15 @@
 .form {
+	display: flex;
 	width: 100%;
 	cursor: pointer;
-	padding: 5px;
-	margin: 10px auto 20px auto;
+	padding: 0px 20px;
 	font-family: 'Open Sans';
 	font-size: large;
 	font-style: large;
 	font-weight: normal;
 	font-feature-settings: 'tnum' on, 'lnum' on, 'ss01' on;
-	vertical-align: middle;border-radius: 4px;
+	vertical-align: middle;
+	border-radius: 4px;
 	
 	&-header {
 		display: flex;

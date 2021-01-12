@@ -1,13 +1,19 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useState } from 'react';
 import Context from '../context';
 import Logo from '../assets/logo.png';
-import { Submit, ErrorBox } from '../components';
+import { ErrorBox, Form, PasswordConditions } from '../components';
 
 const Login = ({ location }) => {
     const { api, state } = useContext(Context);
 
-    async function loginWithTwitter() {
-        api.request
+    const [password, setPassword] = useState('');
+    const [passwordCopy, setPasswordCopy] = useState('');
+
+    async function onSubmit(params) {
+        if (PasswordConditions.allConditionsPass(password, passwordCopy)) {
+            params.password = password;
+            api.createUser(params);
+        }
     }
 
     const loading = state.loading.login;
@@ -25,22 +31,67 @@ const Login = ({ location }) => {
             </div>
             <div className="auth-card">
                 <ErrorBox error={error} />
-                <div className="auth-description huge-body" style={{fontWeight: 'normal'}}>
-                    We currently require you to sign up with <b>Twitter</b>. The twitter-verse is a rich community of learners, which bodes well for lyrnlink. Authentication via Twitter allows us to ensure you a seamless onboarding experience.
-                </div>
                 <div className="btn-item auth-button" onClick={() => api.requestToken()}>
                     <i className="fab fa-twitter" style={{marginRight: '10px'}} />
                     Sign Up with Twitter
                 </div>
-                <a className="auth-button btn-access" href="https://www.lyrn.link/access">
-                    I don't have twitter..
-                </a>
-                <div className="auth-description main-body">
+                <hr/>
+                <div className="auth-description main-heading">
+                    Or Sign Up with Email
+                </div>
+                <Form
+                    onSubmit={onSubmit}
+                    submitCopy="Sign Up"
+                    type="login"
+                    col="12"
+                    inputs={[
+                        {
+                            label: 'Name',
+                            type: 'text',
+                            key: 'name',
+                            placeholder: 'Benjamin Franklin'
+                        },
+                        {
+                            label: 'Link',
+                            type: 'text',
+                            key: 'handle',
+                            placeholder: '/benfranklin'
+                        },
+                        {
+                            label: 'Email',
+                            type: 'email',
+                            key: 'email',
+                            placeholder: 'ben.franklin@junto.club'
+                        }
+                    ]}
+                >
+                    <div className="col-md-12">
+                        <div className="input-primary">
+                            <label>Password</label>
+                            <input 
+                                value={password}
+                                onChange={({ target }) => setPassword(target.value)} 
+                                type="password"
+                            />
+                        </div>
+                        <div className="input-primary">
+                            <label>Verify Password</label>
+                            <input 
+                                value={passwordCopy}  
+                                onChange={({ target }) => setPasswordCopy(target.value)} 
+                                type="password"
+                            />
+                        </div>
+                        <PasswordConditions password={password} passwordCopy={passwordCopy} />
+                    </div>
+                </Form>
+                <hr/>
+                <div className="auth-footing main-body">
                     By signing up for lyrnlink, you agree to our <a href="https://www.lyrn.link/privacy">Privacy Poloicy</a> and <a href="https://www.lyrn.link/terms">Terms of Use</a>. We won't post anything to twitter without your permission.
                 </div>
-                <div className="little-body" style={{marginTop: '15px'}}>
-                        Already got a lyrnlink? <a href="/signin">Sign In</a>
-                </div>
+            </div>
+            <div className="little-body" style={{margin: '15px'}}>
+                    Already got a lyrnlink? <a href="/signin">Sign In</a>
             </div>
         </div>
     )

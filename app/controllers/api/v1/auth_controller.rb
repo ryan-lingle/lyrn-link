@@ -24,9 +24,9 @@ class Api::V1::AuthController < ApplicationController
 	    res = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
 	    id = res.params[:user_id]
 	    handle = res.params[:screen_name]
-	    @user = User.find_by(twitter_id: id)
+	    @user = TwitterUser.find_by(twitter_id: id)
 	    if !@user
-	    	@user = User.create!(
+	    	@user = TwitterUser.create!(
 	    		twitter_id: id,
 	    		twitter_token: res.token,
 	    		twitter_secret: res.secret,
@@ -42,6 +42,26 @@ class Api::V1::AuthController < ApplicationController
 	    	user: @user.to_res
 	    }
 		    
+  	end
+
+  	def sign_up
+  		@user = EmailUser.create!(user_params)
+		render json: {
+	    	auth_token: new_jwt,
+	    	user: @user.to_res
+	    }
+  	end
+
+  	def login
+  		@user = User.find_by(email: user_params[:email])
+  		if @user && @user.authenticate(user_params[:password])
+  	 		render json: {
+  		    	auth_token: new_jwt,
+  		    	user: @user.to_res
+  		    }
+  		else
+  	 		raise "Invalid email and/or password"
+  		end
   	end
 
 	def refresh_token
@@ -68,6 +88,12 @@ class Api::V1::AuthController < ApplicationController
 		render json: {
 			success: true
 		}
+	end
+
+	private
+
+	def user_params
+		params.require(:user).permit(:email, :password, :name, :handle)
 	end
 
 end

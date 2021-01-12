@@ -138,6 +138,94 @@ class Api {
 
     }
 
+    login = async (user, redirectTo="/admin") => {
+        this.setLoading('login');
+
+        const res = await this.post('login', {
+            params: { user },
+            errorType: 'login',
+            checkRefresh: false,
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'login',
+                token: res.auth_token,
+                user: res.user,
+            });
+
+            window.location.href = redirectTo;
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    createUser = async (user) => {
+        this.setLoading('login');
+
+        const res = await this.post('sign_up', { 
+            params: { user },
+            errorType: 'login',
+            checkRefresh: false,
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'login',
+                token: res.auth_token,
+                user: res.user,
+            });
+
+            window.location.href = "/admin";
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    sendConfirmationEmail = async () => {
+        const res = await this.post('users/send_confirmation_email', {
+            errorType: 'confirmation_email',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'success',
+                successType: 'confirmation_email',
+                success: 'Confirmation email resent!',
+            });
+
+            return true;
+            
+        } else {
+
+            return false;
+
+        }
+
+    }
+
+    confirmEmail = async (token) => {
+        const res = await this.post('users/confirm_email', {
+            params: { token },
+            errorType: 'confirm_email',
+        });
+
+        return res.success;
+    }
+
     signOut = async () => {
         const res = await this.post('sign_out', {
             checkRefresh: false
@@ -212,7 +300,7 @@ class Api {
         });
     }
 
-    getUser = async (params) => {
+    getUser = async (params={}) => {
         this.setLoading('user');
 
         const res = await this.get('current_user', {
@@ -225,7 +313,7 @@ class Api {
             store.reduce({
                 type: 'set_user',
                 ...res,
-                readOnly: params && params.handle ? true : false,
+                readOnly: params.handle ? true : false,
             });
 
             return true;
