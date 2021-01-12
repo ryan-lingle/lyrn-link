@@ -27,6 +27,10 @@ const Login = ({ location }) => {
                     <i className="fab fa-twitter" style={{marginRight: '10px'}} />
                     Sign in with Twitter
                 </div>
+                <hr/>
+                <div className="auth-description main-heading">
+                    Or Sign In with Email
+                </div>
                 <Form
                     onSubmit={api.login}
                     submitCopy="Sign In"
@@ -37,12 +41,12 @@ const Login = ({ location }) => {
                             label: 'Email',
                             type: 'email',
                             key: 'email',
-                            placeholder: 'hiro@the.black.sun'
+                            placeholder: 'ben@electricity.co'
                         },
                         {
                             label: 'Password',
                             type: 'password',
-                            key: 'password',
+                            key: 'password'
                         }
                     ]}
                 />

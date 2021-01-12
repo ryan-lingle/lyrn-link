@@ -7,13 +7,14 @@ input {
 	-moz-appearance: none;
 	appearance: none;
 	&:focus {
-		outline-color: $grey5;
+		outline-color: $black;
 	}
 }
 
 .input-primary {
-	padding: 10px 0px;
-	margin: auto;
+	padding: auto;
+	margin: 10px auto;
+
 }
 
 .input-primary label {
@@ -24,11 +25,11 @@ input {
 	font-size: small;
 	font-feature-settings: 'tnum' on, 'lnum' on, 'ss01' on;
 	color: $black;
-	padding: 0px 10px;
 	text-align: left;
 }
 
 .input-primary input {
+	display: flex;
 	width: 100%;
 	height: auto;
 	font-family: 'Open Sans';

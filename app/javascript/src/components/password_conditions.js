@@ -19,11 +19,11 @@ const conditions = [
     },
     {
         condition: ({ password }) => caps.some((n) => password.includes(n)),
-        copy: '1 Uppercase',
+        copy: '1 Uppercase letter',
     },
     {
         condition: ({ password, passwordCopy }) => password.length > 0 && password === passwordCopy,
-        copy: 'Passwords Match',
+        copy: 'Both Passwords Match',
     }
 ];
 
@@ -31,18 +31,18 @@ const Conditional = ({ condition, copy }) => (
     condition 
         ?   <div 
                 className="password-condition"
-                style={{color: '#43A047'}}
+                style={{color: '$green'}}
             >
                 <i className="far fa-check icon"/>
-                <span>{copy}</span>
+                <span>  {copy}</span>
             </div>
 
         :   <div
                 className="password-condition"
-                style={{color: '#676767'}}
+                style={{color: '$red'}}
             >
-                <i className="far fa-times icon"/>
-                <span>{copy}</span>
+                <i className="far fa-times icon"style={{width: '10px'}}/>
+                <span>  {copy}</span>
             </div>
 );
 

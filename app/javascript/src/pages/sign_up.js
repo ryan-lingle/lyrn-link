@@ -31,12 +31,13 @@ const Login = ({ location }) => {
             </div>
             <div className="auth-card">
                 <ErrorBox error={error} />
-                <div className="auth-description huge-body" style={{fontWeight: 'normal'}}>
-                    We currently require you to sign up with <b>Twitter</b>. The twitter-verse is a rich community of learners, which bodes well for lyrnlink. Authentication via Twitter allows us to ensure you a seamless onboarding experience.
-                </div>
                 <div className="btn-item auth-button" onClick={() => api.requestToken()}>
                     <i className="fab fa-twitter" style={{marginRight: '10px'}} />
                     Sign Up with Twitter
+                </div>
+                <hr/>
+                <div className="auth-description main-heading">
+                    Or Sign Up with Email
                 </div>
                 <Form
                     onSubmit={onSubmit}
@@ -48,19 +49,19 @@ const Login = ({ location }) => {
                             label: 'Name',
                             type: 'text',
                             key: 'name',
-                            placeholder: 'Hiro Protagonist'
+                            placeholder: 'Benjamin Franklin'
                         },
                         {
-                            label: 'Handle',
+                            label: 'Link',
                             type: 'text',
                             key: 'handle',
-                            placeholder: '/the_deliverator'
+                            placeholder: '/benfranklin'
                         },
                         {
                             label: 'Email',
                             type: 'email',
                             key: 'email',
-                            placeholder: 'hiro@the.black.sun'
+                            placeholder: 'ben@electcicity.co'
                         }
                     ]}
                 >
@@ -84,12 +85,13 @@ const Login = ({ location }) => {
                         <PasswordConditions password={password} passwordCopy={passwordCopy} />
                     </div>
                 </Form>
-                <div className="auth-button main-body">
+                <hr/>
+                <div className="auth-footing main-body">
                     By signing up for lyrnlink, you agree to our <a href="https://www.lyrn.link/privacy">Privacy Poloicy</a> and <a href="https://www.lyrn.link/terms">Terms of Use</a>. We won't post anything to twitter without your permission.
                 </div>
-                <div className="little-body" style={{marginTop: '15px'}}>
-                        Already got a lyrnlink? <a href="/signin">Sign In</a>
-                </div>
+            </div>
+            <div className="little-body" style={{margin: '15px'}}>
+                    Already got a lyrnlink? <a href="/signin">Sign In</a>
             </div>
         </div>
     )
