@@ -4,7 +4,7 @@ class Token < ApplicationRecord
 
 	def self.get(key)
 		token = find_by(key: key)
-		raise "token has expired" if token.expires_at < Time.now
+		raise "token has expired" if !token || token.expires_at < Time.now
 		token.metadata
 	end
 

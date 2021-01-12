@@ -67,17 +67,18 @@ class Api::V1::UsersController < ApplicationController
 
 	def confirm_email
 		token = Token.get(params[:token])
-		user = User.find(token[:user_id])
-		if user
-			user.email_confirmed = true
-			user.save!
+		@user = User.find(token[:user_id])
+		if @user
+			@user.email_confirmed = true
+			@user.save!
 			Token.destroy(params[:token])
 			render json: {
-				success: true,
+				auth_token: new_jwt,
+				user: @user.to_res
 			}
 		else
 			render json: {
-				success: false
+				error: true
 			}
 		end
 	end
