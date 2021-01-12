@@ -1,6 +1,7 @@
 class EmailUser < User
 	has_secure_password
 	validates :email, :password_digest, presence: true
+	validates :email, uniqueness: true
 	after_create :send_confirmation_email
 
 	def send_confirmation_email

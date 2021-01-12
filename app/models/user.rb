@@ -4,8 +4,7 @@ class User < ApplicationRecord
 	include ActiveStorageSupport::SupportForBase64
 	has_one_base64_attached :profile_picture
 
-	validates :handle, presence: true
-	validates :handle, uniqueness: true
+	validates :handle, presence: true, uniqueness: { case_sensitive: false }
 
 	has_many :likes, class_name: "Like", foreign_key: "like_id"
 	has_many :likers, class_name: "Like", foreign_key: "link_id"
@@ -17,7 +16,7 @@ class User < ApplicationRecord
 	has_many :bookmarks, dependent: :destroy
 	has_many :bookmarked_items, through: :bookmarks, source: :item
 
-	before_create :clean_handle
+	before_validation :clean_handle
 	before_update :clean_handle
 
 	def clean_handle
