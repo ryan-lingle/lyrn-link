@@ -36,7 +36,7 @@ class User < ApplicationRecord
 				link: user.link,
 				lists: user.lists.count,
 				items: item_count,
-				twitter: user.twitter_client ? user.twitter_client.user.screen_name : nil,
+				twitter: user.twitter_handle,
 			}
 		end
 	end
@@ -50,6 +50,7 @@ class User < ApplicationRecord
 	def add_name_and_description
 		self.name = twitter_client.user.name if !self.name
 		self.description = twitter_client.user.description if !self.description
+		self.twitter_handle = twitter_client.user.screen_name
 	end
 
 	def add_profile_picture_url
