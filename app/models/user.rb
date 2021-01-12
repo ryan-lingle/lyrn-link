@@ -28,7 +28,7 @@ class User < ApplicationRecord
 
 	def self.index
 		User.all.map do |user|
-			item_count = user.lists.count do |list|
+			item_count = user.lists.sum do |list|
 				list.items.count
 			end
 			{
