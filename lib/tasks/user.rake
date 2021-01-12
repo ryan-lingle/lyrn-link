@@ -9,4 +9,16 @@ namespace :user do
 			end
 		end
 	end
+
+	desc 'save twitter handle'
+	task twitter_handles: :environment do
+		User.all.each do |user|
+			if user.twitter_client
+				user.twitter_handle = user.twitter_client.user.screen_name
+				user.save
+			end
+		rescue => e
+			puts e
+		end
+	end
 end

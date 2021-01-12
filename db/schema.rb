@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_25_223148) do
+ActiveRecord::Schema.define(version: 2021_01_12_005836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -88,6 +88,14 @@ ActiveRecord::Schema.define(version: 2020_12_25_223148) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "key"
+    t.text "metadata"
+    t.datetime "expires_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email"
     t.string "handle"
@@ -103,6 +111,7 @@ ActiveRecord::Schema.define(version: 2020_12_25_223148) do
     t.string "description"
     t.string "profile_picture_url"
     t.boolean "admin", default: false
+    t.string "twitter_handle"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
