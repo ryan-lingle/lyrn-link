@@ -28,9 +28,15 @@ class User < ApplicationRecord
 
 	def self.index
 		User.all.map do |user|
+			item_count = user.lists.count do |list|
+				list.items.count
+			end
 			{
 				name: user.name,
 				link: user.link,
+				lists: user.lists.count,
+				items: item_count,
+				twitter: user.twitter_client ? user.twitter_client.user.screen_name : nil,
 			}
 		end
 	end
@@ -146,11 +152,13 @@ class User < ApplicationRecord
 	end
 
 	def twitter_client
-		Twitter::REST::Client.new do |config|
-		  	config.consumer_key        = ENV["TWITTER_KEY"]
-		  	config.consumer_secret     = ENV["TWITTER_SECRET_KEY"]
-		  	config.access_token        = self.twitter_token
-		  	config.access_token_secret = self.twitter_secret
+		if self.twitter_token
+			Twitter::REST::Client.new do |config|
+			  	config.consumer_key        = ENV["TWITTER_KEY"]
+			  	config.consumer_secret     = ENV["TWITTER_SECRET_KEY"]
+			  	config.access_token        = self.twitter_token
+			  	config.access_token_secret = self.twitter_secret
+			end
 		end
 	end
 

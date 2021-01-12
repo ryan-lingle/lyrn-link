@@ -8,8 +8,18 @@ const schema = {
 		bold: true,
 	},
 	link: {
+		textAlign: 'left',
+		children: ({ datum }) => <a target="_blank" href={datum.link}>{datum.link}</a>,
+	},
+	lists: {
+		textAlign: 'center',
+	},
+	items: {
 		textAlign: 'right',
-		children: ({ datum }) => <a href={datum.link}>{datum.link}</a>,
+	},
+	twitter: {
+		textAlign: 'right',
+		children: ({ datum }) => <a target="_blank" href={`https://www.twitter.com/${datum.twitter}`}>{datum.twitter} </a>,
 	},
 }
 
