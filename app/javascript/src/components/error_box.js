@@ -3,7 +3,7 @@ import React from 'react';
 const ErrorBox = ({ error }) => {
     if (error) return(
         <div className="card card-error nohover">
-            <div className="card-header-wrapper">
+            <div className="card-header-wrapper flex">
                 <div className="card-text card-text-icon">
                     <i className="fas fa-exclamation-triangle"></i>
                 </div>
