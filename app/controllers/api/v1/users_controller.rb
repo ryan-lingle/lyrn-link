@@ -13,7 +13,7 @@ class Api::V1::UsersController < ApplicationController
 
 	def show
 		if params[:handle]
-			user = User.find_by(handle: params[:handle])
+			user = User.find_by(handle: params[:handle].downcase)
 			if !user
 				render json: {}, status: 404
 			else
