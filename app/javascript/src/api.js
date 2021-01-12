@@ -195,9 +195,26 @@ class Api {
     }
 
     sendConfirmationEmail = async () => {
-        const res = await this.post('users/send_confirmation_email');
+        const res = await this.post('users/send_confirmation_email', {
+            errorType: 'confirmation_email',
+        });
 
-        return res.success;
+        if (!res.error) {
+
+            store.reduce({
+                type: 'success',
+                successType: 'confirmation_email',
+                success: 'Confirmation email resent!',
+            });
+
+            return true;
+            
+        } else {
+
+            return false;
+
+        }
+
     }
 
     confirmEmail = async (token) => {

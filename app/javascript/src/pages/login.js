@@ -41,7 +41,7 @@ const Login = ({ location }) => {
                             label: 'Email',
                             type: 'email',
                             key: 'email',
-                            placeholder: 'ben@electricity.co'
+                            placeholder: 'ben@junto.club'
                         },
                         {
                             label: 'Password',

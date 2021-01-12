@@ -61,7 +61,7 @@ const Login = ({ location }) => {
                             label: 'Email',
                             type: 'email',
                             key: 'email',
-                            placeholder: 'ben@electcicity.co'
+                            placeholder: 'ben@junto.club'
                         }
                     ]}
                 >
