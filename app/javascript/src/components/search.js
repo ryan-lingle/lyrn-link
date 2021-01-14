@@ -51,7 +51,7 @@ const Search = ({ type, item, children }) => {
             <div className="input-primary">
                 <input 
                     value={term} 
-                    placeholder={`search for a ${item}`}
+                    placeholder={`Search for a ${item} to add...`}
                     onChange={({ target }) => {
                         setFirstLoad(false);
                         setTerm(target.value);

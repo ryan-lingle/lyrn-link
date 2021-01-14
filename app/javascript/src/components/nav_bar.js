@@ -46,7 +46,7 @@ const NavBar = ({ location }) => {
                                     />
 
                                 :   <i 
-                                        className="fas fa-smile-wink" 
+                                        className="fal fa-user-circle" 
                                         id="default-avatar" 
                                         onClick={() => setShowHam(prev => !prev)}
                                     />

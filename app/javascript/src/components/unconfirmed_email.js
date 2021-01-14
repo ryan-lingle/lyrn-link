@@ -10,7 +10,7 @@ const UnconfirmedEmail = ({ email }) => {
     const error = state.errors.confirmation_email;
 
 	return(
-		<div className="container" >
+		<div className="container" id="confirm" >
             <SuccessBox success={success} />
             <ErrorBox error={error} />
 			<div className="todo-card">
@@ -23,7 +23,7 @@ const UnconfirmedEmail = ({ email }) => {
                     <div className="big-heading">Please confirm your email to continue.</div>
                     <div className="main-heading">We've sent an email to <strong>{state.user.email}</strong>. Please open it and follow its directions to confirm your email address.</div>
                 </div>
-                <div className="todo-btns">
+                <div className="flex todo-btns text-center" style={{marginTop: '20px'}}>
                     <div className="btn-black" onClick={api.sendConfirmationEmail}>
                         Resend Email
                     </div>

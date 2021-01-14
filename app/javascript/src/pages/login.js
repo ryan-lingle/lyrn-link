@@ -41,12 +41,13 @@ const Login = ({ location }) => {
                             label: 'Email',
                             type: 'email',
                             key: 'email',
-                            placeholder: 'ben.franklin@junto.club'
+                            placeholder: 'ben@junto.club'
                         },
                         {
                             label: 'Password',
                             type: 'password',
-                            key: 'password'
+                            key: 'password',
+                            placeholder: 'password'
                         }
                     ]}
                 />
