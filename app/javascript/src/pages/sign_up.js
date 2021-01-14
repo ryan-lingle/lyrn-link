@@ -55,13 +55,13 @@ const Login = ({ location }) => {
                             label: 'Link',
                             type: 'text',
                             key: 'handle',
-                            placeholder: '/benfranklin'
+                            placeholder: '/MrElectric'
                         },
                         {
                             label: 'Email',
                             type: 'email',
                             key: 'email',
-                            placeholder: 'ben.franklin@junto.club'
+                            placeholder: 'benjamin@junto.club'
                         }
                     ]}
                 >
@@ -72,6 +72,7 @@ const Login = ({ location }) => {
                                 value={password}
                                 onChange={({ target }) => setPassword(target.value)} 
                                 type="password"
+                                placeholder="password"
                             />
                         </div>
                         <div className="input-primary">
@@ -80,6 +81,7 @@ const Login = ({ location }) => {
                                 value={passwordCopy}  
                                 onChange={({ target }) => setPasswordCopy(target.value)} 
                                 type="password"
+                                placeholder="password"
                             />
                         </div>
                         <PasswordConditions password={password} passwordCopy={passwordCopy} />
