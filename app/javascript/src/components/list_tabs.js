@@ -61,7 +61,7 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                         />
                         <div className="todo-text">
                             <div className="todo-heading">You'll have to wait a moment...</div>
-                            <div className="todo-heading">{state.user.name} is just getting started with lyrnlink and hasn't created a list yet.</div>
+                            <div className="todo-body">{state.user.name} is just getting started with lyrnlink and hasn't created a list yet.</div>
                         </div>
                     </div>
 
@@ -73,12 +73,12 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                         />
                         <div className="todo-text">
                             <div className="todo-heading">👋 Welcome to the family!</div>
-                            <div className="todo-heading">Now that you're logged in, you can begin creating your lists.</div>
+                            <div className="todo-body">Now you can begin creating lists.  <b>We recommend starting with Books</b>, they're easy to search for and you'll get the feel of list making pretty quickly.</div>
                         </div>
                         <NewList id={'empty-state-new-list'} >
-                            <div className="flex todo-btns">
-                                <div className="btn-black" style={{width: '80px', margin: 'auto'}} >
-                                <i className="far fa-plus-circle" style={{marginRight: '5px'}}/>
+                            <div className="todo-btns" style={{marginTop: '20px'}}>
+                                <div className="btn-black">
+                                <i className="far fa-plus-circle" style={{marginRight: '7px'}}/>
                                 List
                                 </div>
                             </div>
