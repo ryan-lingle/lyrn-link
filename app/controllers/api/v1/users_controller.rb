@@ -73,7 +73,7 @@ class Api::V1::UsersController < ApplicationController
 			@user.save!
 			Token.destroy(params[:token])
 			render json: {
-				auth_token: new_jwt,
+				token: new_jwt,
 				user: @user.to_res
 			}
 		else

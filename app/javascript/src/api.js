@@ -221,6 +221,7 @@ class Api {
         const res = await this.post('users/confirm_email', {
             params: { token },
             errorType: 'confirm_email',
+            checkRefresh: false,
         });
 
         if (!res.error) {
