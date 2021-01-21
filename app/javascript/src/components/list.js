@@ -32,7 +32,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                     </div>
                     <div className="btn-black" onClick={() => setAdd(prev => !prev)} >
                         <i className={`far fa-${add ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
-                        Item
+                        {capitalize(type)}
                     </div>
                 </div>
             );
@@ -92,7 +92,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                                     alt="Lyrn Link No Items" 
                                 />
                                 <div className="todo-text">
-                                    <div className="todo-heading"> Hold tight, please?</div>
+                                    <div className="todo-heading">Hold tight, please?</div>
                                     <div className="todo-body">{state.user.name} is working hard on this list...</div>
                                 </div>
                             </div>
@@ -123,7 +123,6 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                             src={NoItems} 
                             alt="Lyrn Link No Items" 
                         />
-                        <div className="big-heading">Nothing to see here yet!</div>
                     </div>
                 </div>
             )
@@ -147,7 +146,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 ?   <div className="list-heading">
                         <div className="main-heading">
                             <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
-                            <strong>My Top {items.length} {capitalize(type)}</strong>
+                            <strong>My Favorite {capitalize(type)}</strong>
                         </div>
                         <div>{editBtns()}</div>
                     </div>

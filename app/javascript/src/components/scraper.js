@@ -39,13 +39,13 @@ const Scraper = ({ onSubmit }) => {
                 type="items"
                 inputs={[
                     {
-                        label: 'Url',
+                        label: 'Link to Item',
                         key: 'url',
                         type: 'text',
                         onChange: scrape
                     },
                     {
-                        label: 'Title',
+                        label: 'Title of Item',
                         key: 'title',
                         type: 'text',
                         defaultValue: result.title,

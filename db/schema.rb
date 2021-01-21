@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_01_12_005836) do
     t.string "description"
     t.string "url"
     t.integer "index"
+    t.string "image_url"
     t.text "creator"
     t.uuid "list_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -59,7 +60,6 @@ ActiveRecord::Schema.define(version: 2021_01_12_005836) do
     t.string "uid"
     t.text "categories"
     t.date "publish_date"
-    t.string "image_url"
     t.index ["list_id"], name: "index_items_on_list_id"
   end
 
