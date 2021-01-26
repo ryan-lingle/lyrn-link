@@ -7,6 +7,10 @@ const Page = ({ match }) => {
     const { api, state } = useContext(Context);
     const [pageHeight, setPageHeight] = useState(window.innerHeight - 60);
 
+    const fetchListeners = {
+        discover: (length) => api.getDiscoverIndex(length),
+    };
+
     useEffect(() => {
         window.onresize = () => {
             setPageHeight(window.innerHeight - 60);
@@ -100,6 +104,7 @@ const Page = ({ match }) => {
                         createItem={api.createItem} 
                         destroyItem={api.destroyItem}
                         isList={state.tab === 'lists'}
+                        onFetch={fetchListeners[state.tab]}
                     />
                     
                 </div>

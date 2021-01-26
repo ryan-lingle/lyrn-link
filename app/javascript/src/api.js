@@ -623,6 +623,27 @@ class Api {
         }
     }
 
+    getDiscoverIndex = async (offset) => {
+        const res = await this.get(`users/discover?offset=${offset}`, {
+            errorType: 'discover',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'add_discover_users',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
     setError = (errorType, error) => {
         store.reduce({
             type: errorType,

@@ -113,6 +113,10 @@ class User < ApplicationRecord
 				type: 'bookmarks',
 				items: bookmarked_items.map { |i| i.to_index_res(bis) },
 			}],
+			discover: [{
+				type: 'users',
+				items: discover_index(flwing: flwing),
+			}],
 			uncreated_lists: uncreated_lists,
 			liked: flwing.include?(self.id),
 			email: self.email,
@@ -120,15 +124,24 @@ class User < ApplicationRecord
 		}
 	end
 
-	def to_index_res(flwing=[])
+	def to_index_res(flwing=[], index=nil, show_count=false)
 		{
 			id: self.id,
+			index: index,
 			title: self.name,
 			url:  ENV["DOMAIN"] + '/' + self.handle,
 			internal_url: true,
 			image_url: profile_picture_url,
 			followed: flwing.include?(self.id),
+			follower_count: show_count ? follower_count : nil,
 		}
+	end
+
+	def discover_index(offset: 0, flwing: nil)
+		flwing ||= following&.pluck(:id) || []
+		User.order(follower_count: :desc, handle: :asc).offset(offset).limit(100).each_with_index.map do |u, i| 
+			u.to_index_res(flwing, offset + i, true)
+		end
 	end
 
 	def search_people(term, page: 1)

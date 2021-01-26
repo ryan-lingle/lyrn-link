@@ -36,12 +36,13 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
     const icons = {
         lists: 'far fa-clipboard-list',
         circle: 'far fa-chart-network',
+        discover: 'far fa-compass',
         bookmarks: 'far fa-bookmark',
     };
 
     return(
         <div className="profile-tabs" >
-            {['lists', 'circle', 'bookmarks'].map((tab, i) =>
+            {['lists', 'circle', 'discover', 'bookmarks'].map((tab, i) =>
                 <div 
                     key={i} 
                     className={`profile-tab flex section-tab ${tab === state.tab ? 'current-section-tab' : ''}`}

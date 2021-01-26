@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         collection do 
           post 'send_confirmation_email', to: 'users#send_confirmation_email'
           post 'confirm_email', to: 'users#confirm_email'
+          get 'discover', to: 'users#discover'
         end
       end
       resources :lists, only: [:create, :destroy], param: :type do 

@@ -4,8 +4,9 @@ import NoItems from '../assets/noitems.png';
 import NoItemsUser from '../assets/noitemsuser.png';
 import Context from '../context';
 import { capitalize } from '../utils';
+import { observer } from '../utils';
 
-const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, isList }) => {
+const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, isList, onFetch }) => {
     const [add, setAdd] = useState(false);
     const { state, api } = useContext(Context);
     const readOnly = state.readOnly;
@@ -13,6 +14,20 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     useEffect(() => {
         setAdd(false);
     }, [type]);
+
+    useEffect(() => {
+        const streamObserver = observer(() => {
+            onFetch(items.length);
+            streamObserver.unobserve(sb);
+        });
+
+        const sb = document.getElementById("list-bottom");
+
+        if (sb && onFetch) streamObserver.observe(sb);
+
+        return () => sb ? streamObserver.unobserve(sb) : null;
+
+    }, [ items.length ]);
 
     function destroyList() {
         if (window.confirm('Are you sure you want to delete this list?')) {
@@ -166,16 +181,17 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 >
                     <ItemCard
                         onMove={(d, h) => { onMove(d, h); api.updateItemIndex(); }}
-                        readOnly={readOnly}
-                        rank={isList}
+                        readOnly={readOnly || type == 'users'}
+                        rank={isList || type == 'users'}
                         onDestroy={() => destroyItem(type, item.id)}
-                        followButton={['following', 'followers'].includes(type)}
+                        followButton={['following', 'followers', 'users'].includes(type)}
                         bookmarkButton={type === 'bookmarks'}
                         lastItem={items.length === i + 1}
                         {...item} 
                     />
                 </Draggable>
             )}
+            <div id="list-bottom"></div>
         </div>
     );
 }

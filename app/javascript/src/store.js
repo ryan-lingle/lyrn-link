@@ -131,6 +131,9 @@ class Store {
                 }
             }
             break;
+        case 'add_discover_users':
+            this.state.user.discover[0].items = this.state.user.discover[0].items.concat(event.users);
+            break;
         case 'error':
             this.state.loading[event.errorType] = null;
             this.state.success[event.errorType] = null;
