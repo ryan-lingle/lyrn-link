@@ -1,13 +1,19 @@
 class Api::V1::UsersController < ApplicationController
 	skip_before_action :authenticate_request, only: [:show, :confirm_email]
 	before_action :soft_authentication, only: [:show]
-	before_action :set_user, except: [:show, :index, :send_confirmation_email, :confirm_email]
+	before_action :set_user, except: [:show, :index, :send_confirmation_email, :confirm_email, :discover]
 
 	def index
 		authorize current_user
 		render json: {
 			count: User.count,
 			users: User.index,
+		}
+	end
+
+	def discover
+		render json: {
+			users: current_user.discover_index(offset: params[:offset].to_i)
 		}
 	end
 

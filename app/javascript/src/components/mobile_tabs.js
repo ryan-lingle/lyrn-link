@@ -37,12 +37,13 @@ const MobileTabs = ({ pathname="/admin/" }) => {
         lists: 'far fa-clipboard-list',
         circle: 'far fa-chart-network',
         bookmarks: 'far fa-bookmark',
+        discover: 'far fa-compass',
     };
 
     return(
         <div>
             <div className="mobile-tabs" >
-                {['lists', 'circle', 'bookmarks'].map((tab, i) =>
+                {['lists', 'circle', 'discover', 'bookmarks'].map((tab, i) =>
                     <div 
                         key={i} 
                         className={`mobile-tab tabs-icon section-tab ${tab === state.tab ? 'current-section-tab' : ''}`}

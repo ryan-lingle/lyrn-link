@@ -23,7 +23,8 @@ default: &default
 
 development:
   <<: *default
-  database: lyrn_list_development
+  # database: lyrn_list_development
+  url: "postgres://zwemiblofodomy:843bd9a1c383ec3dbe0a8a1920bba7c1239cbc5552329828c87e5b7b68c8bf4c@ec2-52-87-58-157.compute-1.amazonaws.com:5432/ddbfu2aofa838p"
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
