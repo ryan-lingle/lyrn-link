@@ -10,6 +10,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     const [add, setAdd] = useState(false);
     const { state, api } = useContext(Context);
     const readOnly = state.readOnly;
+    const isDiscover = ['users', 'items'].includes(type);
 
     useEffect(() => {
         setAdd(false);
@@ -17,7 +18,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
     useEffect(() => {
         const streamObserver = observer(() => {
-            onFetch(items.length);
+            onFetch(items.length, state.tabIndex);
             streamObserver.unobserve(sb);
         });
 
@@ -27,7 +28,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
         return () => sb ? streamObserver.unobserve(sb) : null;
 
-    }, [ items.length ]);
+    }, [ items.length, state.tabIndex ]);
 
     function destroyList() {
         if (window.confirm('Are you sure you want to delete this list?')) {
@@ -181,11 +182,11 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 >
                     <ItemCard
                         onMove={(d, h) => { onMove(d, h); api.updateItemIndex(); }}
-                        readOnly={readOnly || type == 'users'}
-                        rank={isList || type == 'users'}
+                        readOnly={readOnly || isDiscover}
+                        rank={isList || isDiscover}
                         onDestroy={() => destroyItem(type, item.id)}
                         followButton={['following', 'followers', 'users'].includes(type)}
-                        bookmarkButton={type === 'bookmarks'}
+                        bookmarkButton={['bookmarks', 'items'].includes(type)}
                         lastItem={items.length === i + 1}
                         {...item} 
                     />

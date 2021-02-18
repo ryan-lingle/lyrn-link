@@ -1,14 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Context from '../context';
 
-const BookmarkButton = ({ id, bookmarked, authed }) => {
-
-	useEffect(() => {
-		setBookmarkState(bookmarked);
-	}, [bookmarked]);
+const BookmarkButton = ({ id, bookmarked, count }) => {
 
 	const { api } = useContext(Context);
 	const [bookmarkState, setBookmarkState] = useState(bookmarked);
+	const [countState, setCountState] = useState(count);
+
+	useEffect(() => {
+		setBookmarkState(bookmarked);
+		setCountState(count);
+	}, [bookmarked, count]);
 
 	async function handleClick(e) {
 		e.stopPropagation();
@@ -17,10 +19,15 @@ const BookmarkButton = ({ id, bookmarked, authed }) => {
 	};
 
 	return(
-		<i 
-			className={`${bookmarkState ? 'fas' : 'fal'} bookmark-icon fa-bookmark ${bookmarkState ? 'bookmarked' : ''}`} 
-			onClick={handleClick}
-		/>
+		<div className="flex">
+			<i 
+				className={`${bookmarkState ? 'fas' : 'fal'} bookmark-icon fa-bookmark ${bookmarkState ? 'bookmarked' : ''}`} 
+				onClick={handleClick}
+			/>
+			<div className="bookmark-count">
+				{countState || ''}
+			</div>
+		</div>
 	);
 }; 
 

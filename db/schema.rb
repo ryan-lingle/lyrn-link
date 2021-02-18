@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_26_150634) do
+ActiveRecord::Schema.define(version: 2021_02_18_204544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -38,10 +38,10 @@ ActiveRecord::Schema.define(version: 2021_01_26_150634) do
 
   create_table "bookmarks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
-    t.uuid "item_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["item_id"], name: "index_bookmarks_on_item_id"
+    t.uuid "meta_item_id"
+    t.index ["meta_item_id"], name: "index_bookmarks_on_meta_item_id"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
@@ -60,7 +60,9 @@ ActiveRecord::Schema.define(version: 2021_01_26_150634) do
     t.string "uid"
     t.text "categories"
     t.date "publish_date"
+    t.uuid "meta_item_id"
     t.index ["list_id"], name: "index_items_on_list_id"
+    t.index ["meta_item_id"], name: "index_items_on_meta_item_id"
   end
 
   create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -79,6 +81,22 @@ ActiveRecord::Schema.define(version: 2021_01_26_150634) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_lists_on_user_id"
+  end
+
+  create_table "meta_items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "url"
+    t.string "image_url"
+    t.string "creator"
+    t.string "subtitle"
+    t.string "uid"
+    t.string "url_copy"
+    t.text "categories"
+    t.date "publish_date"
+    t.integer "count", default: 1
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "oauth_credentials", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -116,9 +134,10 @@ ActiveRecord::Schema.define(version: 2021_01_26_150634) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "bookmarks", "items"
+  add_foreign_key "bookmarks", "meta_items"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "items", "lists"
+  add_foreign_key "items", "meta_items"
   add_foreign_key "likes", "users", column: "like_id"
   add_foreign_key "likes", "users", column: "link_id"
   add_foreign_key "lists", "users"

@@ -13,7 +13,7 @@ class Api::V1::UsersController < ApplicationController
 
 	def discover
 		render json: {
-			users: current_user.discover_index(offset: params[:offset].to_i)
+			users: current_user.discover_users_index(offset: params[:offset].to_i)
 		}
 	end
 

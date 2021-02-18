@@ -400,7 +400,7 @@ class Api {
             });
 
             store.reduce({
-                type: 'set_list_index',
+                type: 'set_tab_index',
                 index: store.state.user.lists.length - 1,
             });
 
@@ -591,7 +591,7 @@ class Api {
 
     createBookmark = async (id) => {
         const res = await this.post('bookmarks', {
-            params: { bookmark: { item_id: id } },
+            params: { bookmark: { meta_item_id: id } },
             errorType: 'bookmarks',
         });
 
@@ -623,7 +623,7 @@ class Api {
         }
     }
 
-    getDiscoverIndex = async (offset) => {
+    getDiscoverUsers = async (offset) => {
         const res = await this.get(`users/discover?offset=${offset}`, {
             errorType: 'discover',
         });
@@ -632,6 +632,28 @@ class Api {
 
             store.reduce({
                 type: 'add_discover_users',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    getDiscoverItems = async (offset) => {
+        console.log('ehllo')
+        const res = await this.get(`items/discover?offset=${offset}`, {
+            errorType: 'discover',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'add_discover_items',
                 ...res,
             });
 

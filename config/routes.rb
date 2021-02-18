@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       resources :items, only: [] do
         collection do
           get 'scrape', to: 'items#scrape'
+          get 'discover', to: 'items#discover'
         end
       end
 
