@@ -10,7 +10,6 @@ class Store {
             users: [],
             userCount: 0,
             readOnly: true,
-            listIndex: 0,
             tabIndex: 0,
             tab: 'lists',
             loading: {
@@ -64,19 +63,16 @@ class Store {
             this.state.tabIndex = 0;
             break;
         case 'set_tab_index':
-            this.state.tabIndex = event.tabIndex;
+            if (Number.isInteger(event.tabIndex)) {
+                this.state.tabIndex = event.tabIndex;
+            }
+            if (event.tabType) {
+                this.state.tabIndex = this.findIndexFromType(event.tabType)
+            }
             break;
         case 'add_list':
             this.state.loading.lists = false;
             this.state.user.lists.push(event.list);
-            break;
-        case 'set_list_index':
-            if (Number.isInteger(event.index)) {
-                this.state.listIndex = event.index;
-            }
-            if (event.listType) {
-                this.state.listIndex = this.findIndexFromType(event.listType)
-            }
             break;
         case 'swap_lists':
             let newIndex = this.state.listIndex;
@@ -163,17 +159,13 @@ class Store {
     }
 
     currentList = () => {
-        if (this.state.tab === 'lists') {
-            return this.state.user.lists[this.state.listIndex];
-        } else {
-            return this.state.user[this.state.tab][this.state.tabIndex];
-        }
+        return this.state.user[this.state.tab][this.state.tabIndex];
     }
 
     currentTab = () => this.state.user[this.state.tab];
 
-    findIndexFromType = (listType) => {
-        return this.state.user.lists.findIndex(({ type }) => type === listType) || 0;
+    findIndexFromType = (tabType) => {
+        return this.state.user[this.state.tab].findIndex(({ type }) => type === tabType) || 0;
     }
 }
 
