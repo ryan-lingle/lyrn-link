@@ -8,7 +8,9 @@ const Page = ({ match }) => {
     const [pageHeight, setPageHeight] = useState(window.innerHeight - 60);
 
     const fetchListeners = {
-        discover: (length) => api.getDiscoverIndex(length),
+        discover: (length, index=0) => index 
+                                ?   api.getDiscoverItems(length)
+                                :   api.getDiscoverUsers(length)
     };
 
     useEffect(() => {
@@ -30,8 +32,8 @@ const Page = ({ match }) => {
 
             if (match.params.listType) {
                 api.store.reduce({
-                    type: 'set_list_index',
-                    listType: match.params.listType,
+                    type: 'set_tab_index',
+                    tabType: match.params.listType,
                 });
             }
 

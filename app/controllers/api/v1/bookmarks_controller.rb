@@ -9,7 +9,7 @@ class Api::V1::BookmarksController < ApplicationController
 	end
 
 	def destroy
-		Bookmark.find_by(item_id: params[:id], user_id: current_user.id).destroy
+		Bookmark.find_by(meta_item_id: params[:id], user_id: current_user.id).destroy
 		render json: {
 			bookmarked: false
 		}
@@ -18,7 +18,7 @@ class Api::V1::BookmarksController < ApplicationController
 	private
 
 	def bookmark_params
-		params.require(:bookmark).permit(:item_id).tap do |rams|
+		params.require(:bookmark).permit(:meta_item_id).tap do |rams|
 			rams[:user_id] = current_user.id
 		end
 	end

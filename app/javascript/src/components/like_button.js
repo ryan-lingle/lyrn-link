@@ -1,32 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context';
 
-const LikeButton = ({ id, liked, follower_count }) => {
+const LikeButton = ({ id, liked, count }) => {
 
 	const { state, api } = useContext(Context);
 	const [likeState, setLikeState] = useState(liked);
-	const [count, setCount] = useState(follower_count);
+	const [countState, setCountState] = useState(count);
 
 	useEffect(() => {
 		setLikeState(liked);
-		setCount(follower_count);
-	}, [liked, follower_count]);
+		setCountState(count);
+	}, [liked, count]);
 
 	async function handleClick(e) {
 		e.stopPropagation();
 		const res = likeState ? await api.destroyLike(id) : await api.createLike(id);
 		setLikeState(res);
 		if (res) {
-			setCount(count => count + 1);
+			setCountState(prev => prev + 1);
 		} else {
-			setCount(count => count - 1);
+			setCountState(prev => prev - 1);
 		}
 	};
 
 	if (state.current_user_id === id) 
 		return(
 			<div className="follower-count">
-				{count || ''}
+				{countState || ''}
 			</div>
 		)
 
@@ -39,7 +39,7 @@ const LikeButton = ({ id, liked, follower_count }) => {
 				{likeState ? 'Following' : 'Follow'}
 			</div>
 			<div className="follower-count">
-				{count || ''}
+				{countState || ''}
 			</div>
 		</div>
 	);

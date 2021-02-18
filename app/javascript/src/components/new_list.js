@@ -38,8 +38,8 @@ const NewList = ({ children, id }) => {
                             <div key={i} onClick={async () => {
                                 await api.createList({ type: list });
                                 api.store.reduce({
-                                    type: 'set_list_index',
-                                    listType: list,
+                                    type: 'set_tab_index',
+                                    tabType: list,
                                 });
                             }} >
                                 {list.toUpperCase()}

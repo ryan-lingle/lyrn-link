@@ -1,5 +1,5 @@
 class Api::V1::ItemsController < ApplicationController
-	before_action :set_list, except: [:scrape]
+	before_action :set_list, except: [:scrape, :discover]
 
 	def create
 		item = Item.create!(item_params)
@@ -26,6 +26,12 @@ class Api::V1::ItemsController < ApplicationController
 			image: image_meta && image_meta["content"],
 			title: title_meta && title_meta["content"],
 			description: description_meta && description_meta["content"],
+		}
+	end
+
+	def discover
+		render json: {
+			items: current_user.discover_items_index(offset: params[:offset].to_i)
 		}
 	end
 

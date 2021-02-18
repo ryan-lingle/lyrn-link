@@ -18,8 +18,8 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
     //         const wire = window.location.pathname.split('/');
     //         const path = wire[wire.length - 1];
     //         if (path) api.store.reduce({
-    //             type: 'set_list_index',
-    //             listType: path,
+    //             type: 'set_tab_index',
+    //             tabType: path,
     //         });
     //         window.removeEventListener('popstate', changeTab);
 
@@ -34,7 +34,7 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
     function listCallback(list) {
         return async function() {
             api.store.reduce({
-                type: 'set_list_index',
+                type: 'set_tab_index',
                 index: list.index,
             });
             history.pushState({}, list.type, pathname + list.type);

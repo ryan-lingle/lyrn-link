@@ -14,7 +14,7 @@ class User < ApplicationRecord
 
 	has_many :lists, dependent: :destroy
 	has_many :bookmarks, dependent: :destroy
-	has_many :bookmarked_items, through: :bookmarks, source: :item
+	has_many :bookmarked_items, through: :bookmarks, source: :meta_item
 
 	before_validation :clean_handle
 	before_update :clean_handle
@@ -113,10 +113,16 @@ class User < ApplicationRecord
 				type: 'bookmarks',
 				items: bookmarked_items.map { |i| i.to_index_res(bis) },
 			}],
-			discover: [{
-				type: 'users',
-				items: discover_index(flwing: flwing),
-			}],
+			discover: [
+				{
+					type: 'users',
+					items: discover_users_index(flwing: flwing),
+				},
+				{
+					type: 'items',
+					items: discover_items_index(bis: bis),
+				}
+			],
 			uncreated_lists: uncreated_lists,
 			liked: flwing.include?(self.id),
 			email: self.email,
@@ -133,14 +139,21 @@ class User < ApplicationRecord
 			internal_url: true,
 			image_url: profile_picture_url,
 			followed: flwing.include?(self.id),
-			follower_count: show_count ? follower_count : nil,
+			count: show_count ? follower_count : nil,
 		}
 	end
 
-	def discover_index(offset: 0, flwing: nil)
+	def discover_users_index(offset: 0, flwing: nil)
 		flwing ||= following&.pluck(:id) || []
 		User.order(follower_count: :desc, handle: :asc).offset(offset).limit(100).each_with_index.map do |u, i| 
 			u.to_index_res(flwing, offset + i, true)
+		end
+	end
+
+	def discover_items_index(offset: 0, bis: nil)
+		bis ||= bookmarked_items&.pluck(:id) || []
+		MetaItem.order(count: :desc, title: :asc).offset(offset).limit(100).each_with_index.map do |item, i| 
+			item.to_index_res(bis, offset + i, true)
 		end
 	end
 
