@@ -35,7 +35,7 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
         return async function() {
             api.store.reduce({
                 type: 'set_tab_index',
-                index: list.index,
+                tabIndex: list.index,
             });
             history.pushState({}, list.type, pathname + list.type);
         }
@@ -111,7 +111,7 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                             {...list} 
                             readOnly={readOnly}
                             onClick={listCallback(list)}
-                            current={list.index == state.listIndex}
+                            current={list.index == state.tabIndex}
                         />
                     </Draggable>
                     
