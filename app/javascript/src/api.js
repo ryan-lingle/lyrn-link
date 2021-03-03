@@ -645,7 +645,6 @@ class Api {
     }
 
     getDiscoverItems = async (offset) => {
-        console.log('ehllo')
         const res = await this.get(`items/discover?offset=${offset}`, {
             errorType: 'discover',
         });
@@ -663,6 +662,27 @@ class Api {
 
             return false;
 
+        }
+    }
+
+    getGroup = async (handle) => {
+        this.setLoading('groups');
+
+        const res = await this.get(`groups/${handle}`, {
+            errorType: 'groups',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_group',
+                ...res,
+            });
+
+        } else {
+
+            return false;
+            
         }
     }
 

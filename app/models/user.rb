@@ -13,8 +13,13 @@ class User < ApplicationRecord
 	has_many :followers, through: :likers, source: :like
 
 	has_many :lists, dependent: :destroy
+	has_many :items, through: :lists
+
 	has_many :bookmarks, dependent: :destroy
 	has_many :bookmarked_items, through: :bookmarks, source: :meta_item
+
+	has_many :group_relationships
+	has_many :groups, through: :group_relationships
 
 	before_validation :clean_handle
 	before_update :clean_handle
@@ -87,9 +92,16 @@ class User < ApplicationRecord
 		end
 	end
 
+	def group_index
+		groups.map do |group|
+			group.to_index_res
+		end
+	end
+
 	def to_res(current_user=nil)
 		bis = current_user&.bookmarked_items&.pluck(:id) || []
 		flwing = current_user&.following&.pluck(:id) || []
+
 		{
 			id: self.id,
 			name: self.name,
@@ -106,21 +118,29 @@ class User < ApplicationRecord
 				{
 					type: 'followers',
 					items: followers.map { |u| u.to_index_res(flwing) },
-
+				},
+				{
+					type: 'groups',
+					items: group_index,
 				}
 			],
-			bookmarks: [{
-				type: 'bookmarks',
-				items: bookmarked_items.map { |i| i.to_index_res(bis) },
-			}],
+			bookmarks: [
+				{
+					type: 'bookmarks',
+					items: bookmarked_items.map { |i| i.to_index_res(bis) },
+					read_only: true,
+				}
+			],
 			discover: [
 				{
 					type: 'users',
 					items: discover_users_index(flwing: flwing),
+					read_only: true,
 				},
 				{
 					type: 'items',
 					items: discover_items_index(bis: bis),
+					read_only: true,
 				}
 			],
 			uncreated_lists: uncreated_lists,
@@ -140,6 +160,7 @@ class User < ApplicationRecord
 			image_url: profile_picture_url,
 			followed: flwing.include?(self.id),
 			count: show_count ? follower_count : nil,
+			button: 'follow',
 		}
 	end
 
@@ -187,6 +208,10 @@ class User < ApplicationRecord
 
 	def link
 		ENV["DOMAIN"] + "/" + self.handle
+	end
+
+	def meta_items_ids
+		items.pluck(:meta_item_id)
 	end
 
 	private

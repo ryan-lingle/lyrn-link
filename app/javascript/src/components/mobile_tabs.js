@@ -38,6 +38,7 @@ const MobileTabs = ({ pathname="/admin/" }) => {
         circle: 'far fa-chart-network',
         bookmarks: 'far fa-bookmark',
         discover: 'far fa-compass',
+        groups: 'far fa-users',
     };
 
     return(

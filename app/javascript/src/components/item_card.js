@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { BookmarkButton, LikeButton } from '../components';
 import Icon from '../assets/icon.png';
 
-const ItemCard = ({ rank=true, id, meta_item_id, bookmarkButton, bookmarked, followButton, followed, count, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, searchResult, lastItem, onDestroy, onMove }) => {
+const ItemCard = ({ rank=true, id, meta_item_id, bookmarkButton, bookmarked, followButton, followed, joinButton, count, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, searchResult, lastItem, onDestroy, onMove }) => {
     const link = useRef();
 
     function destroy(e) {
@@ -23,6 +23,8 @@ const ItemCard = ({ rank=true, id, meta_item_id, bookmarkButton, bookmarked, fol
             return <BookmarkButton id={meta_item_id || id} bookmarked={bookmarked} count={count} />;
         } else if (followButton) {
             return <LikeButton id={id} liked={followed} count={count} />;
+        } else if (joinButton) {
+            return <div></div>;
         } else if (readOnly) {
             return <BookmarkButton id={meta_item_id || id} bookmarked={bookmarked} count={count} />;
         } else {

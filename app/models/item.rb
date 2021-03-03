@@ -39,6 +39,7 @@ class Item < ApplicationRecord
 			index: self.index,
 			creator: self.creator,
 			bookmarked: bookmarks.include?(self.meta_item_id),
+			button: 'bookmark',
 		}
 	end
 

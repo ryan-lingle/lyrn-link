@@ -1,5 +1,8 @@
 class MetaItem < ApplicationRecord
 	has_many :bookmarks, dependent: :destroy
+	has_many :items
+	has_many :lists, through: :items
+	has_many :users, through: :lists
 
 	def to_index_res(bookmarks=[], index=nil, count=false)
 		{

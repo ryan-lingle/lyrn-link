@@ -3,7 +3,7 @@ import { ErrorBox, Loader, ListTabs, GenericTabs, ProfileTabs, MobileTabs, List,
 import Context from '../context';
 import { Helmet } from 'react-helmet';
 
-const Page = ({ match }) => {
+const Group = ({ match }) => {
     const { api, state } = useContext(Context);
     const [pageHeight, setPageHeight] = useState(window.innerHeight - 60);
 
@@ -21,7 +21,8 @@ const Page = ({ match }) => {
 
     useEffect(() => {
         (async function() {
-            await api.getUser(match.params);
+            await api.getUser();
+            await api.getGroup(match.params.handle);
 
             if (match.params.tab) {
                 api.store.reduce({
@@ -115,4 +116,4 @@ const Page = ({ match }) => {
     );
 }
 
-export default Page;
+export default Group;
