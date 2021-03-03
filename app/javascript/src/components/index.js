@@ -28,3 +28,4 @@ export {default as GenericTabs} from './generic_tabs.js';
 export {default as MobileTabs} from './mobile_tabs.js';
 export {default as PasswordConditions} from './password_conditions.js';
 export {default as UnconfirmedEmail} from './unconfirmed_email.js';
+export {default as GroupForm} from './group_form.js';

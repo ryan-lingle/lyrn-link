@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Search, Scraper, Draggable, ItemCard } from '../components';
+import { Search, Scraper, Draggable, ItemCard, GroupForm } from '../components';
 import NoItems from '../assets/noitems.png';
 import NoItemsUser from '../assets/noitemsuser.png';
 import Context from '../context';
@@ -8,12 +8,15 @@ import { observer } from '../utils';
 
 const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, isList, onFetch }) => {
     const [add, setAdd] = useState(false);
+    const [addGroup, setAddGroup] = useState(false);
     const { state, api } = useContext(Context);
     const readOnly = state.readOnly;
     const isDiscover = ['users', 'items'].includes(type);
+    const isGroups = type === 'groups';
 
     useEffect(() => {
         setAdd(false);
+        setAddGroup(false);
     }, [type]);
 
     useEffect(() => {
@@ -89,6 +92,14 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         }
     }
 
+    function groupForm() {
+        if (addGroup) {
+            return(
+                <GroupForm />
+            );
+        }
+    }
+
     if (!type) return <div/>;
 
     if (items.length === 0) {
@@ -153,7 +164,6 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         });
     };
 
-
     return(
         <div id="list" >
             {
@@ -169,7 +179,18 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
                 :   null
             }
+            {
+                !readOnly && isGroups
+
+                ?   <div className="btn-black" onClick={() => setAddGroup(prev => !prev)} >
+                        <i className={`far fa-${addGroup ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
+                        Group
+                    </div>
+
+                :   null
+            }
             {addItem()}
+            {groupForm()}
             {items.map((item, i) => 
                 <Draggable 
                     key={i} 
@@ -182,11 +203,12 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 >
                     <ItemCard
                         onMove={(d, h) => { onMove(d, h); api.updateItemIndex(); }}
-                        readOnly={readOnly || isDiscover}
+                        readOnly={readOnly || isDiscover || isGroups}
                         rank={isList || isDiscover}
                         onDestroy={() => destroyItem(type, item.id)}
                         followButton={['following', 'followers', 'users'].includes(type)}
                         bookmarkButton={['bookmarks', 'items'].includes(type)}
+                        joinButton={isGroups}
                         lastItem={items.length === i + 1}
                         {...item} 
                     />

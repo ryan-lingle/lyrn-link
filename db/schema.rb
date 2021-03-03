@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_18_204544) do
+ActiveRecord::Schema.define(version: 2021_03_03_153437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,12 +45,38 @@ ActiveRecord::Schema.define(version: 2021_02_18_204544) do
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
+  create_table "group_invites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_group_invites_on_group_id"
+    t.index ["user_id"], name: "index_group_invites_on_user_id"
+  end
+
+  create_table "group_relationships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "group_id", null: false
+    t.uuid "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_group_relationships_on_group_id"
+    t.index ["user_id"], name: "index_group_relationships_on_user_id"
+  end
+
+  create_table "groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.boolean "private", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "handle"
+  end
+
   create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "description"
     t.string "url"
     t.integer "index"
-    t.string "image_url"
     t.text "creator"
     t.uuid "list_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -60,6 +86,7 @@ ActiveRecord::Schema.define(version: 2021_02_18_204544) do
     t.string "uid"
     t.text "categories"
     t.date "publish_date"
+    t.string "image_url"
     t.uuid "meta_item_id"
     t.index ["list_id"], name: "index_items_on_list_id"
     t.index ["meta_item_id"], name: "index_items_on_meta_item_id"
@@ -136,6 +163,10 @@ ActiveRecord::Schema.define(version: 2021_02_18_204544) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bookmarks", "meta_items"
   add_foreign_key "bookmarks", "users"
+  add_foreign_key "group_invites", "groups"
+  add_foreign_key "group_invites", "users"
+  add_foreign_key "group_relationships", "groups"
+  add_foreign_key "group_relationships", "users"
   add_foreign_key "items", "lists"
   add_foreign_key "items", "meta_items"
   add_foreign_key "likes", "users", column: "like_id"

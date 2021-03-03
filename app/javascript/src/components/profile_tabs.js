@@ -38,6 +38,7 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
         circle: 'far fa-chart-network',
         discover: 'far fa-compass',
         bookmarks: 'far fa-bookmark',
+        groups: 'far fa-users',
     };
 
     return(
