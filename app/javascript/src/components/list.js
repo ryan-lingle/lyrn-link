@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Search, Scraper, Draggable, ItemCard, GroupForm } from '../components';
+import { ItemSearch, Scraper, Draggable, ItemCard, GroupForm, InviteUser } from '../components';
 import NoItems from '../assets/noitems.png';
 import NoItemsUser from '../assets/noitemsuser.png';
 import Context from '../context';
@@ -9,6 +9,7 @@ import { observer } from '../utils';
 const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, isList, onFetch }) => {
     const [add, setAdd] = useState(false);
     const [addGroup, setAddGroup] = useState(false);
+    const [invite, setInvite] = useState(false);
     const { state, api } = useContext(Context);
     const readOnly = state.readOnly;
     const isDiscover = ['users', 'items'].includes(type);
@@ -17,6 +18,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     useEffect(() => {
         setAdd(false);
         setAddGroup(false);
+        setInvite(false);
     }, [type]);
 
     useEffect(() => {
@@ -39,6 +41,12 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         };
     };
 
+    function destroyGroup() {
+        if (window.confirm('Are you sure you want to delete this group?')) {
+            api.destroyGroup(state.group.id);
+        };
+    };
+
     function editBtns() {
         if (readOnly) {
             return null;
@@ -58,12 +66,31 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         }
     }
 
+    function groupBtns() {
+        if (readOnly) {
+            return null;
+        } else {
+            return(
+                <div className="flex todo-btns">
+                    <div className="btn-red" style={{marginRight: '5px'}} onClick={destroyGroup}>
+                        <i className="far fa-trash" style={{marginRight: '4px'}}/>
+                        Group
+                    </div>
+                    <div className="btn-black" onClick={() => setInvite(prev => !prev)} >
+                        <i className={`far fa-${add ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
+                        Invite User
+                    </div>
+                </div>
+            );
+        }
+    }
+
     function addItem() {
         if (add) {
 
             if (searchable) {
 
-                return <Search type={type} item={singular} >
+                return <ItemSearch type={type} item={singular} >
                     {(result, clearResults) =>
                         <div onClick={() => {
                             createItem(type, result);
@@ -78,7 +105,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                             />
                         </div>
                     }
-                </Search>;
+                </ItemSearch>;
 
             } else {
 
@@ -96,6 +123,14 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         if (addGroup) {
             return(
                 <GroupForm />
+            );
+        }
+    }
+
+    function inviteForm() {
+        if (invite) {
+            return(
+                <InviteUser />
             );
         }
     }
@@ -137,6 +172,26 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                                 <div className="text-center" style={{marginTop: '20px'}}>{editBtns()}</div>
                             </div>
                     }
+                </div>
+            )
+
+        } else if (type === 'invites') {
+
+            return(
+                <div>
+                    {inviteForm()}
+                    <div className="todo-card" >
+                        <img 
+                            className="todo-img"
+                            src={NoItems} 
+                            alt="Lyrn Link No Items" 
+                        />
+                        <div className="todo-text">
+                            <div className="todo-heading">🎉 Congrats, you've made a new group!</div>
+                            <div className="todo-body">Go ahead and start inviting people!</div>
+                        </div>
+                        <div className="text-center" style={{marginTop: '20px'}}>{groupBtns()}</div>
+                    </div>
                 </div>
             )
 
@@ -191,6 +246,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             }
             {addItem()}
             {groupForm()}
+            {inviteForm()}
             {items.map((item, i) => 
                 <Draggable 
                     key={i} 

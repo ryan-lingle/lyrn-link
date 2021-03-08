@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import Context from '../context';
 import { observer } from '../utils';
 
-const Search = ({ type, item, children }) => {
+const ItemSearch = ({ search, type, children, placeholder }) => {
     const { api, state } = useContext(Context);
     const [firstLoad, setFirstLoad] = useState(true);
     const [term, setTerm] = useState('');
@@ -24,7 +24,7 @@ const Search = ({ type, item, children }) => {
             if (timeout) clearTimeout(timeout);
 
             saveTimeout(
-                setTimeout(() => api.search(type, term), 500)
+                setTimeout(() => search(type, term), 500)
             );
         };
     }, [term]);
@@ -32,7 +32,7 @@ const Search = ({ type, item, children }) => {
     useEffect(() => {
             const streamObserver = observer(() => {
                 if (term != '') {
-                    api.search(type, term, results.length);
+                    search(type, term, results.length);
                     streamObserver.unobserve(sb);
                 }
 
@@ -51,7 +51,7 @@ const Search = ({ type, item, children }) => {
             <div className="input-primary">
                 <input 
                     value={term} 
-                    placeholder={`Search for a ${item} to add...`}
+                    placeholder={placeholder}
                     onChange={({ target }) => {
                         setFirstLoad(false);
                         setTerm(target.value);
@@ -71,4 +71,4 @@ const Search = ({ type, item, children }) => {
     );
 };
 
-export default Search;
+export default ItemSearch;

@@ -7,6 +7,7 @@ class Store {
                 username: localStorage.getItem('username'),
                 lists: [],
             },
+            group: {},
             users: [],
             userCount: 0,
             readOnly: true,
@@ -14,6 +15,7 @@ class Store {
             tab: 'lists',
             loading: {
                 user: true,
+                groups: true,
             },
             errors: {},
             success: {},
@@ -72,7 +74,7 @@ class Store {
             break;
         case 'add_list':
             this.state.loading.lists = false;
-            this.state.user.lists.push(event.list);
+            this.getTab('lists').push(event.list);
             break;
         case 'swap_lists':
             let newIndex = this.state.listIndex;
@@ -83,7 +85,7 @@ class Store {
                 newIndex = event.dragIndex;
             }
             this.state.listIndex = newIndex;
-            const lists = this.state.user.lists;
+            const lists = this.getTab('lists');
             const dragList = lists[event.dragIndex];
             dragList.index = event.hoverIndex;
             lists[event.dragIndex] = lists[event.hoverIndex];
@@ -128,11 +130,15 @@ class Store {
             }
             break;
         case 'add_discover_users':
-            this.state.user.discover[0].items = this.state.user.discover[0].items.concat(event.users);
+            this.getTab('discover')[0].items = this.getTab('discover')[0].items.concat(event.users);
             break;
         case 'add_discover_items':
-            this.state.user.discover[1].items = this.state.user.discover[1].items.concat(event.items);
+            this.getTab('discover')[1].items = this.getTab('discover')[1].items.concat(event.items);
             break;
+        case 'set_group':
+            this.state.loading.groups = false;
+            this.state.group = event.group;
+            this.state.tab = 'circle';
         case 'error':
             this.state.loading[event.errorType] = null;
             this.state.success[event.errorType] = null;
@@ -158,14 +164,20 @@ class Store {
         return new Date(new Date().getTime() + 600000);
     }
 
-    currentList = () => {
-        return this.state.user[this.state.tab][this.state.tabIndex];
+    currentList = (type='user') => {
+        const tab = this.currentTab(type);
+        if (tab) return tab[this.state.tabIndex];
     }
 
-    currentTab = () => this.state.user[this.state.tab];
+    currentTab = (type='user') => this.getTab(this.state.tab, type);
 
-    findIndexFromType = (tabType) => {
-        return this.state.user[this.state.tab].findIndex(({ type }) => type === tabType) || 0;
+    getTab = (_tab_, type='user') => {
+        const res = this.state[type].tabs.find((({ tab }) => _tab_ === tab));
+        if (res) return res.sub_tabs;
+    }
+
+    findIndexFromType = (tabType, type='user') => {
+        return this.currentTab().findIndex(({ type }) => type === tabType) || 0;
     }
 }
 

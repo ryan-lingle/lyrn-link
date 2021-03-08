@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_03_153437) do
+ActiveRecord::Schema.define(version: 2021_03_04_141120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -70,6 +70,8 @@ ActiveRecord::Schema.define(version: 2021_03_03_153437) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "handle"
+    t.uuid "user_id", null: false
+    t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
   create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -167,6 +169,7 @@ ActiveRecord::Schema.define(version: 2021_03_03_153437) do
   add_foreign_key "group_invites", "users"
   add_foreign_key "group_relationships", "groups"
   add_foreign_key "group_relationships", "users"
+  add_foreign_key "groups", "users"
   add_foreign_key "items", "lists"
   add_foreign_key "items", "meta_items"
   add_foreign_key "likes", "users", column: "like_id"

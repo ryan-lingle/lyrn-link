@@ -33,24 +33,16 @@ const MobileTabs = ({ pathname="/admin/" }) => {
         });
     };
 
-    const icons = {
-        lists: 'far fa-clipboard-list',
-        circle: 'far fa-chart-network',
-        bookmarks: 'far fa-bookmark',
-        discover: 'far fa-compass',
-        groups: 'far fa-users',
-    };
-
     return(
         <div>
             <div className="mobile-tabs" >
-                {['lists', 'circle', 'discover', 'bookmarks'].map((tab, i) =>
+                {state.user.tabs.map(({ tab, icon }, i) =>
                     <div 
                         key={i} 
                         className={`mobile-tab tabs-icon section-tab ${tab === state.tab ? 'current-section-tab' : ''}`}
                         onClick={() => setTab(tab)}
                     >
-                        <i className={icons[tab]} />
+                        <i className={icon} />
                     </div>                
                 )}
             </div>

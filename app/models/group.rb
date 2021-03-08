@@ -1,9 +1,13 @@
 class Group < ApplicationRecord
 	HANDLE_WHITELIST = %w(a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 _)
-	has_many :group_relationships
+	has_many :group_relationships, dependent: :destroy
 	has_many :users, through: :groups
 	include ActiveStorageSupport::SupportForBase64
 	has_one_base64_attached :image
+	after_create :add_admin_to_group
+	belongs_to :user
+	validates :handle, presence: true, uniqueness: { case_sensitive: false }
+	validates :name, presence: true
 
 	def to_index_res
 		{
@@ -21,16 +25,26 @@ class Group < ApplicationRecord
 			handle: self.handle,
 			description: self.description,
 			# image: image_url,
-			circle: [
+			tabs: [
 				{
-					type: 'members',
-					items: user_index,
-				},
-				{
-					type: 'items',
-					items: item_index,
+					tab: 'circle',
+					icon: 'far fa-chart-network',
+					sub_tabs: [
+						{
+							type: 'invites',
+							items: [],
+						},
+						{
+							type: 'members',
+							items: user_index,
+						},
+						{
+							type: 'items',
+							items: item_index,
+						}
+					]
 				}
-			],
+			]
 		}
 	end
 
@@ -47,9 +61,13 @@ class Group < ApplicationRecord
 	end
 
 	def clean_handle
-		split = self.handle.downcase.gsub('-', '_').gsub(' ', '_').split('').select do |l|
+		split = self.name.downcase.gsub('-', '_').gsub(' ', '_').split('').select do |l|
 			HANDLE_WHITELIST.include?(l)
 		end
 		self.handle = split.join('')
+	end
+
+	def add_admin_to_group
+		GroupRelationship.create!(group: self, user: self.user)
 	end
 end
