@@ -686,6 +686,74 @@ class Api {
         }
     }
 
+    createGroup = async (group) => {
+        this.setLoading('create_group');
+
+        const res = await this.post('groups', {
+            params: { group },
+            errorType: 'create_group',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'add_group',
+                ...res
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    updateGroup = async (id, group) => {
+        this.setLoading('update_group');
+
+        const res = await this.post(`groups/${id}`, { 
+            params: { group },
+            errorType: 'update_group',
+            method: 'PATCH',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_group',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    destroyGroup = async (id) => {
+        const res = await this.get(`groups/${id}`, {
+            method: 'DELETE',
+            errorType: 'groups',
+        });
+
+        if (!res.error) {
+
+            window.location.href = '/admin/circle/groups';
+            
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
     setError = (errorType, error) => {
         store.reduce({
             type: errorType,

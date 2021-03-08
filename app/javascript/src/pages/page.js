@@ -29,8 +29,8 @@ const Page = ({ match }) => {
                     tab: match.params.tab,
                 });
             }
-
-            if (match.params.listType) {
+            
+            if (match.params.tabType) {
                 api.store.reduce({
                     type: 'set_tab_index',
                     tabType: match.params.tabType,
@@ -98,7 +98,7 @@ const Page = ({ match }) => {
 
                             :   <GenericTabs 
                                     pathname={pathname + state.tab + '/'}
-                                    lists={api.store.currentTab()} 
+                                    tabs={api.store.currentTab()} 
                                 />
                     }
                     <List 

@@ -109,38 +109,56 @@ class User < ApplicationRecord
 			handle: self.handle,
 			description: self.description,
 			profile_picture_url: profile_picture_url,
-			lists: list_index(bis),
-			circle: [
+			tabs: [
 				{
-					type: 'following',
-					items: following.map { |u| u.to_index_res(flwing) },
+					tab: 'lists',
+					icon: 'far fa-clipboard-list',
+					sub_tabs: list_index(bis),
 				},
 				{
-					type: 'followers',
-					items: followers.map { |u| u.to_index_res(flwing) },
+					tab: 'circle',
+					icon: 'far fa-chart-network',
+					sub_tabs: [
+						{
+							type: 'following',
+							items: following.map { |u| u.to_index_res(flwing) },
+						},
+						{
+							type: 'followers',
+							items: followers.map { |u| u.to_index_res(flwing) },
+						},
+						{
+							type: 'groups',
+							items: group_index,
+						}
+					],
 				},
 				{
-					type: 'groups',
-					items: group_index,
-				}
-			],
-			bookmarks: [
-				{
-					type: 'bookmarks',
-					items: bookmarked_items.map { |i| i.to_index_res(bis) },
-					read_only: true,
-				}
-			],
-			discover: [
-				{
-					type: 'users',
-					items: discover_users_index(flwing: flwing),
-					read_only: true,
+					tab: 'bookmarks',
+					icon: 'far fa-bookmark',
+					sub_tabs: [
+						{
+							type: 'bookmarks',
+							items: bookmarked_items.map { |i| i.to_index_res(bis) },
+							read_only: true,
+						}
+					],
 				},
 				{
-					type: 'items',
-					items: discover_items_index(bis: bis),
-					read_only: true,
+					tab: 'discover',
+					icon: 'far fa-compass',
+					sub_tabs: [
+						{
+							type: 'users',
+							items: discover_users_index(flwing: flwing),
+							read_only: true,
+						},
+						{
+							type: 'items',
+							items: discover_items_index(bis: bis),
+							read_only: true,
+						}
+					]
 				}
 			],
 			uncreated_lists: uncreated_lists,

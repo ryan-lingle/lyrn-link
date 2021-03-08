@@ -1,17 +1,11 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { ErrorBox, Loader, ListTabs, GenericTabs, ProfileTabs, MobileTabs, List, UserProfile, UnconfirmedEmail } from '../components';
+import { ErrorBox, Loader, ListTabs, GenericTabs, ProfileTabs, MobileTabs, List, GroupProfile, UnconfirmedEmail } from '../components';
 import Context from '../context';
 import { Helmet } from 'react-helmet';
 
 const Group = ({ match }) => {
     const { api, state } = useContext(Context);
     const [pageHeight, setPageHeight] = useState(window.innerHeight - 60);
-
-    const fetchListeners = {
-        discover: (length, index=0) => index 
-                                ?   api.getDiscoverItems(length)
-                                :   api.getDiscoverUsers(length)
-    };
 
     useEffect(() => {
         window.onresize = () => {
@@ -21,8 +15,8 @@ const Group = ({ match }) => {
 
     useEffect(() => {
         (async function() {
-            await api.getUser();
             await api.getGroup(match.params.handle);
+            await api.getUser();
 
             if (match.params.tab) {
                 api.store.reduce({
@@ -41,35 +35,25 @@ const Group = ({ match }) => {
         })();
     }, []);
 
-    const loading = state.loading.user;
-    const error = state.errors.user;
+    const loading = state.loading.groups;
+    const error = state.errors.groups;
  
     if (loading) return <Loader />;
     if (error) return <div className="container"><ErrorBox error={error} /></div>;
-    if (state.admin && state.user.confirm_email) return <UnconfirmedEmail email={state.user.email} />;
 
-    const currentList = api.store.currentList();
-    const pathname = state.readOnly ? `/${state.user.handle}/` : '/admin/';
+    const currentList = api.store.currentList('group');
+    const pathname = `/g/${state.group.handle}/`;
 
     return(
         <div>
             <Helmet>
                 <title>
-                    {
-                        state.readOnly
-
-                        ?   `${state.user.name} (${state.user.handle})`
-
-                        :   'lyrnlink'
-                    }
+                    {state.group.name}
                 </title>
             </Helmet>
             <div className="page" style={{ height: `${pageHeight}px` }} >
                 <div id="side-nav" className="non-mobile-only">
-                    <UserProfile />
-                    <ProfileTabs 
-                        pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
-                    />
+                    <GroupProfile />
                     <div className="nav-footer">
                         <div>
                             <a style={{fontWeight: 'bolder'}}>© 2021 - Lyrnlink</a>
@@ -82,32 +66,15 @@ const Group = ({ match }) => {
                     </div>
                 </div>
                 <div className="mobile-only">
-                    <UserProfile />
-                    <div className="mobile-only">
-                        <MobileTabs 
-                            pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
-                        />
-                    </div>
+                    <GroupProfile />
                 </div>
                 <div className="container">
-                    {
-                        state.tab === 'lists' 
-
-                            ?   <ListTabs 
-                                    pathname={pathname + 'lists/'} 
-                                /> 
-
-                            :   <GenericTabs 
-                                    pathname={pathname + state.tab + '/'}
-                                    lists={api.store.currentTab()} 
-                                />
-                    }
+                    <GenericTabs 
+                        pathname={pathname + state.tab + '/'}
+                        tabs={api.store.currentTab('group')} 
+                    />
                     <List 
                         {...currentList}
-                        createItem={api.createItem} 
-                        destroyItem={api.destroyItem}
-                        isList={state.tab === 'lists'}
-                        onFetch={fetchListeners[state.tab]}
                     />
                     
                 </div>

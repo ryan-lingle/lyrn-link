@@ -41,7 +41,7 @@ Rails.application.routes.draw do
 
       resources :likes, only: [:create, :destroy]
       resources :bookmarks, only: [:create, :destroy]
-      resources :groups, only: [:show, :create]
+      resources :groups, only: [:show, :create, :update, :destroy]
 
     end
   end

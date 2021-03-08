@@ -22,6 +22,8 @@ const Routes = () => {
           <PrivateRoute path="/admin/:tab" exact component={Page} />
           <PrivateRoute path="/admin/:tab/:tabType" exact component={Page} />
           <Route path="/g/:handle" exact component={Group} />
+          <Route path="/g/:handle/:tab" exact component={Group} />
+          <Route path="/g/:handle/:tab/:tabType" exact component={Group} />
           <Route exact path="/:handle/" component={Page} />
           <Route exact path="/:handle/:tab" component={Page} />
           <Route exact path="/:handle/:tab/:tabType" component={Page} />

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Form } from '../components';
 
-const GroupForm = ({ onSubmit }) => {
+const GroupForm = () => {
 	return(
 		<Form
-		    onSubmit={onSubmit}
+		    onSubmit="createGroup"
 		    submitCopy="Create Group"
-		    type="groups"
+		    type="create_group"
 		    inputs={[
 		        {
 		            label: 'Group Name',
