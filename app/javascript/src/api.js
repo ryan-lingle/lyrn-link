@@ -413,6 +413,94 @@ class Api {
         }
     }
 
+    createGroupRelationship = async (group_relationship) => {
+        this.setLoading('group_relationship');
+
+        const res = await this.post('group_relationships', {
+            params: { group_relationship },
+            errorType: 'group_relationship',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'add_member',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    updateGroupRelationship = async (group_id, group_relationship) => {
+        this.setLoading('group_relationship');
+
+        const res = await this.post(`group_relationships/${group_id}`, {
+            params: { group_relationship },
+            errorType: 'group_relationship',
+            method: 'PATCH',
+        });
+
+        if (!res.error) {
+            
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    destroyGroupRelationship = async (group_id) => {
+        this.setLoading('group_relationship');
+
+        const res = await this.get(`group_relationships/${group_id}`, {
+            errorType: 'group_relationship',
+            method: 'DELETE',
+        });
+
+        if (!res.error) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    userSearch = async (term, offset=0) => {
+        this.setLoading('search');
+
+        const res = await this.get('users/search', {
+            params: { term },
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'search_results',
+                searchType: 'users',
+                results: res.results,
+                push: offset > 0,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
     search = async (type, term, offset=0) => {
         this.setLoading('search');
 

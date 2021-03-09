@@ -139,6 +139,14 @@ class Store {
             this.state.loading.groups = false;
             this.state.group = event.group;
             this.state.tab = 'circle';
+            break;
+        case 'add_group':
+            this.state.loading.create_group = false;
+            this.getTab('circle')[2].items.push(event.group);
+            break;
+        case 'add_member':
+            this.getTab('circle', 'group')[0].items.unshift(event.user);
+            break;
         case 'error':
             this.state.loading[event.errorType] = null;
             this.state.success[event.errorType] = null;

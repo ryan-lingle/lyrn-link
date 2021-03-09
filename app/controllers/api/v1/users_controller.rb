@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
 	skip_before_action :authenticate_request, only: [:show, :confirm_email]
 	before_action :soft_authentication, only: [:show]
-	before_action :set_user, except: [:show, :index, :send_confirmation_email, :confirm_email, :discover]
+	before_action :set_user, except: [:show, :index, :send_confirmation_email, :confirm_email, :discover, :search]
 
 	def index
 		authorize current_user
@@ -14,6 +14,13 @@ class Api::V1::UsersController < ApplicationController
 	def discover
 		render json: {
 			users: current_user.discover_users_index(offset: params[:offset].to_i)
+		}
+	end
+
+	def search
+		res = User.search(params[:term])
+		render json: {
+			results: res.map { |user| user.to_index_res }
 		}
 	end
 
@@ -33,7 +40,7 @@ class Api::V1::UsersController < ApplicationController
 		elsif authenticate_request
 			render json: {
 				admin: true,
-				user: current_user.to_res(current_user),
+				user: current_user.to_res(current_user, admin: true),
 				current_user_id: current_user.id,
 				current_user_profile_picture: current_user.profile_picture_url,
 			}

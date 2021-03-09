@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form } from '../components';
+import Context from '../context';
 
-const GroupForm = () => {
+const GroupForm = ({ onSubmit }) => {
+	const { api } = useContext(Context);
+
+	async function handleSubmit(params) {
+		await api.createGroup(params);
+		onSubmit();
+	};
+
 	return(
 		<Form
-		    onSubmit="createGroup"
+		    onSubmit={handleSubmit}
 		    submitCopy="Create Group"
 		    type="create_group"
 		    inputs={[

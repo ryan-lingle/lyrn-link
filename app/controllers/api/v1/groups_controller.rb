@@ -6,8 +6,9 @@ class Api::V1::GroupsController < ApplicationController
 		if !group
 			render json: {}, status: 404
 		else
+			soft_authentication
 			render json: {
-				group: group.to_show_res,
+				group: group.to_show_res(current_user),
 			}
 		end
 	end
@@ -26,7 +27,7 @@ class Api::V1::GroupsController < ApplicationController
 		group.clean_handle
 		group.save!
 		render json: {
-			group: group.to_show_res,
+			group: group.to_index_res,
 		}
 	end
 
@@ -42,7 +43,7 @@ class Api::V1::GroupsController < ApplicationController
 	private
 
 	def group_params
-		params.require(:group).permit(:name, :description, :private).tap do |rams|
+		params.require(:group).permit(:name, :description, :private, :handle).tap do |rams|
 			rams[:user_id] = current_user.id
 		end
 	end

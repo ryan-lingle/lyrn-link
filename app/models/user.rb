@@ -24,6 +24,10 @@ class User < ApplicationRecord
 	before_validation :clean_handle
 	before_update :clean_handle
 
+	include PgSearch::Model
+  	pg_search_scope :search, against: [:name]
+
+
 	def clean_handle
 		split = self.handle.downcase.gsub('-', '_').gsub(' ', '_').split('').select do |l|
 			HANDLE_WHITELIST.include?(l)
@@ -92,13 +96,26 @@ class User < ApplicationRecord
 		end
 	end
 
-	def group_index
-		groups.map do |group|
-			group.to_index_res
+	def group_index(admin: false)
+		gs = groups.where("group_relationships.accepted = true").map do |group|
+			res = group.to_index_res
+			res[:invite] = false
+			res
+		end
+
+		if admin
+			invites = groups.where("group_relationships.accepted = false").map do |group|
+				res = group.to_index_res
+				res[:invite] = true
+				res
+			end
+			invites.concat(gs)
+		else
+			gs
 		end
 	end
 
-	def to_res(current_user=nil)
+	def to_res(current_user=nil, admin: false)
 		bis = current_user&.bookmarked_items&.pluck(:id) || []
 		flwing = current_user&.following&.pluck(:id) || []
 
@@ -129,7 +146,7 @@ class User < ApplicationRecord
 						},
 						{
 							type: 'groups',
-							items: group_index,
+							items: group_index(admin: admin),
 						}
 					],
 				},
