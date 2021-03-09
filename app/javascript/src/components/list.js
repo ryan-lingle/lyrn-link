@@ -122,7 +122,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     function groupForm() {
         if (addGroup) {
             return(
-                <GroupForm />
+                <GroupForm onSubmit={() => setAddGroup(false)} />
             );
         }
     }
@@ -175,7 +175,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 </div>
             )
 
-        } else if (type === 'invites') {
+        } else if (type === 'members') {
 
             return(
                 <div>
@@ -237,9 +237,24 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             {
                 !readOnly && isGroups
 
-                ?   <div className="btn-black" onClick={() => setAddGroup(prev => !prev)} >
-                        <i className={`far fa-${addGroup ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
-                        Group
+                ?   <div className="list-heading">
+                        <div style={{marginLeft: 'auto'}} >
+                            <div className="btn-black" onClick={() => setAddGroup(prev => !prev)} >
+                                <i className={`far fa-${addGroup ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
+                                Group
+                            </div>
+                        </div>
+                    </div>
+
+                :   null
+            }
+            {
+                !readOnly && type == "members"
+
+                ?   <div className="list-heading">
+                        <div style={{marginLeft: 'auto'}} >
+                            {groupBtns()}
+                        </div>
                     </div>
 
                 :   null
@@ -262,7 +277,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                         readOnly={readOnly || isDiscover || isGroups}
                         rank={isList || isDiscover}
                         onDestroy={() => destroyItem(type, item.id)}
-                        followButton={['following', 'followers', 'users'].includes(type)}
+                        followButton={['following', 'followers', 'users', 'members'].includes(type)}
                         bookmarkButton={['bookmarks', 'items'].includes(type)}
                         joinButton={isGroups}
                         lastItem={items.length === i + 1}

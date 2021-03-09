@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import Context from '../context';
 import { observer } from '../utils';
 
-const ItemSearch = ({ search, type, children, placeholder }) => {
+const ItemSearch = ({ search, type, children, placeholder, fetchMore=true }) => {
     const { api, state } = useContext(Context);
     const [firstLoad, setFirstLoad] = useState(true);
     const [term, setTerm] = useState('');
@@ -40,7 +40,7 @@ const ItemSearch = ({ search, type, children, placeholder }) => {
 
             const sb = document.getElementById("search-bottom");
 
-            if (sb) streamObserver.observe(sb);
+            if (sb && fetchMore) streamObserver.observe(sb);
 
             return () => streamObserver.unobserve(sb);
 
