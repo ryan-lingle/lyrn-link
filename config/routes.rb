@@ -42,7 +42,11 @@ Rails.application.routes.draw do
 
       resources :likes, only: [:create, :destroy]
       resources :bookmarks, only: [:create, :destroy]
-      resources :groups, only: [:show, :create, :update, :destroy]
+      resources :groups, only: [:show, :create, :update, :destroy] do
+        member do
+          post 'image', to: 'groups#image'
+        end
+      end
       resources :group_relationships, only: [:create, :update, :destroy]
 
     end

@@ -82,6 +82,7 @@ const UserProfile = () => {
 					</div>
 					<ImageEditor 
 						image={profilePicture} 
+						onUpdate={async (image) => { await api.updateProfilePicture(state.user.id, image); setProfilePicture(null);}}
 						onClose={() => setProfilePicture(null)}
 					/>
 					<div className="flex-grow profile-info" >

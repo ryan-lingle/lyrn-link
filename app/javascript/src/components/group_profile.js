@@ -1,14 +1,14 @@
 import React, { useContext, useRef, useState } from 'react';
 import Context from '../context';
-import { Editable, ImageEditor, LikeButton, ProfileTabs } from '../components';
+import { Editable, ImageEditor, JoinButton, ProfileTabs } from '../components';
 import { Tooltip } from 'react-tippy';
 import Icon from '../assets/icon.png';
 
 const GroupProfile = () => {
 	const { api, state } = useContext(Context);
-	const readOnly = state.readOnly;
+	const readOnly = state.groupReadOnly;
     const fileInput = useRef();
-    const [profilePicture, setProfilePicture] = useState(null);
+    const [groupImage, setGroupImage] = useState(null);
     const link = 'https://lyrn.link/' + state.user.handle;
     const tweetText = `Check out my LyrnLink: ${link}`;
 
@@ -24,26 +24,40 @@ const GroupProfile = () => {
 		api.updateGroup(state.group.id, { description });
 	};
 
+	function destroyGroup() {
+        if (window.confirm('Are you sure you want to delete this group?')) {
+            api.destroyGroup(state.group.id);
+        };
+    };
+
+	const DeleteGroup = () => (
+		<div className="btn-red" style={{marginRight: '5px'}} onClick={destroyGroup}>
+		    <i className="far fa-trash" style={{marginRight: '4px'}}/>
+		    Group
+		</div>
+	);
+
 	return(
 		<div id="lyrn">
 			<div id="user-profile" >
 				<div id="profile-header">
 					<div id="user-profile-picture-wrapper">
 						<img 
-							src={Icon} 
+							src={state.group.image} 
 							id="user-profile-picture"
 							onClick={
 								readOnly
 
 								?	null
 
-								: 	() => setProfilePicture(state.group.image_url || 1)
+								: 	() => setGroupImage(state.group.image || 1)
 							}
 						/>
 					</div>
 					<ImageEditor 
-						image={profilePicture} 
-						onClose={() => setProfilePicture(null)}
+						image={groupImage} 
+						onUpdate={async (image) => { await api.updateGroupImage(state.group.id, image); setGroupImage(null);}}
+						onClose={() => setGroupImage(null)}
 					/>
 					<div className="flex-grow profile-info" >
 						<div className="user-name truncate">
@@ -67,7 +81,7 @@ const GroupProfile = () => {
 						</div>
 					</div>
 					<div className="mobile-only" >
-						{/* join/leave button */}
+						{readOnly ? <JoinButton id={state.group.id} joined={state.group.joined} /> : <DeleteGroup />}
 					</div>
 				</div>
 				<Editable
@@ -79,7 +93,7 @@ const GroupProfile = () => {
 					defaultValue="I don't have a description."
 				/>
 				<div className="non-mobile-only" style={{marginTop: '10px'}}>
-					{/* join/leave button */}
+					{readOnly ? <JoinButton id={state.group.id} joined={state.group.joined} /> : <DeleteGroup />}
 				</div>
 			</div>
 		</div>

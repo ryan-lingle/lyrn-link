@@ -9,6 +9,7 @@ class Api::V1::GroupsController < ApplicationController
 			soft_authentication
 			render json: {
 				group: group.to_show_res(current_user),
+				admin: group.user == current_user,
 			}
 		end
 	end
@@ -19,6 +20,7 @@ class Api::V1::GroupsController < ApplicationController
 		group.update!(group_params)
 		render json: {
 			group: group.to_show_res,
+			admin: group.user == current_user,
 		}
 	end
 
@@ -27,7 +29,7 @@ class Api::V1::GroupsController < ApplicationController
 		group.clean_handle
 		group.save!
 		render json: {
-			group: group.to_index_res,
+			group: group.to_index_res(current_user.groups.pluck(:id)),
 		}
 	end
 
@@ -37,6 +39,15 @@ class Api::V1::GroupsController < ApplicationController
 		group.destroy!
 		render json: {
 			success: true,
+		}
+	end
+
+	def image
+		group = Group.find(params[:id])
+		authorize group
+		group.update_image(params[:image])
+		render json: {
+			group: group.to_show_res,
 		}
 	end
 
