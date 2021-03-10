@@ -3,7 +3,7 @@ import Context from '../context';
 import AvatarEditor from 'react-avatar-editor';
 import { Submit, Modal } from '../components';
 
-const ImageEditor = ({ image, onClose }) => {
+const ImageEditor = ({ image, onUpdate, onClose }) => {
     const { api, state } = useContext(Context);
     const editor = useRef();
     const fileInput = useRef();
@@ -13,8 +13,7 @@ const ImageEditor = ({ image, onClose }) => {
     async function getCroppedImage(e) {
         e.preventDefault();
         const canvas = editor.current.getImage().toDataURL();
-        const res = await api.updateProfilePicture(state.user.id, canvas);
-        if (res) onClose();
+        onUpdate(canvas);
     }
 
     if (image) return(

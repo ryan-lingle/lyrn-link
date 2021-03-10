@@ -96,16 +96,16 @@ class User < ApplicationRecord
 		end
 	end
 
-	def group_index(admin: false)
+	def group_index(admin: false, grps: [])
 		gs = groups.where("group_relationships.accepted = true").map do |group|
-			res = group.to_index_res
+			res = group.to_index_res(grps)
 			res[:invite] = false
 			res
 		end
 
 		if admin
 			invites = groups.where("group_relationships.accepted = false").map do |group|
-				res = group.to_index_res
+				res = group.to_index_res(grps)
 				res[:invite] = true
 				res
 			end
@@ -118,7 +118,7 @@ class User < ApplicationRecord
 	def to_res(current_user=nil, admin: false)
 		bis = current_user&.bookmarked_items&.pluck(:id) || []
 		flwing = current_user&.following&.pluck(:id) || []
-
+		grps = current_user&.groups&.pluck(:id) || []
 		{
 			id: self.id,
 			name: self.name,
@@ -146,7 +146,7 @@ class User < ApplicationRecord
 						},
 						{
 							type: 'groups',
-							items: group_index(admin: admin),
+							items: group_index(admin: admin, grps: grps),
 						}
 					],
 				},
@@ -173,6 +173,11 @@ class User < ApplicationRecord
 						{
 							type: 'items',
 							items: discover_items_index(bis: bis),
+							read_only: true,
+						},
+						{
+							type: 'groups',
+							items: discover_groups_index(grps: grps),
 							read_only: true,
 						}
 					]
@@ -201,15 +206,22 @@ class User < ApplicationRecord
 
 	def discover_users_index(offset: 0, flwing: nil)
 		flwing ||= following&.pluck(:id) || []
-		User.order(follower_count: :desc, handle: :asc).offset(offset).limit(100).each_with_index.map do |u, i| 
+		User.order(follower_count: :desc, id: :asc).offset(offset).limit(100).each_with_index.map do |u, i| 
 			u.to_index_res(flwing, offset + i, true)
 		end
 	end
 
 	def discover_items_index(offset: 0, bis: nil)
 		bis ||= bookmarked_items&.pluck(:id) || []
-		MetaItem.order(count: :desc, title: :asc).offset(offset).limit(100).each_with_index.map do |item, i| 
+		MetaItem.order(count: :desc, id: :asc).offset(offset).limit(100).each_with_index.map do |item, i| 
 			item.to_index_res(bis, offset + i, true)
+		end
+	end
+
+	def discover_groups_index(grps: nil)
+		grps ||= groups&.pluck(:id) || []
+		Group.order(member_count: :desc, id: :asc).each_with_index.map do |group, i|
+			group.to_index_res(grps, i)
 		end
 	end
 

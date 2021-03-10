@@ -11,6 +11,7 @@ class Store {
             users: [],
             userCount: 0,
             readOnly: true,
+            groupReadOnly: true,
             tabIndex: 0,
             tab: 'lists',
             loading: {
@@ -138,6 +139,7 @@ class Store {
         case 'set_group':
             this.state.loading.groups = false;
             this.state.group = event.group;
+            this.state.groupReadOnly = !event.admin;
             this.state.tab = 'circle';
             break;
         case 'add_group':

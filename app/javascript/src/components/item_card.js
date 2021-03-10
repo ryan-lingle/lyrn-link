@@ -1,10 +1,10 @@
 import React, { useRef, useContext, useState, useEffect } from 'react';
-import { BookmarkButton, LikeButton } from '../components';
+import { BookmarkButton, LikeButton, JoinButton } from '../components';
 import Icon from '../assets/icon.png';
 import Context from '../context';
 
 
-const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton, bookmarked, followButton, followed, joinButton, count, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, searchResult, lastItem, onDestroy, onMove }) => {
+const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton, bookmarked, followButton, followed, joinButton, joined, count, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, searchResult, lastItem, onDestroy, onMove }) => {
     const link = useRef();
     const card = useRef();
 
@@ -53,7 +53,7 @@ const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton
         } else if (followButton) {
             return <LikeButton id={id} liked={followed} count={count} />;
         } else if (joinButton) {
-            return <div></div>;
+            return <JoinButton id={id} count={count} joined={joined} />;
         } else if (readOnly) {
             return <BookmarkButton id={meta_item_id || id} bookmarked={bookmarked} count={count} />;
         } else {

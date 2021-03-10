@@ -270,7 +270,7 @@ class Api {
 
             store.reduce({
                 type: 'set_user',
-                user: res.user,
+                ...res,
             });
 
             return true;
@@ -294,7 +294,7 @@ class Api {
 
             store.reduce({
                 type: 'set_user',
-                user: res.user,
+                ...res,
             });
 
             return true;
@@ -423,10 +423,13 @@ class Api {
 
         if (!res.error) {
 
-            store.reduce({
-                type: 'add_member',
-                ...res,
-            });
+            // admin invite
+            if (!group_relationship.accepted) {
+                store.reduce({
+                    type: 'add_member',
+                    ...res,
+                });
+            }
 
             return true;
 
@@ -805,6 +808,30 @@ class Api {
             params: { group },
             errorType: 'update_group',
             method: 'PATCH',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_group',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    updateGroupImage = async (id, image, type='profile_picture') => {
+        this.setLoading(type);
+
+        const res = await this.post(`groups/${id}/image`, { 
+            params: { image },
+            errorType: type,
         });
 
         if (!res.error) {

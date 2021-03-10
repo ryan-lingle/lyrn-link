@@ -12,8 +12,8 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     const [invite, setInvite] = useState(false);
     const { state, api } = useContext(Context);
     const readOnly = state.readOnly;
-    const isDiscover = ['users', 'items'].includes(type);
-    const isGroups = type === 'groups';
+    const isDiscover = state.tab === 'discover';
+    const isGroups = type === 'groups' && state.tab === 'circle';
 
     useEffect(() => {
         setAdd(false);
@@ -41,12 +41,6 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         };
     };
 
-    function destroyGroup() {
-        if (window.confirm('Are you sure you want to delete this group?')) {
-            api.destroyGroup(state.group.id);
-        };
-    };
-
     function editBtns() {
         if (readOnly) {
             return null;
@@ -67,15 +61,11 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     }
 
     function groupBtns() {
-        if (readOnly) {
+        if (state.groupReadOnly) {
             return null;
         } else {
             return(
                 <div className="flex todo-btns">
-                    <div className="btn-red" style={{marginRight: '5px'}} onClick={destroyGroup}>
-                        <i className="far fa-trash" style={{marginRight: '4px'}}/>
-                        Group
-                    </div>
                     <div className="btn-black" onClick={() => setInvite(prev => !prev)} >
                         <i className={`far fa-${add ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
                         Invite User
@@ -279,7 +269,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                         onDestroy={() => destroyItem(type, item.id)}
                         followButton={['following', 'followers', 'users', 'members'].includes(type)}
                         bookmarkButton={['bookmarks', 'items'].includes(type)}
-                        joinButton={isGroups}
+                        joinButton={type === 'groups'}
                         lastItem={items.length === i + 1}
                         {...item} 
                     />

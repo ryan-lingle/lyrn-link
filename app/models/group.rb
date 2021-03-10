@@ -9,13 +9,17 @@ class Group < ApplicationRecord
 	validates :handle, presence: true, uniqueness: { case_sensitive: false }
 	validates :name, presence: true
 
-	def to_index_res
+	def to_index_res(groups=[], index=nil)
 		{
 			id: self.id,
+			index: index,
 			title: self.name,
 			description: self.description,
 			url:  ENV["DOMAIN"] + '/g/' + self.handle,
 			internal_url: true,
+			image_url: self.image_url,
+			count: self.member_count,
+			joined: groups.include?(self.id),
 		}
 	end
 
@@ -28,7 +32,8 @@ class Group < ApplicationRecord
 			name: self.name,
 			handle: self.handle,
 			description: self.description,
-			# image: image_url,
+			image: self.image_url,
+			joined: users.include?(current_user),
 			tabs: [
 				{
 					tab: 'circle',
@@ -46,6 +51,12 @@ class Group < ApplicationRecord
 				}
 			]
 		}
+	end
+
+	def update_image(data)
+		self.image.attach(data: data)
+		self.image_url = ENV["S3_BUCKET"] + self.image.attachment.blob.key
+		self.save
 	end
 
 	def user_index(offset: 0, flwing: [], admin: false)
@@ -81,6 +92,6 @@ class Group < ApplicationRecord
 	end
 
 	def add_admin_to_group
-		GroupRelationship.create!(group: self, user: self.user, accepted: false)
+		GroupRelationship.create!(group: self, user: self.user, accepted: true)
 	end
 end

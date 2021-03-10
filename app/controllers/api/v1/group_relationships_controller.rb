@@ -9,6 +9,8 @@ class Api::V1::GroupRelationshipsController < ApplicationController
 	end
 
 	def create
+		group = Group.find(group_relationship_params[:group_id])
+		authorize group if group.private
 		gr = GroupRelationship.create!(group_relationship_params)
 		user = gr.user.to_index_res
 		user[:pending] = true
