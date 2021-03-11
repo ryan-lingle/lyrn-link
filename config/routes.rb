@@ -17,6 +17,7 @@ Rails.application.routes.draw do
           post 'profile_picture', to: 'users#profile_picture'
         end
         collection do 
+          get 'search', to: 'users#search'
           post 'send_confirmation_email', to: 'users#send_confirmation_email'
           post 'confirm_email', to: 'users#confirm_email'
           get 'discover', to: 'users#discover'
@@ -41,6 +42,12 @@ Rails.application.routes.draw do
 
       resources :likes, only: [:create, :destroy]
       resources :bookmarks, only: [:create, :destroy]
+      resources :groups, only: [:show, :create, :update, :destroy] do
+        member do
+          post 'image', to: 'groups#image'
+        end
+      end
+      resources :group_relationships, only: [:create, :update, :destroy]
 
     end
   end

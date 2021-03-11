@@ -23,6 +23,9 @@ class List < ApplicationRecord
 			singular: singular,
 			searchable: self.respond_to?('search'),
 			icon: icon,
+			create: self.respond_to?('search') ? 'search' : 'scrape',
+			deletable: true,
+			sortable: true,
 			items: item_index(bookmarks),
 		}
 	end

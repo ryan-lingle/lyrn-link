@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import Context from '../context';
 import { ListTab } from '.';
 
-const ListTabs = ({ lists, pathname="/admin/lists/" }) => {
+const GenericTabs = ({ tabs, pathname="/admin/lists/" }) => {
     const { state, api } = useContext(Context);
     const readOnly = state.readOnly;
     // useEffect(() => {
@@ -40,7 +40,7 @@ const ListTabs = ({ lists, pathname="/admin/lists/" }) => {
             <div 
                 className="tabs"
             >
-                {lists.map((list, i) =>
+                {tabs.map((list, i) =>
                         <ListTab
                             key={i}
                             {...list}
@@ -54,4 +54,4 @@ const ListTabs = ({ lists, pathname="/admin/lists/" }) => {
     );
 };
 
-export default ListTabs;
+export default GenericTabs;

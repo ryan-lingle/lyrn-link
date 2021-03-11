@@ -1,9 +1,19 @@
-import React, { useRef } from 'react';
-import { BookmarkButton, LikeButton } from '../components';
+import React, { useRef, useContext, useState, useEffect } from 'react';
+import { BookmarkButton, LikeButton, JoinButton } from '../components';
 import Icon from '../assets/icon.png';
+import Context from '../context';
 
-const ItemCard = ({ rank=true, id, meta_item_id, bookmarkButton, bookmarked, followButton, followed, count, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, searchResult, lastItem, onDestroy, onMove }) => {
+
+const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton, bookmarked, followButton, followed, joinButton, joined, count, private_group, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, searchResult, lastItem, onDestroy, onMove }) => {
     const link = useRef();
+    const card = useRef();
+
+    const { api } = useContext(Context);
+
+    const [inviteState, setInviteState] = useState(invite);
+    useEffect(() => {
+        setInviteState(invite);
+    }, [ invite ]);
 
     function destroy(e) {
         e.stopPropagation();
@@ -16,13 +26,34 @@ const ItemCard = ({ rank=true, id, meta_item_id, bookmarkButton, bookmarked, fol
         if (url && !searchResult) link.current.click();
     }
 
+    async function acceptGroupInvite(e) {
+        e.stopPropagation();
+        const res = await api.updateGroupRelationship(id, { accepted: true });
+        if (res) setInviteState(false);
+    }
+
+    async function destroyGr(e) {
+        e.stopPropagation();
+        const res = await api.destroyGroupRelationship(id); 
+        if (res) card.current.style.display = 'none';
+    }
+
     function button() {
         if (searchResult) {
             return;
+        } else if (inviteState) {
+            return <div className="flex">
+                        <div className="btn-invite" onClick={acceptGroupInvite}>Accept</div>
+                        <div className="btn-invite" onClick={destroyGr}>Deny</div>
+                    </div>
+        } else if (pending) {
+            return <div className="invite-pending">Pending</div>;
         } else if (bookmarkButton) {
             return <BookmarkButton id={meta_item_id || id} bookmarked={bookmarked} count={count} />;
         } else if (followButton) {
             return <LikeButton id={id} liked={followed} count={count} />;
+        } else if (joinButton) {
+            return <JoinButton id={id} count={count} joined={joined} show={!private_group} />;
         } else if (readOnly) {
             return <BookmarkButton id={meta_item_id || id} bookmarked={bookmarked} count={count} />;
         } else {
@@ -31,7 +62,7 @@ const ItemCard = ({ rank=true, id, meta_item_id, bookmarkButton, bookmarked, fol
     }
 
     return(
-        <div className="item-card-wrapper">
+        <div className="item-card-wrapper" ref={card} >
             {
                 rank && !readOnly
 

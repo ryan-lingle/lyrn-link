@@ -9,7 +9,7 @@ import NoListsUser from '../assets/nolistuser.png'
 const ListTabs = ({ pathname="/admin/lists/" }) => {
     const { state, api } = useContext(Context);
     const readOnly = state.readOnly;
-    const lists = state.user.lists;
+    const lists = api.store.getTab('lists');
 
     // useEffect(() => {
 

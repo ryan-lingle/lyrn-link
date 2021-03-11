@@ -270,7 +270,7 @@ class Api {
 
             store.reduce({
                 type: 'set_user',
-                user: res.user,
+                ...res,
             });
 
             return true;
@@ -294,7 +294,7 @@ class Api {
 
             store.reduce({
                 type: 'set_user',
-                user: res.user,
+                ...res,
             });
 
             return true;
@@ -402,6 +402,97 @@ class Api {
             store.reduce({
                 type: 'set_tab_index',
                 index: store.state.user.lists.length - 1,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    createGroupRelationship = async (group_relationship) => {
+        this.setLoading('group_relationship');
+
+        const res = await this.post('group_relationships', {
+            params: { group_relationship },
+            errorType: 'group_relationship',
+        });
+
+        if (!res.error) {
+
+            // admin invite
+            if (!group_relationship.accepted) {
+                store.reduce({
+                    type: 'add_member',
+                    ...res,
+                });
+            }
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    updateGroupRelationship = async (group_id, group_relationship) => {
+        this.setLoading('group_relationship');
+
+        const res = await this.post(`group_relationships/${group_id}`, {
+            params: { group_relationship },
+            errorType: 'group_relationship',
+            method: 'PATCH',
+        });
+
+        if (!res.error) {
+            
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    destroyGroupRelationship = async (group_id) => {
+        this.setLoading('group_relationship');
+
+        const res = await this.get(`group_relationships/${group_id}`, {
+            errorType: 'group_relationship',
+            method: 'DELETE',
+        });
+
+        if (!res.error) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    userSearch = async (term, offset=0) => {
+        this.setLoading('search');
+
+        const res = await this.get('users/search', {
+            params: { term },
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'search_results',
+                searchType: 'users',
+                results: res.results,
+                push: offset > 0,
             });
 
             return true;
@@ -645,7 +736,6 @@ class Api {
     }
 
     getDiscoverItems = async (offset) => {
-        console.log('ehllo')
         const res = await this.get(`items/discover?offset=${offset}`, {
             errorType: 'discover',
         });
@@ -657,6 +747,119 @@ class Api {
                 ...res,
             });
 
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    getGroup = async (handle) => {
+        this.setLoading('groups');
+
+        const res = await this.get(`groups/${handle}`, {
+            errorType: 'groups',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_group',
+                ...res,
+            });
+
+        } else {
+
+            return false;
+            
+        }
+    }
+
+    createGroup = async (group) => {
+        this.setLoading('create_group');
+
+        const res = await this.post('groups', {
+            params: { group },
+            errorType: 'create_group',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'add_group',
+                ...res
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    updateGroup = async (id, group) => {
+        this.setLoading('update_group');
+
+        const res = await this.post(`groups/${id}`, { 
+            params: { group },
+            errorType: 'update_group',
+            method: 'PATCH',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_group',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    updateGroupImage = async (id, image, type='profile_picture') => {
+        this.setLoading(type);
+
+        const res = await this.post(`groups/${id}/image`, { 
+            params: { image },
+            errorType: type,
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_group',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    destroyGroup = async (id) => {
+        const res = await this.get(`groups/${id}`, {
+            method: 'DELETE',
+            errorType: 'groups',
+        });
+
+        if (!res.error) {
+
+            window.location.href = '/admin/circle/groups';
+            
             return true;
 
         } else {

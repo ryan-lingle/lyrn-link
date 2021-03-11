@@ -13,11 +13,20 @@ class User < ApplicationRecord
 	has_many :followers, through: :likers, source: :like
 
 	has_many :lists, dependent: :destroy
+	has_many :items, through: :lists
+
 	has_many :bookmarks, dependent: :destroy
 	has_many :bookmarked_items, through: :bookmarks, source: :meta_item
 
+	has_many :group_relationships
+	has_many :groups, through: :group_relationships
+
 	before_validation :clean_handle
 	before_update :clean_handle
+
+	include PgSearch::Model
+  	pg_search_scope :search, against: [:name]
+
 
 	def clean_handle
 		split = self.handle.downcase.gsub('-', '_').gsub(' ', '_').split('').select do |l|
@@ -87,9 +96,29 @@ class User < ApplicationRecord
 		end
 	end
 
-	def to_res(current_user=nil)
+	def group_index(admin: false, grps: [])
+		gs = groups.where("group_relationships.accepted = true").map do |group|
+			res = group.to_index_res(grps)
+			res[:invite] = false
+			res
+		end
+
+		if admin
+			invites = groups.where("group_relationships.accepted = false").map do |group|
+				res = group.to_index_res(grps)
+				res[:invite] = true
+				res
+			end
+			invites.concat(gs)
+		else
+			gs
+		end
+	end
+
+	def to_res(current_user=nil, admin: false)
 		bis = current_user&.bookmarked_items&.pluck(:id) || []
 		flwing = current_user&.following&.pluck(:id) || []
+		grps = current_user&.groups&.pluck(:id) || []
 		{
 			id: self.id,
 			name: self.name,
@@ -97,30 +126,61 @@ class User < ApplicationRecord
 			handle: self.handle,
 			description: self.description,
 			profile_picture_url: profile_picture_url,
-			lists: list_index(bis),
-			circle: [
+			tabs: [
 				{
-					type: 'following',
-					items: following.map { |u| u.to_index_res(flwing) },
+					tab: 'lists',
+					icon: 'far fa-clipboard-list',
+					sub_tabs: list_index(bis),
 				},
 				{
-					type: 'followers',
-					items: followers.map { |u| u.to_index_res(flwing) },
-
-				}
-			],
-			bookmarks: [{
-				type: 'bookmarks',
-				items: bookmarked_items.map { |i| i.to_index_res(bis) },
-			}],
-			discover: [
-				{
-					type: 'users',
-					items: discover_users_index(flwing: flwing),
+					tab: 'circle',
+					icon: 'far fa-chart-network',
+					sub_tabs: [
+						{
+							type: 'following',
+							items: following.map { |u| u.to_index_res(flwing) },
+						},
+						{
+							type: 'followers',
+							items: followers.map { |u| u.to_index_res(flwing) },
+						},
+						{
+							type: 'groups',
+							items: group_index(admin: admin, grps: grps),
+						}
+					],
 				},
 				{
-					type: 'items',
-					items: discover_items_index(bis: bis),
+					tab: 'bookmarks',
+					icon: 'far fa-bookmark',
+					sub_tabs: [
+						{
+							type: 'bookmarks',
+							items: bookmarked_items.map { |i| i.to_index_res(bis) },
+							read_only: true,
+						}
+					],
+				},
+				{
+					tab: 'discover',
+					icon: 'far fa-compass',
+					sub_tabs: [
+						{
+							type: 'users',
+							items: discover_users_index(flwing: flwing),
+							read_only: true,
+						},
+						{
+							type: 'items',
+							items: discover_items_index(bis: bis),
+							read_only: true,
+						},
+						{
+							type: 'groups',
+							items: discover_groups_index(grps: grps),
+							read_only: true,
+						}
+					]
 				}
 			],
 			uncreated_lists: uncreated_lists,
@@ -140,20 +200,28 @@ class User < ApplicationRecord
 			image_url: profile_picture_url,
 			followed: flwing.include?(self.id),
 			count: show_count ? follower_count : nil,
+			button: 'follow',
 		}
 	end
 
 	def discover_users_index(offset: 0, flwing: nil)
 		flwing ||= following&.pluck(:id) || []
-		User.order(follower_count: :desc, handle: :asc).offset(offset).limit(100).each_with_index.map do |u, i| 
+		User.order(follower_count: :desc, id: :asc).offset(offset).limit(100).each_with_index.map do |u, i| 
 			u.to_index_res(flwing, offset + i, true)
 		end
 	end
 
 	def discover_items_index(offset: 0, bis: nil)
 		bis ||= bookmarked_items&.pluck(:id) || []
-		MetaItem.order(count: :desc, title: :asc).offset(offset).limit(100).each_with_index.map do |item, i| 
+		MetaItem.order(count: :desc, id: :asc).offset(offset).limit(100).each_with_index.map do |item, i| 
 			item.to_index_res(bis, offset + i, true)
+		end
+	end
+
+	def discover_groups_index(grps: nil)
+		grps ||= groups&.pluck(:id) || []
+		Group.where(private: false).order(member_count: :desc, id: :asc).each_with_index.map do |group, i|
+			group.to_index_res(grps, i)
 		end
 	end
 
@@ -187,6 +255,10 @@ class User < ApplicationRecord
 
 	def link
 		ENV["DOMAIN"] + "/" + self.handle
+	end
+
+	def meta_items_ids
+		items.pluck(:meta_item_id)
 	end
 
 	private

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Search, Scraper, Draggable, ItemCard } from '../components';
+import { ItemSearch, Scraper, Draggable, ItemCard, GroupForm, InviteUser } from '../components';
 import NoItems from '../assets/noitems.png';
 import NoItemsUser from '../assets/noitemsuser.png';
 import Context from '../context';
@@ -8,12 +8,17 @@ import { observer } from '../utils';
 
 const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, isList, onFetch }) => {
     const [add, setAdd] = useState(false);
+    const [addGroup, setAddGroup] = useState(false);
+    const [invite, setInvite] = useState(false);
     const { state, api } = useContext(Context);
     const readOnly = state.readOnly;
-    const isDiscover = ['users', 'items'].includes(type);
+    const isDiscover = state.tab === 'discover';
+    const isGroups = type === 'groups' && state.tab === 'circle';
 
     useEffect(() => {
         setAdd(false);
+        setAddGroup(false);
+        setInvite(false);
     }, [type]);
 
     useEffect(() => {
@@ -55,12 +60,27 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         }
     }
 
+    function groupBtns() {
+        if (state.groupReadOnly) {
+            return null;
+        } else {
+            return(
+                <div className="flex todo-btns">
+                    <div className="btn-black" onClick={() => setInvite(prev => !prev)} >
+                        <i className={`far fa-${add ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
+                        Invite User
+                    </div>
+                </div>
+            );
+        }
+    }
+
     function addItem() {
         if (add) {
 
             if (searchable) {
 
-                return <Search type={type} item={singular} >
+                return <ItemSearch type={type} item={singular} >
                     {(result, clearResults) =>
                         <div onClick={() => {
                             createItem(type, result);
@@ -75,7 +95,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                             />
                         </div>
                     }
-                </Search>;
+                </ItemSearch>;
 
             } else {
 
@@ -86,6 +106,22 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 />;
 
             }
+        }
+    }
+
+    function groupForm() {
+        if (addGroup) {
+            return(
+                <GroupForm onSubmit={() => setAddGroup(false)} />
+            );
+        }
+    }
+
+    function inviteForm() {
+        if (invite) {
+            return(
+                <InviteUser />
+            );
         }
     }
 
@@ -129,6 +165,26 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 </div>
             )
 
+        } else if (type === 'members') {
+
+            return(
+                <div>
+                    {inviteForm()}
+                    <div className="todo-card" >
+                        <img 
+                            className="todo-img"
+                            src={NoItems} 
+                            alt="Lyrn Link No Items" 
+                        />
+                        <div className="todo-text">
+                            <div className="todo-heading">🎉 Congrats, you've made a new group!</div>
+                            <div className="todo-body">Go ahead and start inviting people!</div>
+                        </div>
+                        <div className="text-center" style={{marginTop: '20px'}}>{groupBtns()}</div>
+                    </div>
+                </div>
+            )
+
         } else {
 
             return(
@@ -153,7 +209,6 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         });
     };
 
-
     return(
         <div id="list" >
             {
@@ -169,7 +224,34 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
                 :   null
             }
+            {
+                !readOnly && isGroups
+
+                ?   <div className="list-heading">
+                        <div style={{marginLeft: 'auto'}} >
+                            <div className="btn-black" onClick={() => setAddGroup(prev => !prev)} >
+                                <i className={`far fa-${addGroup ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
+                                Group
+                            </div>
+                        </div>
+                    </div>
+
+                :   null
+            }
+            {
+                !readOnly && type == "members"
+
+                ?   <div className="list-heading">
+                        <div style={{marginLeft: 'auto'}} >
+                            {groupBtns()}
+                        </div>
+                    </div>
+
+                :   null
+            }
             {addItem()}
+            {groupForm()}
+            {inviteForm()}
             {items.map((item, i) => 
                 <Draggable 
                     key={i} 
@@ -182,11 +264,12 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 >
                     <ItemCard
                         onMove={(d, h) => { onMove(d, h); api.updateItemIndex(); }}
-                        readOnly={readOnly || isDiscover}
+                        readOnly={readOnly || isDiscover || isGroups}
                         rank={isList || isDiscover}
                         onDestroy={() => destroyItem(type, item.id)}
-                        followButton={['following', 'followers', 'users'].includes(type)}
+                        followButton={['following', 'followers', 'users', 'members'].includes(type)}
                         bookmarkButton={['bookmarks', 'items'].includes(type)}
+                        joinButton={type === 'groups'}
                         lastItem={items.length === i + 1}
                         {...item} 
                     />

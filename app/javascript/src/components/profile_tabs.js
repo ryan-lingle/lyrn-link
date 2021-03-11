@@ -33,22 +33,15 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
         });
     };
 
-    const icons = {
-        lists: 'far fa-clipboard-list',
-        circle: 'far fa-chart-network',
-        discover: 'far fa-compass',
-        bookmarks: 'far fa-bookmark',
-    };
-
     return(
         <div className="profile-tabs" >
-            {['lists', 'circle', 'discover', 'bookmarks'].map((tab, i) =>
+            {state.user.tabs.map(({ tab, icon }, i) =>
                 <div 
                     key={i} 
                     className={`profile-tab flex section-tab ${tab === state.tab ? 'current-section-tab' : ''}`}
                     onClick={() => setTab(tab)}
                 >
-                    <i className={icons[tab]} style={{marginRight: '10px', width: '25px'}} />
+                    <i className={icon} style={{marginRight: '10px', width: '25px'}} />
                     <div className="tabs-heading">
                         {capitalize(tab)}
                     </div>
