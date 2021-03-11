@@ -220,7 +220,7 @@ class User < ApplicationRecord
 
 	def discover_groups_index(grps: nil)
 		grps ||= groups&.pluck(:id) || []
-		Group.order(member_count: :desc, id: :asc).each_with_index.map do |group, i|
+		Group.where(private: false).order(member_count: :desc, id: :asc).each_with_index.map do |group, i|
 			group.to_index_res(grps, i)
 		end
 	end

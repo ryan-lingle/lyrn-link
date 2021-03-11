@@ -9,7 +9,6 @@ const InfoTooltip = ({ copy, pad=false }) => (
         inertia= "true"
         transitionFlip= "true"
         delay='0'
-
     >
         <span>
            {pad ? <span>&nbsp;&nbsp;</span> : null}

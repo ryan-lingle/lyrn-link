@@ -4,7 +4,7 @@ import Icon from '../assets/icon.png';
 import Context from '../context';
 
 
-const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton, bookmarked, followButton, followed, joinButton, joined, count, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, searchResult, lastItem, onDestroy, onMove }) => {
+const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton, bookmarked, followButton, followed, joinButton, joined, count, private_group, index, title, subtitle, image_url, url, url_copy, internal_url=false, creator, readOnly, searchResult, lastItem, onDestroy, onMove }) => {
     const link = useRef();
     const card = useRef();
 
@@ -43,8 +43,8 @@ const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton
             return;
         } else if (inviteState) {
             return <div className="flex">
-                        <div className="accept-invite" onClick={acceptGroupInvite}>Accept</div>
-                        <div className="accept-invite" onClick={destroyGr}>Deny</div>
+                        <div className="btn-invite" onClick={acceptGroupInvite}>Accept</div>
+                        <div className="btn-invite" onClick={destroyGr}>Deny</div>
                     </div>
         } else if (pending) {
             return <div className="invite-pending">Pending</div>;
@@ -53,7 +53,7 @@ const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton
         } else if (followButton) {
             return <LikeButton id={id} liked={followed} count={count} />;
         } else if (joinButton) {
-            return <JoinButton id={id} count={count} joined={joined} />;
+            return <JoinButton id={id} count={count} joined={joined} show={!private_group} />;
         } else if (readOnly) {
             return <BookmarkButton id={meta_item_id || id} bookmarked={bookmarked} count={count} />;
         } else {

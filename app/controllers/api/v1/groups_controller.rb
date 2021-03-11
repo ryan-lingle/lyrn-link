@@ -7,6 +7,7 @@ class Api::V1::GroupsController < ApplicationController
 			render json: {}, status: 404
 		else
 			soft_authentication
+			raise "You must be a member to view this group." if !group.users.include?(current_user)
 			render json: {
 				group: group.to_show_res(current_user),
 				admin: group.user == current_user,
@@ -19,7 +20,7 @@ class Api::V1::GroupsController < ApplicationController
 		authorize group
 		group.update!(group_params)
 		render json: {
-			group: group.to_show_res,
+			group: group.to_show_res(current_user),
 			admin: group.user == current_user,
 		}
 	end
@@ -47,7 +48,7 @@ class Api::V1::GroupsController < ApplicationController
 		authorize group
 		group.update_image(params[:image])
 		render json: {
-			group: group.to_show_res,
+			group: group.to_show_res(current_user),
 		}
 	end
 
