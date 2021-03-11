@@ -7,7 +7,7 @@ class Api::V1::GroupsController < ApplicationController
 			render json: {}, status: 404
 		else
 			soft_authentication
-			raise "You must be a member to view this group." if !group.users.include?(current_user)
+			raise "You must be a member to view this group." if group.private && !group.users.include?(current_user)
 			render json: {
 				group: group.to_show_res(current_user),
 				admin: group.user == current_user,
