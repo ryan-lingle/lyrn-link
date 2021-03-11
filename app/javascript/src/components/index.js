@@ -33,3 +33,4 @@ export {default as GroupForm} from './group_form.js';
 export {default as GroupProfile} from './group_profile.js';
 export {default as InviteUser} from './invite_user.js';
 export {default as JoinButton} from './join_button.js';
+export {default as PrivateToggle} from './private_toggle.js';

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context';
 
-const JoinButton = ({ id, joined, count }) => {
+const JoinButton = ({ id, joined, count, show }) => {
 
 	const { state, api } = useContext(Context);
 	const [joinState, setJoinState] = useState(joined);
@@ -25,12 +25,18 @@ const JoinButton = ({ id, joined, count }) => {
 
 	return(
 		<div className="flex" >
-			<div 
-				className={joinState ? 'btn-following' : 'btn-follow'}
-				onClick={handleClick}
-			>
-				{joinState ? 'Leave' : 'Join'}
-			</div>
+			{
+				show
+
+				?	<div 
+						className={joinState ? 'btn-following' : 'btn-follow'}
+						onClick={handleClick}
+					>
+						{joinState ? 'Leave' : 'Join'}
+					</div>
+
+				: 	null
+			}
 			<div className="follower-count">
 				{countState || ''}
 			</div>

@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import Context from '../context';
-import { Editable, ImageEditor, JoinButton, ProfileTabs } from '../components';
+import { Editable, ImageEditor, JoinButton, PrivateToggle, ProfileTabs } from '../components';
 import { Tooltip } from 'react-tippy';
 import Icon from '../assets/icon.png';
 
@@ -81,7 +81,10 @@ const GroupProfile = () => {
 						</div>
 					</div>
 					<div className="mobile-only" >
-						{readOnly ? <JoinButton id={state.group.id} joined={state.group.joined} /> : <DeleteGroup />}
+						{readOnly ? <JoinButton id={state.group.id} joined={state.group.joined} show={true} /> : <DeleteGroup />}
+						<div style={{marginTop: '5px'}}>
+							{readOnly ? null : <PrivateToggle />}
+						</div>
 					</div>
 				</div>
 				<Editable
@@ -92,8 +95,9 @@ const GroupProfile = () => {
 					textArea={true}
 					defaultValue="I don't have a description."
 				/>
-				<div className="non-mobile-only" style={{marginTop: '10px'}}>
-					{readOnly ? <JoinButton id={state.group.id} joined={state.group.joined} /> : <DeleteGroup />}
+				<div className="non-mobile-only flex" style={{marginTop: '10px'}}>
+					{readOnly ? <JoinButton id={state.group.id} joined={state.group.joined} show={true} /> : <DeleteGroup />}
+					{readOnly ? null : <PrivateToggle />}
 				</div>
 			</div>
 		</div>

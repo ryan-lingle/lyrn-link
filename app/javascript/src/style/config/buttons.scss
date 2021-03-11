@@ -29,6 +29,36 @@
     }
 }
 
+.btn-white {
+    color: $black;
+    background: $white;
+    padding: 4px 6px;
+    text-align: center;
+    border: solid 1px $black;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: bold;
+    font-size: small;
+    -webkit-transition: (0.2s ease-in-out);
+    -moz-transition: (0.2s ease-in-out); 
+    -o-transition: (0.2s ease-in-out); 
+    transition: (0.2s ease-in-out);  
+    cursor:pointer;
+    text-decoration: none;
+
+    &:hover {
+        color: $grey5;
+        border: solid 1px $grey5;
+        text-decoration: none;
+    }
+
+    @media only screen and (max-width: 950px)  {
+        font-size: x-small;
+    }
+}
+
 .btn-red {
     color: $red;
     background: none;
@@ -298,3 +328,34 @@
     cursor: pointer;
     color: $red !important;
 }
+
+
+.btn-invite {
+    color: $black;
+    padding: auto;
+    text-align: center;
+    align-items: center;
+    border: none;
+    box-sizing: border-box;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-size: small;
+    font-weight: bold;
+    -webkit-transition: (0.2s ease-in-out);
+    -moz-transition: (0.2s ease-in-out); 
+    -o-transition: (0.2s ease-in-out); 
+    transition: (0.2s ease-in-out);  
+    cursor:pointer;
+    text-decoration: none;
+
+    margin-right: 10px;
+
+    &:hover {
+    color: darken($grey3,10%);
+    text-decoration: none;
+    text-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10);
+    -webkit-text-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10);
+    -moz-text-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10);
+    }
+}
+

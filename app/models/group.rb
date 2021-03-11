@@ -20,6 +20,7 @@ class Group < ApplicationRecord
 			image_url: self.image_url,
 			count: self.member_count,
 			joined: groups.include?(self.id),
+			private_group: self.private,
 		}
 	end
 
@@ -34,6 +35,7 @@ class Group < ApplicationRecord
 			description: self.description,
 			image: self.image_url,
 			joined: users.include?(current_user),
+			private: self.private,
 			tabs: [
 				{
 					tab: 'circle',

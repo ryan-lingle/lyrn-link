@@ -51,7 +51,7 @@ class Api::V1::UsersController < ApplicationController
 		authorize @user
 		@user.update!(user_params)
 		render json: {
-			user: @user.to_res,
+			user: @user.to_res(current_user admin: true),
 			admin: true,
 			current_user_id: current_user.id,
 			current_user_profile_picture: current_user.profile_picture_url,
@@ -62,7 +62,7 @@ class Api::V1::UsersController < ApplicationController
 		authorize @user
 		@user.update_profile_picture(params[:image])
 		render json: {
-			user: @user.to_res,
+			user: @user.to_res(current_user, admin: true),
 			admin: true,
 			current_user_id: current_user.id,
 			current_user_profile_picture: current_user.profile_picture_url,
