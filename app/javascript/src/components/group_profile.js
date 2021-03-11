@@ -30,6 +30,10 @@ const GroupProfile = () => {
         };
     };
 
+    function copyGroupLink() {
+		navigator.clipboard.writeText(link);
+	}
+
 	const DeleteGroup = () => (
 		<div className="btn-red" style={{marginRight: '5px'}} onClick={destroyGroup}>
 		    <i className="far fa-trash" style={{marginRight: '4px'}}/>
@@ -39,6 +43,36 @@ const GroupProfile = () => {
 
 	return(
 		<div id="lyrn">
+			{/*
+				readOnly
+
+				? 	null
+
+				:	<div className="mylink">
+						<div className="flex-between big-body">
+							<div>
+								<strong>Group Sign Up Link:&nbsp;</strong>
+								<a className="big-body" href={`/${state.user.handle}`} target="_blank" >
+									https://lyrn.link/{state.user.handle}
+								</a>
+							</div>
+							<Tooltip
+								title="Copy LyrnLink"
+								position= "right"
+								trigger= "mouseenter"
+								inertia= "true"
+								transitionFlip= "true"
+								delay='0'
+							>
+								<i 
+									className="far fa-copy btn-copy"
+									style={{fontSize: 'x-small', marginLeft: '5px'}}
+									onClick={copyGroupLink}
+								/>
+							</Tooltip>
+						</div>
+					</div>
+			*/}
 			<div id="user-profile" >
 				<div id="profile-header">
 					<div id="user-profile-picture-wrapper">

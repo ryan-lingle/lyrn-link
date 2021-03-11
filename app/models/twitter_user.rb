@@ -2,6 +2,7 @@ class TwitterUser < User
 	before_create :add_name_and_description
 	before_update :add_name_and_description
 	before_create :add_profile_picture_url
+	before_create :add_email
 
 	private
 
@@ -26,6 +27,10 @@ class TwitterUser < User
 
 	def confirm_email
 		false
+	end
+
+	def add_email
+		self.email = self.twitter_client.verify_credentials(include_email: true)[:email]
 	end
 
 	def all_list_strings
