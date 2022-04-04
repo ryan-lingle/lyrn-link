@@ -25,6 +25,8 @@ class Item < ApplicationRecord
 		end
 	end
 
+
+
 	def to_index_res(bookmarks=[])
 		{
 			id: self.id,
@@ -32,7 +34,7 @@ class Item < ApplicationRecord
 			title: self.title,
 			subtitle: self.subtitle,
 			description: self.description,
-			image_url: self.image.service_url,
+			image_url: self.image.attached? ? self.image.service_url : '',
 			url: self.url,
 			url_copy: self.url_copy, 
 			index: self.index,
