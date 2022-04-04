@@ -12,7 +12,7 @@ namespace :item do
 
 	desc 'get images back'
 	task images: :environment do
-		List.all.each do |list|
+		People.all.each do |list|
 			list.items.each do |item|
 				res = list.find_image(item)
 				if res

@@ -14,6 +14,7 @@ class ListenNotes
 	end
 
 	def self.find(title)
+		sleep 1
 		url = "https://listen-api.listennotes.com/api/v2/search?q=\"#{title}\"&only_in=title&type=podcast&language=English"
 		response = Unirest.get(
 			url,

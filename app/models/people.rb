@@ -14,9 +14,13 @@ class People < List
 
 	def find_image(person)
 		if person.url_copy
-			res = user.search_people(person.url_copy)
-			if res.first
-				res.first[:image_url]
+			begin
+				res = user.search_people(person.url_copy)
+				if res.first
+					res.first[:image_url]
+				end
+			rescue StandardError => e
+				puts e
 			end
 		end
 	end
