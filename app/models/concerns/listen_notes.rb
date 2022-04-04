@@ -13,19 +13,20 @@ class ListenNotes
 		end
 	end
 
-	def self.find(podcast)
+	def self.find(title)
+		url = "https://listen-api.listennotes.com/api/v2/search?q=\"#{title}\"&only_in=title&type=podcast&language=English"
 		response = Unirest.get(
-			"https://listen-api.listennotes.com/api/v2/search?q=\"#{podcast.title}\"&type=episode&language=English",
+			url,
 		  	headers: {
 		    	"X-ListenAPI-Key" => "0a5c5bf8b8294eafab570b23a18367e7",
 		  	}
 		)
 
 		results = response.body["results"]
+		return results
 		results = results.map do |episode|
 			reduce_episode(episode)
 		end
-		results.first
 
 		if results.first
 			results.first[:image_url]

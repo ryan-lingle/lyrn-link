@@ -10,6 +10,14 @@ class Item < ApplicationRecord
 	before_create :upload_image
 	after_create :create_or_update_meta_item
 
+	def title_clean
+		whitelist = "0123456789abcdefghijklmnopqrstuvwxyz ".split("")
+		clean = (self.title || '').split('').filter do |l|
+			whitelist.include?(l.downcase)
+		end
+		clean.join('')
+	end
+
 	def add_index
 		self.index = list.items.count
 	end

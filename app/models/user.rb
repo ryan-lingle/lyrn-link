@@ -27,6 +27,9 @@ class User < ApplicationRecord
 	include PgSearch::Model
   	pg_search_scope :search, against: [:name]
 
+  	def profile_picture_url
+  		profile_picture.service_url if profile_picture.attached?
+  	end
 
 	def clean_handle
 		split = self.handle.downcase.gsub('-', '_').gsub(' ', '_').split('').select do |l|

@@ -13,7 +13,7 @@ class Podcasts < List
 
 	def find_image(podcast)
 		if podcast.title
-			ListenNotes.find(podcast)
+			Itunes.find(podcast.uid)
 		end
 	end
 end

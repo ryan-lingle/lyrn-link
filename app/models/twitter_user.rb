@@ -4,24 +4,30 @@ class TwitterUser < User
 	before_create :add_profile_picture_url
 	before_create :add_email
 
-	private
-
-	def add_name_and_description
-		self.name = twitter_client.user.name if !self.name
-		self.description = twitter_client.user.description if !self.description
-		self.twitter_handle = twitter_client.user.screen_name
-	end
-
 	def add_profile_picture_url
 		if !self.profile_picture.attached?
 			url = twitter_client.user.profile_image_url.to_s.sub('_normal', '')
 			data = encode_image_url(url)
 			if data
 				self.profile_picture.attach(data: data)
-			else
-				self.profile_picture_url = nil
 			end
 		end
+	end
+
+	def add_profile_picture_url!
+		url = twitter_client.user.profile_image_url.to_s.sub('_normal', '')
+		data = encode_image_url(url)
+		if data
+			self.profile_picture.attach(data: data)
+		end
+	end
+
+	private
+
+	def add_name_and_description
+		self.name = twitter_client.user.name if !self.name
+		self.description = twitter_client.user.description if !self.description
+		self.twitter_handle = twitter_client.user.screen_name
 	end
 
 	def confirm_email
