@@ -31,7 +31,7 @@ class List < ApplicationRecord
 	end
 
 	def items
-		Item.where(list_id: self.id).order(index: :asc)
+		Item.where(list_id: self.id).order(index: :asc).with_attached_image
 	end
 
 	def item_index(bookmarks=[])

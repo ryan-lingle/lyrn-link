@@ -10,4 +10,10 @@ class Podcasts < List
 	def icon
 		"fal fa-podcast"
 	end
+
+	def find_image(podcast)
+		if podcast.title
+			ListenNotes.find(podcast)
+		end
+	end
 end

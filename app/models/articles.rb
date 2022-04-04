@@ -6,4 +6,13 @@ class Articles < List
 	def icon
 		"fal fa-newspaper"
 	end
+
+	def find_image(article)
+		if article.url
+			res = Scraper.scrape(article.url)
+			if res
+				res[:image]
+			end
+		end
+	end
 end

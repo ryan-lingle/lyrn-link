@@ -19,7 +19,6 @@ class Item < ApplicationRecord
 			data = encode_image_url(self.image_url)
 			if data
 				self.image.attach(data: data)
-				self.image_url = ENV["S3_BUCKET"] + self.image.attachment.blob.key
 			else
 				self.image_url = nil
 			end
@@ -33,7 +32,7 @@ class Item < ApplicationRecord
 			title: self.title,
 			subtitle: self.subtitle,
 			description: self.description,
-			image_url: self.image_url,
+			image_url: self.image.service_url,
 			url: self.url,
 			url_copy: self.url_copy, 
 			index: self.index,

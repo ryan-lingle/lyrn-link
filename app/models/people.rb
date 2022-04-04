@@ -11,4 +11,13 @@ class People < List
 	def icon
 		"fab fa-twitter"
 	end
+
+	def find_image(person)
+		if person.url_copy
+			res = user.search_people(person.url_copy)
+			if res.first
+				res.first[:image_url]
+			end
+		end
+	end
 end

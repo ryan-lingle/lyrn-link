@@ -16,6 +16,14 @@ amazon:
   upload:
     acl: "public-read"
 
+digitalocean:
+  service: S3
+  endpoint: https://nyc3.digitaloceanspaces.com
+  access_key_id: "ZTBZS2BDUBKW67NUJD2S"
+  secret_access_key: "p8aFr0qrGY2Wn2lwDNK8qf6cJaq2u0dtJB78g6RnN4E"
+  bucket: lyrnlink
+  region: unused
+
 # Remember not to checkin your GCS keyfile to a repository
 # google:
 #   service: GCS

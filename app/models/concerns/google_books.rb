@@ -7,6 +7,16 @@ class GoogleBooks
 		res.reject { |book| book.nil? }
 	end
 
+	def self.search_by_uid(uid, offset: 0)
+		offset = offset.to_i > 0 ? offset.to_i + 1 : offset
+		response = Unirest.get("https://www.googleapis.com/books/v1/volumes?q=isbn:#{uid}&startIndex=#{offset}&maxResults=30&key=AIzaSyCYbaDcWSJBueVahTqdNl6YppfTvyyOFZw")
+		res = response.body["items"]&.map { |book| reduce_book(book) } || []
+		res = res.reject { |book| book.nil? }
+		if res.first
+			res.first[:image_url]
+		end
+	end
+
 	private
 
 	def self.reduce_book(book)

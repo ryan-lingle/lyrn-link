@@ -9,4 +9,32 @@ namespace :item do
 			end
 		end
 	end
+
+	desc 'get images back'
+	task images: :environment do
+		List.all.each do |list|
+			list.items.each do |item|
+				res = list.find_image(item)
+				if res
+					item.image_url = res
+					item.upload_image
+					item.save
+				end
+			end
+		end
+	end
+
+	desc 'get images back'
+	task test_images: :environment do
+		List.where(user_id: 'eca93597-3b5a-4876-b7fd-0e7899b4e8c2').each do |list|
+			list.items.each do |item|
+				res = list.find_image(item)
+				if res
+					item.image_url = res
+					item.upload_image
+					item.save
+				end
+			end
+		end
+	end
 end
