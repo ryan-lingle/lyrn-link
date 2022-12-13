@@ -5,7 +5,7 @@ const ErrorBox = ({ error }) => {
         <div className="card card-error nohover">
             <div className="card-header-wrapper flex">
                 <div className="card-text card-text-icon">
-                    <i className="fas fa-exclamation-triangle"></i>
+                    <i className="fa-solid fa-exclamation-triangle"></i>
                 </div>
                 {error}
             </div>

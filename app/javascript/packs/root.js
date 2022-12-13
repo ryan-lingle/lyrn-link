@@ -8,7 +8,6 @@ import { api } from '../src/api';
 import Context from '../src/context';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import 'react-tippy/dist/tippy.css';
 
 class Root extends Component {
   constructor(props) {

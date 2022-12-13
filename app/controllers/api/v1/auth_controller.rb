@@ -1,5 +1,20 @@
 class Api::V1::AuthController < ApplicationController
 	skip_before_action :authenticate_request
+	skip_before_action :verify_authenticity_token, only: :google
+
+	def google
+		validator = GoogleIDToken::Validator.new
+		payload = validator.check(params["credential"], params["client_id"])
+		@user = User.find_by(email: payload["email"])
+		if !@user
+			@user = GoogleUser.create!(reduce_google_payload(payload))
+		end
+
+		render json: {
+			auth_token: new_jwt,
+			user: @user.to_res
+		}
+	end
 
 	def request_token
 		if Rails.env == "development"
@@ -30,7 +45,7 @@ class Api::V1::AuthController < ApplicationController
 	    		twitter_id: id,
 	    		twitter_token: res.token,
 	    		twitter_secret: res.secret,
-	    		handle: handle,
+	    		handle: handle, # TODO: handle handle already taken
 	    	)
 	    else
 	    	@user.twitter_token = res.token
@@ -91,6 +106,15 @@ class Api::V1::AuthController < ApplicationController
 	end
 
 	private
+
+	def reduce_google_payload(payload)
+		{
+			email: payload['email'],
+			name: payload['name'],
+			handle: payload['name'],
+			google_picture_url: payload['picture'],
+		}
+	end
 
 	def user_params
 		params.require(:user).permit(:email, :password, :name, :handle)

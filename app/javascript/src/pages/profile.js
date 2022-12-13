@@ -66,7 +66,7 @@ const Profile = () => {
 
                         ?   <div>
                                 <img src={state.user.profile_picture_url} />
-                                <i className="fas fa-user-edit"></i>
+                                <i className="fa-solid fa-user-edit"></i>
                             </div>
 
                         :  <button className="btn">Upload</button>

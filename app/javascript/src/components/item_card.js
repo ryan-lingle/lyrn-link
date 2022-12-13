@@ -67,8 +67,8 @@ const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton
                 rank && !readOnly
 
                 ?   <div className="sort-arrows">
-                        <i className="fas fa-sort-up sort-arrow item-up" onClick={index === 0 ? null : () => onMove(index, index - 1)} />
-                        <i className="fas fa-sort-down sort-arrow item-down" onClick={lastItem ? null : () => onMove(index, index + 1)} />
+                        <i className="fa-solid fa-sort-up sort-arrow item-up" onClick={index === 0 ? null : () => onMove(index, index - 1)} />
+                        <i className="fa-solid fa-sort-down sort-arrow item-down" onClick={lastItem ? null : () => onMove(index, index + 1)} />
                     </div>
 
                 :   null
@@ -81,7 +81,7 @@ const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton
                             <div className="item-rank">
                                 {index + 1}
                             </div>
-                            {readOnly || !rank ? null : <i className="fas fa-ellipsis-v icon"/>}              
+                            {readOnly || !rank ? null : <i className="fa-solid fa-ellipsis-v icon"/>}              
                         </div>
 
                     :   null

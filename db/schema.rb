@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_191405) do
+ActiveRecord::Schema.define(version: 2022_12_07_013602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_191405) do
     t.string "description"
     t.string "url"
     t.integer "index"
+    t.string "image_url"
     t.text "creator"
     t.uuid "list_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -92,7 +93,6 @@ ActiveRecord::Schema.define(version: 2021_03_11_191405) do
     t.string "uid"
     t.text "categories"
     t.date "publish_date"
-    t.string "image_url"
     t.uuid "meta_item_id"
     t.index ["list_id"], name: "index_items_on_list_id"
     t.index ["meta_item_id"], name: "index_items_on_meta_item_id"
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_191405) do
     t.boolean "admin", default: false
     t.string "twitter_handle"
     t.integer "follower_count", default: 0
+    t.string "google_picture_url"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

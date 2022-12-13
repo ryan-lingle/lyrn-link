@@ -22,7 +22,6 @@ class User < ApplicationRecord
 	has_many :groups, through: :group_relationships
 
 	before_validation :clean_handle
-	before_update :clean_handle
 
 	include PgSearch::Model
   	pg_search_scope :search, against: [:name]
@@ -36,6 +35,14 @@ class User < ApplicationRecord
 			HANDLE_WHITELIST.include?(l)
 		end
 		self.handle = split.join('')
+		
+		if User.where(handle: self.handle).where.not(id: id).count > 0
+			count = 1
+			while User.find_by(handle: "#{self.handle}_#{count}")
+				count += 1
+			end
+			self.handle = "#{self.handle}_#{count}"
+		end
 	end
 
 	def created_at_string
@@ -137,7 +144,7 @@ class User < ApplicationRecord
 				},
 				{
 					tab: 'circle',
-					icon: 'far fa-chart-network',
+					icon: 'far fa-circle-notch',
 					sub_tabs: [
 						{
 							type: 'following',

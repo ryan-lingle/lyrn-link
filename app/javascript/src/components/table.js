@@ -35,7 +35,7 @@ const Table = ({ schema, data, style, id, onLinkClick, fetchMore, onDestroy, des
         } else if (!destroyCondition || destroyCondition(datum)) {
             return(
                 <td className="destroy-row" >
-                    <i className="fas fa-trash-alt" 
+                    <i className="fa-solid fa-trash-alt" 
                         onClick={(e) => {
                             e.stopPropagation();
                             if (window.confirm('Are you sure you want to delete this item?')) {
@@ -162,7 +162,7 @@ const Table = ({ schema, data, style, id, onLinkClick, fetchMore, onDestroy, des
                                         {   
                                             key == sort[0]
 
-                                                ?   <i className={`fad fa-sort-${sort[1] ? 'down' : 'up'}`} />
+                                                ?   <i className={`fa-solid fa-sort-${sort[1] ? 'down' : 'up'}`} />
 
                                                 :   null
                                         }

@@ -25,7 +25,7 @@ const NewList = ({ children, id }) => {
             onClick={() => setShow(prev => !prev)} 
         >
             <div className="new-list text-right">
-                {children || <i className={`fas fa-${show ? 'times' : 'plus'}-circle`} />}
+                {children || <i className={`fa-solid fa-${show ? 'times' : 'plus'}-circle`} />}
             </div>
             {
                 show

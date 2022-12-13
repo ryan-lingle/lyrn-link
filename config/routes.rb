@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   	namespace 'v1' do
 
       # AUTH ROUTES
+      post 'google', to: 'auth#google'
   		post 'request_token', to: 'auth#request_token'
       post 'access_token', to: 'auth#access_token'
       post 'sign_up', to: 'auth#sign_up'

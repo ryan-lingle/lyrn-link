@@ -14,7 +14,7 @@ const Modal = ({ heading, children, show, onClose }) => {
 					<div className="big-heading">
 						{heading}
 					</div>
-					<i className="fas fa-times" onClick={onClose} />
+					<i className="fa-solid fa-times" onClick={onClose} />
 				</div>
 				<div className="moodal-body">
 					{children}

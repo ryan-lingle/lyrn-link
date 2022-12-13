@@ -4,7 +4,7 @@ class Videos < List
 	end
 
 	def icon
-		"fal fa-video"
+		"fas fa-video"
 	end
 
 	def find_image(video)

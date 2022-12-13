@@ -12,7 +12,7 @@ const InfoTooltip = ({ copy, pad=false }) => (
     >
         <span>
            {pad ? <span>&nbsp;&nbsp;</span> : null}
-           <i className="fas fa-info-circle icon-small" />
+           <i className="fa-solid fa-info-circle icon-small" />
         </span>
     </Tooltip>
 );

@@ -4,7 +4,7 @@ class Articles < List
 	end
 
 	def icon
-		"fal fa-newspaper"
+		"fas fa-newspaper"
 	end
 
 	def find_image(article)

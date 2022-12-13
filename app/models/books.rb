@@ -8,7 +8,7 @@ class Books < List
 	end
 
 	def icon
-		"fal fa-book-open"
+		"fas fa-book-open"
 	end
 
 	def find_image(book)

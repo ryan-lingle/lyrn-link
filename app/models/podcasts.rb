@@ -8,7 +8,7 @@ class Podcasts < List
 	end
 
 	def icon
-		"fal fa-podcast"
+		"fas fa-podcast"
 	end
 
 	def find_image(podcast)

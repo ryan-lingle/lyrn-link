@@ -2,9 +2,12 @@ import React, { useContext, useRef } from 'react';
 import Context from '../context';
 import Logo from '../assets/logo.png';
 import { ErrorBox, Form } from '../components';
+import { clientId, useGsi, callback } from '../hooks/use_gsi';
+window.callback = callback;
 
 const Login = ({ location }) => {
     const { api, state } = useContext(Context);
+    useGsi();
 
     const loading = state.loading.login;
     const error = state.errors.login;
@@ -27,6 +30,20 @@ const Login = ({ location }) => {
                     <i className="fab fa-twitter" style={{marginRight: '10px'}} />
                     Sign in with Twitter
                 </div>
+                <div id="g_id_onload"
+                     data-client_id={clientId}
+                     data-ux_mode="popup"
+                     data-callback="callback">
+                </div>
+                <div
+                    style={{
+                        width: '100%',
+                        padding: '20px',
+                        textAlign: 'center',
+                    }}
+                    className="g_id_signin"
+                    data-type="standard"
+                ></div>
                 <hr/>
                 <div className="auth-description main-heading">
                     Or Sign In with Email
@@ -56,8 +73,8 @@ const Login = ({ location }) => {
                 </div>
             </div>
             <div className="auth-footing">
-                <div className="little-body" style={{marginTop: '15px'}}>
-                        Don't have a lyrnlink yet? <a href="/signup">Sign Up</a>
+                <div style={{marginTop: '15px'}}>
+                    Don't have a lyrnlink yet? <a className="underline" href="/signup">Sign Up</a>
                 </div>
             </div>
 

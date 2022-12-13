@@ -46,7 +46,7 @@ const NavBar = ({ location }) => {
                                     />
 
                                 :   <i 
-                                        className="fal fa-user-circle" 
+                                        className="fas fa-user-circle" 
                                         id="default-avatar" 
                                         onClick={() => setShowHam(prev => !prev)}
                                     />
@@ -58,11 +58,11 @@ const NavBar = ({ location }) => {
                                 }}
                             >   
                                 <a href="/admin" >
-                                    <i className="fas fa-link" style={{marginRight: '5px'}} />
+                                    <i className="fa-solid fa-link" style={{marginRight: '5px'}} />
                                     My Link
                                 </a>
                                 <a href="#" onClick={api.signOut} >
-                                    <i className="fas fa-sign-out-alt" style={{marginRight: '5px'}} />
+                                    <i className="fa-solid fa-sign-out-alt" style={{marginRight: '5px'}} />
                                     Sign Out
                                 </a>
                             </div>

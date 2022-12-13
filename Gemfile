@@ -43,6 +43,7 @@ gem 'unirest', '~> 1.1.2'
 gem 'nokogiri'
 gem 'oauth', '~> 0.5.1'
 gem 'twitter'
+gem 'google-id-token'
 # gem 'stripe'
 
 group :development, :test do

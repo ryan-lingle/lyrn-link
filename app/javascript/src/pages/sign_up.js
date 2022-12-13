@@ -2,10 +2,14 @@ import React, { useContext, useState } from 'react';
 import Context from '../context';
 import Logo from '../assets/logo.png';
 import { ErrorBox, Form, PasswordConditions } from '../components';
+import { clientId, useGsi, callback } from '../hooks/use_gsi';
+window.callback = callback;
 
 const Login = ({ location }) => {
     const { api, state } = useContext(Context);
 
+    useGsi();
+    
     const [password, setPassword] = useState('');
     const [passwordCopy, setPasswordCopy] = useState('');
 
@@ -31,11 +35,25 @@ const Login = ({ location }) => {
             </div>
             <div className="auth-card">
                 <ErrorBox error={error} />
-                <div className="btn-item auth-button" onClick={() => api.requestToken()}>
+                <div className="btn-item auth-button" style={{padding: '10px'}} onClick={() => api.requestToken()}>
                     <i className="fab fa-twitter" style={{marginRight: '10px'}} />
-                    Sign Up with Twitter
+                    Sign In with Twitter
                 </div>
+                <div id="g_id_onload"
+                     data-client_id={clientId}
+                     data-callback="callback">
+                </div>
+                <div
+                    style={{
+                        width: '100%',
+                        padding: '20px',
+                        textAlign: 'center',
+                    }}
+                    className="g_id_signin"
+                    data-type="standard"
+                ></div>
                 <hr/>
+
                 <div className="auth-description main-heading">
                     Or Sign Up with Email
                 </div>
@@ -92,8 +110,8 @@ const Login = ({ location }) => {
                     By signing up for lyrnlink, you agree to our <a href="https://www.lyrn.link/privacy">Privacy Poloicy</a> and <a href="https://www.lyrn.link/terms">Terms of Use</a>. We won't post anything to twitter without your permission.
                 </div>
             </div>
-            <div className="little-body" style={{margin: '15px'}}>
-                    Already got a lyrnlink? <a href="/signin">Sign In</a>
+            <div style={{margin: '15px'}}>
+                Already got a lyrnlink? <a className="underline" href="/signin">Sign In</a>
             </div>
         </div>
     )

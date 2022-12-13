@@ -5,7 +5,7 @@ const SuccessBox = ({ success }) => {
         <div className="card card-success nohover">
             <div className="card-header-wrapper flex">
                 <div className="card-text card-text-icon">
-                <i className="fas fa-shield-check"></i>
+                <i className="fa-solid fa-shield-check"></i>
                 </div>
                 {success}
             </div>

@@ -166,6 +166,36 @@ class Api {
         }
     }
 
+    googleLogin = async (params, redirectTo="/admin") => {
+        this.setLoading('login');
+
+        const res = await this.post('google', {
+            params: { fetch: true, ...params },
+            errorType: 'login',
+            checkRefresh: false,
+        })
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'login',
+                token: res.auth_token,
+                user: res.user,
+            });
+
+            console.log(redirectTo);
+
+            window.location.href = redirectTo;
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
     createUser = async (user) => {
         this.setLoading('login');
 
