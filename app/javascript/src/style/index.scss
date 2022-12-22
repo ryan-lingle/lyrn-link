@@ -1,11 +1,8 @@
 @import "config";
-$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
-@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "~@fortawesome/fontawesome-free/scss/solid.scss";
-@import "~@fortawesome/fontawesome-free/scss/brands.scss";
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "pages";
 @import "components";
+
 
 .mega-heading {
 	font-family: 'Open Sans';

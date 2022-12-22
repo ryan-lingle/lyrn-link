@@ -36,7 +36,7 @@ const Profile = () => {
             </div>
             <div id="section-header">
                 <div className="section-title">
-                <i class="far fa-id-card"></i>
+                <i class="fa-regular fa-id-card"></i>
                     &nbsp;
                     Profile Details</div>
             </div>
@@ -48,7 +48,7 @@ const Profile = () => {
             />
             <div id="section-header">
             <div className="section-title">
-                <i class="far fa-camera-retro"/>
+                <i class="fa-regular fa-camera-retro"/>
                     &nbsp;
                     Profile Photo</div>
             </div>

@@ -139,12 +139,12 @@ class User < ApplicationRecord
 			tabs: [
 				{
 					tab: 'lists',
-					icon: 'far fa-clipboard-list',
+					icon: 'fa-solid fa-clipboard-list',
 					sub_tabs: list_index(bis),
 				},
 				{
 					tab: 'circle',
-					icon: 'far fa-circle-notch',
+					icon: 'fa-solid fa-circle-notch',
 					sub_tabs: [
 						{
 							type: 'following',
@@ -162,7 +162,7 @@ class User < ApplicationRecord
 				},
 				{
 					tab: 'bookmarks',
-					icon: 'far fa-bookmark',
+					icon: 'fa-regular fa-bookmark',
 					sub_tabs: [
 						{
 							type: 'bookmarks',
@@ -173,7 +173,7 @@ class User < ApplicationRecord
 				},
 				{
 					tab: 'discover',
-					icon: 'far fa-compass',
+					icon: 'fa-regular fa-compass',
 					sub_tabs: [
 						{
 							type: 'users',

@@ -36,7 +36,7 @@ const GroupProfile = () => {
 
 	const DeleteGroup = () => (
 		<div className="btn-red" style={{marginRight: '5px'}} onClick={destroyGroup}>
-		    <i className="far fa-trash" style={{marginRight: '4px'}}/>
+		    <i className="fa-solid fa-trash" style={{marginRight: '4px'}}/>
 		    Group
 		</div>
 	);
@@ -65,7 +65,7 @@ const GroupProfile = () => {
 								delay='0'
 							>
 								<i 
-									className="far fa-copy btn-copy"
+									className="fa-regular fa-copy btn-copy"
 									style={{fontSize: 'x-small', marginLeft: '5px'}}
 									onClick={copyGroupLink}
 								/>

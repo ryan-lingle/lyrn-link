@@ -57,7 +57,7 @@ const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton
         } else if (readOnly) {
             return <BookmarkButton id={meta_item_id || id} bookmarked={bookmarked} count={count} />;
         } else {
-            return <i className="far fa-times icon icon-delete item-delete" onClick={destroy} />;
+            return <i className="fa-solid fa-circle-xmark icon icon-delete item-delete" onClick={destroy} />;
         };
     }
 

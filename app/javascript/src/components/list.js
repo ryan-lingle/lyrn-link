@@ -48,11 +48,11 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return(
                 <div className="flex todo-btns">
                     <div className="btn-red" style={{marginRight: '5px'}} onClick={destroyList}>
-                        <i className="far fa-trash" style={{marginRight: '4px'}}/>
+                        <i className="fa-solid fa-trash" style={{marginRight: '4px'}}/>
                         List
                     </div>
                     <div className="btn-black" onClick={() => setAdd(prev => !prev)} >
-                        <i className={`far fa-${add ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
+                        <i className={`fa-solid fa-${add ? 'xmark' : 'plus'}`} style={{marginRight: '4px'}}/>
                         {capitalize(type)}
                     </div>
                 </div>
@@ -67,7 +67,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             return(
                 <div className="flex todo-btns">
                     <div className="btn-black" onClick={() => setInvite(prev => !prev)} >
-                        <i className={`far fa-${add ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
+                        <i className={`fa-solid fa-${add ? 'xmark' : 'plus'}`} style={{marginRight: '4px'}}/>
                         Invite User
                     </div>
                 </div>
@@ -230,7 +230,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 ?   <div className="list-heading">
                         <div style={{marginLeft: 'auto'}} >
                             <div className="btn-black" onClick={() => setAddGroup(prev => !prev)} >
-                                <i className={`far fa-${addGroup ? 'times' : 'plus'}`} style={{marginRight: '4px'}}/>
+                                <i className={`fa-solid fa-${addGroup ? 'xmark' : 'plus'}`} style={{marginRight: '4px'}}/>
                                 Group
                             </div>
                         </div>

@@ -57,7 +57,7 @@ const UserProfile = () => {
 								delay='0'
 							>
 								<i 
-									className="far fa-copy btn-copy"
+									className="fa-regular fa-copy"
 									style={{fontSize: 'x-small', marginLeft: '5px'}}
 									onClick={copyLyrnLink}
 								/>

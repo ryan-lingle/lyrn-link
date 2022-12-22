@@ -21,7 +21,7 @@ const BookmarkButton = ({ id, bookmarked, count }) => {
 	return(
 		<div className="flex">
 			<i 
-				className={`${bookmarkState ? 'fas' : 'fal'} bookmark-icon fa-bookmark ${bookmarkState ? 'bookmarked' : ''}`} 
+				className={`${bookmarkState ? 'fa-solid' : 'fa-regular'} bookmark-icon fa-bookmark ${bookmarkState ? 'bookmarked' : ''}`} 
 				onClick={handleClick}
 			/>
 			<div className="bookmark-count">

@@ -78,7 +78,7 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                         <NewList id={'empty-state-new-list'} >
                             <div className="todo-btns" style={{marginTop: '20px'}}>
                                 <div className="btn-black">
-                                <i className="far fa-plus-circle" style={{marginRight: '7px'}}/>
+                                <i className="fa-solid fa-circle-plus" style={{marginRight: '7px'}}/>
                                 List
                                 </div>
                             </div>

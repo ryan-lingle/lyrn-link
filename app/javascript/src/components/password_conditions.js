@@ -33,7 +33,7 @@ const Conditional = ({ condition, copy }) => (
                 className="password-condition"
                 style={{color: '$green'}}
             >
-                <i className="far fa-check icon"/>
+                <i className="fa-regular fa-check icon"/>
                 <span>  {copy}</span>
             </div>
 
@@ -41,7 +41,7 @@ const Conditional = ({ condition, copy }) => (
                 className="password-condition"
                 style={{color: '$red'}}
             >
-                <i className="far fa-times icon"style={{width: '10px'}}/>
+                <i className="fa-solid fa-circle-xmark icon"style={{width: '10px'}}/>
                 <span>  {copy}</span>
             </div>
 );

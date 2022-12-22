@@ -39,7 +39,7 @@ class Group < ApplicationRecord
 			tabs: [
 				{
 					tab: 'circle',
-					icon: 'far fa-circle-north',
+					icon: 'fa-regular fa-circle-north',
 					sub_tabs: [
 						{
 							type: 'members',
