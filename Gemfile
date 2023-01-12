@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.6'
+ruby '3.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.3'
@@ -32,14 +32,14 @@ gem 'rspec-rails' , groups: [:development, :test]
 gem 'awesome_print'
 gem 'bcrypt'
 gem 'jwt'
-gem 'postmark'
+gem 'postmark', '~> 1.21.0'
 gem 'pundit'
 gem 'aws-sdk-s3'
 gem 'active_storage_base64'
 gem 'image_processing'
 gem 'rollbar'
 gem 'pg_search'
-gem 'unirest', '~> 1.1.2'
+gem 'rest-client'
 gem 'nokogiri'
 gem 'oauth', '~> 0.5.1'
 gem 'twitter'

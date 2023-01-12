@@ -5,7 +5,7 @@ class Scraper
 			if url.include?('youtube')
 				youtube(url)
 			else
-				doc = Nokogiri::HTML.parse(open(url, 'User-Agent' => 'lyrn-link'))
+				doc = Nokogiri::HTML.parse(URI.open(url, 'User-Agent' => 'lyrn-link'))
 				image_meta = doc.at('meta[property="og:image"]')
 				title_meta = doc.at('meta[property="og:title"]')
 				description_meta = doc.at('meta[property="og:description"]')
@@ -28,10 +28,11 @@ class Scraper
 			mem
 		end
 
-		response = Unirest.get(
+		json = RestClient.get(
 			"https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=#{h['v']}&key=AIzaSyCYbaDcWSJBueVahTqdNl6YppfTvyyOFZw",
 		)
 
+		response = JSON.parse(json.body)
 		begin
 			{
 				image: response.body["items"][0]["snippet"]["thumbnails"]["standard"]["url"],

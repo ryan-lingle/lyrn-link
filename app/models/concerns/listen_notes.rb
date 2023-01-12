@@ -1,13 +1,14 @@
 class ListenNotes
 	def self.search(term, offset: 0)
-		response = Unirest.get(
+		json = RestClient.get(
 			"https://listen-api.listennotes.com/api/v2/search?q=#{term}&type=episode&offset=#{offset}&language=English",
-		  	headers: {
+		  	{
 		    	"X-ListenAPI-Key" => "0a5c5bf8b8294eafab570b23a18367e7",
 		  	}
 		)
 
-		results = response.body["results"]
+		response = JSON.parse(json.body)
+		results = response["results"]
 		results.map do |episode|
 			reduce_episode(episode)
 		end
@@ -16,14 +17,14 @@ class ListenNotes
 	def self.find(title)
 		sleep 1
 		url = "https://listen-api.listennotes.com/api/v2/search?q=\"#{title}\"&only_in=title&type=podcast&language=English"
-		response = Unirest.get(
+		json = RestClient.get(
 			url,
-		  	headers: {
+		  	{
 		    	"X-ListenAPI-Key" => "0a5c5bf8b8294eafab570b23a18367e7",
 		  	}
 		)
-
-		results = response.body["results"]
+		response = JSON.parse(json.body)
+		results = response["results"]
 		return results
 		results = results.map do |episode|
 			reduce_episode(episode)

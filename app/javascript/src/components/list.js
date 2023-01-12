@@ -6,6 +6,8 @@ import Context from '../context';
 import { capitalize } from '../utils';
 import { observer } from '../utils';
 
+
+
 const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, isList, onFetch }) => {
     const [add, setAdd] = useState(false);
     const [addGroup, setAddGroup] = useState(false);
