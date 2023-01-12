@@ -114,7 +114,10 @@ class Api {
         this.setLoading('login');
 
         const res = await this.post('access_token', {
-            params,
+            params: { 
+                ...params,
+                affiliate: localStorage.getItem('affiliate'),
+            },
             checkRefresh: false,
         });
 
@@ -170,7 +173,11 @@ class Api {
         this.setLoading('login');
 
         const res = await this.post('google', {
-            params: { fetch: true, ...params },
+            params: { 
+                fetch: true, 
+                ...params,
+                affiliate: localStorage.getItem('affiliate'),
+            },
             errorType: 'login',
             checkRefresh: false,
         })
@@ -200,7 +207,10 @@ class Api {
         this.setLoading('login');
 
         const res = await this.post('sign_up', { 
-            params: { user },
+            params: {
+                user,
+                affiliate: localStorage.getItem('affiliate'),
+            },
             errorType: 'login',
             checkRefresh: false,
         });

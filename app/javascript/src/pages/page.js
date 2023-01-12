@@ -14,6 +14,13 @@ const Page = ({ match }) => {
     };
 
     useEffect(() => {
+        const { handle } = match.params || {};
+        if (handle && !localStorage.getItem('affiliate')) {
+            localStorage.setItem('affiliate', handle);
+        }
+    }, []);
+
+    useEffect(() => {
         window.onresize = () => {
             setPageHeight(window.innerHeight - 60);
         };

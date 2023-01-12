@@ -8,6 +8,7 @@ class Api::V1::AuthController < ApplicationController
 		@user = User.find_by(email: payload["email"])
 		if !@user
 			@user = GoogleUser.create!(reduce_google_payload(payload))
+			create_affiliate_sign_up?(@user)
 		end
 
 		render json: {
@@ -47,6 +48,7 @@ class Api::V1::AuthController < ApplicationController
 	    		twitter_secret: res.secret,
 	    		handle: handle, # TODO: handle handle already taken
 	    	)
+	    	create_affiliate_sign_up?(@user)
 	    else
 	    	@user.twitter_token = res.token
 	    	@user.twitter_secret = res.secret
@@ -61,6 +63,7 @@ class Api::V1::AuthController < ApplicationController
 
   	def sign_up
   		@user = EmailUser.create!(user_params)
+  		create_affiliate_sign_up?(@user)
 		render json: {
 	    	auth_token: new_jwt,
 	    	user: @user.to_res
@@ -118,6 +121,16 @@ class Api::V1::AuthController < ApplicationController
 
 	def user_params
 		params.require(:user).permit(:email, :password, :name, :handle)
+	end
+
+	def create_affiliate_sign_up?(user)
+		if params["affiliate"]
+			affiliate = User.find_by(handle: params["affiliate"])
+			AffiliateSignUp.create!(
+				user: user,
+				affiliate: affiliate
+			)
+		end
 	end
 
 end

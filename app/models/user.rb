@@ -6,9 +6,15 @@ class User < ApplicationRecord
 
 	validates :handle, presence: true, uniqueness: { case_sensitive: false }
 
+	has_one :affiliate_sign_up, class_name: "AffiliateSignUp", foreign_key: "user_id", dependent:  :destroy
+	has_one :affiliate, through: :affiliate_sign_up, source: :affiliate
+
+	has_many :sign_ups, class_name: "AffiliateSignUp", foreign_key: "affiliate_id", dependent: :destroy
+	has_many :users_signed_up, through: :sign_ups, source: :user
+
+
 	has_many :likes, class_name: "Like", foreign_key: "like_id"
 	has_many :likers, class_name: "Like", foreign_key: "link_id"
-
 	has_many :following, through: :likes, source: :link
 	has_many :followers, through: :likers, source: :like
 
