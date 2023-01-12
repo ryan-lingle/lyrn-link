@@ -11,7 +11,7 @@ const ItemSearch = ({ type, item, children }) => {
             placeholder={`Search for a ${item} to add...`}
             search={api.search}
         >
-            {(result, clearResults) => children(result, clearResults)}
+            {(result, clearResults, input) => children(result, clearResults, input)}
         </Search>
     );
 };

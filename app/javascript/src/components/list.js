@@ -83,11 +83,11 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             if (searchable) {
 
                 return <ItemSearch type={type} item={singular} >
-                    {(result, clearResults) =>
+                    {(result, clearResults, input) =>
                         <div onClick={() => {
                             createItem(type, result);
-                            setAdd(false);
                             clearResults();
+                            input?.current?.focus();
                         }} >
                             <ItemCard
                                 readOnly={true}
@@ -103,7 +103,6 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
                 return <Scraper onSubmit={(result) => {
                         createItem(type, result);
-                        setAdd(false);
                     }} 
                 />;
 

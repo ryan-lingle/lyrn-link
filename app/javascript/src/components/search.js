@@ -1,8 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import Context from '../context';
 import { observer } from '../utils';
 
 const ItemSearch = ({ search, type, children, placeholder, fetchMore=true }) => {
+    const input = useRef();
     const { api, state } = useContext(Context);
     const [firstLoad, setFirstLoad] = useState(true);
     const [term, setTerm] = useState('');
@@ -49,7 +50,8 @@ const ItemSearch = ({ search, type, children, placeholder, fetchMore=true }) => 
     return(
         <div className="search" >
             <div className="input-primary">
-                <input 
+                <input
+                    ref={input}
                     value={term} 
                     placeholder={placeholder}
                     onChange={({ target }) => {
@@ -62,7 +64,7 @@ const ItemSearch = ({ search, type, children, placeholder, fetchMore=true }) => 
             <div className="search-results" >
                 {Object.keys(results).map((key, i) =>
                     <div key={key} >
-                        {children(results[key], clearResults)}
+                        {children(results[key], clearResults, input)}
                     </div>
                 )}
                 <div id="search-bottom"></div>
