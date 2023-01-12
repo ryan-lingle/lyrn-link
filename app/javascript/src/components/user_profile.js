@@ -27,9 +27,33 @@ const UserProfile = () => {
 		navigator.clipboard.writeText(link);
 	}
 
+	function share() {
+		const shareData = {
+			title: 'LyrnLink',
+		  	url: window.location.href,
+		};
+
+		navigator.share(shareData);
+	};
+
 	const profileButtons = (
 		<div className="profile-buttons" >
-			{readOnly ? <LikeButton id={state.user.id} liked={state.user.liked} /> : <a className="btn-share" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>Share <i className="fa-brands fa-twitter" /></a>}
+			{
+				readOnly 
+
+				? <LikeButton id={state.user.id} liked={state.user.liked} />
+
+				: <a className="btn-share" href={`https://twitter.com/intent/tweet?text=${tweetText}`}>
+					Share <i className="fa-brands fa-twitter" />
+				</a>
+			}
+			{
+				navigator.share &&
+
+				<a className="btn-black" style={{marginLeft: '10px'}} onClick={share} >
+					<i className="fa-solid fa-share-from-square" />
+				</a>
+			}
 		</div>
 	);
 
