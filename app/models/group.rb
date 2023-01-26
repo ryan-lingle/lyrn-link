@@ -3,11 +3,16 @@ class Group < ApplicationRecord
 	has_many :group_relationships, dependent: :destroy
 	has_many :users, through: :group_relationships
 	include ActiveStorageSupport::SupportForBase64
+	include EncodeImageUrl
 	has_one_base64_attached :image
 	after_create :add_admin_to_group
 	belongs_to :user
 	validates :handle, presence: true, uniqueness: { case_sensitive: false }
 	validates :name, presence: true
+
+	def image_url
+		image.service_url if image.attached?
+	end
 
 	def to_index_res(groups=[], index=nil)
 		{
@@ -55,9 +60,8 @@ class Group < ApplicationRecord
 		}
 	end
 
-	def update_image(data)
-		self.image.attach(data: data)
-		self.image_url = ENV["S3_BUCKET"] + self.image.attachment.blob.key
+	def update_image(image)
+		self.image.attach(data: image)
 		self.save
 	end
 

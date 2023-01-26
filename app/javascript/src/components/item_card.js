@@ -73,7 +73,7 @@ const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton
 
                 :   null
             }
-            <div className={`item-card ${readOnly ? '' : 'draggable'}`} onClick={go} style={{marginLeft: rank && !readOnly ? '25px' : ''}} >
+            <div className={`item-card ${searchResult ? 'search-item' : ''} ${readOnly ? '' : 'draggable'}`} onClick={go} style={{marginLeft: rank && !readOnly ? '25px' : ''}} >
                 {
                     rank
 

@@ -72,8 +72,6 @@ class User < ApplicationRecord
 
 	def update_profile_picture(image)
 		self.profile_picture.attach(data: image)
-		self.profile_picture_url = ENV["S3_BUCKET"] + self.profile_picture.attachment.blob.key
-		self.save
 	end
 	
 	def admin?
