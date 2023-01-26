@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Context from '../context';
-import Logo from '../assets/logo.png';
+import Logo from '../assets/lyrnlinkblack.svg';
 import { ErrorBox, Form, PasswordConditions } from '../components';
 import { clientId, useGsi, callback } from '../hooks/use_gsi';
 window.callback = callback;
