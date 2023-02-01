@@ -73,7 +73,8 @@ const Page = ({ match }) => {
             <div className="page" style={{ height: `${pageHeight}px` }} >
                 <div id="side-nav" className="non-mobile-only">
                     <UserProfile />
-                    <ProfileTabs 
+                    <ProfileTabs
+                        tabs={state.user.tabs}
                         pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
                     />
                     <div className="nav-footer">

@@ -54,6 +54,10 @@ const Group = ({ match }) => {
             <div className="page" style={{ height: `${pageHeight}px` }} >
                 <div id="side-nav" className="non-mobile-only">
                     <GroupProfile />
+                   {/* <ProfileTabs
+                        tabs={state.group.tabs}
+                        pathname={`/g/${state.group.handle}/`}
+                    />*/}
                     <div className="nav-footer">
                         <div>
                             <a style={{fontWeight: 'bolder'}}>© 2021 - Lyrnlink</a>
@@ -69,10 +73,18 @@ const Group = ({ match }) => {
                     <GroupProfile />
                 </div>
                 <div className="container">
-                    <GenericTabs 
-                        pathname={pathname + state.tab + '/'}
-                        tabs={api.store.currentTab('group')} 
-                    />
+                    {
+                        state.tab === 'lists' 
+
+                            ?   <ListTabs 
+                                    pathname={pathname + 'lists/'} 
+                                /> 
+
+                            :   <GenericTabs 
+                                    pathname={pathname + state.tab + '/'}
+                                    tabs={api.store.currentTab('group')} 
+                                />
+                    }
                     <List 
                         {...currentList}
                     />

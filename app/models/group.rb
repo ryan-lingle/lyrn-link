@@ -45,8 +45,16 @@ class Group < ApplicationRecord
 
 			tabs: [
 				{
+					tab: 'lists',
+					icon: 'fa-solid fa-clipboard-list',
+					sub_tabs: {
+						type: 'Books',
+						items: [],
+					},
+				},
+				{
 					tab: 'circle',
-					icon: 'fa-regular fa-circle-north',
+					icon: 'fa-solid fa-circle',
 					sub_tabs: [
 						{
 							type: 'members',

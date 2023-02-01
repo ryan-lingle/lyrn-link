@@ -4,7 +4,7 @@ import { ListTabs } from '../components';
 import Draggable from './draggable';
 import { parseQuery, capitalize } from '../utils';
 
-const ProfileTabs = ({ pathname="/admin/" }) => {
+const ProfileTabs = ({ pathname="/admin/", tabs }) => {
     const { state, api } = useContext(Context);
 
     // useEffect(() => {
@@ -35,7 +35,7 @@ const ProfileTabs = ({ pathname="/admin/" }) => {
 
     return(
         <div className="profile-tabs" >
-            {state.user.tabs.map(({ tab, icon }, i) =>
+            {tabs.map(({ tab, icon }, i) =>
                 <div 
                     key={i} 
                     className={`profile-tab flex section-tab ${tab === state.tab ? 'current-section-tab' : ''}`}
