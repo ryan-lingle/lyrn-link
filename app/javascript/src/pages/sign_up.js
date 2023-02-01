@@ -1,12 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Context from '../context';
 import Logo from '../assets/lyrnlinkblack.svg';
 import { ErrorBox, Form, PasswordConditions } from '../components';
 import { clientId, useGsi, callback } from '../hooks/use_gsi';
+import { parseQuery } from '../utils';
 window.callback = callback;
 
 const Login = ({ location }) => {
     const { api, state } = useContext(Context);
+
+    useEffect(() => {
+        const params = parseQuery(location.search);
+        if (params.token)
+            localStorage.setItem('token', params.token);
+    }, []);
 
     useGsi();
     

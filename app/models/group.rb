@@ -1,6 +1,7 @@
 class Group < ApplicationRecord
 	HANDLE_WHITELIST = %w(a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 _)
 	has_many :group_relationships, dependent: :destroy
+	has_many :group_invites, dependent: :destroy
 	has_many :users, through: :group_relationships
 	include ActiveStorageSupport::SupportForBase64
 	include EncodeImageUrl
@@ -41,6 +42,7 @@ class Group < ApplicationRecord
 			image: self.image_url,
 			joined: users.include?(current_user),
 			private: self.private,
+
 			tabs: [
 				{
 					tab: 'circle',

@@ -72,6 +72,7 @@ const Form = ({ inputs=[], onSubmit, submitCopy, type, col="6", children }) => {
                     defaultValue={input.defaultValue}
                     onChange={input.onChange}
                     placeholder={input.placeholder}
+                    row={input.rows}
                 />
             );
         } else {

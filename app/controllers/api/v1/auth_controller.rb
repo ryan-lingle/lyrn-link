@@ -46,7 +46,8 @@ class Api::V1::AuthController < ApplicationController
 	    		twitter_id: id,
 	    		twitter_token: res.token,
 	    		twitter_secret: res.secret,
-	    		handle: handle, # TODO: handle handle already taken
+	    		handle: handle,
+	    		token: params["token"]
 	    	)
 	    	create_affiliate_sign_up?(@user)
 	    else
@@ -116,11 +117,12 @@ class Api::V1::AuthController < ApplicationController
 			name: payload['name'],
 			handle: payload['name'],
 			google_picture_url: payload['picture'],
+			token: params['token'],
 		}
 	end
 
 	def user_params
-		params.require(:user).permit(:email, :password, :name, :handle)
+		params.require(:user).permit(:email, :password, :name, :handle, :token)
 	end
 
 	def create_affiliate_sign_up?(user)

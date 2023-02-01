@@ -24,13 +24,15 @@ class User < ApplicationRecord
 	has_many :bookmarks, dependent: :destroy
 	has_many :bookmarked_items, through: :bookmarks, source: :meta_item
 
-	has_many :group_relationships
+	has_many :group_relationships, dependent: :destroy
 	has_many :groups, through: :group_relationships
 
 	before_validation :clean_handle
+	after_create :handle_token, if: :token?
+	after_create :find_group_invites
 
 	include PgSearch::Model
-  	pg_search_scope :search, against: [:name]
+  	pg_search_scope :search, against: [:name, :handle]
 
   	def profile_picture_url
   		profile_picture.service_url if profile_picture.attached?
@@ -279,5 +281,25 @@ class User < ApplicationRecord
 
 	def confirm_email
 		true
+	end
+
+	def handle_token
+		token = Token.get(self.token)
+		GroupRelationship.find_or_create_by(
+			user: self,
+			group_id: token[:group_id]
+		)
+		Token.destroy(self.token)
+	end
+
+	def find_group_invites
+		gis = GroupInvite.where(email: self.email)
+		gis.each do |gi|
+			GroupRelationship.find_or_create_by(
+				user: self,
+				group: gi.group,
+			)
+		end
+		gis.destroy_all
 	end
 end

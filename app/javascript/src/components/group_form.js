@@ -15,16 +15,20 @@ const GroupForm = ({ onSubmit }) => {
 		    onSubmit={handleSubmit}
 		    submitCopy="Create Group"
 		    type="create_group"
+		    col="12"
 		    inputs={[
 		        {
 		            label: 'Group Name',
 		            key: 'name',
 		            type: 'text',
+		            col: '12'
 		        },
 		        {
 		            label: 'Group Description',
 		            key: 'description',
-		            type: 'text',
+		            type: 'textarea',
+		            col: '12',
+		            rows: '10'
 		        },
 		    ]}
 		/>

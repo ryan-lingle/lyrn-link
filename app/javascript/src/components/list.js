@@ -250,9 +250,11 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
                 :   null
             }
-            {addItem()}
-            {groupForm()}
-            {inviteForm()}
+            <div style={{paddingBottom: '15px'}} >
+                {addItem()}
+                {groupForm()}
+                {inviteForm()}
+            </div>
             {items.map((item, i) => 
                 <Draggable 
                     key={i} 

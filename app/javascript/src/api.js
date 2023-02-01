@@ -117,6 +117,7 @@ class Api {
             params: { 
                 ...params,
                 affiliate: localStorage.getItem('affiliate'),
+                token: localStorage.getItem('token'),
             },
             checkRefresh: false,
         });
@@ -177,6 +178,7 @@ class Api {
                 fetch: true, 
                 ...params,
                 affiliate: localStorage.getItem('affiliate'),
+                token: localStorage.getItem('token'),
             },
             errorType: 'login',
             checkRefresh: false,
@@ -208,7 +210,7 @@ class Api {
 
         const res = await this.post('sign_up', { 
             params: {
-                user,
+                user: { ...user, token: localStorage.getItem('token') },
                 affiliate: localStorage.getItem('affiliate'),
             },
             errorType: 'login',
@@ -453,6 +455,32 @@ class Api {
         }
     }
 
+    createGroupInvite = async (group_invite) => {
+        this.setLoading('group_relationship');
+
+        const res = await this.post('group_invites', {
+            params: { group_invite },
+            errorType: 'group_relationship',
+        });
+
+        if (!res.error) {
+
+            if (res.user) {
+                store.reduce({
+                    type: 'add_member',
+                    ...res,
+                });
+            }
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
     createGroupRelationship = async (group_relationship) => {
         this.setLoading('group_relationship');
 
@@ -463,7 +491,6 @@ class Api {
 
         if (!res.error) {
 
-            // admin invite
             if (!group_relationship.accepted) {
                 store.reduce({
                     type: 'add_member',

@@ -11,6 +11,7 @@ input {
 	}
 }
 
+
 .input-primary {
 	padding: auto;
 	margin: 10px auto;
@@ -42,6 +43,26 @@ input {
 	padding: 6px 12px;
 	font-size: medium;
 	font-feature-settings: 'tnum' on, 'lnum' on, 'ss01' on;
+}
+
+.input-primary textarea {
+	display: flex;
+	width: 100%;
+	height: auto;
+	font-family: 'Open Sans';
+	font-style: normal;
+	color: $black;
+	background: $white;
+	border: 1px solid darken($white, 5%);
+	box-sizing: border-box;
+	border-radius: 4px;
+	padding: 6px 12px;
+	font-size: medium;
+	font-feature-settings: 'tnum' on, 'lnum' on, 'ss01' on;
+
+	&:focus {
+		outline-color: $black;
+	}
 }
 
 // 

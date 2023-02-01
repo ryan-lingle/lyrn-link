@@ -49,6 +49,7 @@ Rails.application.routes.draw do
         end
       end
       resources :group_relationships, only: [:create, :update, :destroy]
+      resources :group_invites, only: [:create, :update]
 
     end
   end

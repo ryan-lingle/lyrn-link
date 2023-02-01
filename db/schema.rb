@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_12_214155) do
+ActiveRecord::Schema.define(version: 2023_02_01_222850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -55,12 +55,11 @@ ActiveRecord::Schema.define(version: 2023_01_12_214155) do
   end
 
   create_table "group_invites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id", null: false
     t.uuid "group_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email"
     t.index ["group_id"], name: "index_group_invites_on_group_id"
-    t.index ["user_id"], name: "index_group_invites_on_user_id"
   end
 
   create_table "group_relationships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -174,6 +173,7 @@ ActiveRecord::Schema.define(version: 2023_01_12_214155) do
     t.string "twitter_handle"
     t.integer "follower_count", default: 0
     t.string "google_picture_url"
+    t.string "token"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -182,7 +182,6 @@ ActiveRecord::Schema.define(version: 2023_01_12_214155) do
   add_foreign_key "bookmarks", "meta_items"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "group_invites", "groups"
-  add_foreign_key "group_invites", "users"
   add_foreign_key "group_relationships", "groups"
   add_foreign_key "group_relationships", "users"
   add_foreign_key "groups", "users"
