@@ -1,5 +1,5 @@
 class Api::V1::GroupsController < ApplicationController
-	skip_before_action :authenticate_request, only: [:show]
+	skip_before_action :authenticate_request, only: [:show, :index_show]
 
 	def show
 		group = Group.find_by(handle: params[:id])
@@ -10,6 +10,18 @@ class Api::V1::GroupsController < ApplicationController
 			raise "You must be a member to view this group." if group.private && !group.users.include?(current_user)
 			render json: {
 				group: group.to_show_res(current_user),
+				admin: group.user == current_user,
+			}
+		end
+	end
+
+	def index_show
+		group = Group.find_by(handle: params[:id])
+		if !group
+			render json: {}
+		else
+			render json: {
+				group: group.to_index_res,
 				admin: group.user == current_user,
 			}
 		end

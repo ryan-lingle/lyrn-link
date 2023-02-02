@@ -10,9 +10,6 @@ export function callback(res) {
 
 export function useGsi() {
 
-
-	
-
 	useEffect(() => {
 		google.accounts.id.initialize({
 			client_id: clientId,
@@ -23,4 +20,5 @@ export function useGsi() {
 			console.log(notification)
 		});
 	}, []);
+	
 };

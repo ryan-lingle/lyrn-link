@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       resources :bookmarks, only: [:create, :destroy]
       resources :groups, only: [:show, :create, :update, :destroy] do
         member do
+          get 'index', to: 'groups#index_show'
           post 'image', to: 'groups#image'
         end
       end

@@ -1,19 +1,28 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Context from '../context';
 import Logo from '../assets/lyrnlinkblack.svg';
-import { ErrorBox, Form, PasswordConditions } from '../components';
+import { Loader, ErrorBox, Form, PasswordConditions } from '../components';
 import { clientId, useGsi, callback } from '../hooks/use_gsi';
 import { parseQuery } from '../utils';
 window.callback = callback;
 
-const Login = ({ location }) => {
+const Login = ({ location, match }) => {
     const { api, state } = useContext(Context);
 
     useEffect(() => {
         const params = parseQuery(location.search);
         if (params.token)
             localStorage.setItem('token', params.token);
+
+        if (params.g)
+            api.getIndexGroup(params.g);
+        
     }, []);
+
+    useEffect(() => {
+        if (state.group?.id)
+            localStorage.setItem('group_id', state.group.id);
+    }, [ state.group ]);
 
     useGsi();
     
@@ -27,14 +36,25 @@ const Login = ({ location }) => {
         }
     }
 
-    const loading = state.loading.login;
     const error = state.errors.login;
 
     return(
         <div className="auth-container" >
             <div className="auth-heading">
+                {
+                    state.group?.image_url &&
+
+                    <img
+                        style={{
+                            height: '200px',
+                            borderRadius: '5px',
+                            marginBottom: '5px',
+                        }}
+                        src={state.group.image_url}
+                    />
+                }
                 <div className="mega-heading">
-                        Sign up for lyrnlink
+                    {state.group?.title ? `Join ${state.group.title} on Lyrnlink` : 'Sign up for lyrnlink'}
                 </div>
                 <div className="big-heading">
                     The #1 spot to share your learning

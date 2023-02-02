@@ -9,6 +9,7 @@ class Api::V1::AuthController < ApplicationController
 		if !@user
 			@user = GoogleUser.create!(reduce_google_payload(payload))
 			create_affiliate_sign_up?(@user)
+			create_group_relationship?(@user)
 		end
 
 		render json: {
@@ -50,6 +51,7 @@ class Api::V1::AuthController < ApplicationController
 	    		token: params["token"]
 	    	)
 	    	create_affiliate_sign_up?(@user)
+	    	create_group_relationship?(@user)
 	    else
 	    	@user.twitter_token = res.token
 	    	@user.twitter_secret = res.secret
@@ -65,6 +67,7 @@ class Api::V1::AuthController < ApplicationController
   	def sign_up
   		@user = EmailUser.create!(user_params)
   		create_affiliate_sign_up?(@user)
+  		create_group_relationship?(@user)
 		render json: {
 	    	auth_token: new_jwt,
 	    	user: @user.to_res
@@ -128,9 +131,22 @@ class Api::V1::AuthController < ApplicationController
 	def create_affiliate_sign_up?(user)
 		if params["affiliate"]
 			affiliate = User.find_by(handle: params["affiliate"])
-			AffiliateSignUp.create!(
+			if affiliate
+				AffiliateSignUp.create!(
+					user: user,
+					affiliate: affiliate
+				)
+			end
+		end
+	end
+
+	def create_group_relationship?(user)
+		ap params["group_id"]
+		if params["group_id"]
+			GroupRelationship.create!(
+				group_id: params["group_id"],
 				user: user,
-				affiliate: affiliate
+				accepted: true,
 			)
 		end
 	end

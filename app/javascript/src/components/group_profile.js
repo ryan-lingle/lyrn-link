@@ -9,7 +9,7 @@ const GroupProfile = () => {
 	const readOnly = state.groupReadOnly;
     const fileInput = useRef();
     const [groupImage, setGroupImage] = useState(null);
-    const link = 'https://lyrn.link/' + state.user.handle;
+    const link = 'https://lyrn.link/signup?g=' + state.group.handle;
     const tweetText = `Check out my LyrnLink: ${link}`;
 
 	function updateName(name) {
@@ -43,7 +43,7 @@ const GroupProfile = () => {
 
 	return(
 		<div id="lyrn">
-			{/*
+			{
 				readOnly
 
 				? 	null
@@ -51,13 +51,13 @@ const GroupProfile = () => {
 				:	<div className="mylink">
 						<div className="flex-between big-body">
 							<div>
-								<strong>Group Sign Up Link:&nbsp;</strong>
-								<a className="big-body" href={`/${state.user.handle}`} target="_blank" >
-									https://lyrn.link/{state.user.handle}
+								<strong>Group Invite Link:<br/>&nbsp;</strong>
+								<a className="big-body" href={`/signup?g=${state.group.handle}`} target="_blank" >
+									https://lyrn.link/signup/?g={state.group.handle}
 								</a>
 							</div>
 							<Tooltip
-								title="Copy LyrnLink"
+								title="Copy Link"
 								position= "right"
 								trigger= "mouseenter"
 								inertia= "true"
@@ -65,14 +65,14 @@ const GroupProfile = () => {
 								delay='0'
 							>
 								<i 
-									className="fa-regular fa-copy btn-copy"
+									className="fa-regular fa-copy"
 									style={{fontSize: 'x-small', marginLeft: '5px'}}
 									onClick={copyGroupLink}
 								/>
 							</Tooltip>
 						</div>
 					</div>
-			*/}
+			}
 			<div id="user-profile" >
 				<div id="profile-header">
 					<div id="user-profile-picture-wrapper">

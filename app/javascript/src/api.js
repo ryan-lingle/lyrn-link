@@ -118,6 +118,7 @@ class Api {
                 ...params,
                 affiliate: localStorage.getItem('affiliate'),
                 token: localStorage.getItem('token'),
+                group_id: localStorage.getItem('group_id'),
             },
             checkRefresh: false,
         });
@@ -179,6 +180,7 @@ class Api {
                 ...params,
                 affiliate: localStorage.getItem('affiliate'),
                 token: localStorage.getItem('token'),
+                group_id: localStorage.getItem('group_id'),
             },
             errorType: 'login',
             checkRefresh: false,
@@ -212,6 +214,7 @@ class Api {
             params: {
                 user: { ...user, token: localStorage.getItem('token') },
                 affiliate: localStorage.getItem('affiliate'),
+                group_id: localStorage.getItem('group_id'),
             },
             errorType: 'login',
             checkRefresh: false,
@@ -469,6 +472,12 @@ class Api {
                 store.reduce({
                     type: 'add_member',
                     ...res,
+                });
+            } else {
+                store.reduce({
+                    type: 'success',
+                    successType: 'group_relationship',
+                    success: `Invite email sent to ${res.email}!`,
                 });
             }
 
@@ -820,6 +829,27 @@ class Api {
 
             return false;
 
+        }
+    }
+
+    getIndexGroup = async (handle) => {
+        // this.setLoading('groups');
+
+        const res = await this.get(`groups/${handle}/index`, {
+            errorType: 'groups',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_group',
+                ...res,
+            });
+
+        } else {
+
+            return false;
+            
         }
     }
 

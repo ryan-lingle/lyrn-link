@@ -16,6 +16,7 @@ const InviteUser = () => {
                             email: term
                         });
                         setTerm('');
+                        clearResults();
                     }}
                     className="search-item"
                     style={{padding: '10px'}}
