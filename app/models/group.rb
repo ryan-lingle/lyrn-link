@@ -42,19 +42,21 @@ class Group < ApplicationRecord
 			image: self.image_url,
 			joined: users.include?(current_user),
 			private: self.private,
-
 			tabs: [
 				{
 					tab: 'lists',
+					title: 'Featured',
 					icon: 'fa-solid fa-clipboard-list',
-					sub_tabs: {
-						type: 'Books',
-						items: [],
-					},
+					sub_tabs: [
+						{
+							type: 'Books',
+							items: [],
+						}
+					],
 				},
 				{
-					tab: 'circle',
-					icon: 'fa-solid fa-circle',
+					tab: 'group',
+					icon: 'fa-solid fa-circle-notch',
 					sub_tabs: [
 						{
 							type: 'members',

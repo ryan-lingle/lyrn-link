@@ -33,9 +33,11 @@ const ProfileTabs = ({ pathname="/admin/", tabs }) => {
         });
     };
 
+    console.log(tabs);
+
     return(
         <div className="profile-tabs" >
-            {tabs.map(({ tab, icon }, i) =>
+            {tabs.map(({ tab, icon, title }, i) =>
                 <div 
                     key={i} 
                     className={`profile-tab flex section-tab ${tab === state.tab ? 'current-section-tab' : ''}`}
@@ -43,7 +45,7 @@ const ProfileTabs = ({ pathname="/admin/", tabs }) => {
                 >
                     <i className={icon} style={{marginRight: '10px', width: '25px'}} />
                     <div className="tabs-heading">
-                        {capitalize(tab)}
+                        {title || capitalize(tab)}
                     </div>
                 </div>
             )}

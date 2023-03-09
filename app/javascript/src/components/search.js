@@ -3,7 +3,6 @@ import Context from '../context';
 import { observer } from '../utils';
 
 // function sort(a) {
-//     console.log(a); 
 //     if (a.length <= 1)
 //         return a;
 
@@ -16,8 +15,6 @@ import { observer } from '../utils';
 //         a[i] < p ? left.push(a[i]) : right.push(a[i]);
 //     };
 
-//     console.log(left);
-//     console.log(right);
 
 //     return(sort(left).concat(p, sort(right)));
 // };
@@ -40,14 +37,9 @@ import { observer } from '../utils';
 
 //     let a, b;
 
-//     if (array2) {
-//         a = mergeSort(array);
-//         b = mergeSort(array2)
-//     } else {
-//         let mid = Math.floor(array.length / 2);
-//         a = mergeSort(array.slice(0, mid));
-//         b = mergeSort(array.slice(mid));
-//     }
+//     let mid = Math.floor(array.length / 2);
+//     a = mergeSort(array.slice(0, mid));
+//     b = mergeSort(array.slice(mid));
 
 //     return merge(a, b);
 // };
@@ -129,7 +121,7 @@ const ItemSearch = ({ search, type, children, placeholder, onChange, bottom, fet
                         {children(results[key], clearResults, input)}
                     </div>
                 )}
-                {bottom(clearResults)}
+                {bottom && bottom(clearResults)}
                 <div id="search-bottom"></div>
             </div>
         </div>

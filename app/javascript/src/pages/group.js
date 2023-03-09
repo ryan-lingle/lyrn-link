@@ -44,6 +44,8 @@ const Group = ({ match }) => {
     const currentList = api.store.currentList('group');
     const pathname = `/g/${state.group.handle}/`;
 
+    api.store.currentTab('group')
+
     return(
         <div>
             <Helmet>
@@ -54,10 +56,10 @@ const Group = ({ match }) => {
             <div className="page" style={{ height: `${pageHeight}px` }} >
                 <div id="side-nav" className="non-mobile-only">
                     <GroupProfile />
-                   {/* <ProfileTabs
+                    <ProfileTabs
                         tabs={state.group.tabs}
                         pathname={`/g/${state.group.handle}/`}
-                    />*/}
+                    />
                     <div className="nav-footer">
                         <div>
                             <a style={{fontWeight: 'bolder'}}>© 2021 - Lyrnlink</a>
@@ -74,7 +76,7 @@ const Group = ({ match }) => {
                 </div>
                 <div className="container">
                     {
-                        state.tab === 'lists' 
+                        state.tab === 'featured' 
 
                             ?   <ListTabs 
                                     pathname={pathname + 'lists/'} 

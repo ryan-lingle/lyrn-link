@@ -140,7 +140,7 @@ class Store {
             this.state.loading.groups = false;
             this.state.group = event.group;
             this.state.groupReadOnly = !event.admin;
-            this.state.tab = 'circle';
+            this.state.tab = 'group';
             break;
         case 'add_group':
             this.state.loading.create_group = false;
