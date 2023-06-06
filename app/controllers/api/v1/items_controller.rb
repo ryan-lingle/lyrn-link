@@ -1,5 +1,13 @@
 class Api::V1::ItemsController < ApplicationController
-	before_action :set_list, except: [:scrape, :discover]
+	skip_before_action :authenticate_request, only: [:show]
+	before_action :set_list, except: [:scrape, :discover, :show, :update]
+
+	def show
+		item = Item.find_by(id: params[:id]) || MetaItem.find(params[:id])
+		render json: {
+			item: item.to_show_res(current_user&.bookmarked_items&.pluck(:id) || []),
+		}
+	end
 
 	def create
 		item = Item.create!(item_params)
@@ -8,8 +16,18 @@ class Api::V1::ItemsController < ApplicationController
 		}
 	end
 
+	def update
+		item = Item.find(params[:id])
+		authorize item
+		item.update!(item_params)
+		render json: {
+			item: item.to_show_res,
+		}
+	end
+
 	def destroy
 		item = Item.find(params[:id])
+		authorize item
 		item.destroy!
 		@list.re_index_items!
 		render json: {
@@ -42,8 +60,10 @@ class Api::V1::ItemsController < ApplicationController
 	end
 
 	def item_params
-		params.require(:item).permit(:uid, :title, :description, :url, :url_copy, :subtitle, :image_url, :creator, :subtitle, :publish_date, :categories).tap do |rams|
-			rams[:list] = @list
+		params.require(:item).permit(:uid, :title, :description, :url, :url_copy, :subtitle, :image_url, :creator, :subtitle, :publish_date, :categories, :user_notes).tap do |rams|
+			if @list
+				rams[:list] = @list
+			end
 		end
 	end
 end

@@ -3,6 +3,7 @@ class MetaItem < ApplicationRecord
 	has_many :items
 	has_many :lists, through: :items
 	has_many :users, through: :lists
+	has_many :comments, dependent: :destroy, as: :item
 	include EncodeImageUrl
 	include ActiveStorageSupport::SupportForBase64
 	has_one_base64_attached :image
@@ -16,6 +17,12 @@ class MetaItem < ApplicationRecord
 			else
 				self.image_url = nil
 			end
+		end
+	end
+
+	def comment_index
+		comments.map do |comment|
+			comment.to_res
 		end
 	end
 
@@ -33,6 +40,24 @@ class MetaItem < ApplicationRecord
 			show_count: true,
 			bookmarked: bookmarks.include?(self.id),
 			count: count ? self.count : nil,
+		}
+	end
+
+	def to_show_res(bookmarks=[])
+		{
+			id: self.id,
+			meta_item_id: self.id,
+			title: self.title,
+			subtitle: self.subtitle,
+			description: self.description,
+			image_url: self.image.attached? ? self.image.service_url : '',
+			url: self.url,
+			url_copy: self.url_copy, 
+			creator: self.creator,
+			bookmarked: bookmarks.include?(self.id),
+			button: 'bookmark',
+			comments: comment_index,
+			type: 'MetaItem',
 		}
 	end
 end

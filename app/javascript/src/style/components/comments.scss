@@ -1,0 +1,18 @@
+.comment {
+    padding: 10px;
+    img {
+        border-radius: 100%;
+    }
+}
+
+.comment-ts {
+    color: $grey5;
+    font-size: 12px;
+    font-weight: lighter;
+}
+
+.comment-text {
+    color: black;
+    font-size: 16px;
+    margin-bottom: 5px;
+}

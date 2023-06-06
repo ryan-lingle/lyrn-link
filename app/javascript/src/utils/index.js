@@ -25,3 +25,24 @@ export function capitalize(string="") {
     };
 }
 
+
+export function parseInputValues(params) {
+	return Object.keys(params).reduce((np, key) => {
+		const split = key.split('.');
+		const v = params[key];
+		split.reduce((_np_, s, i) => {
+			if (!Number.isNaN(parseInt(s)))
+				s = parseInt(s);
+			// if last item of split, set param
+			if (split.length === i +  1) {
+				_np_[s] = v;
+			} else {
+				const inSet = !Number.isNaN(parseInt(split[i + 1]));
+				_np_[s] =  _np_[s] || (inSet ? [] : {});
+			}
+			return _np_[s];
+		}, np);
+		return np;
+	}, {});
+};
+

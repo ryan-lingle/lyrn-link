@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_01_222850) do
+ActiveRecord::Schema.define(version: 2023_05_25_200215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -52,6 +52,17 @@ ActiveRecord::Schema.define(version: 2023_02_01_222850) do
     t.uuid "meta_item_id"
     t.index ["meta_item_id"], name: "index_bookmarks_on_meta_item_id"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
+  end
+
+  create_table "comments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "item_type", null: false
+    t.uuid "item_id", null: false
+    t.text "text"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_type", "item_id"], name: "index_comments_on_item_type_and_item_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "group_invites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -102,6 +113,7 @@ ActiveRecord::Schema.define(version: 2023_02_01_222850) do
     t.text "categories"
     t.date "publish_date"
     t.uuid "meta_item_id"
+    t.text "user_notes"
     t.index ["list_id"], name: "index_items_on_list_id"
     t.index ["meta_item_id"], name: "index_items_on_meta_item_id"
   end
@@ -181,6 +193,7 @@ ActiveRecord::Schema.define(version: 2023_02_01_222850) do
   add_foreign_key "affiliate_sign_ups", "users", column: "affiliate_id"
   add_foreign_key "bookmarks", "meta_items"
   add_foreign_key "bookmarks", "users"
+  add_foreign_key "comments", "users"
   add_foreign_key "group_invites", "groups"
   add_foreign_key "group_relationships", "groups"
   add_foreign_key "group_relationships", "users"

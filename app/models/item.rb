@@ -3,9 +3,11 @@ class Item < ApplicationRecord
 	include ActiveStorageSupport::SupportForBase64
 	has_one_base64_attached :image
 	belongs_to :list
+	has_one :user, through: :list
 	belongs_to :meta_item, required: false
 	# has_many :bookmarks, dependent: :destroy
 	# has_many :users, through: :bookmarks
+	has_many :comments, dependent: :destroy, as: :item
 	before_create :add_index
 	before_create :upload_image
 	after_create :create_or_update_meta_item
@@ -33,8 +35,6 @@ class Item < ApplicationRecord
 		end
 	end
 
-
-
 	def to_index_res(bookmarks=[])
 		{
 			id: self.id,
@@ -52,11 +52,43 @@ class Item < ApplicationRecord
 		}
 	end
 
+	def to_show_res(bookmarks=[])
+		{
+			id: self.id,
+			meta_item_id: self.meta_item_id,
+			title: self.title,
+			subtitle: self.subtitle,
+			description: self.description,
+			image_url: self.image.attached? ? self.image.service_url : '',
+			url: self.url,
+			url_copy: self.url_copy, 
+			index: self.index,
+			creator: self.creator,
+			bookmarked: bookmarks.include?(self.meta_item_id),
+			button: 'bookmark',
+			user_id: user.id,
+			user_name: user.name,
+			user_notes: user_notes,
+			comments: comment_index,
+		}
+	end
+
+	def comment_index
+		comments.map do |comment|
+			comment.to_res
+		end
+	end
+
+
 	def create_or_update_meta_item
 		meta_item = MetaItem.find_by(title: self.title)
 
 		if meta_item
 			meta_item.count += 1
+			unless meta_item.image.attached?
+				meta_item.image_url = self.image_url
+				meta_item.upload_image
+			end
 			meta_item.save
 		else
 			meta_item = MetaItem.create!(

@@ -8,7 +8,7 @@ const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton
     const link = useRef();
     const card = useRef();
 
-    const { api } = useContext(Context);
+    const { api, state } = useContext(Context);
 
     const [inviteState, setInviteState] = useState(invite);
     useEffect(() => {
@@ -23,7 +23,8 @@ const ItemCard = ({ rank=true, id, meta_item_id, pending, invite, bookmarkButton
     };
 
     function go() {
-        if (url && !searchResult) link.current.click();
+        if (!searchResult && id)
+            window.location.href = `/${state.user.handle}/i/${id}`;
     }
 
     async function acceptGroupInvite(e) {

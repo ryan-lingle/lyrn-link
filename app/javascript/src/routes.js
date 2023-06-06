@@ -1,36 +1,127 @@
-import React, { useContext } from 'react';
-import {
-  Users,
-  Page,
-  _404_,
-  Group,
-} from "./pages";
+import React, { useContext, useEffect } from 'react';
+import * as Pages from "./pages";
 import { Route, Switch } from 'react-router-dom';
 import { PrivateRoute, NavBar, ErrorBox } from './components';
 import Context from './context';
+import { withStuff } from "./hocs";
 
-const Routes = () => {
+const routes = [
+  {
+    path: "/users",
+    page: "Users",
+    private: true,
+  },
+  {
+    path: "/settings",
+    page: "Settings",
+    private: true,
+  },
+  {
+    path: "/admin",
+    page: "Page",
+    private: true,
+  },
+  {
+    path: "/admin/:tab",
+    page: "Page",
+    private: true,
+  },
+  {
+    path: "/admin/:tab/:tabType",
+    page: "Page",
+    private: true,
+  },
+  {
+    path: "/g/:handle",
+    page: "Group",
+  },
+  {
+    path: "/g/:handle/:tab",
+    page: "Group",
+  },
+  {
+    path: "/g/:handle/:tab/:tabType",
+    page: "Group",
+  },
+  {
+    path: "/:handle",
+    page: "Page",
+  },
+  {
+    path: "/:handle/i/:item",
+    page: "Page",
+  },
+  {
+    path: "/:handle/:tab",
+    page: "Page",
+  },
+  {
+    path: "/:handle/:tab/:tabType",
+    page: "Page",
+  }
+];
+
+const buildComponent = ({
+  path,
+  page,
+  nav = true,
+  ...config
+}) => {
+  const Page = withStuff(Pages[page], config);
+
+  return (props) => {
     const { state } = useContext(Context);
 
-    return(
+    return (
       <div>
-        <Route exact component={NavBar} />
+        {nav && <Route exact component={NavBar} />}
         <ErrorBox error={state.errors.standard} />
+        <Page {...props} />
+      </div>
+    );
+  };
+};
+
+const buildRoutes = (routes) => {
+  routes = routes.map((route) => {
+    route.Component = buildComponent(route);
+    return route;
+  });
+
+
+  const _404_ = buildComponent({
+    page: "_404_",
+    stripeBanner: false,
+  });
+
+  return () => {
+    const { state } = useContext(Context);
+
+    return (
+      <div>
         <Switch>
-          <PrivateRoute exact path="/users" component={Users} />
-          <PrivateRoute path="/admin" exact component={Page} />
-          <PrivateRoute path="/admin/:tab" exact component={Page} />
-          <PrivateRoute path="/admin/:tab/:tabType" exact component={Page} />
-          <Route path="/g/:handle" exact component={Group} />
-          <Route path="/g/:handle/:tab" exact component={Group} />
-          <Route path="/g/:handle/:tab/:tabType" exact component={Group} />
-          <Route exact path="/:handle/" component={Page} />
-          <Route exact path="/:handle/:tab" component={Page} />
-          <Route exact path="/:handle/:tab/:tabType" component={Page} />
+          {routes.map((route, i) =>
+            route.private ? (
+              <PrivateRoute
+                key={i}
+                path={route.path}
+                exact
+                component={route.Component}
+              />
+            ) : (
+              <Route
+                key={i}
+                path={route.path}
+                exact
+                component={route.Component}
+              />
+            )
+          )}
           <Route component={_404_} />
         </Switch>
       </div>
-    )
-}
+    );
+  };
+};
 
-export default Routes;
+export default buildRoutes(routes);

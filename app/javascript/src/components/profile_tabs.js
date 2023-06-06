@@ -33,8 +33,6 @@ const ProfileTabs = ({ pathname="/admin/", tabs }) => {
         });
     };
 
-    console.log(tabs);
-
     return(
         <div className="profile-tabs" >
             {tabs.map(({ tab, icon, title }, i) =>

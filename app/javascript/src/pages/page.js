@@ -1,11 +1,11 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { ErrorBox, Loader, ListTabs, GenericTabs, ProfileTabs, MobileTabs, List, UserProfile, UnconfirmedEmail } from '../components';
-import Context from '../context';
-import { Helmet } from 'react-helmet';
+import React from 'react';
+import { PageWrapper } from '.';
+import { List, ItemShow } from '../components';
+import { withStuff } from "../hocs";
 
-const Page = ({ match }) => {
-    const { api, state } = useContext(Context);
-    const [pageHeight, setPageHeight] = useState(window.innerHeight - 60);
+const ListPage = (props) => {
+
+    const currentList = props.api.store.currentList();
 
     const fetchListeners = {
         discover: (length, index=0) => index 
@@ -13,114 +13,49 @@ const Page = ({ match }) => {
                                 :   api.getDiscoverUsers(length)
     };
 
-    useEffect(() => {
-        const { handle } = match.params || {};
-        if (handle && !localStorage.getItem('affiliate')) {
-            localStorage.setItem('affiliate', handle);
-        }
-    }, []);
-
-    useEffect(() => {
-        window.onresize = () => {
-            setPageHeight(window.innerHeight - 60);
-        };
-    }, []);
-
-    useEffect(() => {
-        (async function() {
-            await api.getUser(match.params);
-
-            if (match.params.tab) {
-                api.store.reduce({
-                    type: 'set_tab',
-                    tab: match.params.tab,
-                });
-            }
-            
-            if (match.params.tabType) {
-                api.store.reduce({
-                    type: 'set_tab_index',
-                    tabType: match.params.tabType,
-                });
-            }
-
-        })();
-    }, []);
-
-    const loading = state.loading.user;
-    const error = state.errors.user;
- 
-    if (loading) return <Loader />;
-    if (error) return <div className="container"><ErrorBox error={error} /></div>;
-    if (state.admin && state.user.confirm_email) return <UnconfirmedEmail email={state.user.email} />;
-
-    const currentList = api.store.currentList();
-    const pathname = state.readOnly ? `/${state.user.handle}/` : '/admin/';
-
     return(
-        <div>
-            <Helmet>
-                <title>
-                    {
-                        state.readOnly
+        <PageWrapper {...props} >
+            {
+                props.state.item
 
-                        ?   `${state.user.name} (${state.user.handle})`
+                ?   <ItemShow {...props.state.item} />
 
-                        :   'lyrnlink'
-                    }
-                </title>
-            </Helmet>
-            <div className="page" style={{ height: `${pageHeight}px` }} >
-                <div id="side-nav" className="non-mobile-only">
-                    <UserProfile />
-                    <ProfileTabs
-                        tabs={state.user.tabs}
-                        pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
-                    />
-                    <div className="nav-footer">
-                        <div>
-                            <a style={{fontWeight: 'bolder'}}>© 2021 - Lyrnlink</a>
-                        </div>
-                        <div>
-                            <a style={{color: '#333333'}} href="https://www.lyrn.link/privacy">Privacy Policy</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <a style={{color: '#333333'}} href="https://www.lyrn.link/terms">Terms of Use</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="mobile-only">
-                    <UserProfile />
-                    <div className="mobile-only">
-                        <MobileTabs 
-                            pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
-                        />
-                    </div>
-                </div>
-                <div className="container">
-                    {
-                        state.tab === 'lists' 
-
-                            ?   <ListTabs 
-                                    pathname={pathname + 'lists/'} 
-                                /> 
-
-                            :   <GenericTabs 
-                                    pathname={pathname + state.tab + '/'}
-                                    tabs={api.store.currentTab()} 
-                                />
-                    }
-                    <List 
+                :     <List 
                         {...currentList}
-                        createItem={api.createItem} 
-                        destroyItem={api.destroyItem}
-                        isList={state.tab === 'lists'}
-                        onFetch={fetchListeners[state.tab]}
+                        createItem={props.api.createItem} 
+                        destroyItem={props.api.destroyItem}
+                        isList={props.state.tab === 'lists'}
+                        onFetch={fetchListeners[props.state.tab]}
                     />
-                    
-                </div>
-            </div>
-        </div>
+            }
+        </PageWrapper>
     );
 }
 
-export default Page;
+export default withStuff(ListPage, {
+    api: true,
+    state: true,
+    loader: 'user',
+    effect: async ({ api, match }) => {
+        await api.getUser(match.params.handle);
+
+        if (match.params.item) {
+            api.getItem(match.params.item);
+        }
+
+        if (match.params.tab) {
+            api.store.reduce({
+                type: 'set_tab',
+                tab: match.params.tab,
+            });
+        }
+        
+        if (match.params.tabType) {
+            
+            api.store.reduce({
+                type: 'set_tab_index',
+                tabType: match.params.tabType,
+            });
+        }
+    }
+});

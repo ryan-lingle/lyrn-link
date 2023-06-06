@@ -68,6 +68,7 @@ const Form = ({ inputs=[], onSubmit, submitCopy, type, col="6", children }) => {
         } else if (input.type === 'textarea') {
             return(
                 <textarea
+                    id={input.id}
                     ref={refs[input.key]} 
                     defaultValue={input.defaultValue}
                     onChange={input.onChange}
@@ -78,6 +79,7 @@ const Form = ({ inputs=[], onSubmit, submitCopy, type, col="6", children }) => {
         } else {
             return(
                 <input
+                    id={input.id}
                     ref={refs[input.key]} 
                     type={input.type} 
                     defaultValue={input.defaultValue}

@@ -966,6 +966,77 @@ class Api {
         }
     }
 
+    getItem = async (id) => {
+        const res = await this.get(`items/${id}`, {
+            errorType: 'items',
+        });
+        
+        if (!res.error) {
+                
+            store.reduce({
+                type: 'set_item',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
+    updateItem = async (id, item) => {
+        this.setLoading('update_item');
+
+        const res = await this.post(`items/${id}`, {
+            params: { item },
+            errorType: 'update_item',
+            method: 'PATCH',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'set_item',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    createComment = async (id, comment) => {
+        this.setLoading('comments');
+        
+        const res = await this.post(`items/${id}/comments`, {
+            params: { comment },
+            errorType: 'comments',
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'add_comment',
+                ...res,
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
     setError = (errorType, error) => {
         store.reduce({
             type: errorType,

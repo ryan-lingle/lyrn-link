@@ -61,6 +61,10 @@ const NavBar = ({ location }) => {
                                     <i className="fa-solid fa-link" style={{marginRight: '5px'}} />
                                     My Link
                                 </a>
+                                <a href="/settings" className="whitespace-no-wrap text-groundwork-red" >
+                                    <i className="fa-solid fa-link" style={{marginRight: '5px'}} />
+                                    Settings
+                                </a>
                                 <a href="#" onClick={api.signOut} >
                                     <i className="fa-solid fa-sign-out-alt" style={{marginRight: '5px'}} />
                                     Sign Out

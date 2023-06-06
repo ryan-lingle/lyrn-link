@@ -7,6 +7,7 @@ class Store {
                 username: localStorage.getItem('username'),
                 lists: [],
             },
+            item: null,
             group: {},
             users: [],
             userCount: 0,
@@ -64,14 +65,17 @@ class Store {
         case 'set_tab':
             this.state.tab = event.tab;
             this.state.tabIndex = 0;
+            this.state.item = null;
             break;
         case 'set_tab_index':
+            this.state.item = null;
             if (Number.isInteger(event.tabIndex)) {
                 this.state.tabIndex = event.tabIndex;
             }
             if (event.tabType) {
                 this.state.tabIndex = this.findIndexFromType(event.tabType)
             }
+            this.state.item = null;
             break;
         case 'add_list':
             this.state.loading.lists = false;
@@ -148,6 +152,14 @@ class Store {
             break;
         case 'add_member':
             this.getTab('circle', 'group')[0].items.unshift(event.user);
+            break;
+        case 'set_item':
+            this.state.loading.items = false;
+            this.state.item =  event.item;
+            break;
+        case 'add_comment':
+            this.state.loading.comments = false;
+            this.state.item.comments.push(event.comment);
             break;
         case 'error':
             this.state.loading[event.errorType] = null;

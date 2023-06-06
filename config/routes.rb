@@ -34,10 +34,13 @@ Rails.application.routes.draw do
         end
         resources :items, only: [:create, :destroy]
       end
-      resources :items, only: [] do
+      resources :items, only: [ :show, :update ] do
         collection do
           get 'scrape', to: 'items#scrape'
           get 'discover', to: 'items#discover'
+        end
+        member do
+          post 'comments', to: 'comments#create'
         end
       end
 
