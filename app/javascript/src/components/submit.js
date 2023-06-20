@@ -1,12 +1,15 @@
 import React from 'react';
 import BtnSpinner from './btn_spinner.js';
+import { withStuff } from  '../hocs';
 
-const Submit = ({ copy, loading, style }) => {
-    if (loading) return <BtnSpinner style={style} />;
+const Submit = ({ copy, loading, type, style, className="btn btn-black", state }) => {
+    loading = loading || state.loading[type];
+
+    if (loading) return <BtnSpinner style={style} className={className} />;
 
     return(
         <input
-            className="btn-black"
+            className={className}
             type="submit"
             value={copy}
             style={style}
@@ -14,4 +17,6 @@ const Submit = ({ copy, loading, style }) => {
     );
 }
 
-export default Submit;
+export default withStuff(Submit, {
+    state: true,
+});

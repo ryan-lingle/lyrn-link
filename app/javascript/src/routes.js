@@ -44,6 +44,10 @@ const routes = [
     page: "Group",
   },
   {
+    path: "/i/:item",
+    page: "Page",
+  },
+  {
     path: "/:handle",
     page: "Page",
   },

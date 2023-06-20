@@ -318,6 +318,12 @@ class Api {
                 ...res,
             });
 
+            store.reduce({
+                type: 'success',
+                successType: 'update_user',
+                success: 'Successfully updated',
+            });
+
             return true;
 
         } else {
@@ -360,6 +366,7 @@ class Api {
 
     getUser = async (params={}) => {
         this.setLoading('user');
+        console.log(params )
 
         const res = await this.get('current_user', {
             params,

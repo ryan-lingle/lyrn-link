@@ -8,9 +8,11 @@ class Item < ApplicationRecord
 	# has_many :bookmarks, dependent: :destroy
 	# has_many :users, through: :bookmarks
 	has_many :comments, dependent: :destroy, as: :item
+	has_many :comment_users, -> { distinct }, through: :comments, source: :user
 	before_create :add_index
 	before_create :upload_image
 	after_create :create_or_update_meta_item
+	after_create :send_notification_email
 
 	def title_clean
 		whitelist = "0123456789abcdefghijklmnopqrstuvwxyz ".split("")
@@ -37,6 +39,7 @@ class Item < ApplicationRecord
 
 	def to_index_res(bookmarks=[])
 		{
+			trueItem: true,
 			id: self.id,
 			meta_item_id: self.meta_item_id,
 			title: self.title,
@@ -109,4 +112,15 @@ class Item < ApplicationRecord
 		self.save!
 	end
 	
+	def send_notification_email
+		user.followers.each do |follower|
+			if follower.subscribed?('follow_post')
+				NotificationMailer.new_item(
+					email: follower.email,
+					name: follower.handle,
+					item: self,
+				)
+			end
+		end
+	end
 end

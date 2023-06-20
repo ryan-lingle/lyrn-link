@@ -37,7 +37,7 @@ export default withStuff(ListPage, {
     state: true,
     loader: 'user',
     effect: async ({ api, match }) => {
-        await api.getUser(match.params.handle);
+        await api.getUser(match.params);
 
         if (match.params.item) {
             api.getItem(match.params.item);

@@ -40,3 +40,5 @@ export {default as Editor} from './editor.js';
 export {default as CommentList} from './comment_list.js';
 export {default as NewComment} from './new_comment.js';
 export {default as SimpleForm} from './simple_form.js';
+export {default as CheckInput} from './check_input.js';
+export {default as CheckboxList} from './checkbox_list.js';

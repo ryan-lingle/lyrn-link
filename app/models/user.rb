@@ -31,6 +31,8 @@ class User < ApplicationRecord
 	after_create :handle_token, if: :token?
 	after_create :find_group_invites
 
+	serialize :notification_settings, Hash
+
 	include PgSearch::Model
   	pg_search_scope :search, against: [:name, :handle]
 
@@ -203,7 +205,12 @@ class User < ApplicationRecord
 			liked: flwing.include?(self.id),
 			email: self.email,
 			confirm_email: !self.email_confirmed && confirm_email,
+			notification_settings: notification_settings,
 		}
+	end
+
+	def subscribed?(type)
+		self.notification_settings[type] == "1"
 	end
 
 	def to_index_res(flwing=[], index=nil, show_count=false)

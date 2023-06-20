@@ -5,6 +5,7 @@ class Like < ApplicationRecord
   validate :following_self
   before_create :increment_follower_count
   before_destroy :decrement_follower_count
+  after_create :send_notification_email
 
   private
 
@@ -23,5 +24,15 @@ class Like < ApplicationRecord
   	link.follower_count -= 1
   	link.save
   end
+
+  def send_notification_email
+    if link.subscribed?('new_follower')
+      NotificationMailer.new_follower(
+        email: link.email,
+        name: link.handle,
+        follower: like,
+      )
+    end
+  end 
 
 end

@@ -29,18 +29,29 @@ const ItemShow = ({ title, image_url, description, subtitle, ...item }) => {
                         </div>
                     }
                     {
-                        !!state.item?.user_notes &&
+                        !!state.item?.user_notes
 
-                        <div>
-                            <p className='b-copy' style={{ fontSize: '18px', margin: '20px 0px'}}>
-                                {state.user.name}'s notes
-                            </p>
-                            <Editor
-                                defaultValue={item.user_notes}
-                                onSave={user_notes => api.updateItem(item.id, { user_notes })}
-                                owner={item.user_id === state.current_user_id}
-                            />
-                        </div>
+                        &&   <div className='mt-5'>
+                                <p className='b-copy' style={{ fontSize: '18px'}}>
+                                    {state.user.name}'s notes
+                                </p>
+                                <Editor
+                                    defaultValue={item.user_notes}
+                                    onSave={user_notes => api.updateItem(item.id, { user_notes })}
+                                    owner={item.user_id === state.current_user_id}
+                                />
+                            </div>
+                        
+                        
+                    }
+                    {
+                        !state.item?.user_notes && item.user_id === state.current_user_id &&
+
+                        <Editor
+                            defaultValue={item.user_notes}
+                            onSave={user_notes => api.updateItem(item.id, { user_notes })}
+                            owner={item.user_id === state.current_user_id}
+                        />
                     }
                     <p className='b-copy' style={{ fontSize: '18px', margin: '20px 0px'}}>Comments</p>
                     <CommentList comments={item.comments} />

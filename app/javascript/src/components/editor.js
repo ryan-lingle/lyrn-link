@@ -25,19 +25,24 @@ const Editor = ({ onSave, defaultValue, owner=false }) => {
   return(
     <div id="editor">
       {
-        owner 
+        owner
 
-        ?  <div className="text-right" style={{ fontSize: '20px', marginTop: '-30px'}}>
-            {
-              edit
+        ? value || edit
 
-              ?   <i className="fas fa-save" style={{marginBottom: '10px'}} onClick={saveContent}>
-                  </i>
+          ?  <div className="text-right" style={{ fontSize: '20px', marginTop: '-30px'}}>
+              {
+                edit
 
-              :   <i className="fas fa-pencil" style={{marginBottom: '10px'}} onClick={() => setEdit(true)} >
-                  </i>
-              }   
-          </div>
+                ?   <i className="fas fa-save" style={{marginBottom: '10px'}} onClick={saveContent}>
+                    </i>
+
+                :   <i className="fas fa-pencil" style={{marginBottom: '10px'}} onClick={() => setEdit(true)} >
+                    </i>
+                }
+              </div>
+
+          : <button className="btn btn-primary" onClick={() => setEdit(true)}>Create Note</button>
+          
         :   null
       }
       <CustomToolbar display={edit} />

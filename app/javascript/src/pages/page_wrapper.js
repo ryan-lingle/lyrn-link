@@ -6,7 +6,7 @@ import {
 import { Helmet } from 'react-helmet';
 import { withStuff } from "../hocs";
 
-const PageWrapper = ({ state, api, children, pageHeight }) => {
+const PageWrapper = ({ state, api, children, pageHeight, tabs=true }) => {
     
     // move to HOC
     if (state.admin && state.user.confirm_email) return <UnconfirmedEmail email={state.user.email} />;
@@ -54,7 +54,9 @@ const PageWrapper = ({ state, api, children, pageHeight }) => {
                 </div>
                 <div className="container">
                     {
-                        state.tab === 'lists' 
+                        tabs
+
+                        ?   state.tab === 'lists' 
 
                             ?   <ListTabs 
                                     pathname={pathname + 'lists/'} 
@@ -64,6 +66,7 @@ const PageWrapper = ({ state, api, children, pageHeight }) => {
                                     pathname={pathname + state.tab + '/'}
                                     tabs={api.store.currentTab()} 
                                 />
+                        :   null
                     }
                     {children}
                 </div>

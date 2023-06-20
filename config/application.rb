@@ -31,5 +31,7 @@ module LyrnLink
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::HashWithIndifferentAccess]
   end
 end

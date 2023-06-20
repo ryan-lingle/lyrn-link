@@ -105,7 +105,7 @@ class Api::V1::UsersController < ApplicationController
 	private
 
 	def user_params
-		params.require(:user).permit(:email, :name, :handle, :description)
+		params.require(:user).permit(:email, :name, :handle, :description, notification_settings: [:comment_on_my_item, :comment_on_my_converation, :follow_post, :new_follower, :group_invite])
 	end
 
 	def set_user
