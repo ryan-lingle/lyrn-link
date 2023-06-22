@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { ItemSearch, Scraper, Draggable, ItemCard, GroupForm, InviteUser } from '../components';
+import { ItemSearch, Scraper, Draggable, ItemCard, GroupForm, InviteUser, ActivityCard } from '../components';
 import NoItems from '../assets/noitems.png';
 import NoItemsUser from '../assets/noitemsuser.png';
 import Context from '../context';
 import { capitalize } from '../utils';
 import { observer } from '../utils';
-
-
 
 const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, isList, onFetch }) => {
     const [add, setAdd] = useState(false);
@@ -128,6 +126,8 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
     if (!type) return <div/>;
 
+
+
     if (items.length === 0) {
         
         if (isList) {
@@ -210,6 +210,8 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
         });
     };
 
+    const ListItem = type === 'feed' ? ActivityCard : ItemCard;
+
     return(
         <div id="list" >
             {
@@ -265,7 +267,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                     onDrop={() => api.updateItemIndex()} 
                     onMove={onMove}
                 >
-                    <ItemCard
+                    <ListItem
                         onMove={(d, h) => { onMove(d, h); api.updateItemIndex(); }}
                         readOnly={readOnly || isDiscover || isGroups}
                         rank={isList || isDiscover}

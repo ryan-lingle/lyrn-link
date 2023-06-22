@@ -42,3 +42,4 @@ export {default as NewComment} from './new_comment.js';
 export {default as SimpleForm} from './simple_form.js';
 export {default as CheckInput} from './check_input.js';
 export {default as CheckboxList} from './checkbox_list.js';
+export {default as ActivityCard} from './activity_card.js';

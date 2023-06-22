@@ -6,6 +6,7 @@ class Like < ApplicationRecord
   before_create :increment_follower_count
   before_destroy :decrement_follower_count
   after_create :send_notification_email
+  after_create :create_activity
 
   private
 
@@ -34,5 +35,12 @@ class Like < ApplicationRecord
       )
     end
   end 
+
+  def create_activity
+    FollowActivity.create(
+      user: like,
+      record: link,
+    )
+  end
 
 end

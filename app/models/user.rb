@@ -2,6 +2,7 @@ class User < ApplicationRecord
 	HANDLE_WHITELIST = %w(a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 0 _)
 	include EncodeImageUrl
 	include ActiveStorageSupport::SupportForBase64
+	include Feedable
 	has_one_base64_attached :profile_picture
 
 	validates :handle, presence: true, uniqueness: { case_sensitive: false }
@@ -17,6 +18,10 @@ class User < ApplicationRecord
 	has_many :likers, class_name: "Like", foreign_key: "link_id"
 	has_many :following, through: :likes, source: :link
 	has_many :followers, through: :likers, source: :like
+
+	has_many :activities, dependent: :destroy
+
+	has_many :follower_activities, class_name: "Activity", through: :followers, source: :activities
 
 	has_many :lists, dependent: :destroy
 	has_many :items, through: :lists
@@ -145,6 +150,16 @@ class User < ApplicationRecord
 			description: self.description,
 			profile_picture_url: profile_picture_url,
 			tabs: [
+				{
+					tab: 'feed',
+					icon: 'fa-solid fa-newspaper',
+					sub_tabs: [
+						{
+							type: 'feed',
+							items: feed(following: flwing, bookmarks: bis),
+						}
+					],
+				},
 				{
 					tab: 'lists',
 					icon: 'fa-solid fa-clipboard-list',

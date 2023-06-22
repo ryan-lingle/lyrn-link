@@ -13,6 +13,7 @@ class Item < ApplicationRecord
 	before_create :upload_image
 	after_create :create_or_update_meta_item
 	after_create :send_notification_email
+	after_create :create_activity
 
 	def title_clean
 		whitelist = "0123456789abcdefghijklmnopqrstuvwxyz ".split("")
@@ -122,5 +123,12 @@ class Item < ApplicationRecord
 				)
 			end
 		end
+	end
+
+	def create_activity
+		ItemPostActivity.create!(
+			user: self.user,
+			record: self,
+		)
 	end
 end
