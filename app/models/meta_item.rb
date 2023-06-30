@@ -27,6 +27,10 @@ class MetaItem < ApplicationRecord
 		end
 	end
 
+	def href
+		"#{ENV['DOMAIN']}/i/#{id}"
+	end
+
 	def to_index_res(bookmarks=[], index=nil, count=false)
 		{
 			trueItem: true,

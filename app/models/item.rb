@@ -14,6 +14,7 @@ class Item < ApplicationRecord
 	after_create :create_or_update_meta_item
 	after_create :send_notification_email
 	after_create :create_activity
+	after_update :create_notes_activity
 
 	def title_clean
 		whitelist = "0123456789abcdefghijklmnopqrstuvwxyz ".split("")
@@ -83,6 +84,10 @@ class Item < ApplicationRecord
 		end
 	end
 
+	def href
+		"#{ENV['DOMAIN']}/#{user.handle}/i/#{id}"
+	end
+
 
 	def create_or_update_meta_item
 		meta_item = MetaItem.find_by(title: self.title)
@@ -130,5 +135,15 @@ class Item < ApplicationRecord
 			user: self.user,
 			record: self,
 		)
+	end
+
+	def create_notes_activity
+		if !notes_activity_published && user_notes.present?
+			NotesActivity.create!(
+				user: self.user,
+				record: self,
+				metadata: { notes: user_notes }
+			)
+		end
 	end
 end

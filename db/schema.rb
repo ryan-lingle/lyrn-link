@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_22_201623) do
+ActiveRecord::Schema.define(version: 2023_06_30_202946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2023_06_22_201623) do
     t.uuid "record_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "metadata"
     t.index ["record_type", "record_id"], name: "index_activities_on_record_type_and_record_id"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
@@ -125,6 +126,7 @@ ActiveRecord::Schema.define(version: 2023_06_22_201623) do
     t.date "publish_date"
     t.uuid "meta_item_id"
     t.text "user_notes"
+    t.boolean "notes_activity_published", default: false
     t.index ["list_id"], name: "index_items_on_list_id"
     t.index ["meta_item_id"], name: "index_items_on_meta_item_id"
   end

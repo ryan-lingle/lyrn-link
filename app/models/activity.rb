@@ -5,12 +5,15 @@ class Activity < ApplicationRecord
   validates :user, presence: true
   validates :record, presence: true
 
+  serialize :metadata, Hash
+
   before_create :destroy_any_previous_duplicates
 
   def destroy_any_previous_duplicates
     Activity.where(
       user: user,
       record: record,
+      metadata: metadata,
     ).destroy_all
   end
 

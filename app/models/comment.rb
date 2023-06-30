@@ -4,6 +4,7 @@ class Comment < ApplicationRecord
   belongs_to :item, polymorphic: true
   after_create :send_notification_email
   after_create :send_conversation_notification_email
+  after_create :create_activity
 
   def to_res
     {
@@ -19,11 +20,7 @@ class Comment < ApplicationRecord
   end
 
   def action_url
-    if item_type == 'Item'
-      "#{ENV['DOMAIN']}/#{item.user.handle}/i/#{item.id}"
-    else
-      "#{ENV['DOMAIN']}/i/#{item.id}"
-    end
+    item.href
   end
 
   def send_notification_email
@@ -48,5 +45,13 @@ class Comment < ApplicationRecord
         )
       end
     end
+  end
+
+  def create_activity
+    CommentActivity.create(
+      user: user,
+      record: item,
+      metadata: { comment: text }
+    )
   end
 end
