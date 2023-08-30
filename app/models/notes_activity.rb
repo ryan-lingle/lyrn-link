@@ -4,7 +4,7 @@ class NotesActivity < Activity
     end
 
     def icon
-        "fa-solid fa-note"
+        "fa-solid fa-pencil"
     end
 
     def image_url

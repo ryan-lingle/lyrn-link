@@ -76,9 +76,10 @@ const Group = ({ match }) => {
                 </div>
                 <div className="container">
                     {
-                        state.tab === 'featured' 
+                        state.tab === 'lists' 
 
                             ?   <ListTabs 
+                                    type="group"
                                     pathname={pathname + 'lists/'} 
                                 /> 
 
@@ -89,6 +90,7 @@ const Group = ({ match }) => {
                     }
                     <List 
                         {...currentList}
+                        isList={state.tab === 'lists'}
                     />
                     
                 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_30_202946) do
+ActiveRecord::Schema.define(version: 2023_08_30_173801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -143,9 +143,12 @@ ActiveRecord::Schema.define(version: 2023_06_30_202946) do
   create_table "lists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type"
     t.integer "index"
-    t.uuid "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "user_id"
+    t.string "owner_type", null: false
+    t.uuid "owner_id", null: false
+    t.index ["owner_type", "owner_id"], name: "index_lists_on_owner_type_and_owner_id"
     t.index ["user_id"], name: "index_lists_on_user_id"
   end
 
@@ -217,5 +220,4 @@ ActiveRecord::Schema.define(version: 2023_06_30_202946) do
   add_foreign_key "items", "meta_items"
   add_foreign_key "likes", "users", column: "like_id"
   add_foreign_key "likes", "users", column: "link_id"
-  add_foreign_key "lists", "users"
 end

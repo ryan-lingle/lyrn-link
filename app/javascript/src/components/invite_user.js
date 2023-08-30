@@ -36,7 +36,7 @@ const InviteUser = () => {
     		<Search 
                 type='users'
                 placeholder='Search for a user to invite or type in an email...'
-                search={(_, term, length) => {
+                search={({ term, length }) => {
                     api.userSearch(term, length)
                 }}
                 onChange={term => setTerm(term)}

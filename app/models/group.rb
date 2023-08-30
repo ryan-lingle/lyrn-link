@@ -5,11 +5,14 @@ class Group < ApplicationRecord
 	has_many :users, through: :group_relationships
 	include ActiveStorageSupport::SupportForBase64
 	include EncodeImageUrl
+	include Listable
 	has_one_base64_attached :image
 	after_create :add_admin_to_group
 	belongs_to :user
 	validates :handle, presence: true, uniqueness: { case_sensitive: false }
 	validates :name, presence: true
+	has_many :lists, -> { order(index: :asc) }, dependent: :destroy, as: :owner
+
 
 	def image_url
 		image.service_url if image.attached?
@@ -30,6 +33,10 @@ class Group < ApplicationRecord
 		}
 	end
 
+	def to_res(current_user=nil)
+		to_show_res(current_user)
+	end
+
 	def to_show_res(current_user=nil)
 		bis = current_user&.bookmarked_items&.pluck(:id) || []
 		flwing = current_user&.following&.pluck(:id) || []
@@ -42,17 +49,13 @@ class Group < ApplicationRecord
 			image: self.image_url,
 			joined: users.include?(current_user),
 			private: self.private,
+			uncreated_lists: uncreated_lists,
 			tabs: [
 				{
 					tab: 'lists',
 					title: 'Featured',
 					icon: 'fa-solid fa-clipboard-list',
-					sub_tabs: [
-						{
-							type: 'Books',
-							items: [],
-						}
-					],
+					sub_tabs: list_index(bis),
 				},
 				{
 					tab: 'group',
@@ -72,6 +75,10 @@ class Group < ApplicationRecord
 		}
 	end
 
+	def owner_type
+		"group"
+	end
+
 	def update_image(image)
 		self.image.attach(data: image)
 		self.save
@@ -89,7 +96,7 @@ class Group < ApplicationRecord
 	end
 
 	def item_index(offset: 0, bis: [])
-		MetaItem.where("id in (SELECT items.meta_item_id FROM items INNER JOIN lists ON items.list_id = lists.id WHERE lists.user_id in (SELECT user_id FROM group_relationships WHERE accepted = true AND group_id = '#{self.id}'))").order(count: :desc, title: :asc).offset(offset).limit(100).each_with_index.map do |item, i| 
+		MetaItem.where("id in (SELECT items.meta_item_id FROM items INNER JOIN lists ON items.list_id = lists.id WHERE lists.owner_type = 'User' AND lists.owner_id in (SELECT user_id FROM group_relationships WHERE accepted = true AND group_id = '#{self.id}'))").order(count: :desc, title: :asc).offset(offset).limit(100).each_with_index.map do |item, i| 
 			item.to_index_res(bis, offset + i, true)
 		end
 	end

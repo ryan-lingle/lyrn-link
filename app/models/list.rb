@@ -1,11 +1,12 @@
 class List < ApplicationRecord
-	belongs_to :user
+	belongs_to :user, optional: true
+	belongs_to :owner, polymorphic: true
 	has_many :items, dependent: :destroy
 	before_create :add_index
-	validates_uniqueness_of :type, scope: [:user_id]
+	validates_uniqueness_of :type, scope: [:owner_id]
 
 	def add_index
-		self.index = user.lists.count
+		self.index = owner.lists.count
 	end
 
 	def re_index_items!
@@ -17,6 +18,7 @@ class List < ApplicationRecord
 
 	def to_res(bookmarks=[])
 		{
+			owner_type: owner.owner_type,
 			id: self.id,
 			index: self.index,
 			type: self.type.downcase,

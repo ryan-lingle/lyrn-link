@@ -31,7 +31,8 @@ class Api::V1::ItemsController < ApplicationController
 		item.destroy!
 		@list.re_index_items!
 		render json: {
-			user: current_user.to_res
+			owner: @list.owner.to_res,
+			owner_type: @list.owner.owner_type,
 		}
 	end
 
@@ -56,7 +57,7 @@ class Api::V1::ItemsController < ApplicationController
 	private
 
 	def set_list
-		@list = current_user.lists.find_by(type: params[:list_type].capitalize)
+		@list = List.find(params[:list_id])
 	end
 
 	def item_params

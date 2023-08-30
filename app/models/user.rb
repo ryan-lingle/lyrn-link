@@ -3,6 +3,7 @@ class User < ApplicationRecord
 	include EncodeImageUrl
 	include ActiveStorageSupport::SupportForBase64
 	include Feedable
+	include Listable
 	has_one_base64_attached :profile_picture
 
 	validates :handle, presence: true, uniqueness: { case_sensitive: false }
@@ -22,9 +23,6 @@ class User < ApplicationRecord
 	has_many :activities, dependent: :destroy
 
 	has_many :follower_activities, class_name: "Activity", through: :followers, source: :activities
-
-	has_many :lists, dependent: :destroy
-	has_many :items, through: :lists
 
 	has_many :bookmarks, dependent: :destroy
 	has_many :bookmarked_items, through: :bookmarks, source: :meta_item
@@ -85,38 +83,6 @@ class User < ApplicationRecord
 	
 	def admin?
 		self.admin
-	end
-
-	def lists
-		List.where(user_id: self.id).order(index: :asc)
-	end
-
-	def re_index_lists!
-		lists.each_with_index do |list, index|
-			list.index = index
-			list.save
-		end
-	end
-
-	def update_list_index!(lists)
-		lists.each do |list_rams|
-			list = List.find(list_rams[:id])
-			list.index = list_rams[:index]
-			list.save
-		end
-	end
-
-	def list_index(bis=[])
-		lists.map { |list| list.to_res(bis) }
-	end
-
-	def uncreated_lists
-		my_list_strings = lists.map do |list|
-			list.type.downcase
-		end
-		all_list_strings.filter do |list_string|
-			!my_list_strings.include?(list_string)
-		end
 	end
 
 	def group_index(admin: false, grps: [])
@@ -222,6 +188,10 @@ class User < ApplicationRecord
 			confirm_email: !self.email_confirmed && confirm_email,
 			notification_settings: notification_settings,
 		}
+	end
+
+	def owner_type
+		"user"
 	end
 
 	def subscribed?(type)

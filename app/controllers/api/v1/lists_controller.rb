@@ -1,32 +1,40 @@
 class Api::V1::ListsController < ApplicationController
-	before_action :set_list, except: [:create, :index]
+	before_action :set_list, only: [:destroy, :item_index, :search, :index]
 
 	def create
-		list = List.create!(list_params)
+		list = List.new(list_params)
+		ListPolicy.new(current_user, list).create?
+		list.save!
 		render json: {
-			user: current_user.to_res
+			owner: list.owner.to_res,
+			owner_type: list.owner_type.downcase,
 		}
 	end
 
 	def destroy
+		ListPolicy.new(current_user, @list).destroy?
+		@owner = @list.owner
 		@list.destroy!
-		current_user.re_index_lists!
+		@owner.re_index_lists!
 		render json: {
-			user: current_user.to_res
+			owner: @owner.to_res,
+			owner_type: @list.owner_type.downcase,
 		}
 	end
 
 	def index
-		current_user.update_list_index!(params[:lists])
+		@list.owner.update_list_index!(params[:lists])
 		render json: {
-			user: current_user.to_res
+			owner: @list.owner.to_res,
+			owner_type: @list.owner.owner_type,
 		}
 	end
 
 	def item_index
 		@list.update_item_index!(params[:items])
 		render json: {
-			user: current_user.to_res
+			owner: @list.owner.to_res,
+			owner_type: @list.owner_type.downcase,
 		}
 	end
 
@@ -42,11 +50,12 @@ class Api::V1::ListsController < ApplicationController
 	def list_params
 		params.require(:list).permit(:type).tap do |rams|
 			rams[:type] = rams[:type].capitalize
-			rams[:user] = current_user
+			rams[:owner_id] = params[:group_id] || current_user.id
+			rams[:owner_type] = params[:group_id] ? 'Group' : 'User'
 		end
 	end
 
 	def set_list
-		@list = current_user.lists.find_by(type: params[:type].capitalize)
+		@list = List.find(params[:id])
 	end
 end

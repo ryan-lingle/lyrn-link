@@ -24,11 +24,9 @@ Rails.application.routes.draw do
           get 'discover', to: 'users#discover'
         end
       end
-      resources :lists, only: [:create, :destroy], param: :type do 
-        collection do
-          post 'index', to: 'lists#index'
-        end
+      resources :lists, only: [:create, :destroy] do 
         member do
+          post 'index', to: 'lists#index'
           post 'item_index', to: 'lists#item_index'
           get 'search', to: 'lists#search'
         end

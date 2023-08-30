@@ -22,8 +22,6 @@ const ListPage = (props) => {
 
                 :     <List 
                         {...currentList}
-                        createItem={props.api.createItem} 
-                        destroyItem={props.api.destroyItem}
                         isList={props.state.tab === 'lists'}
                         onFetch={fetchListeners[props.state.tab]}
                     />

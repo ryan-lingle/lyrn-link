@@ -2,7 +2,6 @@ class MetaItem < ApplicationRecord
 	has_many :bookmarks, dependent: :destroy
 	has_many :items
 	has_many :lists, through: :items
-	has_many :users, through: :lists
 	has_many :comments, dependent: :destroy, as: :item
 	has_many :comment_users, -> { distinct }, through: :comments, source: :user
 	include EncodeImageUrl

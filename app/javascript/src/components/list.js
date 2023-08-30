@@ -6,7 +6,7 @@ import Context from '../context';
 import { capitalize } from '../utils';
 import { observer } from '../utils';
 
-const List = ({ type, singular, searchable, icon, items=[], createItem, destroyItem, isList, onFetch }) => {
+const List = ({ id, type, owner_type, singular, searchable, icon, items=[], isList, onFetch }) => {
     const [add, setAdd] = useState(false);
     const [addGroup, setAddGroup] = useState(false);
     const [invite, setInvite] = useState(false);
@@ -36,8 +36,9 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     }, [ items.length, state.tabIndex ]);
 
     function destroyList() {
+        console.log(id);
         if (window.confirm('Are you sure you want to delete this list?')) {
-            api.destroyList(type);
+            api.destroyList(id);
         };
     };
 
@@ -80,10 +81,10 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
 
             if (searchable) {
 
-                return <ItemSearch type={type} item={singular} >
+                return <ItemSearch id={id} item={singular} >
                     {(result, clearResults, input) =>
                         <div onClick={() => {
-                            createItem(type, result);
+                            api.createItem(id, result);
                             clearResults();
                             input?.current?.focus();
                         }} >
@@ -100,7 +101,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
             } else {
 
                 return <Scraper onSubmit={(result) => {
-                        createItem(type, result);
+                        api.createItem(id, result);
                     }} 
                 />;
 
@@ -206,6 +207,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
     function onMove(dragIndex, hoverIndex) {
         api.store.reduce({
             type: 'swap_items',
+            owner_type: owner_type,
             dragIndex, hoverIndex,
         });
     };
@@ -220,7 +222,7 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                 ?   <div className="list-heading">
                         <div className="main-heading">
                             <i className={icon} style={{fontSize: 'normal', marginRight: '10px'}} />
-                            <strong>My Favorite {capitalize(type)}</strong>
+                            <strong>{owner_type == 'group' ? 'Our' : 'My'} Favorite {capitalize(type)}</strong>
                         </div>
                         <div>{editBtns()}</div>
                     </div>
@@ -268,10 +270,10 @@ const List = ({ type, singular, searchable, icon, items=[], createItem, destroyI
                     onMove={onMove}
                 >
                     <ListItem
-                        onMove={(d, h) => { onMove(d, h); api.updateItemIndex(); }}
+                        onMove={(d, h) => { onMove(d, h); api.updateItemIndex(owner_type); }}
                         readOnly={readOnly || isDiscover || isGroups}
                         rank={isList || isDiscover}
-                        onDestroy={() => destroyItem(type, item.id)}
+                        onDestroy={() => api.destroyItem(id, item.id)}
                         followButton={['following', 'followers', 'users', 'members'].includes(type)}
                         bookmarkButton={['bookmarks', 'items'].includes(type)}
                         joinButton={type === 'groups'}

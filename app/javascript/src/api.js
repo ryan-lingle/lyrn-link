@@ -194,8 +194,6 @@ class Api {
                 user: res.user,
             });
 
-            console.log(redirectTo);
-
             window.location.href = redirectTo;
 
             return true;
@@ -366,7 +364,6 @@ class Api {
 
     getUser = async (params={}) => {
         this.setLoading('user');
-        console.log(params )
 
         const res = await this.get('current_user', {
             params,
@@ -414,19 +411,19 @@ class Api {
 
     }
 
-    createList = async (list) => {
+    createList = async ({ group_id, ...list }) => {
         this.setLoading('lists');
 
         const res = await this.post('lists', {
-            params: { list },
+            params: { list, group_id },
             errorType: 'lists',
         });
 
         if (!res.error) {
 
             store.reduce({
-                type: 'set_user',
-                user: res.user,
+                type: `set_${res.owner_type}`,
+                [res.owner_type]: res.owner,
             });
 
             return true;
@@ -438,8 +435,8 @@ class Api {
         }
     }
 
-    destroyList = async (type) => {
-        const res = await this.get(`lists/${type}`, {
+    destroyList = async (id) => {
+        const res = await this.get(`lists/${id}`, {
             method: 'DELETE',
             errorType: 'lists',
         });
@@ -447,8 +444,8 @@ class Api {
         if (!res.error) {
 
             store.reduce({
-                type: 'set_user',
-                user: res.user,
+                type: `set_${res.owner_type}`,
+                [res.owner_type]: res.owner,
             });
 
             store.reduce({
@@ -587,11 +584,11 @@ class Api {
         }
     }
 
-    search = async (type, term, offset=0) => {
+    search = async ({ id, type, term, length=0 } ) => {
         this.setLoading('search');
 
-        const res = await this.get(`lists/${type}/search`, {
-            params: { term, offset },
+        const res = await this.get(`lists/${id}/search`, {
+            params: { term, offset: length },
             errorType: 'search',
         });
 
@@ -601,7 +598,7 @@ class Api {
                 type: 'search_results',
                 searchType: type,
                 results: res.results,
-                push: offset > 0,
+                push: length > 0,
             });
 
             return true;
@@ -637,10 +634,10 @@ class Api {
         }
     }
 
-    createItem = async (listType, item) => {
+    createItem = async (listId, item) => {
         this.setLoading('items');
 
-        const res = await this.post(`lists/${listType}/items`, {
+        const res = await this.post(`lists/${listId}/items`, {
             params: { item },
             errorType: 'items',
         });
@@ -670,8 +667,8 @@ class Api {
         if (!res.error) {
 
             store.reduce({
-                type: 'set_user',
-                user: res.user,
+                type:  `set_${res.owner_type}`,
+                [res.owner_type]: res.owner,
             });
 
             return true;
@@ -683,9 +680,9 @@ class Api {
         }
     }
 
-    updateItemIndex = async () => {
-        const list = this.store.currentList();
-        const res = await this.post(`lists/${list.type}/item_index`, {
+    updateItemIndex = async (owner_type) => {
+        const list = this.store.currentList(owner_type);
+        const res = await this.post(`lists/${list.id}/item_index`, {
             params: { items: list.items },
             errorType: 'items',
         });
@@ -693,8 +690,8 @@ class Api {
         if (!res.error) {
 
             store.reduce({
-                type: 'set_user',
-                user: res.user,
+                type: `set_${res.owner_type}`,
+                [res.owner_type]: res.owner,
             });
 
             return true;
@@ -707,17 +704,17 @@ class Api {
 
     }
 
-    updateListIndex = async () => {
-        const res = await this.post(`lists/index`, {
-            params: { lists: this.store.state.user.lists },
+    updateListIndex = async (id, type="user") => {
+        const res = await this.post(`lists/${id}/index`, {
+            params: { lists: this.store.state[type].lists },
             errorType: 'lists',
         });
 
         if (!res.error) {
 
             store.reduce({
-                type: 'set_user',
-                user: res.user,
+                type: `set_${res.owner_type}`,
+                [res.owner_type]: res.owner,
             });
 
             return true;
@@ -871,7 +868,7 @@ class Api {
 
             store.reduce({
                 type: 'set_group',
-                ...res,
+                ...res, initial_load: true,
             });
 
         } else {

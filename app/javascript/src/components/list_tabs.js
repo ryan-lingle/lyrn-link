@@ -6,10 +6,10 @@ import Draggable from './draggable';
 import NoLists from '../assets/nolist.png';
 import NoListsUser from '../assets/nolistuser.png'
 
-const ListTabs = ({ pathname="/admin/lists/" }) => {
+const ListTabs = ({ pathname="/admin/lists/", type="user" }) => {
     const { state, api } = useContext(Context);
     const readOnly = state.readOnly;
-    const lists = api.store.getTab('lists');
+    const lists = api.store.getTab('lists', type);
 
     // useEffect(() => {
 
@@ -75,7 +75,7 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                             <div className="todo-heading">👋 Welcome to the family!</div>
                             <div className="todo-body">Now you can begin creating lists.  <b>We recommend starting with Books</b>, they're easy to search for and you'll get the feel of list making pretty quickly.</div>
                         </div>
-                        <NewList id={'empty-state-new-list'} >
+                        <NewList type={type} id={'empty-state-new-list'} >
                             <div className="todo-btns" style={{marginTop: '20px'}}>
                                 <div className="btn-black">
                                 <i className="fa-solid fa-circle-plus" style={{marginRight: '7px'}}/>
@@ -103,7 +103,7 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                         id={list.id}
                         index={list.index}
                         disable={readOnly} 
-                        onDrop={() => api.updateListIndex()} 
+                        onDrop={() => api.updateListIndex(list.id, type)} 
                         onMove={onMove}
                     >
 
@@ -118,7 +118,7 @@ const ListTabs = ({ pathname="/admin/lists/" }) => {
                 )}
             </div>
             <div>
-                {readOnly ? null : <NewList />}
+                {readOnly ? null : <NewList type={type} />}
             </div>
         </div>
     );

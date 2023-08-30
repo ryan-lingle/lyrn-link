@@ -2,10 +2,10 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import Context from '../context';
 const maxListsLength = 5;
 
-const NewList = ({ children, id }) => {
+const NewList = ({ children, id, type="user" }) => {
     const { state, api } = useContext(Context);
     const [show, setShow] = useState(false);
-    const lists = state.user.uncreated_lists;
+    const lists = state[type].uncreated_lists;
     const maxLists = lists && lists.length === maxListsLength;
     const menu = useRef();
 
@@ -36,7 +36,10 @@ const NewList = ({ children, id }) => {
                     >
                         {lists.map((list, i) =>
                             <div key={i} onClick={async () => {
-                                await api.createList({ type: list });
+                                await api.createList({
+                                    type: list,
+                                    group_id: type === 'group' ? state.group.id : null,
+                                });
                                 api.store.reduce({
                                     type: 'set_tab_index',
                                     tabType: list,

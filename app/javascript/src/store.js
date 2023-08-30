@@ -99,10 +99,10 @@ class Store {
             break;
         case 'add_item':
             this.state.loading.items = false;
-            this.currentList().items.push(event.item);
+            this.currentList(event.item.owner_type).items.push(event.item);
             break;
         case 'swap_items':
-            const items = this.currentList().items;
+            const items = this.currentList(event.owner_type).items;
             const dragItem = items[event.dragIndex];
             dragItem.index = event.hoverIndex;
             items[event.dragIndex] = items[event.hoverIndex];
@@ -143,8 +143,11 @@ class Store {
         case 'set_group':
             this.state.loading.groups = false;
             this.state.group = event.group;
-            this.state.groupReadOnly = !event.admin;
-            this.state.tab = 'group';
+
+            if (event.initial_load) {
+                this.state.groupReadOnly = !event.admin;
+                this.state.tab = 'group';
+            };
             break;
         case 'add_group':
             this.state.loading.create_group = false;
