@@ -1,56 +1,19 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { ErrorBox, Loader, ListTabs, GenericTabs, ProfileTabs, MobileTabs, List, GroupProfile, UnconfirmedEmail } from '../components';
-import Context from '../context';
+import React from 'react';
+import { ListTabs, GenericTabs, ProfileTabs, MobileTabs, List, GroupProfile, UnconfirmedEmail, ItemShow } from '../components';
+import { withStuff } from "../hocs";
 import { Helmet } from 'react-helmet';
 
-const Group = ({ match }) => {
-    const { api, state } = useContext(Context);
-    const [pageHeight, setPageHeight] = useState(window.innerHeight - 60);
-
-    useEffect(() => {
-        window.onresize = () => {
-            setPageHeight(window.innerHeight - 60);
-        };
-    }, []);
-
-    useEffect(() => {
-        (async function() {
-            await api.getGroup(match.params.handle);
-            await api.getUser();
-
-            if (match.params.tab) {
-                api.store.reduce({
-                    type: 'set_tab',
-                    tab: match.params.tab,
-                });
-            }
-
-            if (match.params.listType) {
-                api.store.reduce({
-                    type: 'set_tab_index',
-                    tabType: match.params.tabType,
-                });
-            }
-
-        })();
-    }, []);
-
-    const loading = state.loading.groups;
-    const error = state.errors.groups;
- 
-    if (loading) return <Loader />;
-    if (error) return <div className="container"><ErrorBox error={error} /></div>;
+const Group = ({ api, state, pageHeight }) => {
 
     const currentList = api.store.currentList('group');
-    const pathname = `/g/${state.group.handle}/`;
 
-    api.store.currentTab('group')
+    const pathname = `/g/${state.group.handle}/`;
 
     return(
         <div>
             <Helmet>
                 <title>
-                    {state.group.name}
+                    {state.group.name} / Lyrnlink
                 </title>
             </Helmet>
             <div className="page" style={{ height: `${pageHeight}px` }} >
@@ -88,15 +51,47 @@ const Group = ({ match }) => {
                                     tabs={api.store.currentTab('group')} 
                                 />
                     }
-                    <List 
-                        {...currentList}
-                        isList={state.tab === 'lists'}
-                    />
-                    
+                    {
+                        state.item
+
+                        ?   <ItemShow {...state.item} />
+
+                        :   <List
+                                {...currentList}
+                                isList={state.tab === 'lists'}
+                            />
+                    } 
                 </div>
             </div>
         </div>
     );
 }
 
-export default Group;
+export default withStuff(Group, {
+    api: true,
+    state: true,
+    loader: 'groups',
+    effect: async ({ api, match }) => {
+        await api.getGroup(match.params.handle);
+        api.getUser();
+
+        if (match.params.tab) {
+            api.store.reduce({
+                type: 'set_tab',
+                tab: match.params.tab,
+            });
+        }
+
+        if (match.params.item) {
+            api.getItem(match.params.item);
+        }
+        
+        if (match.params.tabType) {
+            
+            api.store.reduce({
+                type: 'set_tab_index',
+                tabType: match.params.tabType,
+            });
+        }
+    }
+});

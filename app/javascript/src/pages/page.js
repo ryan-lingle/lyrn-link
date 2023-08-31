@@ -3,7 +3,7 @@ import { PageWrapper } from '.';
 import { List, ItemShow } from '../components';
 import { withStuff } from "../hocs";
 
-const ListPage = (props) => {
+const Page = (props) => {
 
     const currentList = props.api.store.currentList();
 
@@ -30,11 +30,12 @@ const ListPage = (props) => {
     );
 }
 
-export default withStuff(ListPage, {
+export default withStuff(Page, {
     api: true,
     state: true,
     loader: 'user',
     effect: async ({ api, match }) => {
+        
         await api.getUser(match.params);
 
         if (match.params.item) {

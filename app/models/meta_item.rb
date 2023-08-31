@@ -43,6 +43,7 @@ class MetaItem < ApplicationRecord
 			creator: self.creator,
 			index: index,
 			show_count: true,
+			internal_href: href,
 			bookmarked: bookmarks.include?(self.id),
 			count: count ? self.count : nil,
 		}
@@ -59,6 +60,7 @@ class MetaItem < ApplicationRecord
 			url: self.url,
 			url_copy: self.url_copy, 
 			creator: self.creator,
+			internal_href: href,
 			bookmarked: bookmarks.include?(self.id),
 			button: 'bookmark',
 			comments: comment_index,

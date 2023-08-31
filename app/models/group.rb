@@ -3,9 +3,12 @@ class Group < ApplicationRecord
 	has_many :group_relationships, dependent: :destroy
 	has_many :group_invites, dependent: :destroy
 	has_many :users, through: :group_relationships
+	has_many :activities, dependent: :destroy, as: :owner
+	has_many :user_activities, class_name: "Activity", through: :users, source: :activities
 	include ActiveStorageSupport::SupportForBase64
 	include EncodeImageUrl
 	include Listable
+	include Feedable
 	has_one_base64_attached :image
 	after_create :add_admin_to_group
 	belongs_to :user
@@ -13,6 +16,9 @@ class Group < ApplicationRecord
 	validates :name, presence: true
 	has_many :lists, -> { order(index: :asc) }, dependent: :destroy, as: :owner
 
+	def activity_set
+		(user_activities + activities).sort_by(&:created_at).reverse
+	end
 
 	def image_url
 		image.service_url if image.attached?
@@ -37,6 +43,8 @@ class Group < ApplicationRecord
 		to_show_res(current_user)
 	end
 
+
+
 	def to_show_res(current_user=nil)
 		bis = current_user&.bookmarked_items&.pluck(:id) || []
 		flwing = current_user&.following&.pluck(:id) || []
@@ -52,12 +60,6 @@ class Group < ApplicationRecord
 			uncreated_lists: uncreated_lists,
 			tabs: [
 				{
-					tab: 'lists',
-					title: 'Featured',
-					icon: 'fa-solid fa-clipboard-list',
-					sub_tabs: list_index(bis),
-				},
-				{
 					tab: 'group',
 					icon: 'fa-solid fa-circle-notch',
 					sub_tabs: [
@@ -70,7 +72,24 @@ class Group < ApplicationRecord
 							items: item_index(bis: bis),
 						}
 					]
-				}
+				},
+				{
+					tab: 'feed',
+					icon: 'fa-solid fa-newspaper',
+					sub_tabs: [
+						{
+							type: 'feed',
+							items: feed(following: flwing, bookmarks: bis),
+						}
+					],
+				},
+				{
+					tab: 'lists',
+					title: 'Featured',
+					icon: 'fa-solid fa-clipboard-list',
+					sub_tabs: list_index(bis),
+				},
+
 			]
 		}
 	end

@@ -9,11 +9,13 @@ const ShowMore = ({ text, maxLength }) => {
 
     return(
        <div>
-            <span>{copy}</span>
+            <span
+                dangerouslySetInnerHTML={{ __html: copy }}
+            ></span>
             {
                 exceedsMaxLength &&
 
-                <span
+                <div
                     onClick={() => setShow(prev => !prev)}
                     className='b-copy'
                     style={{ 
@@ -23,7 +25,7 @@ const ShowMore = ({ text, maxLength }) => {
                     }}
                 >
                     Show {show ? "less" : "more"}
-                </span>
+                </div>
             }
         </div>
     );

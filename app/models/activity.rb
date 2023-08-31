@@ -1,8 +1,9 @@
 class Activity < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
+  belongs_to :owner, polymorphic: true
   belongs_to :record, polymorphic: true
 
-  validates :user, presence: true
+  validates :owner, presence: true
   validates :record, presence: true
 
   serialize :metadata, Hash
@@ -11,7 +12,7 @@ class Activity < ApplicationRecord
 
   def destroy_any_previous_duplicates
     Activity.where(
-      user: user,
+      owner: owner,
       record: record,
       metadata: metadata,
     ).destroy_all
@@ -25,7 +26,12 @@ class Activity < ApplicationRecord
 			html: html,
 			image_url: image_url,
 			href: href,
+      owner_type: owner.owner_type
 		}
 	end
+
+  def group_activity?
+    owner.is_a?(Group)
+  end
 
 end

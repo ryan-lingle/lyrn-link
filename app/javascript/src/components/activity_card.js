@@ -4,14 +4,12 @@ import Icon from '../assets/icon.png';
 import { withStuff } from "../hocs";
 
 
-const ActivityCard = ({ api, state, href, icon, html, image_url, lastItem, }) => {
+const ActivityCard = ({ api, state, href, icon, html, image_url, lastItem, owner_type }) => {
     const card = useRef();
-
-    console.log(href);
     
     return(
         <a href={href} className="item-card-wrapper no-underline cursor-pointer" ref={card} >
-            <div className='item-card items-start activity-card p-3' >
+            <div className={`item-card items-start activity-card p-3 ${owner_type == 'group' ? 'group-activity' : ''}`} >
                 <div className="rounded-full text-center bg-black" style={{height: '50px', width: '50px'}}>
                     <i className={icon + " " + "text-white text-lg"} style={{marginTop: '16px'}} />
                 </div>

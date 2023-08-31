@@ -1,6 +1,6 @@
 class ItemPostActivity < Activity
     def html
-        "<a href='/#{self.user.handle}' class='text-xl no-underline font-bold'>#{self.user.name}</a> posted <a href='/#{self.record.user.handle}/i/#{self.record.id}' class='text-xl no-underline font-bold'>#{self.record.title}</a>"
+        "<a href='/#{self.owner.handle}' class='text-xl no-underline font-bold'>#{self.owner.name}</a> posted <a href='/#{self.record.owner.handle}/i/#{self.record.id}' class='text-xl no-underline font-bold'>#{self.record.title}</a>"
     end
 
     def icon
@@ -12,6 +12,6 @@ class ItemPostActivity < Activity
     end
 
     def href
-        "/#{self.user.handle}/i/#{self.record.id}"
+        record.href
     end
 end

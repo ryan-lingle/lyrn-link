@@ -20,9 +20,9 @@ const PageWrapper = ({ state, api, children, pageHeight, tabs=true }) => {
                     {
                         state.readOnly
 
-                        ?   `${state.user.name} (${state.user.handle})`
+                        ?   `${state.user.name} (${state.user.handle}) / Lyrnlink`
 
-                        :   'lyrnlink'
+                        :   'Lyrnlink'
                     }
                 </title>
             </Helmet>

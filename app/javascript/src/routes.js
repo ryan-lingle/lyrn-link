@@ -36,6 +36,10 @@ const routes = [
     page: "Group",
   },
   {
+    path: "/g/:handle/i/:item",
+    page: "Group",
+  },
+  {
     path: "/g/:handle/:tab",
     page: "Group",
   },

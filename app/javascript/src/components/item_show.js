@@ -5,6 +5,8 @@ import Context from '../context';
 const ItemShow = ({ title, image_url, description, subtitle, ...item }) => {
     const { api, state } = useContext(Context);
 
+    console.log(item)
+
     return(
         <div style={{marginTop: '20px', height: '100%'}}>
             <div className="flex items-start">
@@ -33,24 +35,24 @@ const ItemShow = ({ title, image_url, description, subtitle, ...item }) => {
 
                         &&   <div className='mt-5'>
                                 <p className='b-copy' style={{ fontSize: '18px'}}>
-                                    {state.user.name}'s notes
+                                    {state.item.user_name}'s notes
                                 </p>
                                 <Editor
                                     defaultValue={item.user_notes}
                                     onSave={user_notes => api.updateItem(item.id, { user_notes })}
-                                    owner={item.user_id === state.current_user_id}
+                                    owner={item.owner_id === state.current_user_id}
                                 />
                             </div>
                         
                         
                     }
                     {
-                        !state.item?.user_notes && item.user_id === state.current_user_id &&
+                        !state.item?.user_notes && item.owner_id === state.current_user_id &&
 
                         <Editor
                             defaultValue={item.user_notes}
                             onSave={user_notes => api.updateItem(item.id, { user_notes })}
-                            owner={item.user_id === state.current_user_id}
+                            owner={item.owner_id === state.current_user_id}
                         />
                     }
                     <p className='b-copy' style={{ fontSize: '18px', margin: '20px 0px'}}>Comments</p>

@@ -20,7 +20,7 @@ class User < ApplicationRecord
 	has_many :following, through: :likes, source: :link
 	has_many :followers, through: :likers, source: :like
 
-	has_many :activities, dependent: :destroy
+	has_many :activities, dependent: :destroy, as: :owner
 
 	has_many :follower_activities, class_name: "Activity", through: :followers, source: :activities
 
@@ -38,6 +38,10 @@ class User < ApplicationRecord
 
 	include PgSearch::Model
   	pg_search_scope :search, against: [:name, :handle]
+
+	def activity_set
+		(follower_activities + activities).sort_by(&:created_at).reverse
+	end
 
   	def profile_picture_url
   		profile_picture.service_url if profile_picture.attached?

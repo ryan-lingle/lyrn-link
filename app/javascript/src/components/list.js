@@ -36,7 +36,6 @@ const List = ({ id, type, owner_type, singular, searchable, icon, items=[], isLi
     }, [ items.length, state.tabIndex ]);
 
     function destroyList() {
-        console.log(id);
         if (window.confirm('Are you sure you want to delete this list?')) {
             api.destroyList(id);
         };

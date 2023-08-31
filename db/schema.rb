@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_30_173801) do
+ActiveRecord::Schema.define(version: 2023_08_31_192615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -37,13 +37,16 @@ ActiveRecord::Schema.define(version: 2023_08_30_173801) do
   end
 
   create_table "activities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id", null: false
+    t.uuid "user_id"
     t.string "type"
     t.string "record_type", null: false
     t.uuid "record_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "metadata"
+    t.string "owner_type", null: false
+    t.uuid "owner_id", null: false
+    t.index ["owner_type", "owner_id"], name: "index_activities_on_owner_type_and_owner_id"
     t.index ["record_type", "record_id"], name: "index_activities_on_record_type_and_record_id"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end

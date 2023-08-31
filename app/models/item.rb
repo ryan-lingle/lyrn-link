@@ -6,12 +6,13 @@ class Item < ApplicationRecord
 	belongs_to :meta_item, required: false
 	has_many :comments, dependent: :destroy, as: :item
 	has_many :comment_users, -> { distinct }, through: :comments, source: :user
+	has_many :activities, dependent: :destroy, as: :record
 	before_create :add_index
 	before_create :upload_image
 	after_create :create_or_update_meta_item
 	after_create :send_notification_email, if: :created_by_user?
-	after_create :create_activity, if: :created_by_user?
-	after_update :create_notes_activity, if: :created_by_user?
+	after_create :create_activity
+	after_update :create_notes_activity
 
 	def title_clean
 		whitelist = "0123456789abcdefghijklmnopqrstuvwxyz ".split("")
@@ -48,6 +49,7 @@ class Item < ApplicationRecord
 			image_url: self.image.attached? ? self.image.service_url : '',
 			url: self.url,
 			url_copy: self.url_copy, 
+			internal_href: href,
 			index: self.index,
 			creator: self.creator,
 			bookmarked: bookmarks.include?(self.meta_item_id),
@@ -65,12 +67,13 @@ class Item < ApplicationRecord
 			description: self.description,
 			image_url: self.image.attached? ? self.image.service_url : '',
 			url: self.url,
-			url_copy: self.url_copy, 
+			url_copy: self.url_copy,
+			internal_href: href, 
 			index: self.index,
 			creator: self.creator,
 			bookmarked: bookmarks.include?(self.meta_item_id),
 			button: 'bookmark',
-			owner_id: owner.id,
+			owner_id: created_by_user? ? owner.id : owner.user_id,
 			user_name: owner.name,
 			user_notes: user_notes,
 			comments: comment_index,
@@ -84,7 +87,7 @@ class Item < ApplicationRecord
 	end
 
 	def href
-		"#{ENV['DOMAIN']}/#{owner.handle}/i/#{id}"
+		"#{ENV['DOMAIN']}/#{created_by_group? ? 'g/' : ''}#{owner.handle}/i/#{id}"
 	end
 
 
@@ -118,6 +121,7 @@ class Item < ApplicationRecord
 	end
 	
 	def send_notification_email
+		# todo: support group member notifications on  featured item posts
 		user.followers.each do |follower|
 			if follower.subscribed?('follow_post')
 				NotificationMailer.new_item(
@@ -131,7 +135,7 @@ class Item < ApplicationRecord
 
 	def create_activity
 		ItemPostActivity.create!(
-			user: user,
+			owner: owner,
 			record: self,
 		)
 	end
@@ -139,7 +143,7 @@ class Item < ApplicationRecord
 	def create_notes_activity
 		if !notes_activity_published && user_notes.present?
 			NotesActivity.create!(
-				user: user,
+				owner: owner,
 				record: self,
 				metadata: { notes: user_notes }
 			)
@@ -152,6 +156,10 @@ class Item < ApplicationRecord
 
 	def created_by_user?
 		owner.is_a? User
+	end
+
+	def owner_user
+		created_by_user? ? owner : owner.user
 	end
 
 	def user

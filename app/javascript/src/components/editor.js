@@ -20,8 +20,6 @@ const Editor = ({ onSave, defaultValue, owner=false }) => {
     setEdit(false);
   }
 
-  console.log(edit);
-
   return(
     <div id="editor">
       {
