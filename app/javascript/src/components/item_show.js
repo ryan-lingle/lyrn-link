@@ -8,15 +8,15 @@ const ItemShow = ({ title, image_url, description, subtitle, ...item }) => {
     console.log(item)
 
     return(
-        <div style={{marginTop: '20px', height: '100%'}}>
+        <div style={{marginTop: '20px', height: '100%', overflowY: 'scroll'}}>
             <div className="flex items-start">
                 <img
                     src={image_url}
                     width="200px"
-                    className='flex-grow'
+                    className='flex-grow sticky top-0'
                     style={{marginRight: '20px'}}
                 />
-                <div>
+                <div className='overflow-y-scroll'>
                     <h1 style={{marginTop: '10px'}}>{title}</h1>
                     <h2>{subtitle}</h2>
                     {
@@ -30,31 +30,12 @@ const ItemShow = ({ title, image_url, description, subtitle, ...item }) => {
                             />
                         </div>
                     }
-                    {
-                        !!state.item?.user_notes
-
-                        &&   <div className='mt-5'>
-                                <p className='b-copy' style={{ fontSize: '18px'}}>
-                                    {state.item.user_name}'s notes
-                                </p>
-                                <Editor
-                                    defaultValue={item.user_notes}
-                                    onSave={user_notes => api.updateItem(item.id, { user_notes })}
-                                    owner={item.owner_id === state.current_user_id}
-                                />
-                            </div>
-                        
-                        
-                    }
-                    {
-                        !state.item?.user_notes && item.owner_id === state.current_user_id &&
-
-                        <Editor
-                            defaultValue={item.user_notes}
-                            onSave={user_notes => api.updateItem(item.id, { user_notes })}
-                            owner={item.owner_id === state.current_user_id}
-                        />
-                    }
+                    <Editor
+                        defaultValue={item.user_notes}
+                        onSave={user_notes => api.updateItem(item.id, { user_notes })}
+                        owner={item.owner_id === state.current_user_id}
+                        userName={item.user_name}
+                    />
                     <p className='b-copy' style={{ fontSize: '18px', margin: '20px 0px'}}>Comments</p>
                     <CommentList comments={item.comments} />
                     {
