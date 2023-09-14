@@ -24,13 +24,17 @@ class Group < ApplicationRecord
 		image.service_url if image.attached?
 	end
 
+	def url
+		ENV["DOMAIN"] + '/g/' + self.handle
+	end
+
 	def to_index_res(groups=[], index=nil)
 		{
 			id: self.id,
 			index: index,
 			title: self.name,
 			description: self.description,
-			url:  ENV["DOMAIN"] + '/g/' + self.handle,
+			url: url,
 			internal_url: true,
 			image_url: self.image_url,
 			count: self.member_count,

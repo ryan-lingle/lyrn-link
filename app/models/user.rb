@@ -47,6 +47,10 @@ class User < ApplicationRecord
   		profile_picture.service_url if profile_picture.attached?
   	end
 
+	def image_url
+		profile_picture_url
+	end
+
 	def clean_handle
 		split = self.handle.downcase.gsub('-', '_').gsub(' ', '_').split('').select do |l|
 			HANDLE_WHITELIST.include?(l)
@@ -267,6 +271,10 @@ class User < ApplicationRecord
 
 	def link
 		ENV["DOMAIN"] + "/" + self.handle
+	end
+
+	def url
+		link
 	end
 
 	def meta_items_ids

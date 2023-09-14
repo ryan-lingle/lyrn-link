@@ -14,12 +14,14 @@ class Activity < ApplicationRecord
     Activity.where(
       owner: owner,
       record: record,
-      metadata: metadata,
+      type: self.type
     ).destroy_all
   end
 
   def to_index_res(flwing=[])
 		{
+      owner_avatar: owner.image_url,
+      owner_href: owner.url,
 			id: self.id,
       icon: icon,
 			index: false,
