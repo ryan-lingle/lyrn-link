@@ -2,7 +2,7 @@ import React from 'react';
 import BtnSpinner from './btn_spinner.js';
 import { withStuff } from  '../hocs';
 
-const Submit = ({ copy, loading, type, style, className="btn btn-black", state }) => {
+const Submit = ({ copy, loading, type, style, className="btn-black", state }) => {
     loading = loading || state.loading[type];
 
     if (loading) return <BtnSpinner style={style} className={className} />;

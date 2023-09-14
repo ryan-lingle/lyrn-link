@@ -16,12 +16,13 @@ const NewComment = ({ item_id }) => {
 
     return(
         <Form
+            col="12"
+            className='new-comment'
             inputs={[
                 {
                     id: 'comment-input',
                     key: 'text',
                     type: 'textarea',
-                    label: 'Comment',
                     placeholder: 'What do you think?',
                     rows: 3,
                 },

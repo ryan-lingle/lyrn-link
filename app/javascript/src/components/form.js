@@ -9,7 +9,7 @@ import {
 } from '.';
 import Context from '../context';
 
-const Form = ({ inputs=[], onSubmit, submitCopy, type, col="6", children }) => {
+const Form = ({ inputs=[], className, onSubmit, submitCopy, type, col="6", children }) => {
     const { api, state } = useContext(Context);
     const refs = inputs.reduce((mem, { key }) => {
         mem[key] = useRef();
@@ -128,7 +128,7 @@ const Form = ({ inputs=[], onSubmit, submitCopy, type, col="6", children }) => {
     const success = state.success[type];
 
     return(
-        <div className="form">
+        <div className={`form ${className}`}>
             <form onSubmit={handleSubmit} >
                 <ErrorBox error={error} />
                 <SuccessBox success={success} />

@@ -10,6 +10,7 @@
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.11.0",
     "@tiptap/extension-color": "^2.1.8",
+    "@tiptap/extension-link": "^2.1.9",
     "@tiptap/extension-list-item": "^2.1.8",
     "@tiptap/extension-placeholder": "^2.1.8",
     "@tiptap/extension-text-style": "^2.1.8",

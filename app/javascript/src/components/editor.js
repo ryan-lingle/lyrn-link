@@ -1,14 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Color } from '@tiptap/extension-color'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import { EditorProvider, useCurrentEditor } from '@tiptap/react'
 import Placeholder from '@tiptap/extension-placeholder'
 import StarterKit from '@tiptap/starter-kit'
+import Link from '@tiptap/extension-link'
 import { Tooltip } from 'react-tippy';
 
-const MenuBar = ({ onSave, setEditing }) => {
-  const { editor } = useCurrentEditor()
+const MenuBar = ({ onSave, setValue, setEditing }) => {
+  const { editor } = useCurrentEditor();
+
+  const setLink = useCallback(() => {
+    const previousUrl = editor.getAttributes('link').href
+    let url = window.prompt('URL', previousUrl)
+
+    // cancelled
+    if (url === null) {
+      return
+    }
+
+    // empty
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink()
+        .run()
+
+      return
+    }
+
+    if (!(url.includes('http://') || url.includes('https://'))) {
+      url = 'http://' + url;
+    }
+
+    // update link
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url })
+      .run()
+  }, [editor])
 
   if (!editor) {
     return null
@@ -66,6 +93,24 @@ const MenuBar = ({ onSave, setEditing }) => {
             title="Strikethrough"
         >
           <i className='fa-solid fa-strikethrough'/>
+        </Tooltip>
+      </button>
+      <button onClick={setLink} className={editor.isActive('link') ? 'btn-black' : 'btn-white'}>
+        <Tooltip
+            title="Link"
+        >
+          <i className='fa-solid fa-link'/>
+        </Tooltip>
+      </button>
+      <button
+        className='btn-white'
+        onClick={() => editor.chain().focus().unsetLink().run()}
+        disabled={!editor.isActive('link')}
+      >
+        <Tooltip
+            title="Unlink"
+        >
+          <i className='fa-solid fa-link-slash'/>
         </Tooltip>
       </button>
       {/* <button className='btn-white' onClick={() => editor.chain().focus().unsetAllMarks().run()}>
@@ -187,6 +232,7 @@ const MenuBar = ({ onSave, setEditing }) => {
       <button
         className='btn-black'
         onClick={() => {
+          setValue(editor.getHTML());
           onSave(editor.getHTML());
           setEditing(false);
         }}
@@ -218,27 +264,32 @@ const extensions = [
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
   }),
+  Link.configure({
+    autolink: false,
+  })
 ]
 
 const Editor = ({ owner, onSave, defaultValue, userName }) => {
   const [editing, setEditing] = useState(!defaultValue);
+  const [value, setValue] = useState(defaultValue);
 
   if (owner) {
     return(
       <div>
         <div className='flex justify-between items-center'>
-          <p className='b-copy' style={{ fontSize: '18px', margin: '10px 0px'}}>Your Notes</p>
+          <p className='b-copy' style={{ fontSize: '18px', margin: '20px 0px 10px 0px'}}>Your Notes</p>
           {!editing && <button className='btn-black' onClick={() => setEditing(true)}>
             <i className='fa-solid fa-edit mr-3'/>
             Edit
           </button>}
         </div>
-        <div className={editing ? 'tiptap-editing tiptap-container' : 'tiptap-container cursor-pointer'}>
+        <div className={editing ? 'tiptap-editing tiptap-container' : 'tiptap-container'}>
           <EditorProvider
-            slotBefore={editing ? <MenuBar onSave={onSave} setEditing={setEditing} /> : <div/>}
+            key={editing}
+            slotBefore={editing ? <MenuBar setValue={setValue} onSave={onSave} setEditing={setEditing} /> : <div/>}
             extensions={extensions}
-            content={defaultValue}
-            editable={true}
+            content={value}
+            editable={editing}
           ></EditorProvider>
         </div>
       </div>
@@ -246,7 +297,7 @@ const Editor = ({ owner, onSave, defaultValue, userName }) => {
   } else if (!!defaultValue) {
     return(
       <div>
-        <p className='b-copy' style={{ fontSize: '18px', margin: '10px 0px'}}>{userName}'s Notes</p>
+        <p className='b-copy' style={{ fontSize: '18px', margin: '20px 0px 10px 0px'}}>{userName}'s Notes</p>
         <EditorProvider
           extensions={extensions}
           content={defaultValue}
