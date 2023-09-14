@@ -29,7 +29,7 @@ const MenuBar = ({ onSave, setValue, setEditing }) => {
     }
 
     if (!(url.includes('http://') || url.includes('https://'))) {
-      url = 'http://' + url;
+      url = 'https://' + url;
     }
 
     // update link
@@ -264,9 +264,7 @@ const extensions = [
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
   }),
-  Link.configure({
-    autolink: false,
-  })
+  Link.configure()
 ]
 
 const Editor = ({ owner, onSave, defaultValue, userName }) => {

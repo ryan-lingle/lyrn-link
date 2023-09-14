@@ -22,7 +22,7 @@ class User < ApplicationRecord
 
 	has_many :activities, dependent: :destroy, as: :owner
 
-	has_many :follower_activities, class_name: "Activity", through: :followers, source: :activities
+	has_many :following_activities, class_name: "Activity", through: :following, source: :activities
 
 	has_many :bookmarks, dependent: :destroy
 	has_many :bookmarked_items, through: :bookmarks, source: :meta_item
@@ -40,7 +40,7 @@ class User < ApplicationRecord
   	pg_search_scope :search, against: [:name, :handle]
 
 	def activity_set
-		(follower_activities + activities).sort_by(&:created_at).reverse
+		(following_activities + activities).sort_by(&:created_at).reverse
 	end
 
   	def profile_picture_url
@@ -116,6 +116,7 @@ class User < ApplicationRecord
 		bis = current_user&.bookmarked_items&.pluck(:id) || []
 		flwing = current_user&.following&.pluck(:id) || []
 		grps = current_user&.groups&.pluck(:id) || []
+		is_current_user = current_user == self
 		{
 			id: self.id,
 			name: self.name,
@@ -130,7 +131,7 @@ class User < ApplicationRecord
 					sub_tabs: [
 						{
 							type: 'feed',
-							items: feed(following: flwing, bookmarks: bis),
+							items: feed(is_current_user: is_current_user),
 						}
 					],
 				},

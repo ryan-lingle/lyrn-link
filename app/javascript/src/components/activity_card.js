@@ -10,7 +10,7 @@ const ActivityCard = ({ api, state, href, icon, html, image_url, lastItem, owner
     console.log(owner_avatar)
     return(
         <a href={href} className="item-card-wrapper no-underline cursor-pointer" ref={card} >
-            <div className={`item-card items-start activity-card p-3 ${owner_type == 'group' ? 'group-activity' : ''}`} >
+            <div className={`item-card items-center activity-card p-3 ${owner_type == 'group' ? 'group-activity' : ''}`} >
                 <a href={owner_href}>
                     <img className="rounded-full" style={{width: '40px', height: '40px'}} src={owner_avatar} />
                 </a>

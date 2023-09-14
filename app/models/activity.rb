@@ -18,7 +18,7 @@ class Activity < ApplicationRecord
     ).destroy_all
   end
 
-  def to_index_res(flwing=[])
+  def to_index_res
 		{
       owner_avatar: owner.image_url,
       owner_href: owner.url,

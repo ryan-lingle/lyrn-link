@@ -6,7 +6,7 @@ import {
 import { Helmet } from 'react-helmet';
 import { withStuff } from "../hocs";
 
-const PageWrapper = ({ state, api, children, pageHeight, tabs=true }) => {
+const PageWrapper = ({ state, api, children, pageHeight, tabs=true, link=false }) => {
     
     // move to HOC
     if (state.admin && state.user.confirm_email) return <UnconfirmedEmail email={state.user.email} />;
@@ -31,6 +31,7 @@ const PageWrapper = ({ state, api, children, pageHeight, tabs=true }) => {
                     <UserProfile />
                     <ProfileTabs
                         tabs={state.user.tabs}
+                        link={link}
                         pathname={state.readOnly ? `/${state.user.handle}/` : '/admin/'}
                     />
                     <div className="nav-footer">

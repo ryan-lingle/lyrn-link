@@ -83,7 +83,7 @@ class Group < ApplicationRecord
 					sub_tabs: [
 						{
 							type: 'feed',
-							items: feed(following: flwing, bookmarks: bis),
+							items: feed(is_group: true),
 						}
 					],
 				},

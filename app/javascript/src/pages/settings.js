@@ -15,7 +15,7 @@ const Settings = (props) => {
     const success = props.state.success?.update_user;
 
     return (
-        <PageWrapper {...props} tabs={false} >
+        <PageWrapper {...props} tabs={false} link={true} >
             <SuccessBox success={success} />
             <ErrorBox error={error} />
             <SimpleForm onSubmit={handleSubmit}>

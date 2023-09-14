@@ -4,7 +4,7 @@ import { ListTabs } from '../components';
 import Draggable from './draggable';
 import { parseQuery, capitalize } from '../utils';
 
-const ProfileTabs = ({ pathname="/admin/", tabs }) => {
+const ProfileTabs = ({ pathname="/admin/", tabs, link=false }) => {
     const { state, api } = useContext(Context);
 
     // useEffect(() => {
@@ -27,10 +27,14 @@ const ProfileTabs = ({ pathname="/admin/", tabs }) => {
 
 
     function setTab(tab) {
-        history.pushState({}, tab, pathname + tab);
-        api.store.reduce({
-            type: 'set_tab', tab
-        });
+        if (link) {
+            window.location.href = pathname + tab;
+        } else {
+            history.pushState({}, tab, pathname + tab);
+            api.store.reduce({
+                type: 'set_tab', tab
+            });
+        }
     };
 
     return(

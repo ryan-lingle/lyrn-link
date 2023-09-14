@@ -63,6 +63,9 @@ class Store {
             this.state.readOnly = event.readOnly;
             break;
         case 'set_tab':
+            if (window.location.pathname == '/settings') {
+                window.location.href = '/admin/' + event.tab;
+            }
             this.state.tab = event.tab;
             this.state.tabIndex = 0;
             this.state.item = null;

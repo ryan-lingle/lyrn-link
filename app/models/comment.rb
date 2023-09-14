@@ -48,8 +48,8 @@ class Comment < ApplicationRecord
   end
 
   def create_activity
-    CommentActivity.create(
-      user: user,
+    CommentActivity.create!(
+      owner: user,
       record: item,
       metadata: { comment: text }
     )
