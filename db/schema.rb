@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_31_192615) do
+ActiveRecord::Schema.define(version: 2023_09_15_183329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -205,7 +205,7 @@ ActiveRecord::Schema.define(version: 2023_08_31_192615) do
     t.integer "follower_count", default: 0
     t.string "google_picture_url"
     t.string "token"
-    t.text "notification_settings"
+    t.text "notification_settings", default: "---\n:comment_on_my_item: '1'\n:comment_on_my_converation: '1'\n:follow_post: '1'\n:new_follower: '1'\n"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

@@ -177,6 +177,7 @@ GEM
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth (0.5.14)
+    openai (0.3.0)
     pg (1.4.5)
     pg_search (2.3.6)
       activerecord (>= 5.2)
@@ -333,6 +334,7 @@ DEPENDENCIES
   listen (~> 3.2)
   nokogiri
   oauth (~> 0.5.1)
+  openai
   pg (>= 0.18, < 2.0)
   pg_search
   postmark (~> 1.21.0)

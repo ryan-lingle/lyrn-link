@@ -204,7 +204,7 @@ class User < ApplicationRecord
 	end
 
 	def subscribed?(type)
-		self.notification_settings[type] == "1"
+		self.notification_settings[type] == "1" || self.notification_settings[type.to_sym] == "1"
 	end
 
 	def to_index_res(flwing=[], index=nil, show_count=false)
