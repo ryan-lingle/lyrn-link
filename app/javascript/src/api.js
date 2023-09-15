@@ -862,6 +862,7 @@ class Api {
 
         const res = await this.get(`groups/${handle}`, {
             errorType: 'groups',
+            checkRefresh: this.authToken ? true : false,
         });
 
         if (!res.error) {
@@ -973,6 +974,7 @@ class Api {
     getItem = async (id) => {
         const res = await this.get(`items/${id}`, {
             errorType: 'items',
+            checkRefresh: this.authToken ? true : false,
         });
         
         if (!res.error) {
