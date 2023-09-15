@@ -121,9 +121,9 @@ class Item < ApplicationRecord
 	end
 	
 	def send_notification_email
-		# todo: support group member notifications on  featured item posts
+		# todo: support group member notifications on featured item posts
 		user.followers.each do |follower|
-			if follower.subscribed?('follow_post')
+			if follower.subscribed?('follow_post') && follower.email.present?
 				NotificationMailer.new_item(
 					email: follower.email,
 					name: follower.handle,

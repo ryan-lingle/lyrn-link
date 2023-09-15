@@ -25,7 +25,7 @@ class Comment < ApplicationRecord
 
   def send_notification_email
     # Don't send to the user who created the comment
-    if item_type == 'Item' && item.owner_user != self.user && item.owner_user&.subscribed?('comment_on_my_item')
+    if item_type == 'Item' && item.owner_user != self.user && item.owner_user&.subscribed?('comment_on_my_item') && user.email.present?
       NotificationMailer.new_comment(
         email: item.owner_user.email,
         name: item.owner_user.handle,
@@ -37,7 +37,7 @@ class Comment < ApplicationRecord
   def send_conversation_notification_email
     item.comment_users.each do |user|
       # Don't send to the user who created the comment or the user who created the item
-      if user != self.user && (item_type == 'MetaItem' || user != item.owner_user) && user.subscribed?('comment_on_my_converation')
+      if user != self.user && (item_type == 'MetaItem' || user != item.owner_user) && user.subscribed?('comment_on_my_converation') && user.email.present?
         NotificationMailer.new_conversation_comment(
           email: user.email,
           name: user.handle,

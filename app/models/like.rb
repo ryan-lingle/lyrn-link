@@ -27,7 +27,7 @@ class Like < ApplicationRecord
   end
 
   def send_notification_email
-    if link.subscribed?('new_follower')
+    if link.subscribed?('new_follower') && link.email.present?
       NotificationMailer.new_follower(
         email: link.email,
         name: link.handle,
