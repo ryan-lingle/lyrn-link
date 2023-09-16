@@ -1,0 +1,18 @@
+<div>
+    <div>[Testing]</div>
+    <h2>AI Podcast Recommendations</h2>
+    <% @podcasts.each do |podcast| %>
+        <div style="margin: 10px 0px;">
+            <strong><%= podcast["title"] %></strong>
+            <p><%= podcast["creator"] %></p>
+        </div>
+    <% end %>
+
+    <h2>AI Book Recommendations</h2>
+    <% @books.each do |books| %>
+        <div style="margin: 10px 0px;">
+            <strong><%= books["title"] %></strong>
+            <p><%= books["creator"] %></p>
+        </div>
+    <% end %>
+</div>

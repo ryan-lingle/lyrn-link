@@ -32,6 +32,9 @@ module LyrnLink
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    config.action_mailer.delivery_method = :postmark
+    config.action_mailer.postmark_settings = { :api_token => ENV['POSTMARK_TOKEN'] }
+    
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::HashWithIndifferentAccess]
   end
 end

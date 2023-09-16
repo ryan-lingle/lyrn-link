@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_15_183329) do
+ActiveRecord::Schema.define(version: 2023_09_16_164138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -58,6 +58,14 @@ ActiveRecord::Schema.define(version: 2023_09_15_183329) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["affiliate_id"], name: "index_affiliate_sign_ups_on_affiliate_id"
     t.index ["user_id"], name: "index_affiliate_sign_ups_on_user_id"
+  end
+
+  create_table "ai_models", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.text "history"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_ai_models_on_user_id"
   end
 
   create_table "bookmarks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -212,6 +220,7 @@ ActiveRecord::Schema.define(version: 2023_09_15_183329) do
   add_foreign_key "activities", "users"
   add_foreign_key "affiliate_sign_ups", "users"
   add_foreign_key "affiliate_sign_ups", "users", column: "affiliate_id"
+  add_foreign_key "ai_models", "users"
   add_foreign_key "bookmarks", "meta_items"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "comments", "users"

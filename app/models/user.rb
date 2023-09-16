@@ -248,6 +248,10 @@ class User < ApplicationRecord
 		end
 	end
 
+	def ai_model
+		AiModel.find_or_create_by(user: self)
+	end
+
 	def twitter_client
 		if self.twitter_token
 			Twitter::REST::Client.new do |config|
