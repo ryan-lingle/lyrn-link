@@ -57,5 +57,7 @@ Rails.application.routes.draw do
   end
 
   root to: 'root#root'
-  get '*path', to: 'root#index'
+  get '*path', to: 'root#index', constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }
 end
