@@ -1,4 +1,5 @@
-class NotificationMailer  < Mailer	
+class NotificationMailer < Mailer	
+
 	def self.new_follower(email:, name:, follower:)
     	PostmarkClient.deliver_with_template(
     		from: from,
@@ -12,6 +13,10 @@ class NotificationMailer  < Mailer
 				settings_url: domain + "/settings",
     		}
     	)
+	rescue StandardError => e
+		logger.error e.message
+		e.backtrace.each { |line| logger.error line }
+		Rollbar.error(e) # log to rollbar
 	end
 
 	def self.new_item(email:, name:, item:)
@@ -22,7 +27,7 @@ class NotificationMailer  < Mailer
     		template_model: {
 				name: name,
     			item_title: item.title,
-				item_image_url: item.image.service_url,
+				item_image_url: domain + Rails.application.routes.url_helpers.polymorphic_url(item.image, only_path: true),
 				item_user_name: item.user.name,
 				item_user_handle: item.user.handle,
     			support_url: "mailto:#{from}",
@@ -30,6 +35,10 @@ class NotificationMailer  < Mailer
 				settings_url: domain + "/settings",
     		}
     	)
+	rescue StandardError => e
+		logger.error e.message
+		e.backtrace.each { |line| logger.error line }
+		Rollbar.error(e) # log to rollbar
 	end
 
 	def self.new_comment(email:, name:, comment:)
@@ -41,13 +50,17 @@ class NotificationMailer  < Mailer
 				name: name,
 				commenter_name: comment.user.name,
 				item_title: comment.item.title,
-				item_image_url: comment.item.image.service_url,
+				item_image_url: domain + Rails.application.routes.url_helpers.polymorphic_url(comment.item.image, only_path: true),
 				action_url: comment.action_url,
 				settings_url: domain + "/settings",
 				support_url: "mailto:#{from}",
 			}
 		)
 
+	rescue StandardError => e
+		logger.error e.message
+		e.backtrace.each { |line| logger.error line }
+		Rollbar.error(e) # log to rollbar
 	end
 
 	def self.new_conversation_comment(email:, name:, comment:)
@@ -59,12 +72,16 @@ class NotificationMailer  < Mailer
 				name: name,
 				commenter_name: comment.user.name,
 				item_title: comment.item.title,
-				item_image_url: comment.item.image.service_url,
+				item_image_url: domain + Rails.application.routes.url_helpers.polymorphic_url(comment.item.image, only_path: true),
 				action_url: comment.action_url,
 				settings_url: domain + "/settings",
 				support_url: "mailto:#{from}",
 			}
 		)
 
+	rescue StandardError => e
+		logger.error e.message
+		e.backtrace.each { |line| logger.error line }
+		Rollbar.error(e) # log to rollbar
 	end
 end
