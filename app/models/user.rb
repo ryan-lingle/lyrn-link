@@ -30,6 +30,9 @@ class User < ApplicationRecord
 	has_many :group_relationships, dependent: :destroy
 	has_many :groups, through: :group_relationships
 
+	has_many :recommendations, dependent: :destroy
+	has_many :recommended_items, through: :recommendations, source: :meta_item
+
 	before_validation :clean_handle
 	after_create :handle_token, if: :token?
 	after_create :find_group_invites
@@ -125,6 +128,16 @@ class User < ApplicationRecord
 			description: self.description,
 			profile_picture_url: profile_picture_url,
 			tabs: [
+				{
+					tab: 'recommended',
+					icon: 'fa-solid fa-heart',
+					sub_tabs: [
+						{
+							type: 'recommended',
+							items: recommendation_index,
+						}
+					],
+				},
 				{
 					tab: 'feed',
 					icon: 'fa-solid fa-newspaper',
@@ -242,11 +255,18 @@ class User < ApplicationRecord
 		end
 	end
 
+	def recommendation_index
+		recommended_items.map do |item|
+			item.to_index_res(bis)
+		end
+	end
+
 	def search_people(term, page: 1)
 		twitter_client.user_search(term, count: 20, page: page).map do |twitter_user|
 			reduce_user(twitter_user)
 		end
 	end
+	
 
 	def ai_model
 		AiModel.find_or_create_by(user: self)

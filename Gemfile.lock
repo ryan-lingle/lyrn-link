@@ -88,6 +88,7 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
+    curb (1.0.5)
     date (3.3.3)
     diff-lcs (1.5.0)
     domain_name (0.5.20190701)
@@ -109,6 +110,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    fuzzy_match (2.1.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     google-id-token (1.4.2)
@@ -245,6 +247,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rexml (3.2.4)
     rollbar (3.4.0)
     rspec-core (3.12.0)
       rspec-support (~> 3.12.0)
@@ -263,6 +266,8 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.12.0)
+    rss (0.2.9)
+      rexml
     ruby-openai (5.1.0)
       faraday (>= 1)
       faraday-multipart (>= 1)
@@ -339,7 +344,9 @@ DEPENDENCIES
   bcrypt
   bootsnap (>= 1.4.2)
   byebug
+  curb
   dotenv-rails
+  fuzzy_match
   google-id-token
   haml-rails
   image_processing
@@ -359,6 +366,7 @@ DEPENDENCIES
   rest-client
   rollbar
   rspec-rails
+  rss
   ruby-openai
   sass-rails (>= 6)
   spring

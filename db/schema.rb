@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_16_164138) do
+ActiveRecord::Schema.define(version: 2023_09_21_213949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -186,6 +186,15 @@ ActiveRecord::Schema.define(version: 2023_09_16_164138) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "recommendations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "meta_item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["meta_item_id"], name: "index_recommendations_on_meta_item_id"
+    t.index ["user_id"], name: "index_recommendations_on_user_id"
+  end
+
   create_table "tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "key"
     t.text "metadata"
@@ -232,4 +241,6 @@ ActiveRecord::Schema.define(version: 2023_09_16_164138) do
   add_foreign_key "items", "meta_items"
   add_foreign_key "likes", "users", column: "like_id"
   add_foreign_key "likes", "users", column: "link_id"
+  add_foreign_key "recommendations", "meta_items"
+  add_foreign_key "recommendations", "users"
 end

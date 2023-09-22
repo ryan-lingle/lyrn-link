@@ -8,6 +8,7 @@ class Itunes
 			if file.respond_to?('path')
 				rss = File.open(file.path).read
 			    feed = JSON.parse(rss)
+				ap feed["results"]
 			   	if feed["results"][0]
 			   		feed["results"][0]["artworkUrl100"]
 			   	end
