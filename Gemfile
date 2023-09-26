@@ -46,6 +46,10 @@ gem 'oauth', '~> 0.5.1'
 gem 'twitter'
 gem 'google-id-token'
 gem 'ruby-openai'
+gem 'rss'
+gem 'curb'
+gem 'fuzzy_match'
+gem 'sidekiq'
 # gem 'stripe'
 
 group :development, :test do

@@ -30,6 +30,9 @@ class User < ApplicationRecord
 	has_many :group_relationships, dependent: :destroy
 	has_many :groups, through: :group_relationships
 
+	has_many :recommendations, dependent: :destroy
+	has_many :recommended_items, through: :recommendations
+
 	before_validation :clean_handle
 	after_create :handle_token, if: :token?
 	after_create :find_group_invites
@@ -125,6 +128,16 @@ class User < ApplicationRecord
 			description: self.description,
 			profile_picture_url: profile_picture_url,
 			tabs: [
+				# {
+				# 	tab: 'recommended',
+				# 	icon: 'fa-solid fa-heart',
+				# 	sub_tabs: [
+				# 		{
+				# 			type: 'recommended',
+				# 			items: recommendation_index(bis),
+				# 		}
+				# 	],
+				# },
 				{
 					tab: 'feed',
 					icon: 'fa-solid fa-newspaper',
@@ -239,6 +252,12 @@ class User < ApplicationRecord
 		grps ||= groups&.pluck(:id) || []
 		Group.where(private: false).order(member_count: :desc, id: :asc).each_with_index.map do |group, i|
 			group.to_index_res(grps, i)
+		end
+	end
+
+	def recommendation_index(bis=nil)
+		recommended_items.map do |rec|
+			rec.meta_item.to_index_res(bis)
 		end
 	end
 

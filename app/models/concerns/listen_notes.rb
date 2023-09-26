@@ -14,7 +14,7 @@ class ListenNotes
 		end
 	end
 
-	def self.find(title)
+	def self.find_podcast(title)
 		sleep 1
 		url = "https://listen-api.listennotes.com/api/v2/search?q=\"#{title}\"&only_in=title&type=podcast&language=English"
 		json = RestClient.get(
@@ -25,16 +25,9 @@ class ListenNotes
 		)
 		response = JSON.parse(json.body)
 		results = response["results"]
-		return results
-		results = results.map do |episode|
-			reduce_episode(episode)
-		end
-
-		if results.first
-			results.first[:image_url]
-		end
+		return results[0]
 	end
-
+	
 	private
 
 	def self.reduce_episode(episode)

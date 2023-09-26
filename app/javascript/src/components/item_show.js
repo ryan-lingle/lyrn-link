@@ -10,12 +10,12 @@ const ItemShow = ({ title, image_url, description, ...item }) => {
     return(
         <div style={{marginTop: '20px', height: '100%', overflowY: 'scroll'}}>
             <div>
-                <div className='flex text-center'>
+                <div className='flex text-center items-start'>
                     <img className="rounded-sm" src={image_url} style={{maxWidth: '100px', maxHeight: '100px'}} />
 
-                    <div className='ml-5'>
+                    <div className='ml-5 text-left'>
                         <a href={item.url} target="_blank">
-                            <h2 style={{marginTop: '10px'}}>
+                            <h2 style={{marginTop: '0px'}}>
                                 {title}
                                 {item.url && <i className='fa-solid fa-external-link-alt text-base' style={{marginLeft: '10px'}}/>}
                             </h2>

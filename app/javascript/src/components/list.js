@@ -274,7 +274,7 @@ const List = ({ id, type, owner_type, singular, searchable, icon, items=[], isLi
                         rank={isList || isDiscover}
                         onDestroy={() => api.destroyItem(id, item.id)}
                         followButton={['following', 'followers', 'users', 'members'].includes(type)}
-                        bookmarkButton={['bookmarks', 'items'].includes(type)}
+                        bookmarkButton={['bookmarks', 'items', 'recommended'].includes(type)}
                         joinButton={type === 'groups'}
                         lastItem={items.length === i + 1}
                         {...item} 

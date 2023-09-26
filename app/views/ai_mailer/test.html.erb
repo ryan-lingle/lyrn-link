@@ -1,18 +1,22 @@
-<div>
+<div style="background: #EEEEEE">
     <div>[Testing]</div>
     <h2>AI Podcast Recommendations</h2>
-    <% @podcasts.each do |podcast| %>
-        <div style="margin: 10px 0px;">
-            <strong><%= podcast["title"] %></strong>
-            <p><%= podcast["creator"] %></p>
-        </div>
-    <% end %>
-
-    <h2>AI Book Recommendations</h2>
-    <% @books.each do |books| %>
-        <div style="margin: 10px 0px;">
-            <strong><%= books["title"] %></strong>
-            <p><%= books["creator"] %></p>
+    <% @items.each do |item| %>
+        <div style="position: relative" >
+            <div class="item-card" style="background: white; border-radius: 4px; margin-bottom: 14px; padding: 0px 4px; display: flex; align-items: center; height: 70px; border-bottom: 1px solid grey; cursor: pointer;">
+                <div style="height: 50px; width: 50px; margin: 10px;">
+                    <img
+                        src="<%= @domain + Rails.application.routes.url_helpers.polymorphic_url(item.image, only_path: true)%>"
+                        style="height: 50px; width: 50px; border-radius: 2px; box-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10); object-fit: cover;"
+                    >
+                </div>
+                <div style="display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 10px;">
+                    <div style="display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" >
+                        <%= item.title %>  <span class="main-body"><%= item.subtitle %></span>
+                    </div>
+                    <a class="big-body no-decoration" target="_blank"><%= item.creator %></a>
+                </div>
+            </div>
         </div>
     <% end %>
 </div>
