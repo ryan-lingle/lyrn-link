@@ -30,5 +30,8 @@ class RssParser
 
             end
         end
+    rescue OpenURI::HTTPError => e
+        ap e
+        return nil
     end
 end

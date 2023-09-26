@@ -1,8 +1,8 @@
-<div style="background: #EEEEEE">
-    <div>[Testing]</div>
-    <h2>AI Podcast Recommendations</h2>
+<div style="background: black; padding: 0px 10px;">
+    <div style="color: white;">[Testing]</div>
+    <h2 style="color: white;">AI Podcast Recommendations</h2>
     <% @items.each do |item| %>
-        <div style="position: relative" >
+        <a style="position: relative; font-size: 16px; text-decoration: none;" href="<%= item.href %>" >
             <div class="item-card" style="background: white; border-radius: 4px; margin-bottom: 14px; padding: 0px 4px; display: flex; align-items: center; height: 70px; border-bottom: 1px solid grey; cursor: pointer;">
                 <div style="height: 50px; width: 50px; margin: 10px;">
                     <img
@@ -17,6 +17,6 @@
                     <a class="big-body no-decoration" target="_blank"><%= item.creator %></a>
                 </div>
             </div>
-        </div>
+        </a>
     <% end %>
 </div>

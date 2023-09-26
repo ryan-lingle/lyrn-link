@@ -43,15 +43,9 @@ class AiModel < ApplicationRecord
   end
 
   def get_podcast_recommendations
-    prompt = "I like the following podcast episodes: #{podcast_titles}. Can you recommend 5 more REAL PODCAST EPISODES from Apple Podcasts (not audiobooks) for me based on the episodes I like. Sort the results from most to least compatible. And structure the response as a JSON object I can parse. Here is an example: '{ 'podcasts': { 'title': 'Episode Title', 'creator': 'Podcast Title' } }'"
-    response = completion(prompt)
-    res = JSON.parse(response)
-    ap res
+    prompt = "The following are my all time favorite podcast episodes: #{podcast_titles}. Can you recommend 5 more REAL PODCAST EPISODES from Apple Podcasts (not audiobooks) for me based on the episodes I like. Structure the response only as a JSON object I can parse. Here is an example: '{ 'podcasts': { 'title': 'Episode Title', 'creator': 'Podcast Title' } }'"
+    res = completion(prompt, true)
     add_info(res["podcasts"])
-    # rescue => e
-    #   ap e
-    #   get_podcast_recommendations
-    # end
   end
 
   def add_info(podcasts)
@@ -98,7 +92,14 @@ class AiModel < ApplicationRecord
     rec
   end
 
-  def completion(prompt)
+  def get_sub_string(string="")
+    first = string.split("").find_index("{")
+    last = string.reverse.split("").find_index("}")
+    last = string.length - last - 1
+    string[first..last]
+  end
+
+  def completion(prompt, json=false)
     ap prompt
     response = client.chat(
       parameters: {
@@ -107,8 +108,16 @@ class AiModel < ApplicationRecord
           temperature: 0.7,
       }
     )
-    ap response
-    response.dig("choices", 0, "message", "content")
+    string = response.dig("choices", 0, "message", "content")
+    ap string
+    if json
+      substring = get_sub_string(string)
+      res = JSON.parse(substring)
+      ap res
+      res
+    else
+      string
+    end
   end
 
 
