@@ -6,13 +6,16 @@ class RssParser
             titles = feed.items.map do |item|
                 item.title
             end
-            ap "In the following set of titles: [#{titles.join(', ')}] find the title that matches: #{episode_title}. If there is no match, type '0'."
-            title = ai_model.completion("In the following set of titles: #{titles}, find the title that matches: #{episode_title}. If there is no match, type '0'.")
+            title = FuzzyMatch.new(titles).find(episode_title)
+            ap episode_title
             ap title
             unless title == "0"
+                ap titles
+                ap title
                 index = titles.index(title)
+                ap index
                 if index.present?
-                    item = feed.items.dig(index)
+                    item = feed.items && feed.items[index]
                     ap item
                     if item
                         OpenStruct.new(

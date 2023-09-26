@@ -128,16 +128,16 @@ class User < ApplicationRecord
 			description: self.description,
 			profile_picture_url: profile_picture_url,
 			tabs: [
-				{
-					tab: 'recommended',
-					icon: 'fa-solid fa-heart',
-					sub_tabs: [
-						{
-							type: 'recommended',
-							items: recommendation_index,
-						}
-					],
-				},
+				# {
+				# 	tab: 'recommended',
+				# 	icon: 'fa-solid fa-heart',
+				# 	sub_tabs: [
+				# 		{
+				# 			type: 'recommended',
+				# 			items: recommendation_index(bis),
+				# 		}
+				# 	],
+				# },
 				{
 					tab: 'feed',
 					icon: 'fa-solid fa-newspaper',
@@ -255,7 +255,7 @@ class User < ApplicationRecord
 		end
 	end
 
-	def recommendation_index
+	def recommendation_index(bis=nil)
 		recommended_items.map do |rec|
 			rec.meta_item.to_index_res(bis)
 		end
@@ -266,7 +266,6 @@ class User < ApplicationRecord
 			reduce_user(twitter_user)
 		end
 	end
-	
 
 	def ai_model
 		AiModel.find_or_create_by(user: self)

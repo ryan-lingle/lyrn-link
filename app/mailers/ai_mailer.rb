@@ -1,10 +1,14 @@
 class AiMailer < ActionMailer::Base
     default from: 'hi@lyrn.link'
     
-    def test(user)
-        @user = user
-        @books = user.ai_model.get_book_recommendations
-        @podcasts = user.ai_model.get_podcast_recommendations
+    def test(recommendation)
+        @user = recommendation.user
+        @items = recommendation.meta_items
+        @domain = domain
         mail(to: @user.email, subject: "Lyrnlink AI Weekly [Test]")
+    end
+
+    def domain
+        ENV["DOMAIN"]
     end
   end

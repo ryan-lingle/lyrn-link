@@ -36,5 +36,7 @@ module LyrnLink
     config.action_mailer.postmark_settings = { :api_token => ENV['POSTMARK_TOKEN'] }
     
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::HashWithIndifferentAccess]
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
