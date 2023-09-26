@@ -1,4 +1,5 @@
 class Recommendation < ApplicationRecord
   belongs_to :user
-  belongs_to :meta_item
+  has_many :recommended_items, dependent: :destroy
+  has_many :meta_items, through: :recommended_items
 end

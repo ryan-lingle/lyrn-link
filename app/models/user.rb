@@ -31,7 +31,7 @@ class User < ApplicationRecord
 	has_many :groups, through: :group_relationships
 
 	has_many :recommendations, dependent: :destroy
-	has_many :recommended_items, through: :recommendations, source: :meta_item
+	has_many :recommended_items, through: :recommendations
 
 	before_validation :clean_handle
 	after_create :handle_token, if: :token?
@@ -256,8 +256,8 @@ class User < ApplicationRecord
 	end
 
 	def recommendation_index
-		recommended_items.map do |item|
-			item.to_index_res(bis)
+		recommended_items.map do |rec|
+			rec.meta_item.to_index_res(bis)
 		end
 	end
 
