@@ -1,22 +1,24 @@
-<div style="background: black; padding: 0px 10px;">
+<div style="background: black; padding: 0px 20px;">
     <div style="color: white;">[Testing]</div>
-    <h2 style="color: white;">AI Podcast Recommendations</h2>
-    <% @items.each do |item| %>
-        <a style="position: relative; font-size: 16px; text-decoration: none;" href="<%= item.href %>" >
-            <div class="item-card" style="background: white; border-radius: 4px; margin-bottom: 14px; padding: 0px 4px; display: flex; align-items: center; height: 70px; border-bottom: 1px solid grey; cursor: pointer;">
-                <div style="height: 50px; width: 50px; margin: 10px;">
-                    <img
-                        src="<%= @domain + Rails.application.routes.url_helpers.polymorphic_url(item.image, only_path: true)%>"
-                        style="height: 50px; width: 50px; border-radius: 2px; box-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10); object-fit: cover;"
-                    >
-                </div>
-                <div style="display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 10px;">
-                    <div style="display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" >
-                        <%= item.title %>  <span class="main-body"><%= item.subtitle %></span>
+    <h2 style="color: white; font-size: 25px; margin-bottom: 25px">AI Podcast Recommendations</h2>
+    <div style="width: 100%">
+        <% @items.each do |item| %>
+            <a style="text-decoration: none;" href="<%= item.href %>" >
+                <div class="item-card" style="background: white; border-radius: 4px; margin-bottom: 25px; padding: 0px 4px; display: flex; align-items: center; height: 100px; border-bottom: 1px solid grey; cursor: pointer;">
+                    <div style="height: 70px; width: 70px; margin: 10px;">
+                        <img
+                            src="<%= @domain + Rails.application.routes.url_helpers.polymorphic_url(item.image, only_path: true)%>"
+                            style="height: 50px; width: 50px; border-radius: 2px; box-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10); object-fit: cover;"
+                        >
                     </div>
-                    <a class="big-body no-decoration" target="_blank"><%= item.creator %></a>
+                    <div style="text-align: left; display: block; flex-grow: 1; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 10px;">
+                        <div style="font-size: 20px;display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" >
+                            <%= item.title %>  <span class="main-body"><%= item.subtitle %></span>
+                        </div>
+                        <a style="font-size: 18px;" target="_blank"><%= item.creator %></a>
+                    </div>
                 </div>
-            </div>
-        </a>
-    <% end %>
+            </a>
+        <% end %>
+    </div>
 </div>
