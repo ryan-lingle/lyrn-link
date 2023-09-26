@@ -14,8 +14,8 @@ class NotificationMailer < Mailer
     		}
     	)
 	rescue StandardError => e
-		logger.error e.message
-		e.backtrace.each { |line| logger.error line }
+		puts e.message
+		e.backtrace.each { |line| puts line }
 		Rollbar.error(e) # log to rollbar
 	end
 
@@ -36,8 +36,8 @@ class NotificationMailer < Mailer
     		}
     	)
 	rescue StandardError => e
-		logger.error e.message
-		e.backtrace.each { |line| logger.error line }
+		puts e.message
+		e.backtrace.each { |line| puts line }
 		Rollbar.error(e) # log to rollbar
 	end
 
@@ -58,8 +58,8 @@ class NotificationMailer < Mailer
 		)
 
 	rescue StandardError => e
-		logger.error e.message
-		e.backtrace.each { |line| logger.error line }
+		puts e.message
+		e.backtrace.each { |line| puts line }
 		Rollbar.error(e) # log to rollbar
 	end
 
@@ -80,8 +80,8 @@ class NotificationMailer < Mailer
 		)
 
 	rescue StandardError => e
-		logger.error e.message
-		e.backtrace.each { |line| logger.error line }
+		puts e.message
+		e.backtrace.each { |line| puts line }
 		Rollbar.error(e) # log to rollbar
 	end
 end
