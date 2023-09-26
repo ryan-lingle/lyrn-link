@@ -5,7 +5,7 @@ class AiMailer < ActionMailer::Base
         @user = recommendation.user
         @items = recommendation.meta_items
         @domain = domain
-        mail(to: @user.email, subject: "Lyrnlink AI Weekly [Test]")
+        mail(to: @user.email, subject: "Lyrnlink AI Daily [Test]")
     end
 
     def domain

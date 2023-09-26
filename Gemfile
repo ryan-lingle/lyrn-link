@@ -50,6 +50,7 @@ gem 'rss'
 gem 'curb'
 gem 'fuzzy_match'
 gem 'sidekiq'
+gem 'sidekiq-cron'
 # gem 'stripe'
 
 group :development, :test do

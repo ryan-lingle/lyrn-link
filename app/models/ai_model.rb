@@ -21,6 +21,10 @@ class AiModel < ApplicationRecord
     end
   end
 
+  def previous_podcast_titles
+    user.recommended_meta_items.map { |item| "#{item.title} by #{item.creator}" }.join(', ')
+  end
+
   def has_podcasts?
     podcast_titles.present?
   end
@@ -43,7 +47,7 @@ class AiModel < ApplicationRecord
   end
 
   def get_podcast_recommendations
-    prompt = "The following are my all time favorite podcast episodes: #{podcast_titles}. Can you recommend 10 more REAL PODCAST EPISODES from Apple Podcasts (not audiobooks) for me based on the episodes I like. Structure the response only as a JSON object I can parse. Here is an example: '{ 'podcasts': { 'title': 'Episode Title', 'creator': 'Podcast Title' } }'"
+    prompt = "The following are my all time favorite podcast episodes: #{podcast_titles}. Can you recommend 10 more REAL PODCAST EPISODES from Apple Podcasts (not audiobooks) for me based on the episodes I like. Please do not include any of the following episodes: #{previous_podcast_titles}. Structure the response only as a JSON object I can parse. Here is an example: '{ 'podcasts': { 'title': 'Episode Title', 'creator': 'Podcast Title' } }'"
     res = completion(prompt, true)
     add_info(res["podcasts"])
   end

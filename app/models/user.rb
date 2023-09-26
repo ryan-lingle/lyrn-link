@@ -32,6 +32,7 @@ class User < ApplicationRecord
 
 	has_many :recommendations, dependent: :destroy
 	has_many :recommended_items, through: :recommendations
+	has_many :recommended_meta_items, through: :recommended_items, source: :meta_item
 
 	before_validation :clean_handle
 	after_create :handle_token, if: :token?

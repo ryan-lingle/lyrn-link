@@ -27,6 +27,7 @@ const Settings = (props) => {
                         'comment_on_my_converation': 'When a comment is made on a conversation I\'m in',
                         'follow_post': 'When someone I follow posts a new item',
                         'new_follower': 'When someone follows me',
+                        'ai_daily': 'Daily AI Recommendations [Early BETA]',
                     }}
                     defaultValue={props.state.user.notification_settings}
                 />
