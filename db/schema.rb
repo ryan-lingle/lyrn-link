@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_21_213949) do
+ActiveRecord::Schema.define(version: 2023_09_29_175914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 2023_09_21_213949) do
     t.uuid "meta_item_id"
     t.text "user_notes"
     t.boolean "notes_activity_published", default: false
+    t.string "media_type"
     t.index ["list_id"], name: "index_items_on_list_id"
     t.index ["meta_item_id"], name: "index_items_on_meta_item_id"
   end
@@ -177,6 +178,7 @@ ActiveRecord::Schema.define(version: 2023_09_21_213949) do
     t.integer "count", default: 1
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "media_type"
   end
 
   create_table "oauth_credentials", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

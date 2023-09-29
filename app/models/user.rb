@@ -262,6 +262,14 @@ class User < ApplicationRecord
 		end
 	end
 
+	def recommended_podcasts
+		recommended_meta_items.where(media_type: 'podcast')
+	end
+
+	def recommended_books
+		recommended_meta_items.where(media_type: 'book')
+	end
+
 	def search_people(term, page: 1)
 		twitter_client.user_search(term, count: 20, page: page).map do |twitter_user|
 			reduce_user(twitter_user)

@@ -14,9 +14,7 @@ class GoogleBooks
 		response = JSON.parse(json.body)
 		res = response["items"]&.map { |book| reduce_book(book) } || []
 		res = res.reject { |book| book.nil? }
-		if res.first
-			res.first[:image_url]
-		end
+		res.first
 	end
 
 	private

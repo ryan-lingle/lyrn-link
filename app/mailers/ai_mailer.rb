@@ -3,7 +3,8 @@ class AiMailer < ActionMailer::Base
     
     def test(recommendation)
         @user = recommendation.user
-        @items = recommendation.meta_items
+        @podcasts = recommendation.podcasts
+        @books = recommendation.books
         @domain = domain
         mail(to: @user.email, subject: "Lyrnlink AI Daily [Test]")
     end

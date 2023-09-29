@@ -1,18 +1,39 @@
-<div style="background: black; padding: 0px 20px;">
+<div style="background: black; padding: 0px 20px; text-align: center;">
     <div style="color: white;">[Testing]</div>
-    <h2 style="color: white; font-size: 25px; margin-bottom: 25px">AI Podcast Recommendations</h2>
-    <div style="width: 100%">
-        <% @items.each do |item| %>
-            <a style="text-decoration: none;" href="<%= item.href %>" >
+    <h2 style="color: white; font-size: 30px; margin-bottom: 25px">Podcasts</h2>
+    <div style="width: 600px; margin: auto; text-align: center; margin-bottom: 25px;">
+        <% @podcasts.each do |item| %>
+            <a style="text-decoration: none; display: block; margin: auto;" href="<%= item.href %>" >
                 <div class="item-card" style="background: white; border-radius: 4px; margin-bottom: 25px; padding: 0px 4px; display: flex; align-items: center; height: 100px; border-bottom: 1px solid grey; cursor: pointer;">
                     <div style="height: 70px; width: 70px; margin: 10px;">
                         <img
                             src="<%= @domain + Rails.application.routes.url_helpers.polymorphic_url(item.image, only_path: true)%>"
-                            style="height: 50px; width: 50px; border-radius: 2px; box-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10); object-fit: cover;"
+                            style="height: 70px; width: 70px; border-radius: 2px; box-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10); object-fit: cover;"
                         >
                     </div>
                     <div style="text-align: left; display: block; flex-grow: 1; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 10px;">
-                        <div style="font-size: 20px;display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" >
+                        <div style="font-size: 20px;display: block; margin-top: 10px; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" >
+                            <%= item.title %>  <span class="main-body"><%= item.subtitle %></span>
+                        </div>
+                        <a style="font-size: 18px;" target="_blank"><%= item.creator %></a>
+                    </div>
+                </div>
+            </a>
+        <% end %>
+    </div>
+    <h2 style="color: white; font-size: 30px; margin-bottom: 25px">Books</h2>
+    <div style="width: 600px; text-align: center; margin: auto; margin-bottom: 25px;">
+        <% @books.each do |item| %>
+            <a style="text-decoration: none;  display: block; margin: auto;" href="<%= item.href %>" >
+                <div class="item-card" style="background: white; border-radius: 4px; margin-bottom: 25px; padding: 0px 4px; display: flex; align-items: center; height: 100px; border-bottom: 1px solid grey; cursor: pointer;">
+                    <div style="height: 70px; width: 70px; margin: 10px;">
+                        <img
+                            src="<%= @domain + Rails.application.routes.url_helpers.polymorphic_url(item.image, only_path: true)%>"
+                            style="height: 70px; width: 70px; border-radius: 2px; box-shadow: 0px 0px 8px 2px rgba(26,26,26,0.10); object-fit: cover;"
+                        >
+                    </div>
+                    <div style="text-align: left; display: block; flex-grow: 1; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 10px;">
+                        <div style="font-size: 20px; margin-top: 10px; display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" >
                             <%= item.title %>  <span class="main-body"><%= item.subtitle %></span>
                         </div>
                         <a style="font-size: 18px;" target="_blank"><%= item.creator %></a>
