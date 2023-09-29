@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_29_175914) do
+ActiveRecord::Schema.define(version: 2023_09_29_185253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -179,11 +179,23 @@ ActiveRecord::Schema.define(version: 2023_09_29_175914) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "media_type"
+    t.uuid "podcast_id"
+    t.index ["podcast_id"], name: "index_meta_items_on_podcast_id"
   end
 
   create_table "oauth_credentials", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "token"
     t.string "secret"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "podcasts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "itunes_id"
+    t.text "description"
+    t.string "image_url"
+    t.string "rss_url"
+    t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -251,6 +263,7 @@ ActiveRecord::Schema.define(version: 2023_09_29_175914) do
   add_foreign_key "items", "meta_items"
   add_foreign_key "likes", "users", column: "like_id"
   add_foreign_key "likes", "users", column: "link_id"
+  add_foreign_key "meta_items", "podcasts"
   add_foreign_key "recommendations", "users"
   add_foreign_key "recommended_items", "meta_items"
   add_foreign_key "recommended_items", "recommendations"

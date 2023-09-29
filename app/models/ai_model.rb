@@ -35,7 +35,7 @@ class AiModel < ApplicationRecord
 
   def create_recommendation
     if has_books? && has_podcasts?
-      rec = Recommendation.find_or_create_by(
+      rec = Recommendation.create(
         user: user,
         date: Date.today,
       )
@@ -69,25 +69,28 @@ class AiModel < ApplicationRecord
     add_book_info(res["books"])
   end
 
-  def add_book_info(books)
-    nb = books.map do |book|
-      sleep 2
-      res = GoogleBooks.search_by_uid(book["isbn"])
-      res
+  def add_book_info(recs)
+    nb = recs.map do |rec|
+      item = MetaItem.find_by(uid: rec["isbn"])
+      if item
+        item
+      else
+        sleep 2
+        res = GoogleBooks.search_by_uid(rec["isbn"])
+        if res
+          item = MetaItem.create!(
+            media_type: 'book',
+            uid: res[:uid],
+            title: res[:title],
+            description: res[:description],
+            image_url: res[:image_url],
+            creator: res[:creator],
+            publish_date: res[:publish_date],
+          )
+        end
+      end
     end
-    return nb.compact.map do |meta_item|
-      item = MetaItem.find_by(uid: meta_item[:uid])
-      item ||= MetaItem.create!(
-        media_type: 'book',
-        uid: meta_item[:uid],
-        title: meta_item[:title],
-        description: meta_item[:description],
-        image_url: meta_item[:image_url],
-        creator: meta_item[:creator],
-        publish_date: meta_item[:publish_date],
-      )
-      item
-    end
+    return nb.compact
   end
 
   def get_podcast_recommendations
@@ -96,41 +99,22 @@ class AiModel < ApplicationRecord
     add_info(res["podcasts"])
   end
 
-  def add_info(podcasts)
-    np = podcasts.map do |podcast|
+  def add_info(recs)
+    # recs = [{ "title": "Episode Title", "creator": "Podcast Title" }]
+
+    np = recs.map do |rec|
       sleep 2
-      res = Taddy.find_podcast(podcast["creator"])
-      if res
-        # add to Podcast
-        podcast["uid"] = res["itunesId"]
-        podcast["description"] = res["description"]
-        podcast["image_url"] = res["imageUrl"]
-        episode = RssParser.find_episode(res["rssUrl"], podcast["title"], self)
-        if episode
-          podcast["audioUrl"] = episode.audio_url
-          podcast["title"] = episode.title
-          podcast["url"] = episode.url
-          podcast["description"] = episode.description
-          podcast["publishDate"] = episode.publish_date
-          ap podcast
-          podcast
-        end
+      podcast = Podcast.find_or_create_by(title: rec["creator"])
+      if podcast
+
+        # add podcast info to rec
+        rec["uid"] = podcast.itunes_id
+        rec["image_url"] = podcast.image_url
+        podcast.find_episode(episode_title: rec["title"])
       end
     end
-    return np.compact.map do |meta_item|
-      item = MetaItem.find_by(title: meta_item["title"])
-      item ||= MetaItem.create!(
-        media_type: 'podcast',
-        uid: meta_item["uid"],
-        title: meta_item["title"],
-        description: meta_item["description"],
-        image_url: meta_item["image_url"],
-        creator: meta_item["creator"],
-        url: meta_item["url"],
-        publish_date: meta_item["publishDate"],
-      )
-      item
-    end
+
+    return np.compact
   end
 
   def get_sub_string(string="")

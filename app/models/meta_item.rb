@@ -4,6 +4,7 @@ class MetaItem < ApplicationRecord
 	has_many :lists, through: :items
 	has_many :comments, dependent: :destroy, as: :item
 	has_many :comment_users, -> { distinct }, through: :comments, source: :user
+	belongs_to :podcast, optional: true
 	include EncodeImageUrl
 	include ActiveStorageSupport::SupportForBase64
 	has_one_base64_attached :image
@@ -37,7 +38,7 @@ class MetaItem < ApplicationRecord
 			title: self.title,
 			subtitle: self.subtitle,
 			description: self.description,
-			image_url: self.image.attached? ? self.image.service_url : '',
+			image_url: persistent_image_url,
 			url: self.url,
 			url_copy: self.url_copy, 
 			creator: self.creator,
@@ -47,6 +48,22 @@ class MetaItem < ApplicationRecord
 			bookmarked: bookmarks.include?(self.id),
 			count: count ? self.count : nil,
 		}
+	end
+
+	def persistent_image_url
+		if podcast.present?
+			podcast.image.attached? ? podcast.image.service_url : ''
+		else
+			image.attached? ? image.service_url : ''
+		end
+	end
+
+	def image_or_podcast_image
+		if podcast.present?
+			podcast.image
+		else
+			image
+		end 
 	end
 
 	def to_show_res(bookmarks=[])
