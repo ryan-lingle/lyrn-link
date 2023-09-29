@@ -62,24 +62,26 @@ class Podcast < ApplicationRecord
             ap rss_url
             # search rss feed
             feed = RssParser.parse(rss_url)
-            titles = feed.items.map do |rss_item|
-                meta_item = MetaItem.new(title: rss_item.title)
-                meta_item.update(
-                    podcast: self,
-                    description: rss_item.description,
-                    url: rss_item.link,
-                    creator: self.title,
-                    publish_date: rss_item.pubDate,
-                )
-                meta_item.title
-            end
-            title = FuzzyMatch.new(titles).find(episode_title)
-            ap title
-            ap episode_title
-            if title
-                episodes.find_by(title: title)
-            else
-                nil
+            if feed
+                titles = feed.items.map do |rss_item|
+                    meta_item = MetaItem.new(title: rss_item.title)
+                    meta_item.update(
+                        podcast: self,
+                        description: rss_item.description,
+                        url: rss_item.link,
+                        creator: self.title,
+                        publish_date: rss_item.pubDate,
+                    )
+                    meta_item.title
+                end
+                title = FuzzyMatch.new(titles).find(episode_title)
+                ap title
+                ap episode_title
+                if title
+                    episodes.find_by(title: title)
+                else
+                    nil
+                end
             end
         end
     end
