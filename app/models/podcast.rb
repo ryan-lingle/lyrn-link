@@ -40,7 +40,6 @@ class Podcast < ApplicationRecord
         # search for episode in db, if not found, search rss feed
 
         # search db
-        episode = episodes.find_by(title: episode_title)
         if episodes.any?
             episode = episodes.find_by(title: episode_title)
             if episode
@@ -66,6 +65,7 @@ class Podcast < ApplicationRecord
                 titles = feed.items.map do |rss_item|
                     meta_item = MetaItem.new(title: rss_item.title)
                     meta_item.update(
+                        media_type: "podcast",
                         podcast: self,
                         description: rss_item.description,
                         url: rss_item.link,

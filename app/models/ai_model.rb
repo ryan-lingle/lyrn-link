@@ -43,6 +43,7 @@ class AiModel < ApplicationRecord
       # get books
       books_meta_items = get_book_recommendations
       podcast_meta_items = get_podcast_recommendations
+      ap podcast_meta_items
 
       # add to recommendation
       books_meta_items.each do |meta_item|

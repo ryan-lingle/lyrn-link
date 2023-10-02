@@ -5,8 +5,10 @@ class MetaItem < ApplicationRecord
 	has_many :comments, dependent: :destroy, as: :item
 	has_many :comment_users, -> { distinct }, through: :comments, source: :user
 	belongs_to :podcast, optional: true
+	has_many :recommended_items, dependent: :destroy
 	include EncodeImageUrl
 	include ActiveStorageSupport::SupportForBase64
+	include Rails.application.routes.url_helpers
 	has_one_base64_attached :image
 	before_create :upload_image
 
@@ -52,18 +54,14 @@ class MetaItem < ApplicationRecord
 
 	def persistent_image_url
 		if podcast.present?
-			podcast.image.attached? ? podcast.image.service_url : ''
+			podcast.image.attached? ? polymorphic_path_with_domain(podcast.image) : ''
 		else
-			image.attached? ? image.service_url : ''
+			image.attached? ? polymorphic_path_with_domain(image) : ''
 		end
 	end
 
-	def image_or_podcast_image
-		if podcast.present?
-			podcast.image
-		else
-			image
-		end 
+	def polymorphic_path_with_domain(attachment)
+		ENV['DOMAIN'] + polymorphic_url(attachment, only_path: true)
 	end
 
 	def to_show_res(bookmarks=[])
