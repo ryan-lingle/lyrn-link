@@ -67,7 +67,7 @@ class AiModel < ApplicationRecord
     raise e
   end
 
-  def get_book_recommendations(n=5)
+  def get_book_recommendations(n=3)
     prompt = "The following are my all time favorite books: #{book_titles}. Can you recommend #{n} more REAL BOOKS for me based on the books I like. Please do not include any of the following books: #{previous_book_titles}. Structure the response only as a JSON object I can parse. Here is an example: '{ 'books': [{ 'title': 'Book Title', 'creator': 'Book Author', isbn: 'Book ISBN' }] }'"
     parsed_gpt_response = completion(prompt, true)
     books = parsed_gpt_response["books"]
@@ -115,7 +115,7 @@ class AiModel < ApplicationRecord
     end
   end
 
-  def get_podcast_recommendations(n=5)
+  def get_podcast_recommendations(n=8)
     prompt = "The following are my all time favorite podcast episodes: #{podcast_titles}. Can you recommend #{n} more REAL PODCAST EPISODES from Apple Podcasts (not audiobooks) for me based on the episodes I like. Please do not include any of the following episodes: #{previous_podcast_titles}. Structure the response only as a JSON object I can parse. Here is an example: '{ 'podcasts': { 'title': 'Episode Title', 'creator': 'Podcast Title' } }'"
     parsed_gpt_response = completion(prompt, true)
     podcasts = parsed_gpt_response["podcasts"]
