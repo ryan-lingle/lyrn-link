@@ -36,7 +36,13 @@ class Podcast < ApplicationRecord
         end
     end
 
-    def find_episode(episode_title:)
+    def confirm_fuzzy_match(title1, title2, ai_model)
+        res = ai_model.completion("#{title1} is a similar podcast episode to #{title2}. If this is correct, please respond with 'true'. If not, please respond with 'false'.")
+        res.downcase == "true"
+    end
+
+
+    def find_episode(episode_title:, ai_model:)
         # search for episode in db, if not found, search rss feed
 
         # search db
@@ -48,10 +54,12 @@ class Podcast < ApplicationRecord
             else
                 titles = episodes.pluck(:title)
                 title = FuzzyMatch.new(titles).find(episode_title)
-                ap title
-                ap episode_title
                 if title
-                    episodes.find_by(title: title)
+                    is_accurate = confirm_fuzzy_match(episode_title, title, ai_model)
+                    ap is_accurate
+                    if is_accurate
+                        episodes.find_by(title: title)
+                    end
                 else
                     nil
                 end
@@ -75,10 +83,12 @@ class Podcast < ApplicationRecord
                     meta_item.title
                 end
                 title = FuzzyMatch.new(titles).find(episode_title)
-                ap title
-                ap episode_title
                 if title
-                    episodes.find_by(title: title)
+                    is_accurate = confirm_fuzzy_match(episode_title, title, ai_model)
+                    ap is_accurate
+                    if is_accurate
+                        episodes.find_by(title: title)
+                    end 
                 else
                     nil
                 end

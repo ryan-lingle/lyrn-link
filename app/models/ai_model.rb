@@ -35,7 +35,7 @@ class AiModel < ApplicationRecord
 
   def create_recommendation
     if has_books? && has_podcasts?
-      rec = Recommendation.create(
+      rec = Recommendation.find_or_create_by(
         user: user,
         date: Date.today,
       )
@@ -62,12 +62,23 @@ class AiModel < ApplicationRecord
       end
     end
     rec
+  rescue => e
+    Recommendation.where(user: user, date: Date.today).destroy_all
+    raise e
   end
 
-  def get_book_recommendations
-    prompt = "The following are my all time favorite books: #{book_titles}. Can you recommend 5 more REAL BOOKS for me based on the books I like. Please do not include any of the following books: #{previous_book_titles}. Structure the response only as a JSON object I can parse. Here is an example: '{ 'books': [{ 'title': 'Book Title', 'creator': 'Book Author', isbn: 'Book ISBN' }] }'"
-    res = completion(prompt, true)
-    add_book_info(res["books"])
+  def get_book_recommendations(n=5)
+    prompt = "The following are my all time favorite books: #{book_titles}. Can you recommend #{n} more REAL BOOKS for me based on the books I like. Please do not include any of the following books: #{previous_book_titles}. Structure the response only as a JSON object I can parse. Here is an example: '{ 'books': [{ 'title': 'Book Title', 'creator': 'Book Author', isbn: 'Book ISBN' }] }'"
+    parsed_gpt_response = completion(prompt, true)
+    books = parsed_gpt_response["books"]
+    if !books.is_a?(Array)
+      books = [books]
+    end
+    books_meta_items = filter_items(add_book_info(books), "books")
+    if books_meta_items.count < n
+      books_meta_items += get_book_recommendations(n - books_meta_items.count)
+    end
+    books_meta_items
   end
 
   def add_book_info(recs)
@@ -94,11 +105,31 @@ class AiModel < ApplicationRecord
     return nb.compact
   end
 
-  def get_podcast_recommendations
-    prompt = "The following are my all time favorite podcast episodes: #{podcast_titles}. Can you recommend 5 more REAL PODCAST EPISODES from Apple Podcasts (not audiobooks) for me based on the episodes I like. Please do not include any of the following episodes: #{previous_podcast_titles}. Structure the response only as a JSON object I can parse. Here is an example: '{ 'podcasts': { 'title': 'Episode Title', 'creator': 'Podcast Title' } }'"
-    res = completion(prompt, true)
-    add_info(res["podcasts"])
+  def filter_items(meta_items, type)
+    previous = user.send("recommended_#{type}").pluck(:title)
+    posted = user.lists.find_by(type: type.capitalize)&.items.pluck(:title) || []
+    black_list = previous + posted
+    uniq = meta_items.uniq { |meta_item| meta_item.title }
+    uniq.reject do |meta_item|
+      black_list.include?(meta_item.title)
+    end
   end
+
+  def get_podcast_recommendations(n=5)
+    prompt = "The following are my all time favorite podcast episodes: #{podcast_titles}. Can you recommend #{n} more REAL PODCAST EPISODES from Apple Podcasts (not audiobooks) for me based on the episodes I like. Please do not include any of the following episodes: #{previous_podcast_titles}. Structure the response only as a JSON object I can parse. Here is an example: '{ 'podcasts': { 'title': 'Episode Title', 'creator': 'Podcast Title' } }'"
+    parsed_gpt_response = completion(prompt, true)
+    podcasts = parsed_gpt_response["podcasts"]
+    ap podcasts
+    if !podcasts.is_a?(Array)
+      podcasts = [podcasts]
+    end
+    podcast_meta_items = filter_items(add_info(podcasts), "podcasts")
+    if podcast_meta_items.count < n
+      podcast_meta_items += get_podcast_recommendations(n - podcast_meta_items.count)
+    end
+    podcast_meta_items
+  end
+  
 
   def add_info(recs)
     # recs = [{ "title": "Episode Title", "creator": "Podcast Title" }]
@@ -111,7 +142,7 @@ class AiModel < ApplicationRecord
         # add podcast info to rec
         rec["uid"] = podcast.itunes_id
         rec["image_url"] = podcast.image_url
-        podcast.find_episode(episode_title: rec["title"])
+        podcast.find_episode(episode_title: rec["title"], ai_model: self)
       end
     end
 
@@ -144,6 +175,9 @@ class AiModel < ApplicationRecord
     else
       string
     end
+  rescue JSON::ParserError => e
+    ap e
+    completion(prompt, json)
   end
 
 
