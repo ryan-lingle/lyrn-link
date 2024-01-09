@@ -34,6 +34,10 @@
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
+  "engines": {
+    "node": "14.9.0",
+    "yarn": "1.22.19"
+  },
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"
   }
