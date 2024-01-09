@@ -17,17 +17,6 @@ class Root extends Component {
       this.store.setStateHandler(this.setState.bind(this));
   }
 
-  // bootIntercom(user) {
-  //   if (user.id)
-  //     window.Intercom('boot', {
-  //       app_id: 'ui27tgvx',
-  //       email: user.email,
-  //       user_id: user.id,
-  //       created_at: user.created_at,
-  //       user_hash: user.intercom_hmac,
-  //     });
-  // }
-
   signOut = () => {
     localStorage.clear();
     window.location.href = "/";

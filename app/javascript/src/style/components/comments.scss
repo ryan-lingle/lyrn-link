@@ -1,5 +1,7 @@
 .comment {
     padding: 10px;
+    height: 100%;
+    align-items: start;
     img {
         border-radius: 100%;
     }
@@ -9,6 +11,7 @@
     color: $grey5;
     font-size: 12px;
     font-weight: lighter;
+    margin-left: 2px;
 }
 
 .comment-text {
