@@ -12,6 +12,16 @@ const routes = [
     private: true,
   },
   {
+    path: '/change_password/:token',
+    page: 'ResetPassword',
+    nav: false,
+  },
+  {
+    path: '/reset_password',
+    page: 'RequestResetPassword',
+    nav: false,
+  },
+  {
     path: "/settings",
     page: "Settings",
     private: true,

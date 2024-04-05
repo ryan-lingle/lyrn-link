@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import Context from '../context';
 import Logo from '../assets/lyrnlinkblack.svg';
 import { ErrorBox, Form } from '../components';
@@ -75,6 +75,9 @@ const Login = ({ location }) => {
             <div className="auth-footing">
                 <div style={{marginTop: '15px'}}>
                     Don't have a lyrnlink yet? <a className="underline" href="/signup">Sign Up</a>
+                </div>
+                <div style={{marginTop: '15px'}}>
+                   Forgot your password? <a className="underline" href="/reset_password">Reset Password</a>
                 </div>
             </div>
 

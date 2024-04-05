@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   		get 'refresh_token', to: 'auth#refresh_token'
       post 'sign_out', to: 'auth#sign_out'
   		get 'current_user', to: 'users#show'
+      post 'reset_password_email', to: 'auth#reset_password_email'
+      post 'reset_password/:token', to: 'auth#reset_password'
 
       # RESOURCES
       resources :users, only: [:update, :destroy, :index] do

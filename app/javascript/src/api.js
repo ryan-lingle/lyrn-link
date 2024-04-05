@@ -282,6 +282,59 @@ class Api {
         }
     }
 
+    requestResetPassword = async (email) => {
+        this.setLoading('reset_password');
+
+        const res = await this.post('reset_password_email', {
+            params: { email },
+            errorType: 'reset_password',
+            checkRefresh: false,
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'success',
+                successType: 'reset_password',
+                success: 'Email sent!',
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    changePassword = async (params) => {
+        this.setLoading('reset_password');
+
+        const res = await this.post(`reset_password/${params.token}`, {
+            params,
+            errorType: 'reset_password',
+            checkRefresh: false,
+        });
+
+        if (!res.error) {
+
+            store.reduce({
+                type: 'success',
+                successType: 'reset_password',
+                success: 'Password changed!',
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
     signOut = async () => {
         const res = await this.post('sign_out', {
             checkRefresh: false

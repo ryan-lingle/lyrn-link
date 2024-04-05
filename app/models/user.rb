@@ -314,6 +314,11 @@ class User < ApplicationRecord
 		items.pluck(:meta_item_id)
 	end
 
+	def send_reset_password_email
+		token = Token.create(metadata: { user_id: self.id })
+		ResetPasswordMailer.send(email: email, name: name, token: token.key )
+	end
+
 	private
 
 	def confirm_email

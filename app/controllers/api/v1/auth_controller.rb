@@ -105,6 +105,32 @@ class Api::V1::AuthController < ApplicationController
 		end
 	end
 
+	def reset_password_email
+		@user = User.find_by(email: params[:email])
+		if @user
+			@user.send_reset_password_email
+			render json: {
+				success: true
+			}
+		else
+			raise "No account found with that email"
+		end
+	end
+
+	def reset_password
+		token = Token.get(params[:token])
+		@user = User.find(token[:user_id])
+		if @user
+			@user.update!(password: params[:password])
+			Token.destroy(params[:token])
+			render json: {
+				success: true,
+			}
+		else
+			raise "Invalid token"
+		end
+	end
+
 	def sign_out
 		cookies.delete(:refresh_token)
 		render json: {

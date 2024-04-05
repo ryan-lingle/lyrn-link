@@ -8,5 +8,5 @@ export {default as ConfirmEmail} from './confirm_email';
 export {default as Group} from './group.js';
 export {default as Settings} from './settings.js';
 export {default as Page} from './page.js';
-
-
+export {default as RequestResetPassword} from './request_reset_password.js';
+export {default as ResetPassword} from './reset_password.js';
