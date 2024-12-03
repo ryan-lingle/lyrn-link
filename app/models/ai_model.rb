@@ -68,7 +68,7 @@ class AiModel < ApplicationRecord
   end
 
   def get_book_recommendations(n=3)
-    prompt = "The following are my all time favorite books: #{book_titles}. Can you recommend #{n} more REAL BOOKS for me based on the books I like. Please do not include any of the following books: #{previous_book_titles}. Structure the response only as a JSON object I can parse. Here is an example: '{ 'books': [{ 'title': 'Book Title', 'creator': 'Book Author', isbn: 'Book ISBN' }] }'"
+    prompt = "The following are my all time favorite books: #{book_titles}. Can you recommend #{n} more REAL BOOKS for me based on the books I like. Structure the response only as a JSON object I can parse. Here is an example: '{ 'books': [{ 'title': 'Book Title', 'creator': 'Book Author', isbn: 'Book ISBN' }] }'"
     parsed_gpt_response = completion(prompt, true)
     books = parsed_gpt_response["books"]
     if !books.is_a?(Array)
@@ -162,7 +162,7 @@ class AiModel < ApplicationRecord
       parameters: {
           model: "gpt-4o",
           messages: [{ role: "user", content: "#{prompt}"}],
-          temperature: 0.3,
+          temperature: 1,
       }
     )
     string = response.dig("choices", 0, "message", "content")
