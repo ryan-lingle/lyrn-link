@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withStuff } from '../hocs';
 import Logo from '../assets/logo.png';
 import { PasswordConditions, Form } from "../components";
