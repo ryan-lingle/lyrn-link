@@ -55,11 +55,11 @@ class Podcast < ApplicationRecord
                 titles = episodes.pluck(:title)
                 title = FuzzyMatch.new(titles).find(episode_title)
                 if title
-                    is_accurate = confirm_fuzzy_match(episode_title, title, ai_model)
-                    ap is_accurate
-                    if is_accurate
-                        episodes.find_by(title: title)
-                    end
+                    # is_accurate = confirm_fuzzy_match(episode_title, title, ai_model)
+                    # ap is_accurate
+                    # if is_accurate
+                    # end
+                    episodes.find_by(title: title)
                 else
                     nil
                 end
