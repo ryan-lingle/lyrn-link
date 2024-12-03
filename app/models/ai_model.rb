@@ -162,7 +162,7 @@ class AiModel < ApplicationRecord
       parameters: {
           model: "gpt-4o",
           messages: [{ role: "user", content: "#{prompt}"}],
-          temperature: 0.7,
+          temperature: 0.3,
       }
     )
     string = response.dig("choices", 0, "message", "content")
