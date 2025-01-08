@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_29_185253) do
+ActiveRecord::Schema.define(version: 2025_01_08_191547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 2023_09_29_185253) do
     t.text "user_notes"
     t.boolean "notes_activity_published", default: false
     t.string "media_type"
+    t.string "audio_url"
     t.index ["list_id"], name: "index_items_on_list_id"
     t.index ["meta_item_id"], name: "index_items_on_meta_item_id"
   end
@@ -180,6 +181,7 @@ ActiveRecord::Schema.define(version: 2023_09_29_185253) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "media_type"
     t.uuid "podcast_id"
+    t.string "audio_url"
     t.index ["podcast_id"], name: "index_meta_items_on_podcast_id"
   end
 

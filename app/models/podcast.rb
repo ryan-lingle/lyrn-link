@@ -16,14 +16,19 @@ class Podcast < ApplicationRecord
 		end
 	end
 
-    def self.find_or_create_by(title:)
+    def self.find_or_create_by(title: nil, id: nil)
         podcast = find_by(title: title)
         if podcast
             ap "found podcast in db"
             podcast
         else
             ap "searching taddy"
-            res = Taddy.find_podcast(title)
+            if id
+                res = Taddy.find_podcast_by_id(id)
+            else
+                res = Taddy.find_podcast(title)
+            end
+
             if res
                 create(
                     title: res["name"],
@@ -71,12 +76,12 @@ class Podcast < ApplicationRecord
             feed = RssParser.parse(rss_url)
             if feed
                 titles = feed.items.map do |rss_item|
-                    meta_item = MetaItem.new(title: rss_item.title)
+                    meta_item = MetaItem.find_or_create_by(title: rss_item.title, podcast: self, media_type: "podcast")
                     meta_item.update(
                         media_type: "podcast",
                         podcast: self,
                         description: rss_item.description,
-                        url: rss_item.link,
+                        audio_url: rss_item.enclosure&.url,
                         creator: self.title,
                         publish_date: rss_item.pubDate,
                     )
@@ -91,6 +96,24 @@ class Podcast < ApplicationRecord
                 else
                     nil
                 end
+            end
+        end
+    end
+
+    def get_episodes
+        feed = RssParser.parse(rss_url)
+        if feed
+            feed.items.each do |rss_item|
+                meta_item = MetaItem.find_or_create_by(title: rss_item.title, podcast: self, media_type: "podcast")
+
+                meta_item.update(
+                    media_type: "podcast",
+                    description: rss_item.description,
+                    audio_url: rss_item.enclosure&.url,
+                    creator: self.title,
+                    publish_date: rss_item.pubDate,
+                )
+                ap meta_item
             end
         end
     end
