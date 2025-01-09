@@ -112,9 +112,22 @@ class Podcast < ApplicationRecord
                     audio_url: rss_item.enclosure&.url,
                     creator: self.title,
                     publish_date: rss_item.pubDate,
+                    duration: get_time_in_seconds(rss_item),
                 )
-                ap meta_item
             end
+        end
+    rescue StandardError => e
+        ap e
+    end
+
+    def get_time_in_seconds(rss_item)
+        if rss_item.itunes_duration
+            hours = rss_item.itunes_duration.hour || 0
+            minutes = rss_item.itunes_duration.minute || 0
+            seconds = rss_item.itunes_duration.second || 0
+            (hours * 3600) + (minutes * 60) + seconds
+        else
+            0
         end
     end
 end
