@@ -3,7 +3,7 @@ require 'csv'
 namespace :podcasts do
 	desc 'all top podcasts'
 	task scrape: :environment do
-    MetaItem.where(items: Item.where(list: List.where(type: "Podcasts"))).each do |meta_item|
+    MetaItem.where(items: Item.where(list: List.where(type: "Podcasts"))).where(podcast_id: nil).each do |meta_item|
       podcast = Podcast.find_or_create_by(title: meta_item.creator)
       if podcast.present?
         podcast.update(in_network: true)
