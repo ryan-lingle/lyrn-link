@@ -3,12 +3,18 @@ require 'csv'
 namespace :podcasts do
 	desc 'all top podcasts'
 	task scrape: :environment do
-		Podcast.all.each do |podcast|
-      episode = podcast.episodes.first
-      if episode && episode.duration.nil?
-        ap podcast.title
-        ap "-------------------------------------------------------"
-        podcast.get_episodes
+    MetaItem.where(items: Item.where(list: List.where(type: "Podcasts"))).each do |meta_item|
+      podcast = Podcast.find_or_create_by(title: meta_item.creator)
+      if podcast.present?
+        podcast.update(in_network: true)
+        meta_item.podcast = podcast
+        meta_item.save
+        unless podcast.episodes.count > 10
+          ap "scraping #{podcast.title}"
+          podcast.get_episodes
+        end
+      else
+        "podcast not found: #{meta_item.creator}"
       end
     end
   end

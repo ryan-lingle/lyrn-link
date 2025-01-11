@@ -28,7 +28,6 @@ class Podcast < ApplicationRecord
             else
                 res = Taddy.find_podcast(title)
             end
-
             if res
                 create(
                     title: res["name"],
@@ -104,9 +103,9 @@ class Podcast < ApplicationRecord
         feed = RssParser.parse(rss_url)
         if feed
             feed.items.each do |rss_item|
-                meta_item = MetaItem.find_or_create_by(title: rss_item.title, podcast: self, media_type: "podcast")
-
+                meta_item = MetaItem.find_or_create_by(title: rss_item.title)
                 meta_item.update(
+                    podcast: self,
                     media_type: "podcast",
                     description: rss_item.description,
                     audio_url: rss_item.enclosure&.url,

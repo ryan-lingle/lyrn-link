@@ -42,7 +42,7 @@ class MetaItem < ApplicationRecord
 			description: self.description,
 			image_url: persistent_image_url,
 			url: self.url,
-			url_copy: self.url_copy, 
+			url_copy: self.url_copy,
 			creator: self.creator,
 			index: index,
 			show_count: true,
