@@ -16,15 +16,17 @@ class Podcast < ApplicationRecord
 		end
 	end
 
-    def self.find_or_create_by(title: nil, id: nil)
+    def self.find_or_create_by(title: nil, uid: nil, id: nil)
         podcast = find_by(title: title)
         if podcast
             ap "found podcast in db"
             podcast
         else
-            ap "searching taddy"
             if id
                 res = Taddy.find_podcast_by_id(id)
+            elsif uid
+                ap "searching by itunes id"
+                res = Taddy.find_by_itunes_id(uid)
             else
                 res = Taddy.find_podcast(title)
             end
