@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_01_11_174227) do
+ActiveRecord::Schema.define(version: 2025_01_13_181559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 2025_01_11_174227) do
     t.string "audio_url"
     t.integer "duration"
     t.string "rec_profile"
+    t.text "transcription"
     t.index ["podcast_id"], name: "index_meta_items_on_podcast_id"
   end
 
