@@ -32,6 +32,12 @@ module LyrnLink
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    # Validate environment variables on startup
+    config.before_configuration do
+      require_relative '../lib/env_validator'
+      EnvValidator.validate! unless Rails.env.test?
+    end
+
     config.action_mailer.delivery_method = :postmark
     config.action_mailer.postmark_settings = { :api_token => ENV['POSTMARK_TOKEN'] }
     

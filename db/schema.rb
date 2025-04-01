@@ -156,9 +156,9 @@ ActiveRecord::Schema.define(version: 2025_01_13_181559) do
   create_table "lists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type"
     t.integer "index"
+    t.uuid "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.uuid "user_id"
     t.string "owner_type", null: false
     t.uuid "owner_id", null: false
     t.index ["owner_type", "owner_id"], name: "index_lists_on_owner_type_and_owner_id"
@@ -270,6 +270,7 @@ ActiveRecord::Schema.define(version: 2025_01_13_181559) do
   add_foreign_key "items", "meta_items"
   add_foreign_key "likes", "users", column: "like_id"
   add_foreign_key "likes", "users", column: "link_id"
+  add_foreign_key "lists", "users"
   add_foreign_key "meta_items", "podcasts"
   add_foreign_key "recommendations", "users"
   add_foreign_key "recommended_items", "meta_items"

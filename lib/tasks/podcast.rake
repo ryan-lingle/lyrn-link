@@ -18,25 +18,24 @@ namespace :podcasts do
           ap "podcast already in network"
         end
       else
-        "podzcast not found: #{meta_item.creator}"
+        "podcast not found: #{meta_item.creator}"
       end
     end
 
     # """
-    #   SELECT title,audio_url FROM meta_items WHERE meta_items.id IN (SELECT items.meta_item_id FROM items WHERE items.list_id IN (SELECT lists.id FROM lists WHERE lists.type = 'Podcasts' AND lists.owner_type = 'User' AND lists.owner_id = 'eca93597-3b5a-4876-b7fd-0e7899b4e8c2'))
+    #   SELECT title,id,audio_url FROM meta_items WHERE meta_items.audio_url IS NOT null AND meta_items.id IN (SELECT items.meta_item_id FROM items WHERE items.list_id IN (SELECT lists.id FROM lists WHERE lists.type = 'Podcasts' AND lists.owner_type = 'User' AND lists.owner_id = 'eca93597-3b5a-4876-b7fd-0e7899b4e8c2'));
     # """
   end
 
   task combine: :environment do
-    Item.all.each do |item|
-      meta_item = MetaItem.where(title: item.title).where("audio_url IS NOT NULL").first
+    Item.where(list: List.where(type: 'Podcasts')).each do |item|
+      meta_item = MetaItem.where(title: item.title, podcast_id: item.meta_item.podcast_id).where("audio_url IS NOT NULL").first
       if meta_item
         item.meta_item.update(
           audio_url: meta_item.audio_url,
           duration: meta_item.duration,
         )
       end
-
     end
   end
 
